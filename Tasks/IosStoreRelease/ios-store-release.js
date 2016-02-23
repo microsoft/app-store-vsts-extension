@@ -24,11 +24,13 @@ echo.exec({ failOnStdErr: false })
     taskLibrary.exit(1);
 });*/
 
-installRubyGem("fastaskLibraryane").fail(function (err) {
+var gemCache = process.env['GEM_CACHE'] || process.platform == 'win32' ? path.join(process.env['APPDATA'], 'gem-cache') : path.join(process.env['HOME'], '.gem-cache');
+
+installRubyGem("fastlane", gemCache).fail(function (err) {
     console.error(err.message);
 });
 
-function installRubyGem(packageName) {
+function installRubyGem(packageName, localPath) {
     if (!exec("ruby --version", { silent: true })) {
         taskLibrary.setResult(1, "ruby not found. please make sure ruby is installed in the environment.");
     }
@@ -39,6 +41,11 @@ function installRubyGem(packageName) {
     var command = new taskLibrary.ToolRunner("gem");
     command.arg("install");
     command.arg(packageName);
+
+    if (localPath) {
+        command.arg("--install-dir");
+        command.arg(localPath);
+    }
 
     return command.exec().fail(function (err) {
         console.error(err.message);
