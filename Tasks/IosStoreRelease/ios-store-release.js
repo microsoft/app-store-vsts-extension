@@ -3,30 +3,15 @@ require('shelljs/global');
 var path = require('path');
 var taskLibrary = require('vsts-task-lib');
 
-var echo = new taskLibrary.ToolRunner(taskLibrary.which('echo', true));
-
-var msg = "test1"; //taskLibrary.getInput('msg', true);
-echo.arg(msg);
-
-/*var cwd = taskLibrary.getPathInput('cwd', false);
-
-// will error and fail task if it doesn't exist
-taskLibrary.checkPath(cwd, 'cwd');
-taskLibrary.cd(cwd);
-
-echo.exec({ failOnStdErr: false })
-    .then(function (code) {
-    taskLibrary.exit(code);
-})
-    .fail(function (err) {
-    console.error(err.message);
-    taskLibrary.debug('taskRunner fail');
-    taskLibrary.exit(1);
-});*/
-
 var gemCache = process.env['GEM_CACHE'] || process.platform == 'win32' ? path.join(process.env['APPDATA'], 'gem-cache') : path.join(process.env['HOME'], '.gem-cache');
+process.env['GEM_HOME'] = gemCache;
 
-installRubyGem("fastlane", gemCache).fail(function (err) {
+// Add bin of new gem home so we don't ahve to resolve it later;
+process.env['PATH'] = process.env['PATH'] + ":" + gemCache + path.sep + "bin";
+
+installRubyGem("fastlane").then(function () {
+    return runFastlaneCommand("init");
+}).fail(function (err) {
     console.error(err.message);
 });
 
@@ -46,6 +31,21 @@ function installRubyGem(packageName, localPath) {
         command.arg("--install-dir");
         command.arg(localPath);
     }
+
+    return command.exec().fail(function (err) {
+        console.error(err.message);
+        taskLibrary.debug('taskRunner fail');
+    });
+}
+
+function runFastlaneCommand(commandString, args) {
+    if (typeof args == "string") {
+        args = [args];
+    }
+    var command = new taskLibrary(commandString);
+    args.foreach(function (arg) {
+        command.arg(arg);
+    });
 
     return command.exec().fail(function (err) {
         console.error(err.message);
