@@ -10,7 +10,9 @@ process.env['GEM_HOME'] = gemCache;
 process.env['PATH'] = process.env['PATH'] + ":" + gemCache + path.sep + "bin";
 
 installRubyGem("fastlane").then(function () {
-    return runFastlaneCommand("init");
+    return runCommand("fastlane", "init");
+}).then(function() {
+    return installRubyGem("sigh");
 }).fail(function (err) {
     console.error(err.message);
 });
@@ -38,7 +40,7 @@ function installRubyGem(packageName, localPath) {
     });
 }
 
-function runFastlaneCommand(commandString, args) {
+function runCommand(commandString, args) {
     if (typeof args == "string") {
         args = [args];
     }
