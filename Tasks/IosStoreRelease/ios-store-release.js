@@ -42,10 +42,13 @@ function runFastlaneCommand(commandString, args) {
     if (typeof args == "string") {
         args = [args];
     }
-    var command = new taskLibrary(commandString);
-    args.foreach(function (arg) {
-        command.arg(arg);
-    });
+
+    var command = new taskLibrary.ToolRunner(commandString);
+    if (args) {
+        args.foreach(function (arg) {
+            command.arg(arg);
+        });
+    }
 
     return command.exec().fail(function (err) {
         console.error(err.message);
