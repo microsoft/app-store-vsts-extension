@@ -45,7 +45,9 @@ function runCommand(commandString, args) {
         args = [args];
     }
 
-    var command = new taskLibrary.ToolRunner(commandString);
+    var command = new taskLibrary.ToolRunner("fastlane");
+    command.arg(commandString);
+
     if (args) {
         args.foreach(function (arg) {
             command.arg(arg);
