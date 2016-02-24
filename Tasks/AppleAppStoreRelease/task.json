@@ -59,6 +59,33 @@
             "visibleRule": "authType = UserAndPass"
         },
         {
+            "name": "appName",
+            "type": "string",
+            "label": "Friendly App Name",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Name to publish app under"
+        },
+        {
+            "name": "language",
+            "type": "pickList",
+            "label": "Language",
+            "defaultValue": "English",
+            "helpMarkDown": "",
+            "options": {
+                "English": "English",
+                "German": "German"
+            }
+        },
+        {
+            "name": "version",
+            "type": "string",
+            "label": "App Version",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "App version"
+        },
+        {
             "name": "ipaPath",
             "type": "string",
             "label": "Path to IPA",

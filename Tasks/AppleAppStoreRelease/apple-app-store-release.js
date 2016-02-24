@@ -15,6 +15,9 @@ if (authType === "ServiceEndpoint") {
 }
 
 var ipaPath = taskLibrary.getInput("ipaPath", true);
+var appName = taskLibrary.getInput("appName", true);
+var languageString = taskLibrary.getInput("language", true);
+var appVersion = taskLibrary.getInput("version", true);
 
 // Set up environment
 var gemCache = process.env['GEM_CACHE'] || process.platform == 'win32' ? path.join(process.env['APPDATA'], 'gem-cache') : path.join(process.env['HOME'], '.gem-cache');
@@ -39,7 +42,11 @@ installRubyGem("fastlane").then(function () {
         args.push(credentials.username);
         args.push("-a");
         args.push(appIdentifier);
-        
+        args.push("-q");
+        args.push(appName);
+        args.push("-m");
+        args.push(languageString);
+
         return runCommand("produce", args);
     });
 }).then(function () {
