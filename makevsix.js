@@ -13,11 +13,11 @@ var devManifestOverride = {
     name: "Cordova Build-Dev",
     id: "cordova-extension-dev",
     publisher: "ms-mobiledevops-test"
-}
+};
 
 var prodManifestOverride = {
     public: true
-}
+};
 
 var cli = commandLineArgs([
   { name: 'maketest', alias: 't', description: 'make test VSIX', type: Boolean },
@@ -50,11 +50,11 @@ if (! options.skipinstalldeps)
     installTasks()
 
 if (options.makeprod)
-    echoAndExec('Creating VSIX', 'tfx extension create --manifest-globs mobiledevopscordovaextension.json --override ' + toOverrideString(prodManifestOverride));
+    echoAndExec('Creating VSIX', 'tfx extension create --manifest-globs vsts-extension-apple-app-store-deploy.json --override ' + toOverrideString(prodManifestOverride));
 
 if (options.maketest)
     echoAndExec('Creating test VSIX',
-        'tfx extension create --manifest-globs mobiledevopscordovaextension.json --override ' + toOverrideString(devManifestOverride));
+        'tfx extension create --manifest-globs vsts-extension-apple-app-store-deploy.json --override ' + toOverrideString(devManifestOverride));
 
 if (options.publishtest) {
     var accessToken = env['PUBLISH_ACCESSTOKEN'];
@@ -64,7 +64,7 @@ if (options.publishtest) {
     }
 
     echoAndExec('Publishing test VSIX',
-        'tfx extension publish --manifest-globs mobiledevopscordovaextension.json --override ' + toOverrideString(devManifestOverride) + ' --share-with mobiledevops x04ty29er --token ' + accessToken);
+        'tfx extension publish --manifest-globs vsts-extension-apple-app-store-deploy.json --override ' + toOverrideString(devManifestOverride) + ' --share-with mobiledevops x04ty29er --token ' + accessToken);
 }
 
 //

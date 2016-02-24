@@ -16,14 +16,7 @@
     "visibility": [
         "Build and release"
     ],
-    "icons": {
-        "default": "",
-        "large": ""
-    },
     "content":{
-        "details": {
-            "path": "docs/extension-overview.md"
-        },
         "thirdpartynotice": {
             "path": "ThirdPartyNotices.txt"
         }
@@ -84,5 +77,6 @@
                     }
                 ]
             }
+        }
     ]
 }
