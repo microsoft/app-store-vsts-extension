@@ -1,0 +1,14 @@
+{
+  "name": "vsts-extension-ios-deploy",
+  "version": "0.0.1",
+  "description": "A set of VSTS task for publishing apps to the Apple App Store.",
+  "author": "Microsoft",
+  "license": "MIT",
+  "dependencies": {
+    "q": "^1.4.1"
+  },
+  "devDependencies": {
+    "command-line-args": "^2.1.4",
+    "shelljs": "^0.6.0"
+  }
+}
