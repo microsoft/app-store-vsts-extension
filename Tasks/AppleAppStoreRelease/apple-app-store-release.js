@@ -74,7 +74,7 @@ installRubyGem("fastlane").then(function () {
     });
 }).then(function () {
     return installRubyGem("deliver").then(function () {
-        // Setting up arguments for deliver command
+        // Setting up arguments for initializing deliver command
         var args = ["init"];
         args.push("-u");
         args.push(credentials.username);
@@ -83,7 +83,9 @@ installRubyGem("fastlane").then(function () {
         args.push("-i");
         args.push(ipaPath);
 
-        return runCommand("deliver", args);
+        return runCommand("deliver", args).then(function() {
+            return runCommand("deilver", "--force");
+        });
     });
 }).fail(function (err) {
     console.error(err.message);
