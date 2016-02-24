@@ -32,6 +32,17 @@ if (!appIdentifier) {
 }
 
 installRubyGem("fastlane").then(function () {
+    return installRubyGem("produce").then(function () {
+        // Setting up arguments for produce command
+        var args = [];
+        args.push("-u");
+        args.push(credentials.username);
+        args.push("-a");
+        args.push(appIdentifier);
+        
+        return runCommand("produce", args);
+    });
+}).then(function () {
     return installRubyGem("deliver").then(function () {
         // Setting up arguments for deliver command
         var args = ["init"];
