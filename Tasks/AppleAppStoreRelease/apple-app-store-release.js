@@ -39,6 +39,16 @@ if (!appIdentifier) {
 }
 
 installRubyGem("fastlane").then(function () {
+    return installRubyGem("sigh").then(function() {
+        var args;
+        if (appIdentifier) {
+            args.push("-a");
+            args.push(appIdentifier);
+        }
+        
+        return runCommand("sigh", args);
+    });
+}).then(function(){
     return installRubyGem("produce").then(function () {
         // Setting up arguments for produce command
         // See https://github.com/fastlane/produce for more information on these arguments
