@@ -20,10 +20,46 @@
     "instanceNameFormat": "Publish $(appPath) to the App Store",
     "inputs": [
         {
-            
+            "name": "authType",
+            "type": "pickList",
+            "label": "Authentication Method",
+            "defaultValue": "ServiceEndpoint",
+            "helpMarkDown": "",
+            "options": {
+                "ServiceEndpoint": "Service Endpoint",
+                "UserAndPass": "Username and Password"
+            }
         },
         {
-            "name": "appPath",
+            "name": "serviceEndpoint",
+            "type": "connectedService:apple-app-store",
+            "label": "Service Endpoint",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The VSTS Service Endpoint that specifies the identiy you wish to publish your IPA under.",
+            "visibleRule": "authType = ServiceEndpoint"
+        },
+        {
+            "name": "username",
+            "type": "string",
+            "label": "Email",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The email of the account with which to publish to the Apple App Store.",
+            "visibleRule": "authType = UserAndPass"
+        },
+        {
+            "name": "password",
+            "type": "string",
+            "label": "Password",
+            "defaultValue": "",
+            "isConfidential": true,
+            "required": true,
+            "helpMarkDown": "The password of the account with which to publish to the Apple App Store.",
+            "visibleRule": "authType = UserAndPass"
+        },
+        {
+            "name": "ipaPath",
             "type": "string",
             "label": "Path to IPA",
             "defaultValue": "",

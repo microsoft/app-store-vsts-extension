@@ -1,16 +1,17 @@
 {
-    "name": "apple-app-store-release",
-    "version": "0.0.1",
-    "description": "",
-    "main": "apple-app-store-release.js",
-    "dependencies": {
-        "shelljs": "^0.6.0",
-        "vsts-task-lib": "^0.5.10"
-    },
-    "devDependencies": {},
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "author": "Microsoft Corporation",
-    "license": "MIT"
+  "name": "apple-app-store-release",
+  "version": "0.0.1",
+  "description": "",
+  "main": "apple-app-store-release.js",
+  "dependencies": {
+    "ipa-metadata": "^1.4.0",
+    "shelljs": "^0.6.0",
+    "vsts-task-lib": "^0.5.10"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Microsoft Corporation",
+  "license": "MIT"
 }
