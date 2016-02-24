@@ -3,8 +3,10 @@ require('shelljs/global');
 var path = require('path');
 var taskLibrary = require('vsts-task-lib');
 
+// Set up environment
 var gemCache = process.env['GEM_CACHE'] || process.platform == 'win32' ? path.join(process.env['APPDATA'], 'gem-cache') : path.join(process.env['HOME'], '.gem-cache');
 process.env['GEM_HOME'] = gemCache;
+process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
 
 // Add bin of new gem home so we don't ahve to resolve it later;
 process.env['PATH'] = process.env['PATH'] + ":" + gemCache + path.sep + "bin";
@@ -12,7 +14,7 @@ process.env['PATH'] = process.env['PATH'] + ":" + gemCache + path.sep + "bin";
 installRubyGem("fastlane").then(function () {
     return runCommand("fastlane", "init");
 }).then(function() {
-    return installRubyGem("sigh");
+    return installRubyGem("deliver");
 }).fail(function (err) {
     console.error(err.message);
 });

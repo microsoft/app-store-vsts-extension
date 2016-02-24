@@ -1,0 +1,88 @@
+{
+    "manifestVersion": 1,
+    "id": "apple-app-store-deploy-extension",
+    "name": "Apple App Store",
+    "version": "0.0.1",
+    "publisher": "ms-vsclient",
+    "description": "Streamline CI setup for your Apache Cordova, PhoneGap, Ionic, or Cordova CLI compatible app using a set of useful pre-defined build steps.",
+    "categories": [
+        "Build and release"
+    ],
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "visibility": [
+        "Build and release"
+    ],
+    "icons": {
+        "default": "",
+        "large": ""
+    },
+    "content":{
+        "details": {
+            "path": "docs/extension-overview.md"
+        },
+        "thirdpartynotice": {
+            "path": "ThirdPartyNotices.txt"
+        }
+    },
+    "files": [
+        {
+            "path": "Tasks/AppleAppStoreRelease"
+        }
+    ],
+    "contributions": [
+        {
+            "id": "appleappstorerelease",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [ "ms.vss-distributed-task.tasks" ],
+            "properties": {
+                "name": "Tasks/AppleAppStoreRelease"
+            }
+        },
+        {
+            "id": "apple-app-store-service-endpoint",
+            "description": "AppleAppStoreAuthenticationEndpoint",
+            "type": "ms.vss-endpoint.service-endpoint-type",
+            "targets": [
+                "ms.vss-endpoint.endpoint-types"
+            ],
+            "properties": {
+                "name": "apple-app-store",
+                "displayName": "Apple App Store",
+                "url": "https://accounts.google.com/o/oauth2/v2/auth",
+                "inputDescriptors": [],
+                "authenticationSchemes": [
+                    {
+                        "type": "ms.vss-endpoint.endpoint-auth-scheme-basic",
+                        "inputDescriptors": [
+                            {
+                                "id": "username",
+                                "name": "App Store E-mail",
+                                "description": "The e-mail address of the service account used to authenticate with the Apple App Store",
+                                "inputMode": "textbox",
+                                "isConfidential": false,
+                                "validation": {
+                                    "isRequired": true,
+                                    "dataType": "string"
+                                }
+                            },
+                            {
+                                "id": "password",
+                                "name": "Password",
+                                "description": "Password for account that is publishing to the Apple App Store",
+                                "inputMode": "textbox",
+                                "isConfidential": true,
+                                "validation": {
+                                    "isRequired": true,
+                                    "dataType": "string"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+    ]
+}

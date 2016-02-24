@@ -1,42 +1,45 @@
 {
-  "id": "2e371150-da5e-11e5-83da-0943b1acc572",
-  "name": "IosStoreRelease",
-  "friendlyName": "Apple Store Release",
-  "description": "VSTS Task to release your build ios app to the Apple Store",
-  "author": "Microsoft Corporation",
-  "helpMarkDown": "Replace with markdown to show in help",
-  "category": "Utility",
-  "visibility": [
-    "Build",
-    "Release"
-  ],
-  "demands": [],
-  "version": {
-    "Major": "0",
-    "Minor": "1",
-    "Patch": "0"
-  },
-  "minimumAgentVersion": "1.83.0",
-  "instanceNameFormat": "Publish $(appPath) to the App Store",
-  "inputs": [
-    {
-      "name": "appPath",
-      "type": "string",
-      "label": "Path to IPA",
-      "defaultValue": "",
-      "required": true,
-      "helpMarkDown": "Path to the IPA to publish"
-    }
-  ],
-  "execution": {
-    "Node": {
-      "target": "ios-store-release.js",
-      "argumentFormat": ""
+    "id": "2e371150-da5e-11e5-83da-0943b1acc572",
+    "name": "AppleAppStoreRelease",
+    "friendlyName": "Apple App Store Release",
+    "description": "VSTS Task to release your build ios app to the Apple Store",
+    "author": "Microsoft Corporation",
+    "helpMarkDown": "Replace with markdown to show in help",
+    "category": "Utility",
+    "visibility": [
+        "Build",
+        "Release"
+    ],
+    "demands": [],
+    "version": {
+        "Major": "0",
+        "Minor": "1",
+        "Patch": "0"
     },
-    "PowerShell": {
-      "target": "$(currentDirectory)\\ios-store-release.ps1",
-      "argumentFormat": "",
-      "workingDirectory": "$(currentDirectory)"
+    "minimumAgentVersion": "1.83.0",
+    "instanceNameFormat": "Publish $(appPath) to the App Store",
+    "inputs": [
+        {
+            
+        },
+        {
+            "name": "appPath",
+            "type": "string",
+            "label": "Path to IPA",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Path to the IPA to publish"
+        }
+    ],
+    "execution": {
+        "Node": {
+            "target": "apple-app-store-release.js",
+            "argumentFormat": ""
+        },
+        "PowerShell": {
+            "target": "$(currentDirectory)\\apple-app-store-release.ps1",
+            "argumentFormat": "",
+            "workingDirectory": "$(currentDirectory)"
+        }
     }
-  }
 }
