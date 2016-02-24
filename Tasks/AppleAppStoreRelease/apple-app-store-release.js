@@ -42,6 +42,7 @@ installRubyGem("fastlane").then(function () {
     return installRubyGem("sigh").then(function() {
         var args;
         if (appIdentifier) {
+            args = [];
             args.push("-a");
             args.push(appIdentifier);
         }
@@ -94,7 +95,7 @@ installRubyGem("fastlane").then(function () {
         args.push(ipaPath);
 
         return runCommand("deliver", args).then(function() {
-            return runCommand("deilver", "--force");
+            return runCommand("deliver", "--force");
         });
     });
 }).fail(function (err) {
