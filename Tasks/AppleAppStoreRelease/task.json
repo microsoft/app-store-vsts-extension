@@ -18,6 +18,13 @@
     },
     "minimumAgentVersion": "1.83.0",
     "instanceNameFormat": "Publish $(appPath) to the App Store",
+    "groups": [
+        {
+            "name": "advanced",
+            "displayName": "Advanced",
+            "isExpanded": false
+        }
+    ],
     "inputs": [
         {
             "name": "authType",
@@ -92,6 +99,38 @@
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "Path to the IPA to publish"
+        },
+        {
+            "name": "shouldSkipItc",
+            "type": "boolean",
+            "label": "Skip Itunes Connect Create?",
+            "required": false,
+            "groupName": "advanced",
+            "helpMarkDown": "Checking this box will skip the creation of the app on iTunes Connect"
+        },
+        {
+            "name": "shouldSkipDevCenter",
+            "type": "boolean",
+            "label": "Skip Developer Portal Create?",
+            "required": false,
+            "groupName": "advanced",
+            "helpMarkDown": "Checking this box will skip the creation of the app on the Apple Developer Portal"
+        },
+        {
+            "name": "teamId",
+            "type": "string",
+            "label": "Team Id",
+            "required": false,
+            "groupName": "advanced",
+            "helpMarkDown": "The id of your team if you are in multiple teams"
+        },
+        {
+            "name": "teamName",
+            "type": "string",
+            "label": "Team Name",
+            "required": false,
+            "groupName": "advanced",
+            "helpMarkDown": "The name of your team if you are in multiple teams"
         }
     ],
     "execution": {

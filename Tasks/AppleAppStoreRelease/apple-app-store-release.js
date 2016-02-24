@@ -18,6 +18,10 @@ var ipaPath = taskLibrary.getInput("ipaPath", true);
 var appName = taskLibrary.getInput("appName", true);
 var languageString = taskLibrary.getInput("language", true);
 var appVersion = taskLibrary.getInput("version", true);
+var shouldSkipItc = taskLibrary.getInput("shouldSkipItc", false);
+var shouldSkipDevCenter = taskLibrary.getInput("shouldSkipDevCenter", false);
+var teamId = taskLibrary.getInput("teamId", false);
+var teamName = taskLibrary.getInput("teamName", false);
 
 // Set up environment
 var gemCache = process.env['GEM_CACHE'] || process.platform == 'win32' ? path.join(process.env['APPDATA'], 'gem-cache') : path.join(process.env['HOME'], '.gem-cache');
@@ -37,6 +41,7 @@ if (!appIdentifier) {
 installRubyGem("fastlane").then(function () {
     return installRubyGem("produce").then(function () {
         // Setting up arguments for produce command
+        // See https://github.com/fastlane/produce for more information on these arguments
         var args = [];
         args.push("-u");
         args.push(credentials.username);
@@ -46,6 +51,24 @@ installRubyGem("fastlane").then(function () {
         args.push(appName);
         args.push("-m");
         args.push(languageString);
+        
+        if (shouldSkipItc) {
+            args.push("-i");
+        }
+        
+        if (shouldSkipDevCenter) {
+            args.push("-d");
+        }
+        
+        if (teamId) {
+            args.push("-b");
+            args.push(teamId);
+        }
+        
+        if (teamName) {
+            args.push("-l");
+            args.push(teamName);
+        }
 
         return runCommand("produce", args);
     });
