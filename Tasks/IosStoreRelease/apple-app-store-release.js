@@ -85,7 +85,7 @@ function runCommand(commandString, args) {
     var command = new taskLibrary.ToolRunner(commandString);
 
     if (args) {
-        args.foreach(function (arg) {
+        args.forEach(function (arg) {
             taskLibrary.debug("Appending argument: " + arg);
             command.arg(arg);
         });
