@@ -1,8 +1,6 @@
 
-require('shelljs/global');
 var path = require('path');
 var taskLibrary = require('vsts-task-lib');
-var ipaReader = require('ipa-metadata');
 
 // Get input variables
 var authType = taskLibrary.getInput('authType', false);
@@ -27,30 +25,27 @@ process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
 // Add bin of new gem home so we don't ahve to resolve it later;
 process.env['PATH'] = process.env['PATH'] + ":" + gemCache + path.sep + "bin";
 
-// First thing first, extract the qualified name from the package.
-ipaReader(ipaPath, function (error, data) {
-    var appIdentifier = data.metadata.entitlements["application-identifier"];
+var appIdentifier = "com.ryuyu.hello"; // TODO: either take this as input or read it from the IPA.
 
-    if (!appIdentifier) {
-        taskLibrary.setResult(1, "Name extraction from IPA failed. Is this a valid IPA file?");
-    }
+if (!appIdentifier) {
+    taskLibrary.setResult(1, "Name extraction from IPA failed. Is this a valid IPA file?");
+}
 
-    return installRubyGem("fastlane").then(function () {
-        return installRubyGem("deliver").then(function () {
-            // Setting up arguments for deliver command
-            var args = ["init"];
-            args.push("-u");
-            args.push(credentials.username);
-            args.push("-a");
-            args.push(appIdentifier);
-            args.push("-i");
-            args.push(ipaPath);
+installRubyGem("fastlane").then(function () {
+    return installRubyGem("deliver").then(function () {
+        // Setting up arguments for deliver command
+        var args = ["init"];
+        args.push("-u");
+        args.push(credentials.username);
+        args.push("-a");
+        args.push(appIdentifier);
+        args.push("-i");
+        args.push(ipaPath);
 
-            return runCommand("deliver", args);
-        });
-    }).fail(function (err) {
-        console.error(err.message);
+        return runCommand("deliver", args);
     });
+}).fail(function (err) {
+    console.error(err.message);
 });
 
 function installRubyGem(packageName, localPath) {
