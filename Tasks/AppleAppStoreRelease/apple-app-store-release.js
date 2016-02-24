@@ -45,6 +45,8 @@ installRubyGem("fastlane").then(function () {
             args = [];
             args.push("-a");
             args.push(appIdentifier);
+            args.push("-u");
+            args.push(credentials.username);
         }
         
         return runCommand("sigh", args);
