@@ -26,6 +26,10 @@
             "path": "Tasks/AppleAppStoreRelease"
         }
     ],
+    "scope": [
+        "vso.build_execute",
+        "vso.serviceendpoint_manage"
+    ],
     "contributions": [
         {
             "id": "appleappstorerelease",

@@ -5,7 +5,7 @@
     "description": "VSTS Task to release your build ios app to the Apple Store",
     "author": "Microsoft Corporation",
     "helpMarkDown": "Replace with markdown to show in help",
-    "category": "Utility",
+    "category": "Deploy",
     "visibility": [
         "Build",
         "Release"
@@ -94,7 +94,7 @@
         },
         {
             "name": "ipaPath",
-            "type": "string",
+            "type": "filePath",
             "label": "Path to IPA",
             "defaultValue": "",
             "required": true,

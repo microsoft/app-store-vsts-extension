@@ -10,8 +10,8 @@ var commandLineArgs = require('command-line-args');
 
 var devManifestOverride = {
     public: false,
-    name: "Cordova Build-Dev",
-    id: "cordova-extension-dev",
+    name: "Apple App Store Deploy-Dev",
+    id: "apple-app-store-deploy-extension-dev",
     publisher: "ms-mobiledevops-test"
 };
 
