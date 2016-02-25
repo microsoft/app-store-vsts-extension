@@ -1,4 +1,3 @@
-
 var path = require('path');
 var taskLibrary = require('vsts-task-lib');
 
@@ -101,7 +100,7 @@ installRubyGem("fastlane").then(function () {
         });
     });
 }).fail(function (err) {
-    console.error(err.message);
+    taskLibrary.setResult(1, err.message);
 });
 
 function installRubyGem(packageName, localPath) {
