@@ -15,10 +15,11 @@ if (authType === "ServiceEndpoint") {
 
 var ipaPath = taskLibrary.getInput("ipaPath", true);
 var appName = taskLibrary.getInput("appName", true);
+var appIdentifier = taskLibrary.getInput("bundleId", true);
 var languageString = taskLibrary.getInput("language", true);
 var appVersion = taskLibrary.getInput("version", true);
-var shouldSkipItc = taskLibrary.getInput("shouldSkipItc", false);
-var shouldSkipDevCenter = taskLibrary.getInput("shouldSkipDevCenter", false);
+var shouldSkipItc = JSON.parse(taskLibrary.getInput("shouldSkipItc", false));
+var shouldSkipDevCenter = JSON.parse(taskLibrary.getInput("shouldSkipDevCenter", false));
 var teamId = taskLibrary.getInput("teamId", false);
 var teamName = taskLibrary.getInput("teamName", false);
 
@@ -31,14 +32,46 @@ process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
 // Add bin of new gem home so we don't ahve to resolve it later;
 process.env['PATH'] = process.env['PATH'] + ":" + gemCache + path.sep + "bin";
 
-var appIdentifier = "com.ryuyu.hello"; // TODO: either take this as input or read it from the IPA.
+//var appIdentifier = "com.ryuyu.hello"; // TODO: either take this as input or read it from the IPA.
 
 if (!appIdentifier) {
     taskLibrary.setResult(1, "Name extraction from IPA failed. Is this a valid IPA file?");
 }
 
-installRubyGem("fastlane").then(function () {
-    return installRubyGem("sigh").then(function() {
+installRubyGem("produce").then(function () {
+    // Setting up arguments for produce command
+    // See https://github.com/fastlane/produce for more information on these arguments
+    var args = [];
+    args.push("-u");
+    args.push(credentials.username);
+    args.push("-a");
+    args.push(appIdentifier);
+    args.push("-q");
+    args.push(appName);
+    args.push("-m");
+    args.push(languageString);
+
+    if (shouldSkipItc) {
+        args.push("-i");
+    }
+
+    if (shouldSkipDevCenter) {
+        args.push("-d");
+    }
+
+    if (teamId) {
+        args.push("-b");
+        args.push(teamId);
+    }
+
+    if (teamName) {
+        args.push("-l");
+        args.push(teamName);
+    }
+
+    return runCommand("produce", args);
+})/*.then(function () {
+    return installRubyGem("sigh").then(function () {
         var args;
         if (appIdentifier) {
             args = [];
@@ -47,44 +80,10 @@ installRubyGem("fastlane").then(function () {
             args.push("-u");
             args.push(credentials.username);
         }
-        
+
         return runCommand("sigh", args);
     });
-}).then(function(){
-    return installRubyGem("produce").then(function () {
-        // Setting up arguments for produce command
-        // See https://github.com/fastlane/produce for more information on these arguments
-        var args = [];
-        args.push("-u");
-        args.push(credentials.username);
-        args.push("-a");
-        args.push(appIdentifier);
-        args.push("-q");
-        args.push(appName);
-        args.push("-m");
-        args.push(languageString);
-        
-        if (shouldSkipItc) {
-            args.push("-i");
-        }
-        
-        if (shouldSkipDevCenter) {
-            args.push("-d");
-        }
-        
-        if (teamId) {
-            args.push("-b");
-            args.push(teamId);
-        }
-        
-        if (teamName) {
-            args.push("-l");
-            args.push(teamName);
-        }
-
-        return runCommand("produce", args);
-    });
-}).then(function () {
+})*/.then(function () {
     return installRubyGem("deliver").then(function () {
         // Setting up arguments for initializing deliver command
         var args = ["init"];
@@ -95,7 +94,7 @@ installRubyGem("fastlane").then(function () {
         args.push("-i");
         args.push(ipaPath);
 
-        return runCommand("deliver", args).then(function() {
+        return runCommand("deliver", args).then(function () {
             return runCommand("deliver", "--force");
         });
     });
