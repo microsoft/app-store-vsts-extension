@@ -32,8 +32,6 @@ process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
 // Add bin of new gem home so we don't ahve to resolve it later;
 process.env['PATH'] = process.env['PATH'] + ":" + gemCache + path.sep + "bin";
 
-//var appIdentifier = "com.ryuyu.hello"; // TODO: either take this as input or read it from the IPA.
-
 if (!appIdentifier) {
     taskLibrary.setResult(1, "Name extraction from IPA failed. Is this a valid IPA file?");
 }
@@ -70,22 +68,10 @@ installRubyGem("produce").then(function () {
     }
 
     return runCommand("produce", args);
-})/*.then(function () {
-    return installRubyGem("sigh").then(function () {
-        var args;
-        if (appIdentifier) {
-            args = [];
-            args.push("-a");
-            args.push(appIdentifier);
-            args.push("-u");
-            args.push(credentials.username);
-        }
-
-        return runCommand("sigh", args);
-    });
-})*/.then(function () {
+}).then(function () {
     return installRubyGem("deliver").then(function () {
         // Setting up arguments for initializing deliver command
+        // See https://github.com/fastlane/deliver for more information on these arguments
         var args = ["init"];
         args.push("-u");
         args.push(credentials.username);
@@ -95,7 +81,7 @@ installRubyGem("produce").then(function () {
         args.push(ipaPath);
 
         return runCommand("deliver", args).then(function () {
-            return runCommand("deliver", ["--force", ipaPath]);
+            return runCommand("deliver", ["--force", "-i", ipaPath]);
         });
     });
 }).fail(function (err) {
