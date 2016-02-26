@@ -95,7 +95,7 @@ installRubyGem("produce").then(function () {
         args.push(ipaPath);
 
         return runCommand("deliver", args).then(function () {
-            return runCommand("deliver", "--force");
+            return runCommand("deliver", ["--force", ipaPath]);
         });
     });
 }).fail(function (err) {
