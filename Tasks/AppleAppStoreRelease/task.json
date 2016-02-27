@@ -14,7 +14,7 @@
     "version": {
         "Major": "0",
         "Minor": "0",
-        "Patch": "7"
+        "Patch": "8"
     },
     "minimumAgentVersion": "1.83.0",
     "instanceNameFormat": "Publish $(appPath) to the App Store",
@@ -93,13 +93,24 @@
             "helpMarkDown": "Path to file containing release notes for this release"
         },
         {
+            "name": "releaseTrack",
+            "type": "pickList",
+            "label": "Release Track",
+            "defaultValue": "TestFlight",
+            "helpMarkDown": "",
+            "options": {
+                "Production": "Production",
+                "TestFlight": "TestFlight"
+            }
+        },
+        {
             "name": "shouldSubmitForReview",
             "type": "boolean",
             "label": "Submit for Review?",
             "required": false,
             "defaultValue": false,
-            "groupName": "advanced",
-            "helpMarkDown": "Checking this box will submit the new version for review after everything is uploaded."
+            "helpMarkDown": "Checking this box will submit the new version for review after everything is uploaded.",
+            "visibleRule": "releaseTrack = Production"
         },
         {
             "name": "shouldAutoRelease",
@@ -107,8 +118,17 @@
             "label": "Automatically Release?",
             "required": false,
             "defaultValue": false,
-            "groupName": "advanced",
-            "helpMarkDown": "Checking this box will automatically release the app once it is approved."
+            "helpMarkDown": "Checking this box will automatically release the app once it is approved.",
+            "visibleRule": "releaseTrack = Production"
+        },
+        {
+            "name": "shouldSkipSubmission",
+            "type": "boolean",
+            "label": "Skip Submission?",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Checking this box will upload your ipa but not distribute to tester.",
+            "visibleRule": "releaseTrack = TestFlight"
         },
         {
             "name": "teamId",

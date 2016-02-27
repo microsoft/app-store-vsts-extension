@@ -17,8 +17,10 @@ if (authType === "ServiceEndpoint") {
 var ipaPath = taskLibrary.getInput("ipaPath", true);
 var languageString = taskLibrary.getInput("language", true);
 var releaseNotes = taskLibrary.getInput("releaseNotes", false);
+var releaseTrack = taskLibrary.getInput("releaseTrack", true);
 var shouldSubmitForReview = JSON.parse(taskLibrary.getInput("shouldSubmitForReview", false));
 var shouldAutoRelease = JSON.parse(taskLibrary.getInput("shouldAutoRelease", false));
+var shouldSkipSubmission = JSON.parse(taskLibrary.getInput("shouldSkipSubmission", false));
 var teamId = taskLibrary.getInput("teamId", false);
 var teamName = taskLibrary.getInput("teamName", false);
 
@@ -71,11 +73,6 @@ ipaParser(ipaPath, function (err, extractedData) {
             args.push("--automatic_release");
         }
 
-        if (releaseNotes) {
-            args.push("--release_notes");
-            args.push(releaseNotes);
-        }
-
         if (teamId) {
             args.push("-b");
             args.push(teamId);
@@ -90,23 +87,41 @@ ipaParser(ipaPath, function (err, extractedData) {
             taskLibrary.setResult(1, err.message);
         });
     }).then(function () {
-        return installRubyGem("deliver").then(function () {
-            // Setting up arguments for initializing deliver command
-            // See https://github.com/fastlane/deliver for more information on these arguments
-            var args = ["init"];
-            args.push("-u");
-            args.push(credentials.username);
-            args.push("-a");
-            args.push(bundleIdentifier);
-            args.push("-i");
-            args.push(ipaPath);
+        if (releaseTrack === "TestFlight") {
+            return installRubyGem("pilot").then(function () {
+                var args = ["upload"];
+                args.push("-u");
+                args.push(credentials.username);
+                args.push("-i");
+                args.push(ipaPath);
 
-            return runCommand("deliver", args).then(function () {
-                return runCommand("deliver", ["--force", "-i", ipaPath]).fail(function (err) {
+                if (shouldSkipSubmission) {
+                    args.push("--skip_submission");
+                }
+
+                return runCommand("pilot", args).fail(function (err) {
                     taskLibrary.setResult(1, err.message);
                 });
             });
-        });
+        } else if (releaseTrack === "Production") {
+            return installRubyGem("deliver").then(function () {
+                // Setting up arguments for initializing deliver command
+                // See https://github.com/fastlane/deliver for more information on these arguments
+                var args = ["init"];
+                args.push("-u");
+                args.push(credentials.username);
+                args.push("-a");
+                args.push(bundleIdentifier);
+                args.push("-i");
+                args.push(ipaPath);
+
+                return runCommand("deliver", args).then(function () {
+                    return runCommand("deliver", ["--force", "-i", ipaPath]).fail(function (err) {
+                        taskLibrary.setResult(1, err.message);
+                    });
+                });
+            });
+        }
     }).fail(function (err) {
         taskLibrary.setResult(1, err.message);
     });
