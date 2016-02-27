@@ -15,16 +15,16 @@ if (authType === "ServiceEndpoint") {
 }
 
 var ipaPath = taskLibrary.getInput("ipaPath", true);
-var appName = taskLibrary.getInput("appName", true);
 var languageString = taskLibrary.getInput("language", true);
-var appVersion = taskLibrary.getInput("version", true);
-var shouldSkipItc = JSON.parse(taskLibrary.getInput("shouldSkipItc", false));
-var shouldSkipDevCenter = JSON.parse(taskLibrary.getInput("shouldSkipDevCenter", false));
-var overrideBundleIdentifier = taskLibrary.getInput("bundleId", false);
+var releaseNotes = taskLibrary.getInput("releaseNotes", false);
+var shouldSubmitForReview = JSON.parse(taskLibrary.getInput("shouldSubmitForReview", false));
+var shouldAutoRelease = JSON.parse(taskLibrary.getInput("shouldAutoRelease", false));
 var teamId = taskLibrary.getInput("teamId", false);
 var teamName = taskLibrary.getInput("teamName", false);
 
 var bundleIdentifier;
+var appVersion;
+var appName;
 
 // Set up environment
 var gemCache = process.env['GEM_CACHE'] || process.platform == 'win32' ? path.join(process.env['APPDATA'], 'gem-cache') : path.join(process.env['HOME'], '.gem-cache');
@@ -36,23 +36,19 @@ process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
 process.env['PATH'] = process.env['PATH'] + ":" + gemCache + path.sep + "bin";
 
 ipaParser(ipaPath, function (err, extractedData) {
-    if (!overrideBundleIdentifier) {
-        if (err) {
-            taskLibrary.setResult(1, "IPA Parsing failed: " + err.message);
-        }
-
-        var metadata = extractedData.metadata;
-
-        if (!metadata) {
-            taskLibrary.setResult(1, "Metadata is empty. Bundle ID extraction failed.");
-        }
-
-        bundleIdentifier = metadata.CFBundleIdentifier;
+    if (err) {
+        taskLibrary.setResult(1, "IPA Parsing failed: " + err.message);
     }
 
-    if (!bundleIdentifier) {
-        bundleIdentifier = overrideBundleIdentifier;
+    var metadata = extractedData.metadata;
+
+    if (!metadata) {
+        taskLibrary.setResult(1, "IPA Metadata is empty.");
     }
+
+    appName = metadata.CFBundleName;
+    appVersion = metadata.CFBundleVersion;
+    bundleIdentifier = metadata.CFBundleIdentifier;
 
     return installRubyGem("produce").then(function () {
         // Setting up arguments for produce command
@@ -67,12 +63,17 @@ ipaParser(ipaPath, function (err, extractedData) {
         args.push("-m");
         args.push(languageString);
 
-        if (shouldSkipItc) {
-            args.push("-i");
+        if (shouldSubmitForReview) {
+            args.push("--submit_for_review");
         }
 
-        if (shouldSkipDevCenter) {
-            args.push("-d");
+        if (shouldAutoRelease) {
+            args.push("--automatic_release");
+        }
+
+        if (releaseNotes) {
+            args.push("--release_notes");
+            args.push(releaseNotes);
         }
 
         if (teamId) {
@@ -96,7 +97,7 @@ ipaParser(ipaPath, function (err, extractedData) {
             args.push("-u");
             args.push(credentials.username);
             args.push("-a");
-            args.push(appIdentifier);
+            args.push(bundleIdentifier);
             args.push("-i");
             args.push(ipaPath);
 

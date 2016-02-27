@@ -14,7 +14,7 @@
     "version": {
         "Major": "0",
         "Minor": "0",
-        "Patch": "6"
+        "Patch": "7"
     },
     "minimumAgentVersion": "1.83.0",
     "instanceNameFormat": "Publish $(appPath) to the App Store",
@@ -66,14 +66,6 @@
             "visibleRule": "authType = UserAndPass"
         },
         {
-            "name": "appName",
-            "type": "string",
-            "label": "Friendly App Name",
-            "defaultValue": "",
-            "required": true,
-            "helpMarkDown": "Name to publish app under"
-        },
-        {
             "name": "language",
             "type": "pickList",
             "label": "Language",
@@ -85,47 +77,38 @@
             }
         },
         {
-            "name": "version",
-            "type": "string",
-            "label": "App Version",
-            "defaultValue": "",
-            "required": true,
-            "helpMarkDown": "App version"
-        },
-        {
             "name": "ipaPath",
             "type": "filePath",
-            "label": "Path to IPA",
+            "label": "IPA Path",
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "Path to the IPA to publish"
         },
         {
-            "name": "shouldSkipItc",
-            "type": "boolean",
-            "label": "Skip Itunes Connect Create?",
-            "required": false,
-            "defaultValue": false,
-            "groupName": "advanced",
-            "helpMarkDown": "Checking this box will skip the creation of the app on iTunes Connect"
-        },
-        {
-            "name": "shouldSkipDevCenter",
-            "type": "boolean",
-            "label": "Skip Developer Portal Create?",
-            "required": false,
-            "defaultValue": false,
-            "groupName": "advanced",
-            "helpMarkDown": "Checking this box will skip the creation of the app on the Apple Developer Portal"
-        },
-        {
-            "name": "bundleId",
-            "type": "string",
-            "label": "Bundle Id",
+            "name": "releaseNotes",
+            "type": "filePath",
+            "label": "Release Notes",
             "defaultValue": "",
             "required": false,
+            "helpMarkDown": "Path to file containing release notes for this release"
+        },
+        {
+            "name": "shouldSubmitForReview",
+            "type": "boolean",
+            "label": "Submit for Review?",
+            "required": false,
+            "defaultValue": false,
             "groupName": "advanced",
-            "helpMarkDown": "Set this to override the bundleID read from the IPA (ie com.example.*)"
+            "helpMarkDown": "Checking this box will submit the new version for review after everything is uploaded."
+        },
+        {
+            "name": "shouldAutoRelease",
+            "type": "boolean",
+            "label": "Automatically Release?",
+            "required": false,
+            "defaultValue": false,
+            "groupName": "advanced",
+            "helpMarkDown": "Checking this box will automatically release the app once it is approved."
         },
         {
             "name": "teamId",
