@@ -74,14 +74,6 @@
             "helpMarkDown": "Name to publish app under"
         },
         {
-            "name": "bundleId",
-            "type": "string",
-            "label": "Bundle Id",
-            "defaultValue": "",
-            "required": true,
-            "helpMarkDown": "Bundle Id (ie com.example.*)"
-        },
-        {
             "name": "language",
             "type": "pickList",
             "label": "Language",
@@ -125,6 +117,15 @@
             "defaultValue": false,
             "groupName": "advanced",
             "helpMarkDown": "Checking this box will skip the creation of the app on the Apple Developer Portal"
+        },
+        {
+            "name": "bundleId",
+            "type": "string",
+            "label": "Bundle Id",
+            "defaultValue": "",
+            "required": false,
+            "groupName": "advanced",
+            "helpMarkDown": "Set this to override the bundleID read from the IPA (ie com.example.*)"
         },
         {
             "name": "teamId",

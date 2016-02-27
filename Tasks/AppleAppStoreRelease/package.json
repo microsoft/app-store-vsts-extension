@@ -4,6 +4,7 @@
   "description": "",
   "main": "apple-app-store-release.js",
   "dependencies": {
+    "ipa-metadata": "^1.4.0",
     "vsts-task-lib": "^0.5.10"
   },
   "devDependencies": {},
