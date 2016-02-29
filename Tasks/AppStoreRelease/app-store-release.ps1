@@ -1,29 +1,32 @@
 param (
-    [string]$cwd,
-    [string]$msg
-)
+    [string]$username,
+    [string]$password,
+    [string]$serviceEndpoint,
+    [string]$ipaPath,
+    [string]$language,
+    [string]$releaseTrack,
+    [string]$releaseNotes,
+    [string]$shouldSubmitForReview,
+    [string]$shouldAutoRelease,
+    [string]$shouldSkipSubmission,
+    [string]$teamId,
+    [string]$teamName
+) 
+  
+$env:INPUT_username = $username
+$env:INPUT_password = $password
+$env:INPUT_serviceEndpoint = $serviceEndpoint
+$env:INPUT_ipaPath = $ipaPath
+$env:INPUT_language = $language
+$env:INPUT_releaseTrack = $releaseTrack
+$env:INPUT_releaseNotes = $releaseNotes
+$env:INPUT_shouldSubmitForReview = $shouldSubmitForReview
+$env:INPUT_shouldAutoRelease = $shouldAutoRelease
+$env:INPUT_shouldSkipSubmission = $shouldSkipSubmission
+$env:INPUT_teamId = $teamId
+$env:INPUT_teamName = $teamName
 
-Write-Verbose 'Entering sample.ps1'
-Write-Verbose "cwd = $cwd"
-Write-Verbose "msg = $msg"
-
-# Import the Task.Common dll that has all the cmdlets we need for Build
-import-module "Microsoft.TeamFoundation.DistributedTask.Task.Common"
-
-if(!$cwd)
-{
-    throw (Get-LocalizedString -Key "Working directory parameter is not set")
-}
-
-if(!(Test-Path $cwd -PathType Container))
-{
-    throw ("$cwd does not exist");
-}
-
-Write-Verbose "Setting working directory to $cwd"
-Set-Location $cwd
-
-Write-Host $msg
+node app-store-release.js
 
 
 
