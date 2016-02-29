@@ -1,7 +1,7 @@
 {
     "id": "2e371150-da5e-11e5-83da-0943b1acc572",
-    "name": "AppleAppStoreRelease",
-    "friendlyName": "Apple App Store Release",
+    "name": "AppStoreRelease",
+    "friendlyName": "App Store Release",
     "description": "VSTS Task to release your build ios app to the Apple Store",
     "author": "Microsoft Corporation",
     "helpMarkDown": "Replace with markdown to show in help",
@@ -14,10 +14,10 @@
     "version": {
         "Major": "0",
         "Minor": "0",
-        "Patch": "8"
+        "Patch": "1"
     },
     "minimumAgentVersion": "1.83.0",
-    "instanceNameFormat": "Publish $(appPath) to the App Store",
+    "instanceNameFormat": "Publish $(appPath) to the App Store $(releaseTrack)",
     "groups": [
         {
             "name": "advanced",
@@ -149,11 +149,11 @@
     ],
     "execution": {
         "Node": {
-            "target": "apple-app-store-release.js",
+            "target": "app-store-release.js",
             "argumentFormat": ""
         },
         "PowerShell": {
-            "target": "$(currentDirectory)\\apple-app-store-release.ps1",
+            "target": "$(currentDirectory)\\app-store-release.ps1",
             "argumentFormat": "",
             "workingDirectory": "$(currentDirectory)"
         }

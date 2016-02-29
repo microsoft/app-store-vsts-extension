@@ -1,8 +1,8 @@
 {
-  "name": "apple-app-store-release",
+  "name": "app-store-release",
   "version": "0.0.1",
   "description": "",
-  "main": "apple-app-store-release.js",
+  "main": "app-store-release.js",
   "dependencies": {
     "ipa-metadata": "^1.4.0",
     "vsts-task-lib": "^0.5.10"

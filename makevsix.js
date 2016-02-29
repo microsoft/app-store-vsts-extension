@@ -10,8 +10,8 @@ var commandLineArgs = require('command-line-args');
 
 var devManifestOverride = {
     public: false,
-    name: "Apple App Store Deploy-Dev",
-    id: "apple-app-store-deploy-extension-dev",
+    name: "App Store Deploy-Dev",
+    id: "app-store-vsts-extension-dev",
     publisher: "ms-mobiledevops-test"
 };
 
@@ -50,11 +50,11 @@ if (! options.skipinstalldeps)
     installTasks()
 
 if (options.makeprod)
-    echoAndExec('Creating VSIX', 'tfx extension create --manifest-globs vsts-extension-apple-app-store-deploy.json --override ' + toOverrideString(prodManifestOverride));
+    echoAndExec('Creating VSIX', 'tfx extension create --manifest-globs app-store-vsts-extension.json --override ' + toOverrideString(prodManifestOverride));
 
 if (options.maketest)
     echoAndExec('Creating test VSIX',
-        'tfx extension create --manifest-globs vsts-extension-apple-app-store-deploy.json --override ' + toOverrideString(devManifestOverride));
+        'tfx extension create --manifest-globs app-store-vsts-extension.json --override ' + toOverrideString(devManifestOverride));
 
 if (options.publishtest) {
     var accessToken = env['PUBLISH_ACCESSTOKEN'];
@@ -64,7 +64,7 @@ if (options.publishtest) {
     }
 
     echoAndExec('Publishing test VSIX',
-        'tfx extension publish --manifest-globs vsts-extension-apple-app-store-deploy.json --override ' + toOverrideString(devManifestOverride) + ' --share-with mobiledevops x04ty29er --token ' + accessToken);
+        'tfx extension publish --manifest-globs app-store-vsts-extension.json --override ' + toOverrideString(devManifestOverride) + ' --share-with mobiledevops x04ty29er --token ' + accessToken);
 }
 
 //

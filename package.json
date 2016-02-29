@@ -1,5 +1,5 @@
 {
-  "name": "vsts-extension-ios-deploy",
+  "name": "app-store-vsts-extension",
   "version": "0.0.1",
   "description": "A set of VSTS task for publishing apps to the Apple App Store.",
   "author": "Microsoft",
