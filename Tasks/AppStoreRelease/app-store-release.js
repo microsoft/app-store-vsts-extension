@@ -37,7 +37,7 @@ process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
 // Add bin of new gem home so we don't ahve to resolve it later;
 process.env['PATH'] = process.env['PATH'] + ":" + gemCache + path.sep + "bin";
 
-ipaParser(ipaPath, function (err, extractedData) {
+ipaParser(ipaPath, function(err, extractedData) {
     if (err) {
         taskLibrary.setResult(1, "IPA Parsing failed: " + err.message);
     }
@@ -52,7 +52,7 @@ ipaParser(ipaPath, function (err, extractedData) {
     appVersion = metadata.CFBundleVersion;
     bundleIdentifier = metadata.CFBundleIdentifier;
 
-    return installRubyGem("produce").then(function () {
+    return installRubyGem("produce").then(function() {
         // Setting up arguments for produce command
         // See https://github.com/fastlane/produce for more information on these arguments
         var args = [];
@@ -83,12 +83,12 @@ ipaParser(ipaPath, function (err, extractedData) {
             args.push(teamName);
         }
 
-        return runCommand("produce", args).fail(function (err) {
+        return runCommand("produce", args).fail(function(err) {
             taskLibrary.setResult(1, err.message);
         });
-    }).then(function () {
+    }).then(function() {
         if (releaseTrack === "TestFlight") {
-            return installRubyGem("pilot").then(function () {
+            return installRubyGem("pilot").then(function() {
                 var args = ["upload"];
                 args.push("-u");
                 args.push(credentials.username);
@@ -99,12 +99,12 @@ ipaParser(ipaPath, function (err, extractedData) {
                     args.push("--skip_submission");
                 }
 
-                return runCommand("pilot", args).fail(function (err) {
+                return runCommand("pilot", args).fail(function(err) {
                     taskLibrary.setResult(1, err.message);
                 });
             });
         } else if (releaseTrack === "Production") {
-            return installRubyGem("deliver").then(function () {
+            return installRubyGem("deliver").then(function() {
                 // Setting up arguments for initializing deliver command
                 // See https://github.com/fastlane/deliver for more information on these arguments
                 var args = ["init"];
@@ -115,14 +115,17 @@ ipaParser(ipaPath, function (err, extractedData) {
                 args.push("-i");
                 args.push(ipaPath);
 
-                return runCommand("deliver", args).then(function () {
-                    return runCommand("deliver", ["--force", "-i", ipaPath]).fail(function (err) {
-                        taskLibrary.setResult(1, err.message);
+                // First, try to pull screenshots from itunes connect
+                return runCommand("deliver", ["download_screenshots", "-u", credentials.username, "-a", bundleIdentifier]).then(function() {
+                    return runCommand("deliver", args).then(function() {
+                        return runCommand("deliver", ["--force", "-i", ipaPath]).fail(function(err) {
+                            taskLibrary.setResult(1, err.message);
+                        });
                     });
                 });
             });
         }
-    }).fail(function (err) {
+    }).fail(function(err) {
         taskLibrary.setResult(1, err.message);
     });
 });
@@ -144,7 +147,7 @@ function installRubyGem(packageName, localPath) {
     }
 
     taskLibrary.debug("Attempting to install " + packageName + " to " + (localPath ? localPath : " default cache directory (" + process.env['GEM_HOME'] + ")"));
-    return command.exec().fail(function (err) {
+    return command.exec().fail(function(err) {
         console.error(err.message);
         taskLibrary.debug('taskRunner fail');
     });
@@ -159,13 +162,13 @@ function runCommand(commandString, args) {
     var command = new taskLibrary.ToolRunner(commandString);
 
     if (args) {
-        args.forEach(function (arg) {
+        args.forEach(function(arg) {
             taskLibrary.debug("Appending argument: " + arg);
             command.arg(arg);
         });
     }
 
-    return command.exec().fail(function (err) {
+    return command.exec().fail(function(err) {
         console.error(err.message);
         taskLibrary.debug('taskRunner fail');
     });
