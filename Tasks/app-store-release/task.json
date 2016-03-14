@@ -1,6 +1,6 @@
 {
     "id": "2e371150-da5e-11e5-83da-0943b1acc572",
-    "name": "AppStoreRelease",
+    "name": "app-store-release",
     "friendlyName": "App Store Release",
     "description": "VSTS Task to release your build ios app to the Apple Store",
     "author": "Microsoft Corporation",
