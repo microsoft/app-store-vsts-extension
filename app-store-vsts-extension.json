@@ -23,20 +23,31 @@
     },
     "files": [
         {
-            "path": "Tasks/AppStoreRelease"
+            "path": "Tasks/app-store-promote"
+        },
+        {
+            "path": "Tasks/app-store-release"
         }
     ],
     "scope": [
-        "vso.build_execute",
-        "vso.serviceendpoint_manage"
+        "vso.build",
+        "vso.serviceendpoint"
     ],
     "contributions": [
         {
-            "id": "appstorerelease",
+            "id": "app-store-promote",
             "type": "ms.vss-distributed-task.task",
             "targets": [ "ms.vss-distributed-task.tasks" ],
             "properties": {
-                "name": "Tasks/AppStoreRelease"
+                "name": "Tasks/app-store-promote"
+            }
+        },
+        {
+            "id": "app-store-release",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [ "ms.vss-distributed-task.tasks" ],
+            "properties": {
+                "name": "Tasks/app-store-release"
             }
         },
         {
@@ -49,7 +60,7 @@
             "properties": {
                 "name": "apple-app-store",
                 "displayName": "Apple App Store",
-                "url": "https://accounts.google.com/o/oauth2/v2/auth",
+                "url": "https://itunesconnect.apple.com/",
                 "inputDescriptors": [],
                 "authenticationSchemes": [
                     {
