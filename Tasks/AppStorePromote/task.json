@@ -1,0 +1,124 @@
+{
+    "id": "2e371150-da5e-11e5-83da-0943b1acc572",
+    "name": "app-store-promote",
+    "friendlyName": "App Store Promote",
+    "description": "VSTS Task to release a build already in iTunes Connect to the Apple Store",
+    "author": "Microsoft Corporation",
+    "category": "Deploy",
+    "visibility": [
+        "Build",
+        "Release"
+    ],
+    "demands": [],
+    "version": {
+        "Major": "0",
+        "Minor": "0",
+        "Patch": "1"
+    },
+    "minimumAgentVersion": "1.83.0",
+    "instanceNameFormat": "Submit build $(buildNumber) of $(appIdentifier) to the App Store for review",
+    "groups": [
+        {
+            "name": "advanced",
+            "displayName": "Advanced",
+            "isExpanded": false
+        }
+    ],
+    "inputs": [
+        {
+            "name": "authType",
+            "type": "pickList",
+            "label": "Authentication Method",
+            "defaultValue": "ServiceEndpoint",
+            "helpMarkDown": "",
+            "options": {
+                "ServiceEndpoint": "Service Endpoint",
+                "UserAndPass": "Username and Password"
+            }
+        },
+        {
+            "name": "serviceEndpoint",
+            "type": "connectedService:apple-app-store",
+            "label": "Service Endpoint",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The VSTS Service Endpoint that specifies the identiy you wish to publish your IPA under.",
+            "visibleRule": "authType = ServiceEndpoint"
+        },
+        {
+            "name": "username",
+            "type": "string",
+            "label": "Email",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The email of the account with which to publish to the Apple App Store.",
+            "visibleRule": "authType = UserAndPass"
+        },
+        {
+            "name": "password",
+            "type": "string",
+            "label": "Password",
+            "defaultValue": "",
+            "isConfidential": true,
+            "required": true,
+            "helpMarkDown": "The password of the account with which to publish to the Apple App Store.",
+            "visibleRule": "authType = UserAndPass"
+        },
+        {
+            "name": "appIdentifier",
+            "type": "string",
+            "label": "App ID",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc)"
+        },
+        {
+            "name": "buildNumber",
+            "type": "pickList",
+            "label": "Build Number",
+            "defaultValue": "Latest",
+            "helpMarkDown": "",
+            "options": {
+                "Latest": "Latest"
+            },
+            "properties":  {
+                "EditableOptions": "True"
+            }
+        },
+        {
+            "name": "shouldAutoRelease",
+            "type": "boolean",
+            "label": "Automatically Release?",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Checking this box will automatically release the app once it is approved."
+        },
+        {
+            "name": "teamId",
+            "type": "string",
+            "label": "Team Id",
+            "required": false,
+            "groupName": "advanced",
+            "helpMarkDown": "The id of your team if you are in multiple teams"
+        },
+        {
+            "name": "teamName",
+            "type": "string",
+            "label": "Team Name",
+            "required": false,
+            "groupName": "advanced",
+            "helpMarkDown": "The name of your team if you are in multiple teams"
+        }
+    ],
+    "execution": {
+        "Node": {
+            "target": "app-store-promote.js",
+            "argumentFormat": ""
+        },
+        "PowerShell": {
+            "target": "$(currentDirectory)\\app-store-promote.ps1",
+            "argumentFormat": "",
+            "workingDirectory": "$(currentDirectory)"
+        }
+    }
+}
