@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "app-store-vsts-extension",
     "name": "Apple App Store",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "ms-vsclient",
     "description": "Streamline CI setup for your Apache Cordova, PhoneGap, Ionic, or Cordova CLI compatible app using a set of useful pre-defined build steps.",
     "categories": [
