@@ -40,6 +40,40 @@ In addition to specifying your publisher credentials directly within each build 
 
 6. Select this endpoint via the name you chose in #5 whenever you add either the **App Store - Release** or **App Store - Promote** tasks to a build or release definition
 
+## Task Reference
+
+In addition to the custom service endpoint, this extension also contributes the following three build and release tasks:
+
+* [App Store - Release](#app-store---release) - Allows automating the release of updates to existing iOS TestFlight beta apps or production apps in the App Store store.
+
+### App Store - Release
+
+Allows you to release updates to your iOS TestFlight beta app or production app on the App Store, and includes the following options:
+
+![Release task](images/release-task-with-advanced.png)
+
+1. **Username and Password** or **Service Endpoint** - The credentials used to authenticate with App Store. Credentials can be typed in directly or configured via a service endpoint that can be referenced from the task (via the `Service Endpoint` authentication method).
+
+2. **Primary Language** *(String, Required)* - Information from the primary language is used in case localized app information isn't available in an App Store territory.
+
+3. **IPA Path** *(File path, Required)* - Path to the IPA file you want to publish to the specified track.
+
+4. **Release Notes** *(File path)* - Path to the file specifying the release notes for the IPA you are publishing.
+
+5. **Track** *(String, Required)* - Release track to publish the IPA to (e.g. `TestFlight`  or `Production` ).
+
+6. **Skip Submission** *(Checkbox)* - Check to upload a TestFlight app without submitting it to actual testers.
+
+7. **Submit for Review** *(Checkbox)* - Check to automatically submit the IPA for review once the upload completes.
+
+8. **Release Automatically** *(Checkbox)* - Check to automatically release the app once the approval process is completed.
+
+#### Advanced Options
+
+1. **Team Id** *(Text box)* - The ID of your team if you're in multiple teams.
+
+2. **Team Name** *(Text box)* - The name of your team if you're in multiple teams.
+
 ## Contact Us
 
 [Report an issue](https://github.com/Microsoft/app-store-vsts-extension/issues)
