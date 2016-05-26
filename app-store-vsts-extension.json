@@ -20,6 +20,9 @@
         "Build and release"
     ],
     "content":{
+        "details": {
+            "path": "docs/vsts-README.md"
+        },        
         "thirdpartynotice": {
             "path": "ThirdPartyNotices.txt"
         }

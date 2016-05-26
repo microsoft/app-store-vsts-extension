@@ -1,11 +1,3 @@
-<table style="width: 100%; border-style: none;"><tr>
-<td width="140px" style="text-align: center;"><img src="apple_default.png" style="max-width:100%" /></td>
-<td><strong>Visual Studio Team Services Extension for the App Store</strong><br />
-<i>Provides build/release tasks that enable performing continuous delivery to Apple's App Store from an automated VSTS build or release definition</i><br />
-<a href="#">Install now!</a>
-</td>
-</tr></table>
-
 # Visual Studio Team Services Extension for the App Store
 
 This extension contains a set of deployment tasks which allow you to automate the release and promotion app updates to Apple's App Store from your CI environment. This can reduce the effort needed to keep your beta and production deployments up-to-date, since you can simply push changes to the configured source control branches, and let your automated build take care of the rest.
@@ -46,7 +38,7 @@ In addition to specifying your publisher credentials directly within each build 
 
 5. Give the new endpoint a name and enter the credentials for the developer account you generated in step#1.
 
-6. Select this endpoint via the name you chose in #5 whenever you add either the **App Store - Release** or **App Store - Promote** tasks to a build or release definition 
+6. Select this endpoint via the name you chose in #5 whenever you add either the **App Store - Release** or **App Store - Promote** tasks to a build or release definition
 
 ## Contact Us
 
