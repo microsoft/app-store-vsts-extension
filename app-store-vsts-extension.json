@@ -4,7 +4,7 @@
     "name": "Apple App Store",
     "version": "0.0.2",
     "publisher": "ms-vsclient",
-    "description": "Streamline CI setup for your Apache Cordova, PhoneGap, Ionic, or Cordova CLI compatible app using a set of useful pre-defined build steps.",
+    "description": "Provides build/release tasks that enable performing continuous delivery to Apple's App Store from an automated VSTS build or release definition",
     "categories": [
         "Build and release"
     ],
@@ -13,10 +13,16 @@
             "id": "Microsoft.VisualStudio.Services"
         }
     ],
+	"icons": {
+		"default": "apple_default.png"
+	},
     "visibility": [
         "Build and release"
     ],
     "content":{
+        "details": {
+            "path": "docs/vsts-README.md"
+        },        
         "thirdpartynotice": {
             "path": "ThirdPartyNotices.txt"
         }

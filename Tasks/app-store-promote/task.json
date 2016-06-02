@@ -1,5 +1,5 @@
 {
-    "id": "2e371150-da5e-11e5-83da-0943b1acc572",
+    "id": "CBBF7F14-C386-4C1F-80A3-FE500E2BD976",
     "name": "app-store-promote",
     "friendlyName": "App Store Promote",
     "description": "VSTS Task to release a build already in iTunes Connect to the Apple Store",
