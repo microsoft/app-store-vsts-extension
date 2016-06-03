@@ -68,7 +68,7 @@
         {
             "name": "language",
             "type": "pickList",
-            "label": "Language",
+            "label": "Primary Language",
             "defaultValue": "English",
             "helpMarkDown": "",
             "options": {
@@ -121,7 +121,7 @@
         {
             "name": "releaseTrack",
             "type": "pickList",
-            "label": "Release Track",
+            "label": "Track",
             "defaultValue": "TestFlight",
             "helpMarkDown": "",
             "options": {
@@ -132,7 +132,7 @@
         {
             "name": "shouldSubmitForReview",
             "type": "boolean",
-            "label": "Submit for Review?",
+            "label": "Submit for Review",
             "required": false,
             "defaultValue": false,
             "helpMarkDown": "Checking this box will submit the new version for review after everything is uploaded.",
@@ -141,7 +141,7 @@
         {
             "name": "shouldAutoRelease",
             "type": "boolean",
-            "label": "Automatically Release?",
+            "label": "Release Automatically",
             "required": false,
             "defaultValue": false,
             "helpMarkDown": "Checking this box will automatically release the app once it is approved.",
@@ -150,7 +150,7 @@
         {
             "name": "shouldSkipSubmission",
             "type": "boolean",
-            "label": "Skip Submission?",
+            "label": "Skip Submission",
             "required": false,
             "defaultValue": false,
             "helpMarkDown": "Checking this box will upload your ipa but not distribute to tester.",
