@@ -77,6 +77,7 @@ ipaParser(ipaPath, function (err, extractedData) {
 
         return runCommand("produce", produceArgs).fail(function (err) {
             taskLibrary.setResult(1, err.message);
+            throw err;
         });
     }).then(function () {
         if (releaseTrack === "TestFlight") {
@@ -123,6 +124,7 @@ ipaParser(ipaPath, function (err, extractedData) {
                     return runCommand("deliver", deliverArgs).then(function () {
                         return runCommand("deliver", ["--force", "-i", ipaPath]).fail(function (err) {
                             taskLibrary.setResult(1, err.message);
+                            throw err;
                         });
                     });
                 });
