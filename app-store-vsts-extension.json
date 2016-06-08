@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "app-store-vsts-extension",
     "name": "Apple App Store",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "publisher": "ms-vsclient",
     "description": "Provides build/release tasks that enable performing continuous delivery to Apple's App Store from an automated VSTS build or release definition",
     "categories": [

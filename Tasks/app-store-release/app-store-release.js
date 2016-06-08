@@ -18,6 +18,7 @@ var ipaPath = taskLibrary.getInput("ipaPath", true);
 var languageString = taskLibrary.getInput("language", true);
 var releaseNotes = taskLibrary.getInput("releaseNotes", false);
 var releaseTrack = taskLibrary.getInput("releaseTrack", true);
+var pullDownProfiles = JSON.parse(taskLibrary.getInput("shouldGetProvisioningProfile", false));
 var shouldSubmitForReview = JSON.parse(taskLibrary.getInput("shouldSubmitForReview", false));
 var shouldAutoRelease = JSON.parse(taskLibrary.getInput("shouldAutoRelease", false));
 var shouldSkipSubmission = JSON.parse(taskLibrary.getInput("shouldSkipSubmission", false));
@@ -79,6 +80,21 @@ ipaParser(ipaPath, function (err, extractedData) {
             taskLibrary.setResult(1, err.message);
             throw err;
         });
+    }).then(function () {
+        if (pullDownProfiles) {
+            return installRubyGem("sigh").then(function () {
+                var sighArgs = [];
+                sighArgs.push("-u");
+                sighArgs.push(credentials.username);
+                sighArgs.push("-a");
+                sighArgs.push(bundleIdentifier);
+
+                return runCommand("sigh", sighArgs).fail(function (err) {
+                    taskLibrary.setResult(1, err.message);
+                    throw err;
+                });
+            });
+        }
     }).then(function () {
         if (releaseTrack === "TestFlight") {
             return installRubyGem("pilot").then(function () {

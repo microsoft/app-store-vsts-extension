@@ -14,7 +14,7 @@
     "version": {
         "Major": "0",
         "Minor": "0",
-        "Patch": "8"
+        "Patch": "9"
     },
     "minimumAgentVersion": "1.83.0",
     "instanceNameFormat": "Publish $(appPath) to the App Store $(releaseTrack)",
@@ -128,6 +128,14 @@
                 "Production": "Production",
                 "TestFlight": "TestFlight"
             }
+        },
+        {
+            "name": "shouldGetProvisioningProfile",
+            "type": "boolean",
+            "label": "Get Provisioning Profile from iTunes Connect",
+            "required": false,
+            "defaultValue": true,
+            "helpMarkDown": "Checking this box will pull down the provisioning profile for your app from iTunes Connect."
         },
         {
             "name": "shouldSubmitForReview",
