@@ -95,6 +95,7 @@ ipaParser(ipaPath, function (err, extractedData) {
 
                 return runCommand("pilot", pilotArgs).fail(function (err) {
                     taskLibrary.setResult(1, err.message);
+                    throw err;
                 });
             });
         } else if (releaseTrack === "Production") {
@@ -132,6 +133,7 @@ ipaParser(ipaPath, function (err, extractedData) {
         }
     }).fail(function (err) {
         taskLibrary.setResult(1, err.message);
+        process.exit(1);
     });
 });
 
