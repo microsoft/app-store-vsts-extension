@@ -14,7 +14,7 @@
     "version": {
         "Major": "0",
         "Minor": "0",
-        "Patch": "9"
+        "Patch": "10"
     },
     "minimumAgentVersion": "1.83.0",
     "instanceNameFormat": "Publish $(appPath) to the App Store $(releaseTrack)",
@@ -132,10 +132,10 @@
         {
             "name": "shouldGetProvisioningProfile",
             "type": "boolean",
-            "label": "Get Provisioning Profile from iTunes Connect",
+            "label": "Get Provisioning Profile and Certificates from iTunes Connect",
             "required": false,
             "defaultValue": true,
-            "helpMarkDown": "Checking this box will pull down the provisioning profile for your app from iTunes Connect."
+            "helpMarkDown": "Checking this box will pull down the provisioning profile and install signing certificates for your app from iTunes Connect."
         },
         {
             "name": "shouldSubmitForReview",

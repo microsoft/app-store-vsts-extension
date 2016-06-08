@@ -82,16 +82,25 @@ ipaParser(ipaPath, function (err, extractedData) {
         });
     }).then(function () {
         if (pullDownProfiles) {
-            return installRubyGem("sigh").then(function () {
-                var sighArgs = [];
-                sighArgs.push("-u");
-                sighArgs.push(credentials.username);
-                sighArgs.push("-a");
-                sighArgs.push(bundleIdentifier);
+            return installRubyGem("cert").then(function () {
+                var certArgs = [];
+                certArgs.push("-u");
+                certArgs.push(credentials.username);
+                return runCommand("cert", certArgs).then(function () {
+                    return installRubyGem("sigh").then(function () {
+                        var sighArgs = [];
+                        sighArgs.push("-u");
+                        sighArgs.push(credentials.username);
+                        sighArgs.push("-a");
+                        sighArgs.push(bundleIdentifier);
+                        sighArgs.push("--force");
+                        sighArgs.push("true");
 
-                return runCommand("sigh", sighArgs).fail(function (err) {
-                    taskLibrary.setResult(1, err.message);
-                    throw err;
+                        return runCommand("sigh", sighArgs).fail(function (err) {
+                            taskLibrary.setResult(1, err.message);
+                            throw err;
+                        });
+                    });
                 });
             });
         }
