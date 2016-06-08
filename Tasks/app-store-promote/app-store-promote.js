@@ -78,6 +78,7 @@ return installRubyGem("deliver").then(function() {
 }).fail(function(err) {
     console.log("global error catch");
     taskLibrary.setResult(1, err.message);
+    process.exit(1);
 });
 
 function installRubyGem(packageName, localPath) {
