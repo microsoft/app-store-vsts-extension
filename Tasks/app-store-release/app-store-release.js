@@ -18,6 +18,7 @@ var ipaPath = taskLibrary.getInput("ipaPath", true);
 var languageString = taskLibrary.getInput("language", true);
 var releaseNotes = taskLibrary.getInput("releaseNotes", false);
 var releaseTrack = taskLibrary.getInput("releaseTrack", true);
+var shouldSkipWaitingForProcessing = JSON.parse(taskLibrary.getInput("shouldSkipWaitingForProcessing", false));
 var shouldSubmitForReview = JSON.parse(taskLibrary.getInput("shouldSubmitForReview", false));
 var shouldAutoRelease = JSON.parse(taskLibrary.getInput("shouldAutoRelease", false));
 var shouldSkipSubmission = JSON.parse(taskLibrary.getInput("shouldSkipSubmission", false));
@@ -90,6 +91,11 @@ ipaParser(ipaPath, function (err, extractedData) {
 
                 if (shouldSkipSubmission) {
                     pilotArgs.push("--skip_submission");
+                    pilotArgs.push("true");
+                }
+
+                if (shouldSkipWaitingForProcessing) {
+                    pilotArgs.push("--skip_waiting_for_build_processing");
                     pilotArgs.push("true");
                 }
 

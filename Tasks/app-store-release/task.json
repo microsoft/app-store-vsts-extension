@@ -14,7 +14,7 @@
     "version": {
         "Major": "0",
         "Minor": "0",
-        "Patch": "11"
+        "Patch": "12"
     },
     "minimumAgentVersion": "1.83.0",
     "instanceNameFormat": "Publish $(appPath) to the App Store $(releaseTrack)",
@@ -146,6 +146,15 @@
             "defaultValue": false,
             "helpMarkDown": "Checking this box will automatically release the app once it is approved.",
             "visibleRule": "releaseTrack = Production"
+        },
+        {
+            "name": "shouldSkipWaitingForProcessing",
+            "type": "boolean",
+            "label": "Skip Waiting for Build Processing",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Checking this box will skip waiting for the build to finish processing before completing..",
+            "visibleRule": "releaseTrack = TestFlight"
         },
         {
             "name": "shouldSkipSubmission",
