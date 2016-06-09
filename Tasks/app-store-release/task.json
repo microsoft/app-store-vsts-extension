@@ -14,7 +14,7 @@
     "version": {
         "Major": "0",
         "Minor": "0",
-        "Patch": "10"
+        "Patch": "11"
     },
     "minimumAgentVersion": "1.83.0",
     "instanceNameFormat": "Publish $(appPath) to the App Store $(releaseTrack)",
@@ -128,14 +128,6 @@
                 "Production": "Production",
                 "TestFlight": "TestFlight"
             }
-        },
-        {
-            "name": "shouldGetProvisioningProfile",
-            "type": "boolean",
-            "label": "Get Provisioning Profile and Certificates from iTunes Connect",
-            "required": false,
-            "defaultValue": true,
-            "helpMarkDown": "Checking this box will pull down the provisioning profile and install signing certificates for your app from iTunes Connect."
         },
         {
             "name": "shouldSubmitForReview",
