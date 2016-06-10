@@ -67,7 +67,7 @@
         {
             "name": "appIdentifier",
             "type": "string",
-            "label": "App ID",
+            "label": "Bundle ID",
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc)"
@@ -88,7 +88,7 @@
         {
             "name": "shouldAutoRelease",
             "type": "boolean",
-            "label": "Automatically Release?",
+            "label": "Release Automatically",
             "required": false,
             "defaultValue": false,
             "helpMarkDown": "Checking this box will automatically release the app once it is approved."
