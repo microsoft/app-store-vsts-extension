@@ -150,10 +150,10 @@
         {
             "name": "shouldSkipWaitingForProcessing",
             "type": "boolean",
-            "label": "Skip Waiting for Build Processing",
+            "label": "Skip Build Processing Wait",
             "required": false,
             "defaultValue": false,
-            "helpMarkDown": "Checking this box will skip waiting for the build to finish processing before completing..",
+            "helpMarkDown": "Checking this box will skip the waiting for the build processing to finish",
             "visibleRule": "releaseTrack = TestFlight"
         },
         {

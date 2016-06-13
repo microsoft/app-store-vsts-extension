@@ -46,11 +46,13 @@ In addition to the custom service endpoint, this extension also contributes the 
 
 * [App Store - Release](#app-store---release) - Allows automating the release of updates to existing iOS TestFlight beta apps or production apps in the App Store store.
 
+* [App Store - Promote](#app-store---promote) - Allows automating the promotion of a previously submitted app from Itunes Connect to the App Store.
+
 ### App Store - Release
 
 Allows you to release updates to your iOS TestFlight beta app or production app on the App Store, and includes the following options:
 
-![Release task](images/release-task-with-advanced.png)
+![Release task](/docs/images/release-task-with-advanced.png)
 
 1. **Username and Password** or **Service Endpoint** - The credentials used to authenticate with App Store. Credentials can be typed in directly or configured via a service endpoint that can be referenced from the task (via the `Service Endpoint` authentication method).
 
@@ -62,7 +64,7 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 5. **Track** *(String, Required)* - Release track to publish the IPA to (e.g. `TestFlight`  or `Production` ).
 
-6. **Skip Submission** *(Checkbox)* - Check to upload a TestFlight app without submitting it to actual testers.
+6. **Skip Submission** *(Checkbox)* - Check to upload a beta app without distributing to testers.
 
 7. **Submit for Review** *(Checkbox)* - Check to automatically submit the IPA for review once the upload completes.
 
@@ -70,9 +72,29 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 #### Advanced Options
 
-1. **Team Id** *(Text box)* - The ID of your team if you're in multiple teams.
+1. **Team Id** *(Text box)* - The ID of the producing team. Only necessary when in multiple teams.
 
-2. **Team Name** *(Text box)* - The name of your team if you're in multiple teams.
+2. **Team Name** *(Text box)* - The name of the producing team. Only necessary when in multiple teams.
+
+### App Store - Promote
+
+Allows you to promote an app previously updated to Itunes Connect to the App Store, and includes the following options:
+
+![Release task](/docs/images/release-task-with-advanced.png)
+
+1. **Username and Password** or **Service Endpoint** - The credentials used to authenticate with App Store. Credentials can be typed in directly or configured via a service endpoint that can be referenced from the task (via the `Service Endpoint` authentication method).
+
+2. **Bundle ID** - The unique identifier for the app to be promoted.
+
+3. **Build Number** - Build number of the app to be promoted. 
+
+4. **Release Automatically** *(Checkbox)* - Check to automatically release the app once the approval process is completed.
+
+#### Advanced Options
+
+1. **Team Id** *(Text box)* - The ID of the producing team. Only necessary when in multiple teams.
+
+2. **Team Name** *(Text box)* - The name of the producing team. Only necessary when in multiple teams.
 
 ## Contact Us
 
