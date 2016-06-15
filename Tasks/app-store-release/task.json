@@ -14,7 +14,7 @@
     "version": {
         "Major": "0",
         "Minor": "0",
-        "Patch": "12"
+        "Patch": "13"
     },
     "minimumAgentVersion": "1.83.0",
     "instanceNameFormat": "Publish $(appPath) to the App Store $(releaseTrack)",
@@ -130,6 +130,14 @@
             }
         },
         {
+            "name": "shouldCreateAppStoreEntry",
+            "type": "boolean",
+            "label": "Create App Store Entry",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Checking this box will attempt to create the app listing in iTunes Connect for you."
+        },
+        {
             "name": "shouldSubmitForReview",
             "type": "boolean",
             "label": "Submit for Review",
@@ -145,6 +153,15 @@
             "required": false,
             "defaultValue": false,
             "helpMarkDown": "Checking this box will automatically release the app once it is approved.",
+            "visibleRule": "releaseTrack = Production"
+        },
+        {
+            "name": "shouldDownloadScreenshots",
+            "type": "boolean",
+            "label": "Download Screenshots",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Checking this box will download your screenshots from iTunes Connect before uploading.",
             "visibleRule": "releaseTrack = Production"
         },
         {
