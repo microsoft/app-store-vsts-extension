@@ -14,7 +14,7 @@ if (authType === "ServiceEndpoint") {
     credentials.password = taskLibrary.getInput("password", true);
 }
 
-var ipaPath = taskLibrary.getInput("ipaPath", true);
+var ipaPath = taskLibrary.getPathInput("ipaPath", true);
 var languageString = taskLibrary.getInput("language", true);
 var releaseNotes = taskLibrary.getInput("releaseNotes", false);
 var releaseTrack = taskLibrary.getInput("releaseTrack", true);
@@ -57,7 +57,7 @@ try {
             });
         }).fail(function (err) {
             taskLibrary.setResult(1, err.message);
-            process.exit(1);
+            throw err;
         });
     } else if (releaseTrack === "Production") {
         installRubyGem("deliver").then(function () {
@@ -92,12 +92,12 @@ try {
             });
         }).fail(function (err) {
             taskLibrary.setResult(1, err.message);
-            process.exit(1);
+            throw err;
         });
     }
 } catch (err) {
     taskLibrary.setResult(1, err.message);
-    process.exit(1);
+    throw err;
 }
 
 function installRubyGem(packageName, localPath) {
@@ -141,5 +141,6 @@ function runCommand(commandString, args) {
     return command.exec().fail(function (err) {
         console.error(err.message);
         taskLibrary.debug('taskRunner fail');
+        throw err;
     });
 }
