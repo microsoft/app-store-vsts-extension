@@ -18,11 +18,11 @@ var ipaPath = taskLibrary.getInput("ipaPath", true);
 var languageString = taskLibrary.getInput("language", true);
 var releaseNotes = taskLibrary.getInput("releaseNotes", false);
 var releaseTrack = taskLibrary.getInput("releaseTrack", true);
-var shouldSkipWaitingForProcessing = JSON.parse(taskLibrary.getInput("shouldSkipWaitingForProcessing", false));
-var shouldSubmitForReview = JSON.parse(taskLibrary.getInput("shouldSubmitForReview", false));
-var shouldAutoRelease = JSON.parse(taskLibrary.getInput("shouldAutoRelease", false));
-var shouldSkipSubmission = JSON.parse(taskLibrary.getInput("shouldSkipSubmission", false));
-var shouldDownloadScreenshots = JSON.parse(taskLibrary.getInput("shouldDownloadScreenshots", false));
+var shouldSkipWaitingForProcessing = taskLibrary.getBoolInput("shouldSkipWaitingForProcessing", false);
+var shouldSubmitForReview = taskLibrary.getBoolInput("shouldSubmitForReview", false);
+var shouldAutoRelease = taskLibrary.getBoolInput("shouldAutoRelease", false);
+var shouldSkipSubmission = taskLibrary.getBoolInput("shouldSkipSubmission", false);
+var shouldDownloadScreenshots = taskLibrary.getBoolInput("shouldDownloadScreenshots", false);
 var teamId = taskLibrary.getInput("teamId", false);
 var teamName = taskLibrary.getInput("teamName", false);
 var bundleIdentifier = taskLibrary.getInput("appIdentifier", true);
@@ -39,11 +39,7 @@ process.env['PATH'] = process.env['PATH'] + ":" + gemCache + path.sep + "bin";
 try {
     if (releaseTrack === "TestFlight") {
         installRubyGem("pilot").then(function () {
-            var pilotArgs = ["upload"];
-            pilotArgs.push("-u");
-            pilotArgs.push(credentials.username);
-            pilotArgs.push("-i");
-            pilotArgs.push(ipaPath);
+            var pilotArgs = ["upload", "-u", credentials.username, "-i", ipaPath];
 
             if (shouldSkipSubmission) {
                 pilotArgs.push("--skip_submission");
@@ -68,13 +64,7 @@ try {
             var deliverPromise = Q(0);
             // Setting up arguments for initializing deliver command
             // See https://github.com/fastlane/deliver for more information on these arguments
-            var deliverArgs = ["init"];
-            deliverArgs.push("-u");
-            deliverArgs.push(credentials.username);
-            deliverArgs.push("-a");
-            deliverArgs.push(bundleIdentifier);
-            deliverArgs.push("-i");
-            deliverArgs.push(ipaPath);
+            var deliverArgs = ["init", "-u", credentials.username, "-a", bundleIdentifier, "-i", ipaPath];
 
             if (shouldSubmitForReview) {
                 deliverArgs.push("--submit_for_review");
