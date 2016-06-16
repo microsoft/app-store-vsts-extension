@@ -22,7 +22,6 @@ var shouldSkipWaitingForProcessing = JSON.parse(taskLibrary.getInput("shouldSkip
 var shouldSubmitForReview = JSON.parse(taskLibrary.getInput("shouldSubmitForReview", false));
 var shouldAutoRelease = JSON.parse(taskLibrary.getInput("shouldAutoRelease", false));
 var shouldSkipSubmission = JSON.parse(taskLibrary.getInput("shouldSkipSubmission", false));
-var shouldCreateAppStoreEntry = JSON.parse(taskLibrary.getInput("shouldCreateAppStoreEntry", false));
 var shouldDownloadScreenshots = JSON.parse(taskLibrary.getInput("shouldDownloadScreenshots", false));
 var teamId = taskLibrary.getInput("teamId", false);
 var teamName = taskLibrary.getInput("teamName", false);
@@ -36,8 +35,6 @@ process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
 
 // Add bin of new gem home so we don't ahve to resolve it later;
 process.env['PATH'] = process.env['PATH'] + ":" + gemCache + path.sep + "bin";
-
-bundleIdentifier = metadata.CFBundleIdentifier;
 
 try {
     if (releaseTrack === "TestFlight") {
