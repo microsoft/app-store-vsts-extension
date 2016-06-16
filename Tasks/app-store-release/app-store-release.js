@@ -139,8 +139,7 @@ function runCommand(commandString, args) {
     }
 
     return command.exec().fail(function (err) {
-        console.error(err.message);
-        taskLibrary.debug('taskRunner fail');
+        taskLibrary.debug('taskRunner failed with message: ' + err.message);
         throw err;
     });
 }
