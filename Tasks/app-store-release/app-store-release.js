@@ -1,7 +1,6 @@
 var path = require('path');
 var Q = require('q');
 var taskLibrary = require('vsts-task-lib');
-var ipaParser = require('ipa-metadata');
 
 // Get input variables
 var authType = taskLibrary.getInput('authType', false);
@@ -27,10 +26,7 @@ var shouldCreateAppStoreEntry = JSON.parse(taskLibrary.getInput("shouldCreateApp
 var shouldDownloadScreenshots = JSON.parse(taskLibrary.getInput("shouldDownloadScreenshots", false));
 var teamId = taskLibrary.getInput("teamId", false);
 var teamName = taskLibrary.getInput("teamName", false);
-
-var bundleIdentifier;
-var appVersion;
-var appName;
+var bundleIdentifier = taskLibrary.getInput("appIdentifier", true);
 
 // Set up environment
 var gemCache = process.env['GEM_CACHE'] || process.platform == 'win32' ? path.join(process.env['APPDATA'], 'gem-cache') : path.join(process.env['HOME'], '.gem-cache');
@@ -41,123 +37,81 @@ process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
 // Add bin of new gem home so we don't ahve to resolve it later;
 process.env['PATH'] = process.env['PATH'] + ":" + gemCache + path.sep + "bin";
 
-ipaParser(ipaPath, function (err, extractedData) {
-    if (err) {
-        taskLibrary.setResult(1, "IPA Parsing failed: " + err.message);
-    }
+bundleIdentifier = metadata.CFBundleIdentifier;
 
-    var metadata = extractedData.metadata;
+try {
+    if (releaseTrack === "TestFlight") {
+        installRubyGem("pilot").then(function () {
+            var pilotArgs = ["upload"];
+            pilotArgs.push("-u");
+            pilotArgs.push(credentials.username);
+            pilotArgs.push("-i");
+            pilotArgs.push(ipaPath);
 
-    if (!metadata) {
-        taskLibrary.setResult(1, "IPA Metadata is empty.");
-    }
-
-    appName = metadata.CFBundleName;
-    appVersion = metadata.CFBundleVersion;
-    bundleIdentifier = metadata.CFBundleIdentifier;
-
-    return function () {
-        var fastlaneExecutionPromise = Q(0);
-        if (shouldCreateAppStoreEntry) {
-            fastlaneExecutionPromise = installRubyGem("produce").then(function () {
-                // Setting up arguments for produce command
-                // See https://github.com/fastlane/produce for more information on these arguments
-                var produceArgs = [];
-                produceArgs.push("-u");
-                produceArgs.push(credentials.username);
-                produceArgs.push("-a");
-                produceArgs.push(bundleIdentifier);
-                produceArgs.push("-q");
-                produceArgs.push(appName);
-                produceArgs.push("-m");
-                produceArgs.push(languageString);
-
-                if (teamId) {
-                    produceArgs.push("-b");
-                    produceArgs.push(teamId);
-                }
-
-                if (teamName) {
-                    produceArgs.push("-l");
-                    produceArgs.push(teamName);
-                }
-
-                return runCommand("produce", produceArgs).fail(function (err) {
-                    taskLibrary.setResult(1, err.message);
-                    throw err;
-                });
-            });
-        }
-
-        return fastlaneExecutionPromise.then(function () {
-            if (releaseTrack === "TestFlight") {
-                return installRubyGem("pilot").then(function () {
-                    var pilotArgs = ["upload"];
-                    pilotArgs.push("-u");
-                    pilotArgs.push(credentials.username);
-                    pilotArgs.push("-i");
-                    pilotArgs.push(ipaPath);
-
-                    if (shouldSkipSubmission) {
-                        pilotArgs.push("--skip_submission");
-                        pilotArgs.push("true");
-                    }
-
-                    if (shouldSkipWaitingForProcessing) {
-                        pilotArgs.push("--skip_waiting_for_build_processing");
-                        pilotArgs.push("true");
-                    }
-
-                    return runCommand("pilot", pilotArgs).fail(function (err) {
-                        taskLibrary.setResult(1, err.message);
-                        throw err;
-                    });
-                });
-            } else if (releaseTrack === "Production") {
-                return installRubyGem("deliver").then(function () {
-                    var deliverPromise = Q(0);
-                    // Setting up arguments for initializing deliver command
-                    // See https://github.com/fastlane/deliver for more information on these arguments
-                    var deliverArgs = ["init"];
-                    deliverArgs.push("-u");
-                    deliverArgs.push(credentials.username);
-                    deliverArgs.push("-a");
-                    deliverArgs.push(bundleIdentifier);
-                    deliverArgs.push("-i");
-                    deliverArgs.push(ipaPath);
-
-                    if (shouldSubmitForReview) {
-                        deliverArgs.push("--submit_for_review");
-                        deilverArgs.push("true");
-                    }
-
-                    if (shouldAutoRelease) {
-                        deliverArgs.push("--automatic_release");
-                        deilverArgs.push("true");
-                    }
-
-                    if (shouldDownloadScreenshots) {
-                        deliverPromise = deliverPromise.then(function() { 
-                            return runCommand("deliver", ["download_screenshots", "-u", credentials.username, "-a", bundleIdentifier]);
-                        })
-                    }
-                    // First, try to pull screenshots from itunes connect
-                    return deliverPromise.then(function () {
-                        return runCommand("deliver", deliverArgs).then(function () {
-                            return runCommand("deliver", ["--force", "-i", ipaPath]).fail(function (err) {
-                                taskLibrary.setResult(1, err.message);
-                                throw err;
-                            });
-                        });
-                    });
-                });
+            if (shouldSkipSubmission) {
+                pilotArgs.push("--skip_submission");
+                pilotArgs.push("true");
             }
+
+            if (shouldSkipWaitingForProcessing) {
+                pilotArgs.push("--skip_waiting_for_build_processing");
+                pilotArgs.push("true");
+            }
+
+            return runCommand("pilot", pilotArgs).fail(function (err) {
+                taskLibrary.setResult(1, err.message);
+                throw err;
+            });
         }).fail(function (err) {
             taskLibrary.setResult(1, err.message);
             process.exit(1);
         });
-    };
-});
+    } else if (releaseTrack === "Production") {
+        installRubyGem("deliver").then(function () {
+            var deliverPromise = Q(0);
+            // Setting up arguments for initializing deliver command
+            // See https://github.com/fastlane/deliver for more information on these arguments
+            var deliverArgs = ["init"];
+            deliverArgs.push("-u");
+            deliverArgs.push(credentials.username);
+            deliverArgs.push("-a");
+            deliverArgs.push(bundleIdentifier);
+            deliverArgs.push("-i");
+            deliverArgs.push(ipaPath);
+
+            if (shouldSubmitForReview) {
+                deliverArgs.push("--submit_for_review");
+                deilverArgs.push("true");
+            }
+
+            if (shouldAutoRelease) {
+                deliverArgs.push("--automatic_release");
+                deilverArgs.push("true");
+            }
+
+            if (shouldDownloadScreenshots) {
+                deliverPromise = deliverPromise.then(function () {
+                    return runCommand("deliver", ["download_screenshots", "-u", credentials.username, "-a", bundleIdentifier]);
+                })
+            }
+            // First, try to pull screenshots from itunes connect
+            return deliverPromise.then(function () {
+                return runCommand("deliver", deliverArgs).then(function () {
+                    return runCommand("deliver", ["--force", "-i", ipaPath]).fail(function (err) {
+                        taskLibrary.setResult(1, err.message);
+                        throw err;
+                    });
+                });
+            });
+        }).fail(function (err) {
+            taskLibrary.setResult(1, err.message);
+            process.exit(1);
+        });
+    }
+} catch (err) {
+    taskLibrary.setResult(1, err.message);
+    process.exit(1);
+}
 
 function installRubyGem(packageName, localPath) {
     taskLibrary.debug("Checking for ruby install...");

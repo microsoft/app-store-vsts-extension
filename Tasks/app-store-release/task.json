@@ -66,6 +66,14 @@
             "visibleRule": "authType = UserAndPass"
         },
         {
+            "name": "appIdentifier",
+            "type": "string",
+            "label": "Bundle ID",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc)"
+        },
+        {
             "name": "language",
             "type": "pickList",
             "label": "Primary Language",
@@ -128,14 +136,6 @@
                 "Production": "Production",
                 "TestFlight": "TestFlight"
             }
-        },
-        {
-            "name": "shouldCreateAppStoreEntry",
-            "type": "boolean",
-            "label": "Create App Store Entry",
-            "required": false,
-            "defaultValue": false,
-            "helpMarkDown": "Checking this box will attempt to create the app listing in iTunes Connect for you."
         },
         {
             "name": "shouldSubmitForReview",
