@@ -14,7 +14,7 @@ if (authType === "ServiceEndpoint") {
     credentials.password = taskLibrary.getInput("password", true);
 }
 
-var ipaPath = taskLibrary.getPathInput("ipaPath", true);
+var ipaPath = "\"" + taskLibrary.getPathInput("ipaPath", true) + "\"";
 var languageString = taskLibrary.getInput("language", true);
 var releaseNotes = taskLibrary.getInput("releaseNotes", false);
 var releaseTrack = taskLibrary.getInput("releaseTrack", true);
