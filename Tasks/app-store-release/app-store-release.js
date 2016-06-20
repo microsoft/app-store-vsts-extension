@@ -23,6 +23,7 @@ var shouldSubmitForReview = taskLibrary.getBoolInput("shouldSubmitForReview", fa
 var shouldAutoRelease = taskLibrary.getBoolInput("shouldAutoRelease", false);
 var shouldSkipSubmission = taskLibrary.getBoolInput("shouldSkipSubmission", false);
 var shouldDownloadScreenshots = taskLibrary.getBoolInput("shouldDownloadScreenshots", false);
+var shouldInitializeWithAppStoreMetadata = taskLibrary.getBoolInput("shouldInitializeWithAppStoreMetadata", false);
 var teamId = taskLibrary.getInput("teamId", false);
 var teamName = taskLibrary.getInput("teamName", false);
 var bundleIdentifier = taskLibrary.getInput("appIdentifier", true);
@@ -64,7 +65,7 @@ try {
             var deliverPromise = Q(0);
             // Setting up arguments for initializing deliver command
             // See https://github.com/fastlane/deliver for more information on these arguments
-            var deliverArgs = ["init", "-u", credentials.username, "-a", bundleIdentifier, "-i", ipaPath];
+            var deliverArgs = ["--force", "-u", credentials.username, "-a", bundleIdentifier, "-i", ipaPath];
 
             if (shouldSubmitForReview) {
                 deliverArgs.push("--submit_for_review");
@@ -76,6 +77,12 @@ try {
                 deilverArgs.push("true");
             }
 
+            if (shouldInitializeWithAppStoreMetadata) {
+                deliverPromise = deliverPromise.then(function () {
+                    return runCommand("deliver", ["init", "-u", credentials.username, "-a", bundleIdentifier]);
+                })
+            }
+
             if (shouldDownloadScreenshots) {
                 deliverPromise = deliverPromise.then(function () {
                     return runCommand("deliver", ["download_screenshots", "-u", credentials.username, "-a", bundleIdentifier]);
@@ -83,11 +90,9 @@ try {
             }
             // First, try to pull screenshots from itunes connect
             return deliverPromise.then(function () {
-                return runCommand("deliver", deliverArgs).then(function () {
-                    return runCommand("deliver", ["--force", "-i", ipaPath]).fail(function (err) {
-                        taskLibrary.setResult(1, err.message);
-                        throw err;
-                    });
+                return runCommand("deliver", deliverArgs).fail(function (err) {
+                    taskLibrary.setResult(1, err.message);
+                    throw err;
                 });
             });
         }).fail(function (err) {

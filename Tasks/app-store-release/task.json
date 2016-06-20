@@ -156,12 +156,21 @@
             "visibleRule": "releaseTrack = Production"
         },
         {
+            "name": "shouldInitializeWithAppStoreMetadata",
+            "type": "boolean",
+            "label": "Download Metadata from App Store Listing",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Checking this box will download all metadata from iTunes Connect for this app listing before uploading.",
+            "visibleRule": "releaseTrack = Production"
+        },
+        {
             "name": "shouldDownloadScreenshots",
             "type": "boolean",
             "label": "Download Screenshots",
             "required": false,
             "defaultValue": false,
-            "helpMarkDown": "Checking this box will download your screenshots from iTunes Connect before uploading.",
+            "helpMarkDown": "Checking this box will download only your screenshots from iTunes Connect before uploading.",
             "visibleRule": "releaseTrack = Production"
         },
         {
