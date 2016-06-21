@@ -22,7 +22,6 @@ var shouldSkipWaitingForProcessing = taskLibrary.getBoolInput("shouldSkipWaiting
 var shouldSubmitForReview = taskLibrary.getBoolInput("shouldSubmitForReview", false);
 var shouldAutoRelease = taskLibrary.getBoolInput("shouldAutoRelease", false);
 var shouldSkipSubmission = taskLibrary.getBoolInput("shouldSkipSubmission", false);
-var shouldDownloadScreenshots = taskLibrary.getBoolInput("shouldDownloadScreenshots", false);
 var shouldInitializeWithAppStoreMetadata = taskLibrary.getBoolInput("shouldInitializeWithAppStoreMetadata", false);
 var teamId = taskLibrary.getInput("teamId", false);
 var teamName = taskLibrary.getInput("teamName", false);
@@ -69,12 +68,12 @@ try {
 
             if (shouldSubmitForReview) {
                 deliverArgs.push("--submit_for_review");
-                deilverArgs.push("true");
+                deliverArgs.push("true");
             }
 
             if (shouldAutoRelease) {
                 deliverArgs.push("--automatic_release");
-                deilverArgs.push("true");
+                deliverArgs.push("true");
             }
 
             if (shouldInitializeWithAppStoreMetadata) {
@@ -83,11 +82,6 @@ try {
                 })
             }
 
-            if (shouldDownloadScreenshots) {
-                deliverPromise = deliverPromise.then(function () {
-                    return runCommand("deliver", ["download_screenshots", "-u", credentials.username, "-a", bundleIdentifier]);
-                })
-            }
             // First, try to pull screenshots from itunes connect
             return deliverPromise.then(function () {
                 return runCommand("deliver", deliverArgs).fail(function (err) {

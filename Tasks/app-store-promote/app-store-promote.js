@@ -35,17 +35,7 @@ process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
 // Add bin of new gem home so we don't ahve to resolve it later;
 process.env['PATH'] = process.env['PATH'] + ":" + gemCache + path.sep + "bin";
 
-return installRubyGem("deliver").then(function() {
-    // See https://github.com/fastlane/deliver for more information on these arguments
-    var args = [];
-    args.push("download_screenshots");
-    args.push("-u");
-    args.push(credentials.username);
-    args.push("-a");
-    args.push(appIdentifier);
-
-    return runCommand("deliver", args);
-}).then(function() {
+return installRubyGem("deliver").then(function () {
     // See https://github.com/fastlane/deliver for more information on these arguments
     var args = [];
     args.push("submit_build")
@@ -75,7 +65,7 @@ return installRubyGem("deliver").then(function() {
 
     args.push("--force");
     return runCommand("deliver", args);
-}).fail(function(err) {
+}).fail(function (err) {
     console.log("global error catch");
     taskLibrary.setResult(1, err.message);
     process.exit(1);
@@ -98,7 +88,7 @@ function installRubyGem(packageName, localPath) {
     }
 
     taskLibrary.debug("Attempting to install " + packageName + " to " + (localPath ? localPath : " default cache directory (" + process.env['GEM_HOME'] + ")"));
-    return command.exec().fail(function(err) {
+    return command.exec().fail(function (err) {
         taskLibrary.debug('taskRunner failed with error ' + err.message);
         throw err;
     });
@@ -113,13 +103,13 @@ function runCommand(commandString, args) {
     var command = new taskLibrary.ToolRunner(commandString);
 
     if (args) {
-        args.forEach(function(arg) {
+        args.forEach(function (arg) {
             taskLibrary.debug("Appending argument: " + arg);
             command.arg(arg);
         });
     }
 
-    return command.exec().fail(function(err) {
+    return command.exec().fail(function (err) {
         taskLibrary.debug('taskRunner failed with error ' + err.message);
         throw err;
     });
