@@ -60,23 +60,27 @@ In addition to the custom service endpoint, this extension also contributes the 
 
 Allows you to release updates to your iOS TestFlight beta app or production app on the App Store, and includes the following options:
 
-![Release task](/docs/images/release-task-with-advanced.png)
+![Release task](/images/release-task-with-advanced.png)
 
 1. **Username and Password** or **Service Endpoint** - The credentials used to authenticate with App Store. Credentials can be typed in directly or configured via a service endpoint that can be referenced from the task (via the `Service Endpoint` authentication method).
 
-2. **Primary Language** *(String, Required)* - Information from the primary language is used in case localized app information isn't available in an App Store territory.
+2. **Bundle ID** *(String, Required)* - Unique app identifier (e.g. com.myapp.etc).
 
-3. **IPA Path** *(File path, Required)* - Path to the IPA file you want to publish to the specified track.
+3. **Primary Language** *(String, Required)* - Information from the primary language is used in case localized app information isn't available in an App Store territory.
 
-4. **Release Notes** *(File path)* - Path to the file specifying the release notes for the IPA you are publishing.
+4. **IPA Path** *(File path, Required)* - Path to the IPA file you want to publish to the specified track.
 
-5. **Track** *(String, Required)* - Release track to publish the IPA to (e.g. `TestFlight`  or `Production` ).
+5. **Release Notes** *(File path)* - Path to the file specifying the release notes for the IPA you are publishing.
 
-6. **Skip Submission** *(Checkbox)* - Check to upload a beta app without distributing to testers.
+6. **Track** *(String, Required)* - Release track to publish the IPA to (e.g. `TestFlight`  or `Production` ).
 
-7. **Submit for Review** *(Checkbox)* - Check to automatically submit the IPA for review once the upload completes.
+7. **Skip Submission** *(Checkbox)* - Check to upload a beta app without distributing to testers.
 
-8. **Release Automatically** *(Checkbox)* - Check to automatically release the app once the approval process is completed.
+8. **Submit for Review** *(Checkbox)* - Check to automatically submit the IPA for review once the upload completes.
+
+9. **Release Automatically** *(Checkbox)* - Check to automatically release the app once the approval process is completed.
+
+10. **Download Screenshots** *(Checkbox)* - Check to download available screenshots from iTunes Connect and use them to replace any local screenshot before uploading the package.
 
 #### Advanced Options
 
@@ -88,7 +92,7 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 Allows you to promote an app previously updated to Itunes Connect to the App Store, and includes the following options:
 
-![Release task](/docs/images/release-task-with-advanced.png)
+![Release task](/images/release-task-with-advanced.png)
 
 1. **Username and Password** or **Service Endpoint** - The credentials used to authenticate with App Store. Credentials can be typed in directly or configured via a service endpoint that can be referenced from the task (via the `Service Endpoint` authentication method).
 

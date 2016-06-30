@@ -14,7 +14,7 @@
     "version": {
         "Major": "0",
         "Minor": "0",
-        "Patch": "22"
+        "Patch": "28"
     },
     "minimumAgentVersion": "1.83.0",
     "instanceNameFormat": "Publish $(appPath) to the App Store $(releaseTrack)",
@@ -143,7 +143,7 @@
             "label": "Submit for Review",
             "required": false,
             "defaultValue": false,
-            "helpMarkDown": "Checking this box will submit the new version for review after everything is uploaded.",
+            "helpMarkDown": "Automatically submit the new version for review after the upload is completed.",
             "visibleRule": "releaseTrack = Production"
         },
         {
@@ -152,7 +152,7 @@
             "label": "Release Automatically",
             "required": false,
             "defaultValue": false,
-            "helpMarkDown": "Checking this box will automatically release the app once it is approved.",
+            "helpMarkDown": "Automatically release the app once it is approved.",
             "visibleRule": "releaseTrack = Production"
         },
         {
@@ -161,7 +161,7 @@
             "label": "Download Metadata from App Store Listing",
             "required": false,
             "defaultValue": false,
-            "helpMarkDown": "Checking this box will download all metadata from iTunes Connect for this app listing before uploading.",
+            "helpMarkDown": "Download all metadata from iTunes Connect for this app listing before uploading.",
             "visibleRule": "releaseTrack = Production"
         },
         {
@@ -170,7 +170,7 @@
             "label": "Skip Build Processing Wait",
             "required": false,
             "defaultValue": false,
-            "helpMarkDown": "Checking this box will skip the waiting for the build processing to finish",
+            "helpMarkDown": "Skip the wait time required to finish the build processing",
             "visibleRule": "releaseTrack = TestFlight"
         },
         {
@@ -179,9 +179,9 @@
             "label": "Skip Submission",
             "required": false,
             "defaultValue": false,
-            "helpMarkDown": "Checking this box will upload your ipa but not distribute to tester.",
+            "helpMarkDown": "Upload the ipa but don't distribute it to tester.",
             "visibleRule": "releaseTrack = TestFlight"
-        },
+        },        
         {
             "name": "teamId",
             "type": "string",
