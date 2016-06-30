@@ -14,7 +14,7 @@
     "version": {
         "Major": "0",
         "Minor": "0",
-        "Patch": "28"
+        "Patch": "29"
     },
     "minimumAgentVersion": "1.83.0",
     "instanceNameFormat": "Publish $(appPath) to the App Store $(releaseTrack)",
@@ -64,6 +64,14 @@
             "required": true,
             "helpMarkDown": "The password of the account with which to publish to the Apple App Store.",
             "visibleRule": "authType = UserAndPass"
+        },
+        {
+            "name": "appIdentifier",
+            "type": "string",
+            "label": "Bundle ID",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc)"
         },
         {
             "name": "language",
@@ -148,6 +156,15 @@
             "visibleRule": "releaseTrack = Production"
         },
         {
+            "name": "shouldInitializeWithAppStoreMetadata",
+            "type": "boolean",
+            "label": "Download Metadata from App Store Listing",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Download all metadata from iTunes Connect for this app listing before uploading.",
+            "visibleRule": "releaseTrack = Production"
+        },
+        {
             "name": "shouldSkipWaitingForProcessing",
             "type": "boolean",
             "label": "Skip Build Processing Wait",
@@ -164,7 +181,7 @@
             "defaultValue": false,
             "helpMarkDown": "Upload the ipa but don't distribute it to tester.",
             "visibleRule": "releaseTrack = TestFlight"
-        },
+        },        
         {
             "name": "teamId",
             "type": "string",
