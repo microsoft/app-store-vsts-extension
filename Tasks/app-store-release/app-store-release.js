@@ -15,6 +15,8 @@ if (authType === "ServiceEndpoint") {
 }
 
 var ipaPath = "\"" + taskLibrary.getPathInput("ipaPath", true) + "\"";
+var metadataPath = taskLibrary.getPathInput("metadataPath", false);
+var screenshotsPath = taskLibrary.getPathInput("screenshotsPath", false);
 var languageString = taskLibrary.getInput("language", true);
 var releaseNotes = taskLibrary.getInput("releaseNotes", false);
 var releaseTrack = taskLibrary.getInput("releaseTrack", true);
@@ -65,6 +67,16 @@ try {
             // Setting up arguments for initializing deliver command
             // See https://github.com/fastlane/deliver for more information on these arguments
             var deliverArgs = ["--force", "-u", credentials.username, "-a", bundleIdentifier, "-i", ipaPath];
+
+            if (metadataPath) {
+                deliverArgs.push("-m");
+                deliverArgs.push("\"" + metadataPath + "\"")
+            }
+
+            if (screenshotsPath) {
+                deliverArgs.push("-w");
+                deliverArgs.push("\"" + screenshotsPath + "\"")
+            }
 
             if (shouldSubmitForReview) {
                 deliverArgs.push("--submit_for_review");

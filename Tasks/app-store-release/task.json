@@ -165,6 +165,24 @@
             "visibleRule": "releaseTrack = Production"
         },
         {
+            "name": "metadataPath",
+            "type": "filePath",
+            "label": "Metadata Path",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Path to the Metdata to publish",
+            "visibleRule": "releaseTrack = Production"
+        },
+        {
+            "name": "screenshotsPath",
+            "type": "filePath",
+            "label": "Screenshots Path",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Path to the Screenshots to publish",
+            "visibleRule": "releaseTrack = Production"
+        },
+        {
             "name": "shouldSkipWaitingForProcessing",
             "type": "boolean",
             "label": "Skip Build Processing Wait",
@@ -181,7 +199,7 @@
             "defaultValue": false,
             "helpMarkDown": "Upload the ipa but don't distribute it to tester.",
             "visibleRule": "releaseTrack = TestFlight"
-        },        
+        },
         {
             "name": "teamId",
             "type": "string",
