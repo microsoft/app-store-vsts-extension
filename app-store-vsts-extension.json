@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "app-store-vsts-extension",
     "name": "Apple App Store",
-    "version": "0.0.29",
+    "version": "0.0.30",
     "publisher": "ms-vsclient",
     "description": "Provides build/release tasks that enable performing continuous delivery to Apple's App Store from an automated VSTS build or release definition",
     "categories": [
@@ -22,7 +22,7 @@
     "content":{
         "details": {
             "path": "docs/vsts-README.md"
-        },        
+        },
         "thirdpartynotice": {
             "path": "ThirdPartyNotices.txt"
         }
@@ -37,7 +37,7 @@
         {
             "path": "images",
             "addressable": true
-        }        
+        }
     ],
     "scope": [
         "vso.build",
