@@ -118,14 +118,6 @@
             "helpMarkDown": "Path to the IPA to publish"
         },
         {
-            "name": "releaseNotes",
-            "type": "filePath",
-            "label": "Release Notes",
-            "defaultValue": "",
-            "required": false,
-            "helpMarkDown": "Path to file containing release notes for this release"
-        },
-        {
             "name": "releaseTrack",
             "type": "pickList",
             "label": "Track",
@@ -180,6 +172,15 @@
             "required": false,
             "helpMarkDown": "Path to the Screenshots to publish",
             "visibleRule": "releaseTrack = Production"
+        },
+        {
+            "name": "releaseNotes",
+            "type": "filePath",
+            "label": "What to Test?",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Path to file containing notes on what to test for this release",
+            "visibleRule": "releaseTrack = TestFlight"
         },
         {
             "name": "shouldSkipWaitingForProcessing",
