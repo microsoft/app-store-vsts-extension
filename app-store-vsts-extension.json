@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "app-store-vsts-extension",
     "name": "Apple App Store",
-    "version": "0.0.30",
+    "version": "0.0.31",
     "publisher": "ms-vsclient",
     "description": "Provides build/release tasks that enable performing continuous delivery to Apple's App Store from an automated VSTS build or release definition",
     "categories": [
@@ -91,7 +91,7 @@
                                 "id": "password",
                                 "name": "Password",
                                 "description": "Password for account that is publishing to the Apple App Store",
-                                "inputMode": "textbox",
+                                "inputMode": "passwordbox",
                                 "isConfidential": true,
                                 "validation": {
                                     "isRequired": true,

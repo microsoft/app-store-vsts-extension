@@ -1,6 +1,13 @@
 var path = require('path');
 var Q = require('q');
 var taskLibrary = require('vsts-task-lib');
+var os = require('os');
+
+//check if this is running on Mac and fail the task if not
+if(os.platform() !== 'darwin') {
+    console.log('App store release can only be run from a Mac computer.');
+    tl.exit(1);
+}
 
 // Get input variables
 var authType = taskLibrary.getInput('authType', false);
