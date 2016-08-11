@@ -1,6 +1,14 @@
+var fs = require('fs');
+var os = require('os');
 var path = require('path');
 var Q = require('q');
 var taskLibrary = require('vsts-task-lib');
+
+//check if this is running on Mac and fail the task if not
+if(os.platform() !== 'darwin') {
+    taskLibrary.setResult(1, 'App store release can only be run from a Mac computer.');
+    taskLibrary.exit(1);
+}
 
 // Get input variables
 var authType = taskLibrary.getInput('authType', false);
@@ -39,10 +47,18 @@ process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
 process.env['PATH'] = process.env['PATH'] + ":" + gemCache + path.sep + "bin";
 
 try {
+
     if (releaseTrack === "TestFlight") {
         installRubyGem("pilot").then(function () {
             var pilotArgs = ["upload", "-u", credentials.username, "-i", ipaPath];
-
+            
+            //set the "what to test?"
+            var stats = fs.statSync(releaseNotes);
+            if(stats && stats.isFile()) {
+                pilotArgs.push("--changelog");
+                pilotArgs.push("\"" + fs.readFileSync(releaseNotes).toString() + "\"");
+            }
+            
             if (shouldSkipSubmission) {
                 pilotArgs.push("--skip_submission");
                 pilotArgs.push("true");

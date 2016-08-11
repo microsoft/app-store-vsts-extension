@@ -1,10 +1,9 @@
 {
     "id": "2e371150-da5e-11e5-83da-0943b1acc572",
-    "name": "app-store-release",
+    "name": "AppStoreRelease",
     "friendlyName": "App Store Release",
     "description": "VSTS Task to release your build ios app to the Apple Store",
     "author": "Microsoft Corporation",
-    "helpMarkDown": "Replace with markdown to show in help",
     "category": "Deploy",
     "visibility": [
         "Build",
@@ -14,7 +13,7 @@
     "version": {
         "Major": "0",
         "Minor": "0",
-        "Patch": "30"
+        "Patch": "31"
     },
     "minimumAgentVersion": "1.83.0",
     "instanceNameFormat": "Publish $(appPath) to the App Store $(releaseTrack)",
@@ -119,14 +118,6 @@
             "helpMarkDown": "Path to the IPA to publish"
         },
         {
-            "name": "releaseNotes",
-            "type": "filePath",
-            "label": "Release Notes",
-            "defaultValue": "",
-            "required": false,
-            "helpMarkDown": "Path to file containing release notes for this release"
-        },
-        {
             "name": "releaseTrack",
             "type": "pickList",
             "label": "Track",
@@ -183,6 +174,15 @@
             "visibleRule": "releaseTrack = Production"
         },
         {
+            "name": "releaseNotes",
+            "type": "filePath",
+            "label": "What to Test?",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Path to file containing notes on what to test for this release",
+            "visibleRule": "releaseTrack = TestFlight"
+        },
+        {
             "name": "shouldSkipWaitingForProcessing",
             "type": "boolean",
             "label": "Skip Build Processing Wait",
@@ -221,11 +221,6 @@
         "Node": {
             "target": "app-store-release.js",
             "argumentFormat": ""
-        },
-        "PowerShell": {
-            "target": "$(currentDirectory)\\app-store-release.ps1",
-            "argumentFormat": "",
-            "workingDirectory": "$(currentDirectory)"
         }
     }
 }

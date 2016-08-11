@@ -1,5 +1,12 @@
+var os = require('os');
 var path = require('path');
 var taskLibrary = require('vsts-task-lib');
+
+//check if this is running on Mac and fail the task if not
+if(os.platform() !== 'darwin') {
+    taskLibrary.setResult(1, 'App store promote can only be run from a Mac computer.');
+    taskLibrary.exit(1);
+}
 
 console.log("getting vars...");
 
