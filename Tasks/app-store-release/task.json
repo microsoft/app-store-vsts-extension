@@ -13,7 +13,7 @@
     "version": {
         "Major": "0",
         "Minor": "0",
-        "Patch": "32"
+        "Patch": "33"
     },
     "minimumAgentVersion": "1.83.0",
     "instanceNameFormat": "Publish $(appPath) to the App Store $(releaseTrack)",
@@ -144,15 +144,6 @@
             "required": false,
             "defaultValue": false,
             "helpMarkDown": "Automatically release the app once it is approved.",
-            "visibleRule": "releaseTrack = Production"
-        },
-        {
-            "name": "shouldInitializeWithAppStoreMetadata",
-            "type": "boolean",
-            "label": "Download Metadata from App Store Listing",
-            "required": false,
-            "defaultValue": false,
-            "helpMarkDown": "Download all metadata from iTunes Connect for this app listing before uploading.",
             "visibleRule": "releaseTrack = Production"
         },
         {

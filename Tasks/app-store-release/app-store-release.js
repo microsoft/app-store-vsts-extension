@@ -32,7 +32,6 @@ var shouldSkipWaitingForProcessing = taskLibrary.getBoolInput("shouldSkipWaiting
 var shouldSubmitForReview = taskLibrary.getBoolInput("shouldSubmitForReview", false);
 var shouldAutoRelease = taskLibrary.getBoolInput("shouldAutoRelease", false);
 var shouldSkipSubmission = taskLibrary.getBoolInput("shouldSkipSubmission", false);
-var shouldInitializeWithAppStoreMetadata = taskLibrary.getBoolInput("shouldInitializeWithAppStoreMetadata", false);
 var teamId = taskLibrary.getInput("teamId", false);
 var teamName = taskLibrary.getInput("teamName", false);
 var bundleIdentifier = taskLibrary.getInput("appIdentifier", true);
@@ -79,7 +78,6 @@ try {
         });
     } else if (releaseTrack === "Production") {
         installRubyGem("deliver").then(function () {
-            var deliverPromise = Q(0);
             // Setting up arguments for initializing deliver command
             // See https://github.com/fastlane/deliver for more information on these arguments
             var deliverArgs = ["--force", "-u", credentials.username, "-a", bundleIdentifier, "-i", ipaPath];
@@ -104,19 +102,7 @@ try {
                 deliverArgs.push("true");
             }
 
-            if (shouldInitializeWithAppStoreMetadata) {
-                deliverPromise = deliverPromise.then(function () {
-                    return runCommand("deliver", ["init", "-u", credentials.username, "-a", bundleIdentifier]);
-                })
-            }
-
-            // First, try to pull screenshots from itunes connect
-            return deliverPromise.then(function () {
-                return runCommand("deliver", deliverArgs).fail(function (err) {
-                    taskLibrary.setResult(1, err.message);
-                    throw err;
-                });
-            });
+            return runCommand("deliver", deliverArgs);
         }).fail(function (err) {
             taskLibrary.setResult(1, err.message);
             throw err;
