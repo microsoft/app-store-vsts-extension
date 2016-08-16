@@ -52,8 +52,7 @@ try {
             var pilotArgs = ["upload", "-u", credentials.username, "-i", ipaPath];
             
             //set the "what to test?"
-            var stats = fs.statSync(releaseNotes);
-            if(stats && stats.isFile()) {
+            if(isValidFilePath(releaseNotes)) {
                 pilotArgs.push("--changelog");
                 pilotArgs.push("\"" + fs.readFileSync(releaseNotes).toString() + "\"");
             }
@@ -69,11 +68,11 @@ try {
             }
 
             return runCommand("pilot", pilotArgs).fail(function (err) {
-                taskLibrary.setResult(1, err.message);
+                taskLibrary.setResult(1, err);
                 throw err;
             });
         }).fail(function (err) {
-            taskLibrary.setResult(1, err.message);
+            taskLibrary.setResult(1, err);
             throw err;
         });
     } else if (releaseTrack === "Production") {
@@ -104,12 +103,12 @@ try {
 
             return runCommand("deliver", deliverArgs);
         }).fail(function (err) {
-            taskLibrary.setResult(1, err.message);
+            taskLibrary.setResult(1, err);
             throw err;
         });
     }
 } catch (err) {
-    taskLibrary.setResult(1, err.message);
+    taskLibrary.setResult(1, err);
     throw err;
 }
 
@@ -131,7 +130,7 @@ function installRubyGem(packageName, localPath) {
 
     taskLibrary.debug("Attempting to install " + packageName + " to " + (localPath ? localPath : " default cache directory (" + process.env['GEM_HOME'] + ")"));
     return command.exec().fail(function (err) {
-        taskLibrary.debug('taskRunner failed with error ' + err.message);
+        taskLibrary.debug('taskRunner failed with error ' + err);
         throw err;
     });
 }
@@ -152,7 +151,15 @@ function runCommand(commandString, args) {
     }
 
     return command.exec().fail(function (err) {
-        taskLibrary.debug('taskRunner failed with message: ' + err.message);
+        taskLibrary.debug('taskRunner failed with message: ' + err);
         throw err;
     });
+}
+
+function isValidFilePath(filePath) {
+    try {
+        return fs.statSync(filePath).isFile();
+    } catch (error) {
+        return false;
+    }
 }
