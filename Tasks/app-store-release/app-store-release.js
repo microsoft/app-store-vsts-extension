@@ -23,9 +23,11 @@ if (authType === "ServiceEndpoint") {
 }
 
 var ipaPath = "\"" + taskLibrary.getPathInput("ipaPath", true) + "\"";
+var skipBinaryUpload = taskLibrary.getBoolInput("skipBinaryUpload");
+var uploadMetadata = taskLibrary.getBoolInput("uploadMetadata");
 var metadataPath = taskLibrary.getPathInput("metadataPath", false);
+var uploadScreenshots = taskLibrary.getBoolInput("uploadScreenshots");
 var screenshotsPath = taskLibrary.getPathInput("screenshotsPath", false);
-var languageString = taskLibrary.getInput("language", true);
 var releaseNotes = taskLibrary.getInput("releaseNotes", false);
 var releaseTrack = taskLibrary.getInput("releaseTrack", true);
 var shouldSkipWaitingForProcessing = taskLibrary.getBoolInput("shouldSkipWaitingForProcessing", false);
@@ -81,14 +83,22 @@ try {
             // See https://github.com/fastlane/deliver for more information on these arguments
             var deliverArgs = ["--force", "-u", credentials.username, "-a", bundleIdentifier, "-i", ipaPath];
 
-            if (metadataPath) {
-                deliverArgs.push("-m");
-                deliverArgs.push("\"" + metadataPath + "\"")
+            if (skipBinaryUpload) {
+                deliverArgs.push(["--skip_binary_upload", "true"]);
             }
 
-            if (screenshotsPath) {
+            if (uploadMetadata && metadataPath) {
+                deliverArgs.push("-m");
+                deliverArgs.push("\"" + metadataPath + "\"")
+            } else {
+                deliverArgs.push(["--skip_metadata", "true"]);
+            }
+
+            if (uploadScreenshots && screenshotsPath) {
                 deliverArgs.push("-w");
                 deliverArgs.push("\"" + screenshotsPath + "\"")
+            } else {
+                deliverArgs.push(["--skip_screenshots", "true"]);
             }
 
             if (shouldSubmitForReview) {

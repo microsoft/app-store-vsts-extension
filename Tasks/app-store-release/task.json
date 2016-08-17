@@ -2,7 +2,7 @@
     "id": "2e371150-da5e-11e5-83da-0943b1acc572",
     "name": "AppStoreRelease",
     "friendlyName": "App Store Release",
-    "description": "VSTS Task to release your build ios app to the Apple Store",
+    "description": "VSTS Task to release your ios app to the Apple Store",
     "author": "Microsoft Corporation",
     "category": "Deploy",
     "visibility": [
@@ -13,11 +13,16 @@
     "version": {
         "Major": "0",
         "Minor": "0",
-        "Patch": "34"
+        "Patch": "35"
     },
     "minimumAgentVersion": "1.83.0",
-    "instanceNameFormat": "Publish $(appPath) to the App Store $(releaseTrack)",
+    "instanceNameFormat": "Publish to the App Store $(releaseTrack)",
     "groups": [
+        {
+            "name": "releaseOptions",
+            "displayName": "Release Options",
+            "isExpanded": true
+        },
         {
             "name": "advanced",
             "displayName": "Advanced",
@@ -42,7 +47,7 @@
             "label": "Service Endpoint",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "The VSTS Service Endpoint that specifies the identiy you wish to publish your IPA under.",
+            "helpMarkDown": "The VSTS Service Endpoint that specifies the identity you wish to publish your app under.",
             "visibleRule": "authType = ServiceEndpoint"
         },
         {
@@ -70,52 +75,15 @@
             "label": "Bundle ID",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc)"
-        },
-        {
-            "name": "language",
-            "type": "pickList",
-            "label": "Primary Language",
-            "defaultValue": "English",
-            "helpMarkDown": "",
-            "options": {
-                "AustralianEnglish" :  "Australian English",
-                "BrazilianPortuguese" :  "Brazilian Portuguese",
-                "CanadianEnglish" :  "Canadian English",
-                "CanadianFrench" :  "Canadian French",
-                "Danish" :  "Danish",
-                "Dutch" :  "Dutch",
-                "English" :  "English",
-                "Finnish" :  "Finnish",
-                "French" :  "French",
-                "German" :  "German",
-                "Greek" :  "Greek",
-                "Indonesian" :  "Indonesian",
-                "Italian" :  "Italian",
-                "Japanese" :  "Japanese",
-                "Korean" :  "Korean",
-                "Malay" :  "Malay",
-                "MexicanSpanish" :  "Mexican Spanish",
-                "Norwegian" :  "Norwegian",
-                "Portuguese" :  "Portuguese",
-                "Russian" :  "Russian",
-                "SimplifiedChinese" :  "Simplified Chinese",
-                "Spanish" :  "Spanish",
-                "Swedish" :  "Swedish",
-                "Thai" :  "Thai",
-                "TraditionalChinese" :  "Traditional Chinese",
-                "Turkish" :  "Turkish",
-                "UKEnglish" :  "UK English",
-                "Vietnamese" :  "Vietnamese"
-            }
+            "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc)."
         },
         {
             "name": "ipaPath",
             "type": "filePath",
-            "label": "IPA Path",
+            "label": "Binary Path",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "Path to the IPA to publish"
+            "helpMarkDown": "Path to the binary to publish."
         },
         {
             "name": "releaseTrack",
@@ -126,7 +94,58 @@
             "options": {
                 "Production": "Production",
                 "TestFlight": "TestFlight"
-            }
+            },
+            "groupName": "releaseOptions"
+        },
+        {
+            "name": "skipBinaryUpload",
+            "type": "boolean",
+            "label": "Skip binary upload",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Select this option to skip binary upload and only update metadata and screenshots.",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = Production"
+        },
+        {
+            "name": "uploadMetadata",
+            "type": "boolean",
+            "label": "Upload Metadata",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Upload app metadata to the App Store (e.g. title, description, changelog).",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = Production"
+        },
+        {
+            "name": "metadataPath",
+            "type": "filePath",
+            "label": "Metadata Path",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Path to the Metadata to publish.",
+            "groupName": "releaseOptions",
+            "visibleRule": "uploadMetadata = true"
+        },
+        {
+            "name": "uploadScreenshots",
+            "type": "boolean",
+            "label": "Upload Screenshots",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Upload screenshots of the app to the App Store.",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = Production"
+        },
+        {
+            "name": "screenshotsPath",
+            "type": "filePath",
+            "label": "Screenshots Path",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Path to the Screenshots to publish.",
+            "groupName": "releaseOptions",
+            "visibleRule": "uploadScreenshots = true"
         },
         {
             "name": "shouldSubmitForReview",
@@ -135,6 +154,7 @@
             "required": false,
             "defaultValue": false,
             "helpMarkDown": "Automatically submit the new version for review after the upload is completed.",
+            "groupName": "releaseOptions",
             "visibleRule": "releaseTrack = Production"
         },
         {
@@ -144,24 +164,7 @@
             "required": false,
             "defaultValue": false,
             "helpMarkDown": "Automatically release the app once it is approved.",
-            "visibleRule": "releaseTrack = Production"
-        },
-        {
-            "name": "metadataPath",
-            "type": "filePath",
-            "label": "Metadata Path",
-            "defaultValue": "",
-            "required": false,
-            "helpMarkDown": "Path to the Metdata to publish",
-            "visibleRule": "releaseTrack = Production"
-        },
-        {
-            "name": "screenshotsPath",
-            "type": "filePath",
-            "label": "Screenshots Path",
-            "defaultValue": "",
-            "required": false,
-            "helpMarkDown": "Path to the Screenshots to publish",
+            "groupName": "releaseOptions",
             "visibleRule": "releaseTrack = Production"
         },
         {
@@ -170,7 +173,8 @@
             "label": "What to Test?",
             "defaultValue": "",
             "required": false,
-            "helpMarkDown": "Path to file containing notes on what to test for this release",
+            "helpMarkDown": "Path to the file containing notes on what to test for this release.",
+            "groupName": "releaseOptions",
             "visibleRule": "releaseTrack = TestFlight"
         },
         {
@@ -179,7 +183,8 @@
             "label": "Skip Build Processing Wait",
             "required": false,
             "defaultValue": false,
-            "helpMarkDown": "Skip the wait time required to finish the build processing",
+            "helpMarkDown": "Skip the wait time required to finish the build processing.",
+            "groupName": "releaseOptions",
             "visibleRule": "releaseTrack = TestFlight"
         },
         {
@@ -188,7 +193,8 @@
             "label": "Skip Submission",
             "required": false,
             "defaultValue": false,
-            "helpMarkDown": "Upload the ipa but don't distribute it to tester.",
+            "helpMarkDown": "Upload the ipa but don't distribute it to the testers.",
+            "groupName": "releaseOptions",
             "visibleRule": "releaseTrack = TestFlight"
         },
         {
@@ -197,7 +203,7 @@
             "label": "Team Id",
             "required": false,
             "groupName": "advanced",
-            "helpMarkDown": "The id of your team if you are in multiple teams"
+            "helpMarkDown": "The id of your team if you are in multiple teams."
         },
         {
             "name": "teamName",
@@ -205,7 +211,7 @@
             "label": "Team Name",
             "required": false,
             "groupName": "advanced",
-            "helpMarkDown": "The name of your team if you are in multiple teams"
+            "helpMarkDown": "The name of your team if you are in multiple teams."
         }
     ],
     "execution": {
