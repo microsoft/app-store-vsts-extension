@@ -34,7 +34,8 @@ async function run() {
         }
 
         var appIdentifier = tl.getInput('appIdentifier', true);
-        var buildNumber = tl.getInput('buildNumber', true);
+        var chooseBuild = tl.getInput('chooseBuild', true);
+        var buildNumber = tl.getInput('buildNumber');
         var shouldAutoRelease = tl.getBoolInput('shouldAutoRelease', false);
         var teamId = tl.getInput('teamId', false);
         var teamName = tl.getInput('teamName', false);
@@ -64,7 +65,7 @@ async function run() {
         // See https://github.com/fastlane/deliver for more information on these arguments
         var deliverCommand : ToolRunner = tl.tool('deliver');
         deliverCommand.arg(['submit_build', '-u', credentials.username, '-a', appIdentifier]);
-        if (buildNumber.toLowerCase() !== 'latest') {
+        if (chooseBuild.toLowerCase() === 'specify') {
            deliverCommand.arg(['-n', buildNumber]);     
         }
         deliverCommand.arg(['--skip_binary_upload', 'true', '--skip_metadata', 'true', '--skip_screenshots', 'true']);
@@ -75,7 +76,7 @@ async function run() {
 
         await deliverCommand.exec();
  
-        tl.setResult(tl.TaskResult.Succeeded, 'Build ' + buildNumber + ' successfully promoted.');
+        tl.setResult(tl.TaskResult.Succeeded, 'Build successfully submitted for review.');
     }
     catch (err) {
         tl.setResult(tl.TaskResult.Failed, err);
