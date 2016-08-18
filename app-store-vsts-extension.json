@@ -1,12 +1,19 @@
 {
     "manifestVersion": 1,
-    "id": "app-store-vsts-extension",
+    "id": "app-store",
     "name": "Apple App Store",
-    "version": "0.0.36",
+    "version": "1.0.0",
     "publisher": "ms-vsclient",
-    "description": "Provides build/release tasks that enable performing continuous delivery to Apple's App Store from an automated VSTS build or release definition",
+    "description": "Provides build/release tasks that enable performing continuous delivery to Apple's App Store from a VSTS build or release definition",
     "categories": [
         "Build and release"
+    ],
+    "tags": [
+        "deploy",
+        "release",
+        "Apple",
+        "App Store",
+        "iTunes Connect"
     ],
     "targets": [
         {
@@ -25,6 +32,14 @@
         },
         "thirdpartynotice": {
             "path": "ThirdPartyNotices.txt"
+        }
+    },
+    "links": {
+        "getstarted": {
+            "uri": "https://github.com/microsoft/app-store-vsts-extension/"
+        },
+        "support": {
+            "uri": "https://github.com/microsoft/app-store-vsts-extension/issues"
         }
     },
     "files": [
@@ -79,7 +94,7 @@
                             {
                                 "id": "username",
                                 "name": "App Store E-mail",
-                                "description": "The e-mail address of the service account used to authenticate with the Apple App Store",
+                                "description": "The e-mail address of the service account used to authenticate with the Apple App Store.",
                                 "inputMode": "textbox",
                                 "isConfidential": false,
                                 "validation": {
@@ -90,7 +105,7 @@
                             {
                                 "id": "password",
                                 "name": "Password",
-                                "description": "Password for account that is publishing to the Apple App Store",
+                                "description": "Password for the account that is publishing to the Apple App Store.",
                                 "inputMode": "passwordbox",
                                 "isConfidential": true,
                                 "validation": {

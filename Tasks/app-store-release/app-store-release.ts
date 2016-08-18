@@ -32,9 +32,9 @@ async function run() {
         var authType: string = tl.getInput('authType', false);
         var credentials : UserCredentials = new UserCredentials();
         if (authType === 'ServiceEndpoint') {
-            var serviceEndpoint = tl.getInput('serviceEndpoint', true); 
-            credentials.username = tl.getEndpointAuthorizationParameter(serviceEndpoint, 'username', true);
-            credentials.password = tl.getEndpointAuthorizationParameter(serviceEndpoint, 'password', true);
+            var serviceEndpoint = tl.getEndpointAuthorization(tl.getInput('serviceEndpoint', true), false); 
+            credentials.username = serviceEndpoint.parameters['username'];
+            credentials.password = serviceEndpoint.parameters['password'];
         } else if (authType == 'UserAndPass') {
             credentials.username = tl.getInput('username', true);
             credentials.password = tl.getInput('password', true);
