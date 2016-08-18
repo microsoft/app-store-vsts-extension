@@ -13,10 +13,9 @@
     "version": {
         "Major": "0",
         "Minor": "0",
-        "Patch": "32"
+        "Patch": "33"
     },
-    "minimumAgentVersion": "1.83.0",
-    "instanceNameFormat": "Submit build $(buildNumber) of $(appIdentifier) to the App Store for review",
+    "instanceNameFormat": "Submit $(buildNumber) build to the App Store for review",
     "groups": [
         {
             "name": "advanced",
