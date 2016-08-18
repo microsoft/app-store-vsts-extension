@@ -1,2 +1,5 @@
 node_modules
+typings
+[Tt]asks/**/*.js
+[Tt]asks/**/*.js.map
 *.vsix

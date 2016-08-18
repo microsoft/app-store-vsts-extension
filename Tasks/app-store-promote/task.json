@@ -13,10 +13,9 @@
     "version": {
         "Major": "0",
         "Minor": "0",
-        "Patch": "32"
+        "Patch": "34"
     },
-    "minimumAgentVersion": "1.83.0",
-    "instanceNameFormat": "Submit build $(buildNumber) of $(appIdentifier) to the App Store for review",
+    "instanceNameFormat": "Submit a build to the App Store for review",
     "groups": [
         {
             "name": "advanced",
@@ -73,17 +72,27 @@
             "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc)"
         },
         {
-            "name": "buildNumber",
+            "name": "chooseBuild",
             "type": "pickList",
-            "label": "Build Number",
+            "label": "Choose Build",
             "defaultValue": "Latest",
             "helpMarkDown": "",
             "options": {
-                "Latest": "Latest"
+                "Latest": "Latest",
+                "Specify": "Specify build number"
             },
             "properties":  {
                 "EditableOptions": "True"
             }
+        },
+        {
+            "name": "buildNumber",
+            "type": "string",
+            "label": "Build Number",
+            "defaultValue": "",
+            "required": true,
+            "visibleRule": "chooseBuild = Specify",
+            "helpMarkDown": "The build number you wish to submit for your app for review in the App Store."
         },
         {
             "name": "shouldAutoRelease",

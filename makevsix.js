@@ -43,6 +43,9 @@ if (! exec("npm --version", {silent: true})) {
     exit(1);
 }
 
+if (exec('tsc --version', {silent: true}).code != 0)
+    echoAndExec("tsc not found. installing", "npm install -g typescript");
+
 if (exec('tfx --version', {silent: true}).code != 0)
     echoAndExec("tfx-cli not found. installing", "npm install -g tfx-cli");
 
@@ -83,7 +86,7 @@ function toOverrideString(object) {
 }
 
 function installTasks() {
-    echo("Installing task dependencies...");
+    echo("Installing task dependencies and compiling tasks...");
 
     var rootPath = process.cwd(); 
     var tasksPath = path.join(rootPath, 'Tasks');
@@ -96,6 +99,13 @@ function installTasks() {
         console.log('Installing npm dependencies for task...');
         if (exec('npm install --only=prod').code != 0) {
             console.log('npm install for task ' + task + ' failed');
+            exit(1);
+        }
+
+        //compile the task
+        console.log('Compiling task...');
+        if (exec('tsc').code != 0) {
+            console.log('Compilation for task ' + task + ' failed');
             exit(1);
         }
     });
