@@ -1,16 +1,30 @@
 {
   "name": "app-store-release",
   "version": "0.0.1",
-  "description": "",
+  "description": "VSTS task to publish your apps to the Apple App Store",
   "main": "app-store-release.js",
   "dependencies": {
-    "ipa-metadata": "^1.4.0",
-    "vsts-task-lib": "^0.5.10"
+    "vsts-task-lib": "^0.9.7"
   },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Microsoft Corporation",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Microsoft/app-store-vsts-extension.git"
+  },
+  "keywords": [
+    "VSTS",
+    "Apple",
+    "AppStore",
+    "Release",
+    "Build"
+  ],
+  "bugs": {
+    "url": "https://github.com/Microsoft/app-store-vsts-extension/issues"
+  },
+  "homepage": "https://github.com/Microsoft/app-store-vsts-extension#readme"
 }
