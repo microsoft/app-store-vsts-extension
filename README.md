@@ -2,7 +2,7 @@
 <td width="140px" style="text-align: center;"><img src="apple_default.png" style="max-width:100%" /></td>
 <td><strong>Visual Studio Team Services Extension for the App Store</strong><br />
 <i>Provides build/release tasks that enable performing continuous delivery to Apple's App Store from an automated VSTS build or release definition</i><br />
-<a href="#">Install now!</a>
+<a href="https://marketplace.visualstudio.com/items/ms-vsclient.app-store">Install now!</a>
 </td>
 </tr></table>
 
