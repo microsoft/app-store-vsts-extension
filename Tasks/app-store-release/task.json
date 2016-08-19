@@ -11,11 +11,12 @@
     ],
     "demands": [ "xcode" ],
     "version": {
-        "Major": "0",
+        "Major": "1",
         "Minor": "0",
-        "Patch": "36"
+        "Patch": "0"
     },
-    "instanceNameFormat": "Publish to the App Store $(releaseTrack)",
+    "minimumAgentVersion": "1.95.3",
+    "instanceNameFormat": "Publish to the App Store $(releaseTrack) track",
     "groups": [
         {
             "name": "releaseOptions",
@@ -99,10 +100,10 @@
         {
             "name": "skipBinaryUpload",
             "type": "boolean",
-            "label": "Skip binary upload",
+            "label": "Skip Binary Upload",
             "required": false,
             "defaultValue": false,
-            "helpMarkDown": "Select this option to skip binary upload and only update metadata and screenshots.",
+            "helpMarkDown": "Skip binary upload and only update metadata and screenshots.",
             "groupName": "releaseOptions",
             "visibleRule": "releaseTrack = Production"
         },
@@ -182,7 +183,7 @@
             "label": "Skip Build Processing Wait",
             "required": false,
             "defaultValue": false,
-            "helpMarkDown": "Skip the wait time required to finish the build processing.",
+            "helpMarkDown": "Skip waiting for AppStore to finish the build processing.",
             "groupName": "releaseOptions",
             "visibleRule": "releaseTrack = TestFlight"
         },
