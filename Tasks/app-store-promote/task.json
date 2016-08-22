@@ -2,7 +2,7 @@
     "id": "CBBF7F14-C386-4C1F-80A3-FE500E2BD976",
     "name": "AppStorePromote",
     "friendlyName": "App Store Promote",
-    "description": "Submit a build in iTunes Connect to the Apple App Store",
+    "description": "Release a build in iTunes Connect to the Apple App Store",
     "author": "Microsoft Corporation",
     "category": "Deploy",
     "visibility": [
