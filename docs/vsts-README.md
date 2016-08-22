@@ -79,11 +79,11 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 2. **Upload Metadata** *(Checkbox)* - Upload app metadata to the App Store (e.g. title, description, changelog).
 
-3. **Metadata Path** *(File path)* - Path to the Metadata to publish. 
+3. **Metadata Path** *(File path)* - Path to the metadata to publish. 
 
 4. **Upload Screenshots** *(Checkbox)* - Upload screenshots of the app to the App Store.
 
-5.  **Screenshots Path** *(File path)* - Path to the Screenshots to publish. 
+5.  **Screenshots Path** *(File path)* - Path to the screenshots to publish. 
 
 6. **Submit for Review** *(Checkbox)* - Automatically submit the new version for review after the upload is completed.
 
