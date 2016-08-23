@@ -2,7 +2,7 @@
     "id": "2e371150-da5e-11e5-83da-0943b1acc572",
     "name": "AppStoreRelease",
     "friendlyName": "App Store Release",
-    "description": "Release an iOS app to the Apple App Store",
+    "description": "Release an iOS app to TestFlight or the Apple App Store",
     "author": "Microsoft Corporation",
     "category": "Deploy",
     "visibility": [
