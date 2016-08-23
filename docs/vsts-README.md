@@ -17,9 +17,9 @@ Once you have created or retrieved credentials for your App Store account, then 
 
 3. Click **Add build step...** and select the neccessary tasks to generate your release assets (e.g. **Gulp**, **Cordova Build**)
 
-4. Click **Add build step...** and select **App Store - Release** from the **Deploy** category
+4. Click **Add build step...** and select **App Store Release** from the **Deploy** category
 
-5. Configure the **App Store - Release** task with the desired authentication method, the generated IPA file path, and the desired release track.
+5. Configure the **App Store Release** task with the desired authentication method, the generated IPA file path, and the desired release track.
 
 6. Click the **Queue Build** button or push a change to your configured repo in order to run the newly defined build pipeline
 
@@ -39,23 +39,23 @@ In addition to specifying your publisher credentials directly within each build 
 
 5. Give the new endpoint a name and enter the credentials for the developer account you generated in step#1.
 
-6. Select this endpoint via the name you chose in #5 whenever you add either the **App Store - Release** or **App Store - Promote** tasks to a build or release definition
+6. Select this endpoint via the name you chose in #5 whenever you add either the **App Store Release** or **App Store Promote** tasks to a build or release definition
 
 ## Task Reference
 
 In addition to the custom service endpoint, this extension also contributes the following build and release tasks:
 
-* [App Store - Release](#app-store---release) - Allows automating the release of updates to existing iOS TestFlight beta apps or production apps in the App Store store.
+* [App Store Release](#app-store---release) - Allows automating the release of updates to existing iOS TestFlight beta apps or production apps in the App Store.
 
-* [App Store - Promote](#app-store---promote) - Allows automating the promotion of a previously submitted app from iTunes Connect to the App Store.
+* [App Store Promote](#app-store---promote) - Allows automating the promotion of a previously submitted app from iTunes Connect to the App Store.
 
-### App Store - Release
+### App Store Release
 
 Allows you to release updates to your iOS TestFlight beta app or production app on the App Store, and includes the following options:
 
 ![Release task](/images/release-task-with-advanced.png)
 
-1. **Username and Password** or **Service Endpoint** - The credentials used to authenticate with App Store. Credentials can be typed in directly or configured via a service endpoint that can be referenced from the task (via the `Service Endpoint` authentication method).
+1. **Username and Password** or **Service Endpoint** - The credentials used to authenticate with the App Store. Credentials can be typed in directly or configured via a service endpoint that can be referenced from the task (via the `Service Endpoint` authentication method).
 
 2. **Bundle ID** *(String, Required)* - Unique app identifier (e.g. com.myapp.etc).
 
@@ -69,7 +69,7 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 1. **What to Test?** *(File path)* - Path to the file containing notes on what to test for this release.
 
-2. **Skip Build Processing Wait** *(Checkbox)* - Skip waiting for AppStore to finish the build processing.
+2. **Skip Build Processing Wait** *(Checkbox)* - Skip waiting for App Store to finish the build processing.
    
 3. **Skip Submission** *(Checkbox)* - Upload a beta app without distributing to the testers.
 
@@ -95,17 +95,17 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 2. **Team Name** *(String)* - The name of the producing team. Only necessary when in multiple teams.
 
-### App Store - Promote
+### App Store Promote
 
 Allows you to promote an app previously updated to iTunes Connect to the App Store, and includes the following options:
 
 ![Promote task](/images/promote-task-with-advanced.png)
 
-1. **Username and Password** or **Service Endpoint** - The credentials used to authenticate with App Store. Credentials can be typed in directly or configured via a service endpoint that can be referenced from the task (via the `Service Endpoint` authentication method).
+1. **Username and Password** or **Service Endpoint** - The credentials used to authenticate with the App Store. Credentials can be typed in directly or configured via a service endpoint that can be referenced from the task (via the `Service Endpoint` authentication method).
 
 2. **Bundle ID** *(String, required)* - The unique identifier for the app to be promoted.
 
-3. **Choose Build** - `Latest` or `Specify build number`. By default the Latest build will be submitted for review. 
+3. **Choose Build** - `Latest` or `Specify build number`. By default the latest build will be submitted for review. 
 
 4. **Build Number** - Required if `Specify build number` option is selected in #3 above. The build number in iTunes Connect that you wish to submit for review.
 
