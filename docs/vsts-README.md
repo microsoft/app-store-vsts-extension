@@ -45,9 +45,9 @@ In addition to specifying your publisher credentials directly within each build 
 
 In addition to the custom service endpoint, this extension also contributes the following build and release tasks:
 
-* [App Store Release](#app-store---release) - Allows automating the release of updates to existing iOS TestFlight beta apps or production apps in the App Store.
+* [App Store Release](#app-store-release) - Allows automating the release of updates to existing iOS TestFlight beta apps or production apps in the App Store.
 
-* [App Store Promote](#app-store---promote) - Allows automating the promotion of a previously submitted app from iTunes Connect to the App Store.
+* [App Store Promote](#app-store-promote) - Allows automating the promotion of a previously submitted app from iTunes Connect to the App Store.
 
 ### App Store Release
 
