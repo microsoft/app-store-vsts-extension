@@ -61,6 +61,7 @@ async function run() {
         process.env['GEM_HOME'] = gemCache;
         process.env['FASTLANE_PASSWORD'] = credentials.password;
         process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
+        process.env['FASTLANE_DISABLE_COLORS'] = true;
 
         // Add bin of new gem home so we don't ahve to resolve it later;
         process.env['PATH'] = process.env['PATH'] + ":" + gemCache + path.sep + "bin";
