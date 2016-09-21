@@ -77,6 +77,8 @@ async function run() {
         deliverCommand.argIf(shouldAutoRelease, '--automatic_release');
         deliverCommand.argIf(teamId, ['-b', teamId]);
         deliverCommand.argIf(teamName, ['-l', teamName]);
+        deliverCommand.argIf(teamId, ['-q', teamId]);
+        deliverCommand.argIf(teamName, ['-r', teamName]);
         deliverCommand.arg('--force');
 
         await deliverCommand.exec();
