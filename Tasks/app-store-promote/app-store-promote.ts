@@ -75,8 +75,6 @@ async function run() {
         }
         deliverCommand.arg(['--skip_binary_upload', 'true', '--skip_metadata', 'true', '--skip_screenshots', 'true']);
         deliverCommand.argIf(shouldAutoRelease, '--automatic_release');
-        deliverCommand.argIf(teamId, ['-b', teamId]);
-        deliverCommand.argIf(teamName, ['-l', teamName]);
         deliverCommand.argIf(teamId, ['-q', teamId]);
         deliverCommand.argIf(teamName, ['-r', teamName]);
         deliverCommand.arg('--force');
