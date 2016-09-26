@@ -55,11 +55,6 @@ async function run() {
         var shouldSkipSubmission: boolean = tl.getBoolInput("shouldSkipSubmission", false);
         var teamId: string = tl.getInput("teamId", false);
         var teamName: string = tl.getInput("teamName", false);
-        if (teamName)
-        {
-            teamName = teamName.trim();
-            teamName = "\"" + teamName + "\"";
-        }
 
         // Set up environment
         var gemCache = process.env['GEM_CACHE'] || process.platform == 'win32' ? path.join(process.env['APPDATA'], 'gem-cache') : path.join(process.env['HOME'], '.gem-cache');
