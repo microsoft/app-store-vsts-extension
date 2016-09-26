@@ -125,6 +125,12 @@ Allows you to promote an app previously updated to iTunes Connect to the App Sto
 
 2. **Team Name** *(String)* - The name of the producing team. Only necessary when in multiple teams.
 
+## Firewall Issues
+
+[fastlane](https://github.com/fastlane/fastlane) tools uses the iTunes Transporter to upload metadata and binaries. In case you are behind a firewall, you can specify a different transporter protocol injecting in your release definition a variable:
+`DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS="-t DAV"`
+![Fix Firewall issues](/images/variable-definition-firewall-issues.png)
+
 ## Contact Us
 
 [Report an issue](https://github.com/Microsoft/app-store-vsts-extension/issues)
