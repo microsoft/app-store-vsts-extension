@@ -80,6 +80,8 @@ async function run() {
             if(isValidFilePath(releaseNotes)) {
                 pilotCommand.arg(['--changelog', fs.readFileSync(releaseNotes).toString()]);
             }
+            pilotCommand.argIf(teamId,['-q', teamId]);
+            pilotCommand.argIf(teamName,['-r', teamName]);
             pilotCommand.argIf(shouldSkipSubmission, ['--skip_submission', 'true']);
             pilotCommand.argIf(shouldSkipWaitingForProcessing, ['--skip_waiting_for_build_processing', 'true']);
             await pilotCommand.exec();
@@ -108,6 +110,8 @@ async function run() {
             } else {
                 deliverCommand.arg(['--skip_screenshots', 'true']);
             }
+            deliverCommand.argIf(teamId,['-q', teamId]);
+            deliverCommand.argIf(teamName,['-r', teamName]);
             deliverCommand.argIf(shouldSubmitForReview, ['--submit_for_review', 'true']);
             deliverCommand.argIf(shouldAutoRelease, ['--automatic_release', 'true']);
             await deliverCommand.exec();

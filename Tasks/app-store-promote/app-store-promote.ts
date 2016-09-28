@@ -39,7 +39,12 @@ async function run() {
         var shouldAutoRelease = tl.getBoolInput('shouldAutoRelease', false);
         var teamId = tl.getInput('teamId', false);
         var teamName = tl.getInput('teamName', false);
-
+        if (teamName)
+        {
+            teamName = teamName.trim();
+            teamName = "\"" + teamName + "\"";
+        }
+        
         tl.debug('Read all inputs.');
 
         var appVersion;
@@ -70,8 +75,8 @@ async function run() {
         }
         deliverCommand.arg(['--skip_binary_upload', 'true', '--skip_metadata', 'true', '--skip_screenshots', 'true']);
         deliverCommand.argIf(shouldAutoRelease, '--automatic_release');
-        deliverCommand.argIf(teamId, ['-b', teamId]);
-        deliverCommand.argIf(teamName, ['-l', teamName]);
+        deliverCommand.argIf(teamId, ['-q', teamId]);
+        deliverCommand.argIf(teamName, ['-r', teamName]);
         deliverCommand.arg('--force');
 
         await deliverCommand.exec();
