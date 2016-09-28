@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "app-store",
     "name": "Apple App Store",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "publisher": "ms-vsclient",
     "description": "Provides build/release tasks that enable performing continuous delivery to Apple's App Store from a VSTS build or release definition",
     "categories": [
