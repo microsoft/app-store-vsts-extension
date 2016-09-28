@@ -39,12 +39,7 @@ async function run() {
         var shouldAutoRelease = tl.getBoolInput('shouldAutoRelease', false);
         var teamId = tl.getInput('teamId', false);
         var teamName = tl.getInput('teamName', false);
-        if (teamName)
-        {
-            teamName = teamName.trim();
-            teamName = "\"" + teamName + "\"";
-        }
-        
+                
         tl.debug('Read all inputs.');
 
         var appVersion;
