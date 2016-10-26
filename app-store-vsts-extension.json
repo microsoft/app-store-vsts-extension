@@ -4,16 +4,22 @@
     "name": "Apple App Store",
     "version": "1.1.0",
     "publisher": "ms-vsclient",
-    "description": "Provides build/release tasks that enable performing continuous delivery to Apple's App Store from a VSTS build or release definition",
+    "description": "Provides tasks for publishing to Apple's App Store from a TFS/Team Services build or release definition",
     "categories": [
         "Build and release"
     ],
     "tags": [
         "deploy",
         "release",
+        "iOS",
+        "Xcode",
         "Apple",
         "App Store",
-        "iTunes Connect"
+        "iTunes Connect",
+        "iPad",
+        "iPhone",
+        "tvOS",
+        "watchOS"
     ],
     "targets": [
         {
