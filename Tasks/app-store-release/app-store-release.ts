@@ -25,7 +25,7 @@ async function run() {
     try {
         // Check if this is running on Mac and fail the task if not
         if(os.platform() !== 'darwin') {
-            throw 'App store promote can only be run from a Mac computer.';
+            throw 'The Apple App Store Release task can only run on a Mac computer.';
         }
 
         // Get input variables
