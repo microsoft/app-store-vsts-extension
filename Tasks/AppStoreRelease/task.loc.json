@@ -1,0 +1,226 @@
+{
+  "id": "2e371150-da5e-11e5-83da-0943b1acc572",
+  "name": "AppStoreRelease",
+  "friendlyName": "ms-resource:loc.friendlyName",
+  "description": "ms-resource:loc.description",
+  "author": "Microsoft Corporation",
+  "category": "Deploy",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [
+    "xcode"
+  ],
+  "version": {
+    "Major": "1",
+    "Minor": "1",
+    "Patch": "0"
+  },
+  "minimumAgentVersion": "1.95.3",
+  "instanceNameFormat": "ms-resource:loc.instanceNameFormat",
+  "groups": [
+    {
+      "name": "releaseOptions",
+      "displayName": "ms-resource:loc.group.displayName.releaseOptions",
+      "isExpanded": true
+    },
+    {
+      "name": "advanced",
+      "displayName": "ms-resource:loc.group.displayName.advanced",
+      "isExpanded": false
+    }
+  ],
+  "inputs": [
+    {
+      "name": "authType",
+      "type": "pickList",
+      "label": "ms-resource:loc.input.label.authType",
+      "defaultValue": "ServiceEndpoint",
+      "helpMarkDown": "",
+      "options": {
+        "ServiceEndpoint": "Service Endpoint",
+        "UserAndPass": "Username and Password"
+      }
+    },
+    {
+      "name": "serviceEndpoint",
+      "type": "connectedService:apple-app-store",
+      "label": "ms-resource:loc.input.label.serviceEndpoint",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "ms-resource:loc.input.help.serviceEndpoint",
+      "visibleRule": "authType = ServiceEndpoint"
+    },
+    {
+      "name": "username",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.username",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "ms-resource:loc.input.help.username",
+      "visibleRule": "authType = UserAndPass"
+    },
+    {
+      "name": "password",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.password",
+      "defaultValue": "",
+      "isConfidential": true,
+      "required": true,
+      "helpMarkDown": "ms-resource:loc.input.help.password",
+      "visibleRule": "authType = UserAndPass"
+    },
+    {
+      "name": "appIdentifier",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.appIdentifier",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "ms-resource:loc.input.help.appIdentifier"
+    },
+    {
+      "name": "ipaPath",
+      "type": "filePath",
+      "label": "ms-resource:loc.input.label.ipaPath",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "ms-resource:loc.input.help.ipaPath"
+    },
+    {
+      "name": "releaseTrack",
+      "type": "pickList",
+      "label": "ms-resource:loc.input.label.releaseTrack",
+      "defaultValue": "TestFlight",
+      "helpMarkDown": "",
+      "options": {
+        "Production": "Production",
+        "TestFlight": "TestFlight"
+      },
+      "groupName": "releaseOptions"
+    },
+    {
+      "name": "skipBinaryUpload",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.skipBinaryUpload",
+      "required": false,
+      "defaultValue": false,
+      "helpMarkDown": "ms-resource:loc.input.help.skipBinaryUpload",
+      "groupName": "releaseOptions",
+      "visibleRule": "releaseTrack = Production"
+    },
+    {
+      "name": "uploadMetadata",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.uploadMetadata",
+      "required": false,
+      "defaultValue": false,
+      "helpMarkDown": "ms-resource:loc.input.help.uploadMetadata",
+      "groupName": "releaseOptions",
+      "visibleRule": "releaseTrack = Production"
+    },
+    {
+      "name": "metadataPath",
+      "type": "filePath",
+      "label": "ms-resource:loc.input.label.metadataPath",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.metadataPath",
+      "groupName": "releaseOptions",
+      "visibleRule": "uploadMetadata = true"
+    },
+    {
+      "name": "uploadScreenshots",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.uploadScreenshots",
+      "required": false,
+      "defaultValue": false,
+      "helpMarkDown": "ms-resource:loc.input.help.uploadScreenshots",
+      "groupName": "releaseOptions",
+      "visibleRule": "releaseTrack = Production"
+    },
+    {
+      "name": "screenshotsPath",
+      "type": "filePath",
+      "label": "ms-resource:loc.input.label.screenshotsPath",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.screenshotsPath",
+      "groupName": "releaseOptions",
+      "visibleRule": "uploadScreenshots = true"
+    },
+    {
+      "name": "shouldSubmitForReview",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.shouldSubmitForReview",
+      "required": false,
+      "defaultValue": false,
+      "helpMarkDown": "ms-resource:loc.input.help.shouldSubmitForReview",
+      "groupName": "releaseOptions",
+      "visibleRule": "releaseTrack = Production"
+    },
+    {
+      "name": "shouldAutoRelease",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.shouldAutoRelease",
+      "required": false,
+      "defaultValue": false,
+      "helpMarkDown": "ms-resource:loc.input.help.shouldAutoRelease",
+      "groupName": "releaseOptions",
+      "visibleRule": "releaseTrack = Production"
+    },
+    {
+      "name": "releaseNotes",
+      "type": "filePath",
+      "label": "ms-resource:loc.input.label.releaseNotes",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.releaseNotes",
+      "groupName": "releaseOptions",
+      "visibleRule": "releaseTrack = TestFlight"
+    },
+    {
+      "name": "shouldSkipWaitingForProcessing",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.shouldSkipWaitingForProcessing",
+      "required": false,
+      "defaultValue": false,
+      "helpMarkDown": "ms-resource:loc.input.help.shouldSkipWaitingForProcessing",
+      "groupName": "releaseOptions",
+      "visibleRule": "releaseTrack = TestFlight"
+    },
+    {
+      "name": "shouldSkipSubmission",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.shouldSkipSubmission",
+      "required": false,
+      "defaultValue": false,
+      "helpMarkDown": "ms-resource:loc.input.help.shouldSkipSubmission",
+      "groupName": "releaseOptions",
+      "visibleRule": "releaseTrack = TestFlight"
+    },
+    {
+      "name": "teamId",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.teamId",
+      "required": false,
+      "groupName": "advanced",
+      "helpMarkDown": "ms-resource:loc.input.help.teamId"
+    },
+    {
+      "name": "teamName",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.teamName",
+      "required": false,
+      "groupName": "advanced",
+      "helpMarkDown": "ms-resource:loc.input.help.teamName"
+    }
+  ],
+  "execution": {
+    "Node": {
+      "target": "app-store-release.js",
+      "argumentFormat": ""
+    }
+  },
+  "helpMarkDown": "ms-resource:loc.helpMarkDown"
+}
