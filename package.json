@@ -2,13 +2,30 @@
   "name": "app-store-vsts-extension",
   "version": "0.0.1",
   "description": "A set of VSTS task for publishing apps to the Apple App Store.",
-  "author": "Microsoft",
-  "license": "MIT",
-  "dependencies": {
-    "q": "^1.4.1"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Microsoft/app-store-vsts-extension"
   },
+  "author": "Microsoft Corporation",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Microsoft/app-store-vsts-extension/issues"
+  },
+  "homepage": "https://github.com/Microsoft/app-store-vsts-extension",
   "devDependencies": {
-    "command-line-args": "^2.1.4",
-    "shelljs": "^0.6.0"
+    "adm-zip": "0.4.7",
+    "gulp": "3.9.0",
+    "gulp-util": "3.0.4",
+    "minimatch": "3.0.2",
+    "minimist": "1.1.1",
+    "mocha": "2.3.3",
+    "node-uuid": "1.4.6",
+    "q": "1.4.1",
+    "semver": "4.3.3",
+    "shelljs": "^0.3.0",
+    "sync-request": "3.0.1",
+    "tslint": "^3.15.1",
+    "typescript": "1.8.7",
+    "validator": "3.33.0"
   }
 }
