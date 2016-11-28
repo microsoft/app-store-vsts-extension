@@ -1,9 +1,9 @@
 // npm install mocha --save-dev
 // typings install dt~mocha --save --global
 
-//import * as path from 'path';
-//import * as assert from 'assert';
-//import * as ttm from 'vsts-task-lib/mock-test';
+import * as path from 'path';
+import * as assert from 'assert';
+import * as ttm from 'vsts-task-lib/mock-test';
 
 describe('app-store-promote L0 Suite', function () {
     /* tslint:disable:no-empty */
@@ -17,12 +17,12 @@ describe('app-store-promote L0 Suite', function () {
     it('app-store-promote first test', (done:MochaDone) => {
         this.timeout(1000);
 
-        // let tp = path.join(__dirname, 'L0ExportArchiveWithAuto.js');
-        // let tr : ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        let tp = path.join(__dirname, 'InitialTest.js');
+        let tr : ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
-        // tr.run();
-        // //version
-        // assert(tr.ran('/home/bin/xcodebuild -version'), 'xcodebuild for version should have been run.');
+        tr.run();
+        assert.equal(true, tr.createdErrorIssue('The Apple App Store Promote task can only run on a Mac computer.'));
+
         // //build
         // assert(tr.ran('/home/bin/xcodebuild -sdk $(SDK) -configuration $(Configuration) ' +
         //         '-workspace /user/build/fun.xcodeproj/project.xcworkspace -scheme testScheme build ' +
