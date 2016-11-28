@@ -2,6 +2,9 @@ var gulp = require('gulp');
 var gutil = require('gulp-util');
 var child_process = require('child_process');
 var process = require('process');
+var exec  = require('child_process').exec;
+var path = require('path');
+var fs = require('fs');
 
 function make (target, cb) {
     var cl = ('node make.js ' + target + ' ' + process.argv.slice(3).join(' ')).trim();
@@ -32,12 +35,87 @@ gulp.task('test', function (cb) {
     //make('testLegacy', cb);
 });
 
-gulp.task('package', function (cb) {
-    var publish = process.argv.filter(function (arg) { return arg == '--server' }).length > 0;
-    make('build', cb) &&
-        make('package', cb) &&
-        make('test', cb) &&
-        make('testLegacy', cb) &&
-        publish &&
-        make('publish', cb);
+// gulp.task('package', function (cb) {
+//     var publish = process.argv.filter(function (arg) { return arg == '--server' }).length > 0;
+//     make('build', cb) &&
+//         make('package', cb) &&
+//         make('test', cb) &&
+//         make('testLegacy', cb) &&
+//         publish &&
+//         make('publish', cb);
+// });
+
+// BELOW are the Extension-specific gulp tasks
+var devManifestOverride = {
+    public: false,
+    name: "App Store Deploy-Dev",
+    id: "app-store-vsts-extension-dev",
+    publisher: "ms-mobiledevops-test"
+};
+
+var prodManifestOverride = {
+    public: true
+};
+
+gulp.task('installTaskDeps', function (cb) {
+    console.log('Installing task dependencies...');
+
+    var rootPath = process.cwd(); 
+    var tasksPath = path.join(rootPath, 'Tasks');
+    var tasks = fs.readdirSync(tasksPath);
+    console.log(tasks.length + ' tasks found.')
+    tasks.forEach(function(task) {
+        console.log('Processing task ' + task);
+        process.chdir(path.join(tasksPath,task));
+
+        console.log('Installing PRODUCTION npm dependencies for task (' + task + ')...');
+
+        exec('npm install --only=prod', function (err, stdout, stderr) {
+            console.log(stdout);
+            console.log(stderr);
+            if (err) {
+                cb(err);
+            }
+        });
+    });
+    process.chdir(rootPath);
+
+    cb();
+});
+
+function toOverrideString(object) {
+    return JSON.stringify(object).replace(/"/g, '\\"');
+}
+
+gulp.task('packageProd', ['installTaskDeps'], function (cb) {
+    console.log('Creating PRODUCTION vsix...');
+    exec('node ./node_modules/tfx-cli/_build/app.js extension create --manifest-globs app-store-vsts-extension.json --override ' + toOverrideString(prodManifestOverride), function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
+
+gulp.task('packageTest', ['installTaskDeps'], function (cb) {
+    console.log('Creating TEST vsix...');
+    exec('node ./node_modules/tfx-cli/_build/app.js extension create --manifest-globs app-store-vsts-extension.json --override ' + toOverrideString(devManifestOverride), function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
+
+gulp.task('publishTest', ['packageTest'], function (cb) {
+    console.log('Publishing TEST VSIX...');
+    var accessToken = process.env['PUBLISH_ACCESSTOKEN'];
+    if (!accessToken) {
+        cb("Must set PUBLISH_ACCESSTOKEN environment variable to publish a test VSIX");
+    }
+
+    //jeyou: Need to test this!
+    // exec('node ./node_modules/tfx-cli/_build/app.js extension publish --manifest-globs app-store-vsts-extension.json --override ' + toOverrideString(devManifestOverride) + ' --share-with mobiledevops x04ty29er --token ' + accessToken, function (err, stdout, stderr) {
+    //     console.log(stdout);
+    //     console.log(stderr);
+    //     cb(err);
+    // });
 });

@@ -50,10 +50,10 @@
     },
     "files": [
         {
-            "path": "Tasks/app-store-promote"
+            "path": "Tasks/AppStorePromote"
         },
         {
-            "path": "Tasks/app-store-release"
+            "path": "Tasks/AppStoreRelease"
         },
         {
             "path": "images",
