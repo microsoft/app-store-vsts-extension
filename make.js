@@ -272,6 +272,7 @@ target.test = function() {
         fail(`Unable to find tests using the following patterns: ${JSON.stringify([pattern1, pattern2])}`);
     }
 
+    // set up any test reporting
     var testResultsArgs = '';
     if (options.testResults) {
         if (options.testReporter) {
@@ -282,6 +283,7 @@ target.test = function() {
         }
     }
     console.log('testResultsArgs=' + testResultsArgs);
+
     run('mocha ' + testsSpec.join(' ') + testResultsArgs, /*inheritStreams:*/true);
 }
 
