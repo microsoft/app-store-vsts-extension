@@ -2,14 +2,15 @@
 import ma = require('vsts-task-lib/mock-answer');
 import tmrm = require('vsts-task-lib/mock-run');
 import path = require('path');
+import os = require('os');
 
 let taskPath = path.join(__dirname, '..', 'app-store-promote.js');
-let tr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
+let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
 //process.env['HOME']='/users/test'; //replace with mock of setVariable when task-lib has the support
 //process.env['USEXCRUN']='false';
 
-tr.setInput('authType', 'UserAndPass');
+tmr.setInput('authType', 'UserAndPass');
 // tr.setInput('configuration', '$(Configuration)');
 // tr.setInput('sdk', '$(SDK)');
 // tr.setInput('xcWorkspacePath', '**/*.xcodeproj/*.xcworkspace');
@@ -125,6 +126,12 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
         }
     }
 };
-tr.setAnswers(a);
+tmr.setAnswers(a);
 
-tr.run();
+// This is how you can mock NPM packages...
+os.platform = () => {
+    return 'win32';
+};
+tmr.registerMock('os', os);
+
+tmr.run();
