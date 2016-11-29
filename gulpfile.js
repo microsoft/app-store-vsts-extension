@@ -5,6 +5,7 @@ var process = require('process');
 var exec  = require('child_process').exec;
 var path = require('path');
 var fs = require('fs');
+var argv = require('yargs').argv;
 
 function make (target, cb) {
     var cl = ('node make.js ' + target + ' ' + process.argv.slice(3).join(' ')).trim();
@@ -118,4 +119,21 @@ gulp.task('publishTest', ['packageTest'], function (cb) {
     //     console.log(stderr);
     //     cb(err);
     // });
+});
+
+// Default to list reporter when run directly.
+// CI build can pass '--reporter=junit' to create JUnit results files
+var reporter = 'list';
+var reporterLocation = '';
+if (argv.reporter === "junit") {
+    reporter = 'mocha-junit-reporter';
+    reporterLocation = '_results/test-results.xml';
+}
+
+gulp.task('testResults', function (cb) {
+    var cmdline = 'test --testResults true --testReporter ' + reporter;
+    if (reporterLocation) {
+        cmdline += ' --testReportLocation ' + reporterLocation;
+    }
+    make(cmdline, cb);
 });

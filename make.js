@@ -5,7 +5,10 @@ var mopts = {
         'server',
         'suite',
         'task',
-        'version'
+        'version',
+        'testResults',
+        'testReporter',
+        'testReportLocation'
     ]
 };
 var options = minimist(process.argv, mopts);
@@ -269,7 +272,17 @@ target.test = function() {
         fail(`Unable to find tests using the following patterns: ${JSON.stringify([pattern1, pattern2])}`);
     }
 
-    run('mocha ' + testsSpec.join(' '), /*inheritStreams:*/true);
+    var testResultsArgs = '';
+    if (options.testResults) {
+        if (options.testReporter) {
+            testResultsArgs += ' -R ' + options.testReporter;
+        }
+        if (options.testReportLocation) {
+            testResultsArgs += ' -O mochaFile=' + options.testReportLocation;
+        }
+    }
+    console.log('testResultsArgs=' + testResultsArgs);
+    run('mocha ' + testsSpec.join(' ') + testResultsArgs, /*inheritStreams:*/true);
 }
 
 //
