@@ -24,7 +24,7 @@ async function run() {
 
         // Get input variables
         let authType = tl.getInput('authType', false);
-        let credentials : UserCredentials = new UserCredentials();
+        let credentials: UserCredentials = new UserCredentials();
         if (authType === 'ServiceEndpoint') {
             let serviceEndpoint = tl.getEndpointAuthorization(tl.getInput('serviceEndpoint', true), false);
             credentials.username = serviceEndpoint.parameters['username'];
@@ -49,7 +49,7 @@ async function run() {
         process.env['FASTLANE_PASSWORD'] = credentials.password;
         process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
 
-        // Add bin of new gem home so we don't ahve to resolve it later;
+        // Add bin of new gem home so we don't have to resolve it later
         process.env['PATH'] = process.env['PATH'] + ':' + gemCache + path.sep + 'bin';
 
         //Install the ruby gem for fastlane deliver
