@@ -131,6 +131,7 @@ if (argv.reporter === "junit") {
 }
 
 gulp.task('testResults', function (cb) {
+    console.log('Running tests and publishing test results...');
     var cmdline = 'test --testResults true --testReporter ' + reporter;
     if (reporterLocation) {
         cmdline += ' --testReportLocation ' + reporterLocation;
