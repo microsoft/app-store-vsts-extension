@@ -278,7 +278,7 @@ target.test = function() {
             testResultsArgs += ' -R ' + options.testReporter;
         }
         if (options.testReportLocation) {
-            testResultsArgs += ' -O mochaFile=' + options.testReportLocation;
+            testResultsArgs += ' -O mochaFile=' + path.join(__dirname, options.testReportLocation);
         }
     }
     console.log('testResultsArgs=' + testResultsArgs);
