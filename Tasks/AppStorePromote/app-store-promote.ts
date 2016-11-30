@@ -17,10 +17,10 @@ async function run() {
     try {
         //check if this is running on Mac and fail the task if not
         if (os.platform() !== 'darwin') {
-            throw 'The Apple App Store Promote task can only run on a Mac computer.';
+            throw new Error(tl.loc('DarwinOnly'));
         }
 
-        tl.debug('Read all inputs ...');
+        tl.debug('Reading all inputs...');
 
         // Get input variables
         let authType = tl.getInput('authType', false);
@@ -74,7 +74,7 @@ async function run() {
 
         await deliverCommand.exec();
 
-        tl.setResult(tl.TaskResult.Succeeded, 'Build successfully submitted for review.');
+        tl.setResult(tl.TaskResult.Succeeded, tl.loc('SuccessfullySubmitted'));
     } catch (err) {
         tl.setResult(tl.TaskResult.Failed, err);
     }

@@ -125,5 +125,9 @@
             "target": "app-store-promote.js",
             "argumentFormat": ""
         }
+    },
+    "messages": {
+        "DarwinOnly": "The Apple App Store Promote task can only run on a Mac computer.",
+        "SuccessfullySubmitted": "Build successfully submitted for review."
     }
 }
