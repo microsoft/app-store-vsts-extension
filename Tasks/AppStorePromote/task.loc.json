@@ -128,5 +128,9 @@
       "argumentFormat": ""
     }
   },
+  "messages": {
+    "DarwinOnly": "ms-resource:loc.messages.DarwinOnly",
+    "SuccessfullySubmitted": "ms-resource:loc.messages.SuccessfullySubmitted"
+  },
   "helpMarkDown": "ms-resource:loc.helpMarkDown"
 }

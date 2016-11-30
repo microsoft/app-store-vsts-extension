@@ -20,5 +20,7 @@
   "loc.input.label.teamId": "Team ID",
   "loc.input.help.teamId": "The ID of your team if you are in multiple teams",
   "loc.input.label.teamName": "Team Name",
-  "loc.input.help.teamName": "The name of your team if you are in multiple teams"
+  "loc.input.help.teamName": "The name of your team if you are in multiple teams",
+  "loc.messages.DarwinOnly": "The Apple App Store Promote task can only run on a Mac computer.",
+  "loc.messages.SuccessfullySubmitted": "Build successfully submitted for review."
 }

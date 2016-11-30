@@ -21,7 +21,7 @@ describe('app-store-promote L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert.equal(true, tr.createdErrorIssue('The Apple App Store Promote task can only run on a Mac computer.'));
+        assert.equal(true, tr.createdErrorIssue('Error: loc_mock_DarwinOnly'));
         assert(tr.failed, 'task should have failed');
 
         done();
