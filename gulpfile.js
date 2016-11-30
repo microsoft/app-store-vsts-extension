@@ -51,7 +51,7 @@ var prodManifestOverride = {
     public: true
 };
 
-gulp.task('installTaskDeps', function (cb) {
+gulp.task('installtaskdeps', function (cb) {
     console.log('Installing task dependencies...');
 
     var rootPath = process.cwd(); 
@@ -85,7 +85,7 @@ gulp.task('cleanpackagefiles', function (done) {
     return del(['_build/Tasks/**/Tests', '_build/Tasks/**/*.js.map'], done);
 });
 
-gulp.task('packageprod', ['installTaskDeps', 'cleanpackagefiles'], function (cb) {
+gulp.task('packageprod', ['installtaskdeps', 'cleanpackagefiles'], function (cb) {
     console.log('Creating PRODUCTION vsix...');
     exec('node ./node_modules/tfx-cli/_build/app.js extension create --manifest-globs app-store-vsts-extension.json --override ' + toOverrideString(prodManifestOverride), function (err, stdout, stderr) {
         console.log(stdout);
@@ -94,7 +94,7 @@ gulp.task('packageprod', ['installTaskDeps', 'cleanpackagefiles'], function (cb)
     });
 });
 
-gulp.task('packagetest', ['installTaskDeps', 'cleanpackagefiles'], function (cb) {
+gulp.task('packagetest', ['installtaskdeps', 'cleanpackagefiles'], function (cb) {
     console.log('Creating TEST vsix...');
     exec('node ./node_modules/tfx-cli/_build/app.js extension create --manifest-globs app-store-vsts-extension.json --override ' + toOverrideString(devManifestOverride), function (err, stdout, stderr) {
         console.log(stdout);
