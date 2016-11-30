@@ -14,6 +14,7 @@
   "homepage": "https://github.com/Microsoft/app-store-vsts-extension",
   "devDependencies": {
     "adm-zip": "0.4.7",
+    "del": "^2.2.2",
     "gulp": "3.9.0",
     "gulp-util": "3.0.4",
     "minimatch": "3.0.2",

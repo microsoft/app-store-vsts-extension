@@ -6,6 +6,7 @@ var exec  = require('child_process').exec;
 var path = require('path');
 var fs = require('fs');
 var argv = require('yargs').argv;
+var del = require('del');
 
 function make (target, cb) {
     var cl = ('node make.js ' + target + ' ' + process.argv.slice(3).join(' ')).trim();
@@ -24,11 +25,11 @@ function make (target, cb) {
     return true;
 }
 
-gulp.task('clean', function (cb) {
-    make('clean', cb);
+gulp.task('clean', function (done) {
+    return del(['_build/**', '!_build'], done);
 });
 
-gulp.task('build', function (cb) {
+gulp.task('build', ['clean'], function (cb) {
     make('build', cb);
 });
 
