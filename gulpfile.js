@@ -26,7 +26,7 @@ function make (target, cb) {
 }
 
 gulp.task('clean', function (done) {
-    return del(['_build/**', '!_build'], done);
+    return del(['_build/**', '_results/**'], done);
 });
 
 gulp.task('build', ['clean'], function (cb) {
