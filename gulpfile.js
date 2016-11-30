@@ -25,26 +25,19 @@ function make (target, cb) {
     return true;
 }
 
+gulp.task('clean', function (cb) {
+    make('clean', cb);
+});
+
 gulp.task('build', function (cb) {
     make('build', cb);
 });
 
-gulp.task('default', ['build']);
-
 gulp.task('test', function (cb) {
     make('test', cb);
-    //make('testLegacy', cb);
 });
 
-// gulp.task('package', function (cb) {
-//     var publish = process.argv.filter(function (arg) { return arg == '--server' }).length > 0;
-//     make('build', cb) &&
-//         make('package', cb) &&
-//         make('test', cb) &&
-//         make('testLegacy', cb) &&
-//         publish &&
-//         make('publish', cb);
-// });
+gulp.task('default', ['build']);
 
 // BELOW are the Extension-specific gulp tasks
 var devManifestOverride = {
@@ -88,7 +81,7 @@ function toOverrideString(object) {
     return JSON.stringify(object).replace(/"/g, '\\"');
 }
 
-gulp.task('packageProd', ['installTaskDeps'], function (cb) {
+gulp.task('packageprod', ['installTaskDeps'], function (cb) {
     console.log('Creating PRODUCTION vsix...');
     exec('node ./node_modules/tfx-cli/_build/app.js extension create --manifest-globs app-store-vsts-extension.json --override ' + toOverrideString(prodManifestOverride), function (err, stdout, stderr) {
         console.log(stdout);
@@ -97,28 +90,13 @@ gulp.task('packageProd', ['installTaskDeps'], function (cb) {
     });
 });
 
-gulp.task('packageTest', ['installTaskDeps'], function (cb) {
+gulp.task('packagetest', ['installTaskDeps'], function (cb) {
     console.log('Creating TEST vsix...');
     exec('node ./node_modules/tfx-cli/_build/app.js extension create --manifest-globs app-store-vsts-extension.json --override ' + toOverrideString(devManifestOverride), function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         cb(err);
     });
-});
-
-gulp.task('publishTest', ['packageTest'], function (cb) {
-    console.log('Publishing TEST VSIX...');
-    var accessToken = process.env['PUBLISH_ACCESSTOKEN'];
-    if (!accessToken) {
-        cb("Must set PUBLISH_ACCESSTOKEN environment variable to publish a test VSIX");
-    }
-
-    //jeyou: Need to test this!
-    // exec('node ./node_modules/tfx-cli/_build/app.js extension publish --manifest-globs app-store-vsts-extension.json --override ' + toOverrideString(devManifestOverride) + ' --share-with mobiledevops x04ty29er --token ' + accessToken, function (err, stdout, stderr) {
-    //     console.log(stdout);
-    //     console.log(stderr);
-    //     cb(err);
-    // });
 });
 
 // Default to list reporter when run directly.
@@ -130,7 +108,8 @@ if (argv.reporter === "junit") {
     reporterLocation = '_results/test-results.xml';
 }
 
-gulp.task('testResults', function (cb) {
+// gulp testwithresults --reporter junit
+gulp.task('testwithresults', function (cb) {
     console.log('Running tests and publishing test results...');
     var cmdline = 'test --testResults true --testReporter ' + reporter;
     if (reporterLocation) {
