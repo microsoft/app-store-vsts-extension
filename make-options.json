@@ -1,7 +1,7 @@
 {
     "tasks": [
-        "AppStorePromote",
-        "AppStoreRelease"
+        "app-store-promote",
+        "app-store-release"
     ],
     "taskResources": [
         "*.ps1",
