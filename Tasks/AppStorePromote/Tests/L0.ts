@@ -39,4 +39,16 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
+    it('service endpoint with deliver', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0ServiceEndpointDeliver.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.succeeded, 'task should have succeeded');
+
+        done();
+    });
+
 });

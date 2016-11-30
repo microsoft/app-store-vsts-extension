@@ -6,18 +6,14 @@ import os = require('os');
 let taskPath = path.join(__dirname, '..', 'app-store-promote.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
-//process.env['HOME']='/users/test'; //replace with mock of setVariable when task-lib has the support
-//process.env['USEXCRUN']='false';
+// replace with mock of setVariable when task-lib has the support
+process.env['ENDPOINT_AUTH_MyServiceEndpoint'] = '{ "parameters": {"username": "creds-username", "password": "creds-password"}, "scheme": "whatever" }';
 
-tmr.setInput('authType', 'UserAndPass');
-tmr.setInput('username', 'creds-username');
-tmr.setInput('password', 'creds-password');
+tmr.setInput('authType', 'ServiceEndpoint');
+tmr.setInput('serviceEndpoint', 'MyServiceEndpoint');
 tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
 tmr.setInput('chooseBuild', 'latest');
-//tmr.setInput('buildNumber', 'true');
 tmr.setInput('shouldAutoRelease', 'true');
-//tmr.setInput('teamId', '');
-//tmr.setInput('teamName', '');
 
 // provide answers for task mock
 let a: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
