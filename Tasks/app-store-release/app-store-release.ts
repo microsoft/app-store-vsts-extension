@@ -26,7 +26,7 @@ async function run() {
     try {
         // Check if this is running on Mac and fail the task if not
         if (os.platform() !== 'darwin') {
-            throw 'The Apple App Store Release task can only run on a Mac computer.';
+            throw new Error(tl.loc('DarwinOnly'));
         }
 
         // Get input variables
@@ -118,7 +118,7 @@ async function run() {
             await deliverCommand.exec();
         }
 
-        tl.setResult(tl.TaskResult.Succeeded, 'Successfully published to ' + releaseTrack);
+        tl.setResult(tl.TaskResult.Succeeded, tl.loc('SuccessfullyPublished', releaseTrack));
 
     } catch (err) {
         tl.setResult(tl.TaskResult.Failed, err);

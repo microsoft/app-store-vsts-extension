@@ -222,5 +222,9 @@
       "argumentFormat": ""
     }
   },
+  "messages": {
+    "DarwinOnly": "ms-resource:loc.messages.DarwinOnly",
+    "SuccessfullyPublished": "ms-resource:loc.messages.SuccessfullyPublished"
+  },
   "helpMarkDown": "ms-resource:loc.helpMarkDown"
 }
