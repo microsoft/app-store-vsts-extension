@@ -26,9 +26,9 @@
             "id": "Microsoft.VisualStudio.Services"
         }
     ],
-	"icons": {
-		"default": "apple_default.png"
-	},
+    "icons": {
+        "default": "apple_default.png"
+    },
     "visibility": [
         "Build and release"
     ],

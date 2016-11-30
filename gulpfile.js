@@ -14,8 +14,7 @@ function make (target, cb) {
     console.log('------------------------------------------------------------');
     try {
         child_process.execSync(cl, { cwd: __dirname, stdio: 'inherit' });
-    }
-    catch (err) {
+    } catch (err) {
         var msg = err.output ? err.output.toString() : err.message;
         console.error(msg);
         cb(new gutil.PluginError(msg));
