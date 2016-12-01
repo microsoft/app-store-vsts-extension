@@ -27,4 +27,28 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
+    it('username+password with pilot', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0UserPassPilot.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.succeeded, 'task should have succeeded');
+
+        done();
+    });
+
+    it('service endpoint with pilot', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0ServiceEndpointPilot.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.succeeded, 'task should have succeeded');
+
+        done();
+    });
+
 });
