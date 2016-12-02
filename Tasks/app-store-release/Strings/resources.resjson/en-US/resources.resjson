@@ -1,5 +1,6 @@
 {
   "loc.friendlyName": "Apple App Store Release",
+  "loc.helpMarkDown": "[More Information](https://marketplace.visualstudio.com/items?itemName=ms-vsclient.app-store)",
   "loc.description": "Release an app to TestFlight or the Apple App Store",
   "loc.instanceNameFormat": "Publish to the App Store $(releaseTrack) track",
   "loc.group.displayName.releaseOptions": "Release Options",
@@ -11,7 +12,7 @@
   "loc.input.help.username": "The email of the account used to publish to the Apple App Store.",
   "loc.input.label.password": "Password",
   "loc.input.help.password": "The password of the account used to publish to the Apple App Store.",
-  "loc.input.label.appIdentifier": "Bundle ID",
+  "loc.input.label.appIdentifier": "Bundle Id",
   "loc.input.help.appIdentifier": "The unique app identifier (e.g. com.myapp.etc).",
   "loc.input.label.ipaPath": "Binary Path",
   "loc.input.help.ipaPath": "Path to the binary to publish (i.e. IPA).",

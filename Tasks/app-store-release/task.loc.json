@@ -3,6 +3,7 @@
   "name": "AppStoreRelease",
   "friendlyName": "ms-resource:loc.friendlyName",
   "description": "ms-resource:loc.description",
+  "helpMarkDown": "ms-resource:loc.helpMarkDown",
   "author": "Microsoft Corporation",
   "category": "Deploy",
   "visibility": [
@@ -225,6 +226,5 @@
   "messages": {
     "DarwinOnly": "ms-resource:loc.messages.DarwinOnly",
     "SuccessfullyPublished": "ms-resource:loc.messages.SuccessfullyPublished"
-  },
-  "helpMarkDown": "ms-resource:loc.helpMarkDown"
+  }
 }

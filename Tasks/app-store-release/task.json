@@ -3,6 +3,7 @@
     "name": "AppStoreRelease",
     "friendlyName": "Apple App Store Release",
     "description": "Release an app to TestFlight or the Apple App Store",
+    "helpMarkDown": "[More Information](https://marketplace.visualstudio.com/items?itemName=ms-vsclient.app-store)",
     "author": "Microsoft Corporation",
     "category": "Deploy",
     "visibility": [
@@ -72,7 +73,7 @@
         {
             "name": "appIdentifier",
             "type": "string",
-            "label": "Bundle ID",
+            "label": "Bundle Id",
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc)."
