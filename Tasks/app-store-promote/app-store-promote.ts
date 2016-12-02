@@ -23,10 +23,10 @@ async function run() {
         tl.debug('Reading all inputs...');
 
         // Get input variables
-        let authType = tl.getInput('authType', false);
+        let authType: string = tl.getInput('authType', false);
         let credentials: UserCredentials = new UserCredentials();
         if (authType === 'ServiceEndpoint') {
-            let serviceEndpoint = tl.getEndpointAuthorization(tl.getInput('serviceEndpoint', true), false);
+            let serviceEndpoint: tl.EndpointAuthorization = tl.getEndpointAuthorization(tl.getInput('serviceEndpoint', true), false);
             credentials.username = serviceEndpoint.parameters['username'];
             credentials.password = serviceEndpoint.parameters['password'];
         } else if (authType === 'UserAndPass') {
@@ -34,12 +34,12 @@ async function run() {
             credentials.password = tl.getInput('password', true);
         }
 
-        let appIdentifier = tl.getInput('appIdentifier', true);
-        let chooseBuild = tl.getInput('chooseBuild', true);
-        let buildNumber = tl.getInput('buildNumber');
-        let shouldAutoRelease = tl.getBoolInput('shouldAutoRelease', false);
-        let teamId = tl.getInput('teamId', false);
-        let teamName = tl.getInput('teamName', false);
+        let appIdentifier: string = tl.getInput('appIdentifier', true);
+        let chooseBuild: string = tl.getInput('chooseBuild', true);
+        let buildNumber: string = tl.getInput('buildNumber', false);
+        let shouldAutoRelease: boolean = tl.getBoolInput('shouldAutoRelease', false);
+        let teamId: string = tl.getInput('teamId', false);
+        let teamName: string = tl.getInput('teamName', false);
 
         tl.debug('Read all inputs.');
 
@@ -61,7 +61,7 @@ async function run() {
 
         //Run the deliver command 
         // See https://github.com/fastlane/deliver for more information on these arguments
-        let deliverCommand : ToolRunner = tl.tool('deliver');
+        let deliverCommand: ToolRunner = tl.tool('deliver');
         deliverCommand.arg(['submit_build', '-u', credentials.username, '-a', appIdentifier]);
         if (chooseBuild.toLowerCase() === 'specify') {
            deliverCommand.arg(['-n', buildNumber]);
