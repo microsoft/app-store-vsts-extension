@@ -30,7 +30,7 @@ async function run() {
         }
 
         // Get input variables
-        let authType: string = tl.getInput('authType', false);
+        let authType: string = tl.getInput('authType', true);
         let credentials : UserCredentials = new UserCredentials();
         if (authType === 'ServiceEndpoint') {
             let serviceEndpoint = tl.getEndpointAuthorization(tl.getInput('serviceEndpoint', true), false);
@@ -41,12 +41,12 @@ async function run() {
             credentials.password = tl.getInput('password', true);
         }
 
-        let bundleIdentifier: string = tl.getInput('appIdentifier', true);
+        //let bundleIdentifier: string = tl.getInput('appIdentifier', true);
         let ipaPath: string = tl.getInput('ipaPath', true);
-        let skipBinaryUpload: boolean = tl.getBoolInput('skipBinaryUpload');
-        let uploadMetadata: boolean = tl.getBoolInput('uploadMetadata');
+        let skipBinaryUpload: boolean = tl.getBoolInput('skipBinaryUpload', false);
+        let uploadMetadata: boolean = tl.getBoolInput('uploadMetadata', false);
         let metadataPath: string = tl.getInput('metadataPath', false);
-        let uploadScreenshots: boolean = tl.getBoolInput('uploadScreenshots');
+        let uploadScreenshots: boolean = tl.getBoolInput('uploadScreenshots', false);
         let screenshotsPath: string = tl.getInput('screenshotsPath', false);
         let releaseNotes: string = tl.getInput('releaseNotes', false);
         let releaseTrack: string = tl.getInput('releaseTrack', true);
@@ -87,6 +87,8 @@ async function run() {
             pilotCommand.argIf(shouldSkipWaitingForProcessing, ['--skip_waiting_for_build_processing', 'true']);
             await pilotCommand.exec();
         } else if (releaseTrack === 'Production') {
+            let bundleIdentifier: string = tl.getInput('appIdentifier', true);
+
             //Install the ruby gem for fastlane deliver
             tl.debug('Checking for ruby install...');
             tl.which('ruby', true);
