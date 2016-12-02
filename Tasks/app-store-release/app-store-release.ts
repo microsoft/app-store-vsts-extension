@@ -41,7 +41,6 @@ async function run() {
             credentials.password = tl.getInput('password', true);
         }
 
-        //let bundleIdentifier: string = tl.getInput('appIdentifier', true);
         let ipaPath: string = tl.getInput('ipaPath', true);
         let skipBinaryUpload: boolean = tl.getBoolInput('skipBinaryUpload', false);
         let uploadMetadata: boolean = tl.getBoolInput('uploadMetadata', false);
