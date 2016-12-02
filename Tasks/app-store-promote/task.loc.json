@@ -3,6 +3,7 @@
   "name": "AppStorePromote",
   "friendlyName": "ms-resource:loc.friendlyName",
   "description": "ms-resource:loc.description",
+  "helpMarkDown": "ms-resource:loc.helpMarkDown",
   "author": "Microsoft Corporation",
   "category": "Deploy",
   "visibility": [
@@ -131,6 +132,5 @@
   "messages": {
     "DarwinOnly": "ms-resource:loc.messages.DarwinOnly",
     "SuccessfullySubmitted": "ms-resource:loc.messages.SuccessfullySubmitted"
-  },
-  "helpMarkDown": "ms-resource:loc.helpMarkDown"
+  }
 }

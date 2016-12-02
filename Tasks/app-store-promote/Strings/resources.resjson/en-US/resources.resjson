@@ -1,5 +1,6 @@
 {
   "loc.friendlyName": "Apple App Store Promote",
+  "loc.helpMarkDown": "[More Information](https://marketplace.visualstudio.com/items?itemName=ms-vsclient.app-store)",
   "loc.description": "Release a build from iTunes Connect to the Apple App Store",
   "loc.instanceNameFormat": "Submit to the App Store for review",
   "loc.group.displayName.advanced": "Advanced",

@@ -3,6 +3,7 @@
     "name": "AppStorePromote",
     "friendlyName": "Apple App Store Promote",
     "description": "Release a build from iTunes Connect to the Apple App Store",
+    "helpMarkDown": "[More Information](https://marketplace.visualstudio.com/items?itemName=ms-vsclient.app-store)",
     "author": "Microsoft Corporation",
     "category": "Deploy",
     "visibility": [
