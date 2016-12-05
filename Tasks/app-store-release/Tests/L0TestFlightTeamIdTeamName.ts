@@ -37,11 +37,11 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers> {
     'exec': {
         '/usr/bin/gem install pilot': {
             'code': 0,
-            'stdout': 'truly outrageous!'
+            'stdout': '10 gems installed'
         },
         'pilot upload -u creds-username -i mypackage.ipa -q teamId -r teamName': {
             'code': 0,
-            'stdout': 'truly outrageous!'
+            'stdout': 'consider it uploaded!'
         }
     }
 };
