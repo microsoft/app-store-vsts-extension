@@ -28,7 +28,7 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
     'exec': {
         '/usr/bin/gem install deliver': {
             'code': 0,
-            'stdout': 'truly outrageous!'
+            'stdout': '1 gem installed'
         },
         'deliver submit_build -u creds-username -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force': {
             'code': 0,
