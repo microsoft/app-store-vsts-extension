@@ -32,13 +32,10 @@ function isValidFilePath(filePath: string) : boolean {
 // If a glob pattern is provided, only a single ipa is allowed.
 function findIpa(ipaPath: string) : string {
     let paths: string[] = tl.glob(ipaPath);
-    tl.debug('after glob');
     if (!paths || paths.length === 0) {
-        tl.debug('!paths || paths.length === 0');
         throw new Error(tl.loc('NoIpaFilesFound', ipaPath));
     }
     if (paths.length > 1) {
-        tl.debug('paths.length > 1');
         throw new Error(tl.loc('MultipleIpaFilesFound', ipaPath));
     }
     return paths[0];
