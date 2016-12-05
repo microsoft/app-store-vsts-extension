@@ -29,17 +29,7 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers> {
         '/usr/bin/gem': true,
         '/usr/bin/deliver': true,
         '/usr/bin/pilot': true
-    }//,
-    // 'exec': {
-    //     '/usr/bin/gem install pilot': {
-    //         'code': 0,
-    //         'stdout': '10 gems installed'
-    //     },
-    //     'pilot upload -u creds-username -i <path>': {
-    //         'code': 0,
-    //         'stdout': 'truly outrageous!'
-    //     }
-    // }
+    }
 };
 tmr.setAnswers(a);
 
