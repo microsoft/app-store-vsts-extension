@@ -104,20 +104,6 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    // it('testflight - release notes', (done:MochaDone) => {
-    //     this.timeout(1000);
-
-    //     let tp = path.join(__dirname, 'L0TestFlightReleaseNotes.js');
-    //     let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
-
-    //     tr.run();
-    //     //assert(tr.stderr.indexOf('Input required: ipaPath') !== -1, 'Task should have written to stderr');
-    //     //assert(tr.stdout.indexOf('Input required: ipaPath') !== -1, 'Task should have written to stdout');
-    //     assert(tr.succeeded, 'task should have succeeded');
-
-    //     done();
-    // });
-
     it('testflight - team id', (done:MochaDone) => {
         this.timeout(1000);
 
