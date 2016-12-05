@@ -73,7 +73,7 @@
         {
             "name": "appIdentifier",
             "type": "string",
-            "label": "Bundle Id",
+            "label": "Bundle ID",
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc). Required if the track is Production."
