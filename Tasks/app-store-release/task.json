@@ -83,8 +83,8 @@
             "type": "filePath",
             "label": "Binary Path",
             "defaultValue": "",
-            "required": true,
-            "helpMarkDown": "Path to the binary to publish (i.e. IPA)."
+            "required": false,
+            "helpMarkDown": "Path to the binary to publish (i.e. IPA). A glob pattern can be used but it must resolve to exactly one IPA file. Required if the track is Production."
         },
         {
             "name": "releaseTrack",
