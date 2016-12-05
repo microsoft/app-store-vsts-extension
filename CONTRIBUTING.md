@@ -19,12 +19,8 @@ Interested in contributing to the vsts-vscode project? There are plenty of ways 
 From a terminal ensure at least node 5.4.1 and npm 3:
 ```bash
 $ node -v && npm -v
-v5.9.0
-3.8.2
-```
-**Note**: To get npm version 3.8.2, you may need to update npm after installing node.  To do that:
-```bash
-[sudo] npm install npm -g
+v6.9.1
+3.10.8
 ```
 
 ### Gulp
