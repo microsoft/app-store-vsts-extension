@@ -21,6 +21,8 @@ export class UserCredentials {
 
 async function run() {
     try {
+        tl.setResourcePath(path.join( __dirname, 'task.json'));
+
         //check if this is running on Mac and fail the task if not
         if (os.platform() !== 'darwin') {
             throw new Error(tl.loc('DarwinOnly'));
