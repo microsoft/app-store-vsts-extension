@@ -12,7 +12,7 @@
   "loc.input.help.username": "The email of the account used to publish to the Apple App Store.",
   "loc.input.label.password": "Password",
   "loc.input.help.password": "The password of the account used to publish to the Apple App Store.",
-  "loc.input.label.appIdentifier": "Bundle Id",
+  "loc.input.label.appIdentifier": "Bundle ID",
   "loc.input.help.appIdentifier": "The unique app identifier (e.g. com.myapp.etc). Required if the track is Production.",
   "loc.input.label.ipaPath": "Binary Path",
   "loc.input.help.ipaPath": "Path to the binary to publish (i.e. IPA). A glob pattern can be used but it must resolve to exactly one IPA file.",
@@ -43,6 +43,6 @@
   "loc.input.help.teamName": "The name of your team if you are in multiple teams.",
   "loc.messages.DarwinOnly": "The Apple App Store Release task can only run on a Mac computer.",
   "loc.messages.SuccessfullyPublished": "Successfully published to %s",
-  "loc.messages.NoIpaFilesFound": "No ipa file found using pattern: %s",
-  "loc.messages.MultipleIpaFilesFound": "More than one ipa file found using pattern: %s"
+  "loc.messages.NoIpaFilesFound": "No IPA file found using pattern: %s",
+  "loc.messages.MultipleIpaFilesFound": "More than one IPA file found using pattern: %s"
 }
