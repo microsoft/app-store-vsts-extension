@@ -21,16 +21,6 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers> {
         '/usr/bin/gem': true,
         '/usr/bin/deliver': true,
         '/usr/bin/pilot': true
-    },
-    'exec': {
-        '/usr/bin/gem install pilot': {
-            'code': 0,
-            'stdout': 'truly outrageous!'
-        },
-        'pilot upload -u creds-username -i <path> --skip_submission true': {
-            'code': 0,
-            'stdout': 'truly outrageous!'
-        }
     }
 };
 tmr.setAnswers(a);

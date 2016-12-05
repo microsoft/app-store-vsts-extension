@@ -9,9 +9,6 @@ let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 tmr.setInput('authType', 'UserAndPass');
 tmr.setInput('username', 'creds-username');
 tmr.setInput('password', 'creds-password');
-//tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
-
-// let releaseTrack: string = tl.getInput('releaseTrack', true);
 tmr.setInput('releaseTrack', 'TestFlight');
 
 // let ipaPath: string = tl.getInput('ipaPath', true);

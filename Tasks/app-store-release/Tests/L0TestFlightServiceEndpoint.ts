@@ -11,7 +11,6 @@ process.env['ENDPOINT_AUTH_MyServiceEndpoint'] = '{ "parameters": {"username": "
 
 tmr.setInput('authType', 'ServiceEndpoint');
 tmr.setInput('serviceEndpoint', 'MyServiceEndpoint');
-//tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
 tmr.setInput('releaseTrack', 'TestFlight');
 
 tmr.setInput('ipaPath', 'mypackage.ipa');

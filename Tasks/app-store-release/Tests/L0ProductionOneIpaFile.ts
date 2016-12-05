@@ -10,11 +10,8 @@ tmr.setInput('authType', 'UserAndPass');
 tmr.setInput('username', 'creds-username');
 tmr.setInput('password', 'creds-password');
 tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
-
-// let releaseTrack: string = tl.getInput('releaseTrack', true);
 tmr.setInput('releaseTrack', 'Production');
 
-// let ipaPath: string = tl.getInput('ipaPath', true);
 tmr.setInput('ipaPath', '**/*.ipa');
 
 // provide answers for task mock
