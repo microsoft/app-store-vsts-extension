@@ -44,7 +44,7 @@ async function run() {
         tl.debug('Read all inputs.');
 
         // Set up environment
-        let gemCache = process.env['GEM_CACHE'] || process.platform === 'win32' ? path.join(process.env['APPDATA'], 'gem-cache') : path.join(process.env['HOME'], '.gem-cache');
+        let gemCache: string = process.env['GEM_CACHE'] || process.platform === 'win32' ? path.join(process.env['APPDATA'], 'gem-cache') : path.join(process.env['HOME'], '.gem-cache');
         process.env['GEM_HOME'] = gemCache;
         process.env['FASTLANE_PASSWORD'] = credentials.password;
         process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
