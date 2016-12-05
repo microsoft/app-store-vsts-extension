@@ -36,7 +36,7 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers> {
     'exec': {
         '/usr/bin/gem install deliver': {
             'code': 0,
-            'stdout': 'truly outrageous!'
+            'stdout': '1 gem installed'
         }
     }
 };
