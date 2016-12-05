@@ -25,37 +25,7 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
     'checkPath' : {
         '/usr/bin/ruby': true,
         '/usr/bin/gem': true,
-        '/usr/bin/deliver': true,
-        '/bin/rm': true
-    },
-    'filePathSupplied': {
-        'archivePath': false
-    },
-    'getVariable': {
-        'build.sourcesDirectory': '/user/build',
-        'HOME': '/users/test'
-    },
-    'exist': {
-        '/user/build/_XcodeTaskExport_testScheme': false
-    },
-    'stats': {
-        '/user/build': {
-            'isFile': false
-        }
-    },
-    'glob': {
-        '**/*.xcodeproj/*.xcworkspace': [
-            '/user/build/fun.xcodeproj/project.xcworkspace'
-        ],
-        '/user/build/output/$(SDK)/$(Configuration)/build.sym/**/*.app': [
-            '/user/build/output/$(SDK)/$(Configuration)/build.sym/Release.iphoneos/fun.app'
-        ],
-        '/user/build/**/*.xcarchive': [
-            '/user/build/testScheme.xcarchive'
-        ],
-        '/user/build/testScheme.xcarchive/**/embedded.mobileprovision': [
-            '/user/build/testScheme.xcarchive/Products/testScheme.app/embedded.mobileprovision'
-        ]
+        '/usr/bin/deliver': true
     },
     'exec': {
         '/usr/bin/gem install deliver': {
