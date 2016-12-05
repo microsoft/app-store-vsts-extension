@@ -111,7 +111,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('pilot upload -u creds-username -i <path> -q teamId'), 'pilot upload with teamId should have been run.');
+        assert(tr.ran('pilot upload -u creds-username -i mypackage.ipa -q teamId'), 'pilot upload with teamId should have been run.');
         assert(tr.invokedToolCount === 2, 'should have run both gem and pilot.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
@@ -126,7 +126,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('pilot upload -u creds-username -i <path> -r teamName'), 'pilot upload with teamName should have been run.');
+        assert(tr.ran('pilot upload -u creds-username -i mypackage.ipa -r teamName'), 'pilot upload with teamName should have been run.');
         assert(tr.invokedToolCount === 2, 'should have run both gem and pilot.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
@@ -141,7 +141,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('pilot upload -u creds-username -i <path> -q teamId -r teamName'), 'pilot upload with teamId and teamName should have been run.');
+        assert(tr.ran('pilot upload -u creds-username -i mypackage.ipa -q teamId -r teamName'), 'pilot upload with teamId and teamName should have been run.');
         assert(tr.invokedToolCount === 2, 'should have run both gem and pilot.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
@@ -156,7 +156,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('pilot upload -u creds-username -i <path> --skip_submission true'), 'pilot upload with skip_submission should have been run.');
+        assert(tr.ran('pilot upload -u creds-username -i mypackage.ipa --skip_submission true'), 'pilot upload with skip_submission should have been run.');
         assert(tr.invokedToolCount === 2, 'should have run both gem and pilot.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
@@ -171,10 +171,50 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('pilot upload -u creds-username -i <path> --skip_waiting_for_build_processing true'), 'pilot upload with skip_waiting_for_build_processing should have been run.');
+        assert(tr.ran('pilot upload -u creds-username -i mypackage.ipa --skip_waiting_for_build_processing true'), 'pilot upload with skip_waiting_for_build_processing should have been run.');
         assert(tr.invokedToolCount === 2, 'should have run both gem and pilot.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
+
+        done();
+    });
+
+    it('testflight - one ipa file', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0TestFlightOneIpaFile.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.succeeded, 'task should have succeeded');
+
+        done();
+    });
+
+    it('testflight - multiple ipa files', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0TestFlightMultipleIpaFiles.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.invokedToolCount === 1, 'should have run only gem.');
+        assert(tr.stdout.indexOf('Error: loc_mock_MultipleIpaFilesFound') !== -1, 'Task should have written to stdout');
+        assert(tr.failed, 'task should have failed');
+
+        done();
+    });
+
+    it('testflight - zero ipa files', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0TestFlightZeroIpaFiles.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.invokedToolCount === 1, 'should have run only gem.');
+        assert(tr.stdout.indexOf('Error: loc_mock_NoIpaFilesFound') !== -1, 'Task should have written to stdout');
+        assert(tr.failed, 'task should have failed');
 
         done();
     });
@@ -212,7 +252,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i <path> --skip_binary_upload true --skip_metadata true --skip_screenshots true'), 'deliver with skip_binary_upload should have been run.');
+        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_binary_upload true --skip_metadata true --skip_screenshots true'), 'deliver with skip_binary_upload should have been run.');
         assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
@@ -227,7 +267,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i <path> --skip_metadata true --skip_screenshots true -q teamId'), 'deliver with teamId should have been run.');
+        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true --skip_screenshots true -q teamId'), 'deliver with teamId should have been run.');
         assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
@@ -242,7 +282,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i <path> --skip_metadata true --skip_screenshots true -r teamName'), 'deliver with teamName should have been run.');
+        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true --skip_screenshots true -r teamName'), 'deliver with teamName should have been run.');
         assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
@@ -257,7 +297,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i <path> --skip_metadata true --skip_screenshots true -q teamId -r teamName'), 'deliver with teamId and teamName should have been run.');
+        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true --skip_screenshots true -q teamId -r teamName'), 'deliver with teamId and teamName should have been run.');
         assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
@@ -272,7 +312,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i <path> --skip_metadata true --skip_screenshots true --submit_for_review true'), 'deliver with submit_for_review should have been run.');
+        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true --skip_screenshots true --submit_for_review true'), 'deliver with submit_for_review should have been run.');
         assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
@@ -287,7 +327,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i <path> --skip_metadata true --skip_screenshots true --automatic_release true'), 'deliver with automatic_release should have been run.');
+        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true --skip_screenshots true --automatic_release true'), 'deliver with automatic_release should have been run.');
         assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
@@ -302,7 +342,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i <path> -m <path> --skip_screenshots true'), 'deliver with -m should have been run.');
+        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa -m <path> --skip_screenshots true'), 'deliver with -m should have been run.');
         assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
@@ -317,10 +357,50 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i <path> --skip_metadata true -w <path>'), 'deliver with -w should have been run.');
+        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true -w <path>'), 'deliver with -w should have been run.');
         assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
+
+        done();
+    });
+
+    it('production - one ipa file', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0ProductionOneIpaFile.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.succeeded, 'task should have succeeded');
+
+        done();
+    });
+
+    it('production - multiple ipa files', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0ProductionMultipleIpaFiles.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.invokedToolCount === 1, 'should have run only gem.');
+        assert(tr.stdout.indexOf('Error: loc_mock_MultipleIpaFilesFound') !== -1, 'Task should have written to stdout');
+        assert(tr.failed, 'task should have failed');
+
+        done();
+    });
+
+    it('production - zero ipa files', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0ProductionZeroIpaFiles.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.invokedToolCount === 1, 'should have run only gem.');
+        assert(tr.stdout.indexOf('Error: loc_mock_NoIpaFilesFound') !== -1, 'Task should have written to stdout');
+        assert(tr.failed, 'task should have failed');
 
         done();
     });

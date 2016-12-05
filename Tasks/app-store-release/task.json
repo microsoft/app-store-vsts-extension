@@ -223,6 +223,8 @@
     },
     "messages": {
         "DarwinOnly": "The Apple App Store Release task can only run on a Mac computer.",
-        "SuccessfullyPublished": "Successfully published to %s"
+        "SuccessfullyPublished": "Successfully published to %s",
+        "NoIpaFilesFound": "No ipa file found using pattern: %s",
+        "MultipleIpaFilesFound": "More than one ipa file found using pattern: %s"
     }
 }

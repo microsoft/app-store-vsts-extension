@@ -15,7 +15,7 @@ tmr.setInput('password', 'creds-password');
 tmr.setInput('releaseTrack', 'TestFlight');
 
 // let ipaPath: string = tl.getInput('ipaPath', true);
-tmr.setInput('ipaPath', '<path>');
+tmr.setInput('ipaPath', 'mypackage.ipa');
 
 // provide answers for task mock
 let a: ma.TaskLibAnswers = <ma.TaskLibAnswers> {
@@ -31,12 +31,17 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers> {
         '/usr/bin/deliver': true,
         '/usr/bin/pilot': true
     },
+    'glob': {
+        'mypackage.ipa': [
+            'mypackage.ipa'
+        ]
+    },
     'exec': {
         '/usr/bin/gem install pilot': {
             'code': 0,
             'stdout': 'truly outrageous!'
         },
-        'pilot upload -u creds-username -i <path>': {
+        'pilot upload -u creds-username -i mypackage.ipa': {
             'code': 0,
             'stdout': 'truly outrageous!'
         }

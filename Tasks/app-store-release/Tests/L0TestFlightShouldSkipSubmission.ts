@@ -11,7 +11,7 @@ tmr.setInput('username', 'creds-username');
 tmr.setInput('password', 'creds-password');
 //tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
 tmr.setInput('releaseTrack', 'TestFlight');
-tmr.setInput('ipaPath', '<path>');
+tmr.setInput('ipaPath', 'mypackage.ipa');
 
 tmr.setInput('shouldSkipSubmission', 'true');
 
@@ -29,12 +29,17 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers> {
         '/usr/bin/deliver': true,
         '/usr/bin/pilot': true
     },
+    'glob': {
+        'mypackage.ipa': [
+            'mypackage.ipa'
+        ]
+    },
     'exec': {
         '/usr/bin/gem install pilot': {
             'code': 0,
             'stdout': 'truly outrageous!'
         },
-        'pilot upload -u creds-username -i <path> --skip_submission true': {
+        'pilot upload -u creds-username -i mypackage.ipa --skip_submission true': {
             'code': 0,
             'stdout': 'truly outrageous!'
         }

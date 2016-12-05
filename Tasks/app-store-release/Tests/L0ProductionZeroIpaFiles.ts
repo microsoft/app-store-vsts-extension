@@ -10,11 +10,8 @@ tmr.setInput('authType', 'UserAndPass');
 tmr.setInput('username', 'creds-username');
 tmr.setInput('password', 'creds-password');
 tmr.setInput('releaseTrack', 'Production');
-tmr.setInput('ipaPath', 'mypackage.ipa');
+tmr.setInput('ipaPath', '**/*.ipa');
 tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
-
-tmr.setInput('uploadMetadata', 'true');
-tmr.setInput('metadataPath', '<path>');
 
 // provide answers for task mock
 let a: ma.TaskLibAnswers = <ma.TaskLibAnswers> {
@@ -31,16 +28,11 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers> {
         '/usr/bin/pilot': true
     },
     'glob': {
-        'mypackage.ipa': [
-            'mypackage.ipa'
+        '**/*.ipa': [
         ]
     },
     'exec': {
         '/usr/bin/gem install deliver': {
-            'code': 0,
-            'stdout': 'truly outrageous!'
-        },
-        'deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa -m <path> --skip_screenshots true': {
             'code': 0,
             'stdout': 'truly outrageous!'
         }

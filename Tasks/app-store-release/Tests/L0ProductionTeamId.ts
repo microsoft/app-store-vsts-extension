@@ -10,7 +10,7 @@ tmr.setInput('authType', 'UserAndPass');
 tmr.setInput('username', 'creds-username');
 tmr.setInput('password', 'creds-password');
 tmr.setInput('releaseTrack', 'Production');
-tmr.setInput('ipaPath', '<path>');
+tmr.setInput('ipaPath', 'mypackage.ipa');
 tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
 
 tmr.setInput('teamId', 'teamId');
@@ -29,12 +29,17 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers> {
         '/usr/bin/deliver': true,
         '/usr/bin/pilot': true
     },
+    'glob': {
+        'mypackage.ipa': [
+            'mypackage.ipa'
+        ]
+    },
     'exec': {
         '/usr/bin/gem install deliver': {
             'code': 0,
             'stdout': 'truly outrageous!'
         },
-        'deliver --force -u creds-username -a com.microsoft.test.appId -i <path> --skip_metadata true --skip_screenshots true -q teamId': {
+        'deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true --skip_screenshots true -q teamId': {
             'code': 0,
             'stdout': 'truly outrageous!'
         }

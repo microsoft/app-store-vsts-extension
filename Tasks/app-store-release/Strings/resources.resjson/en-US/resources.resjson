@@ -42,5 +42,7 @@
   "loc.input.label.teamName": "Team Name",
   "loc.input.help.teamName": "The name of your team if you are in multiple teams.",
   "loc.messages.DarwinOnly": "The Apple App Store Release task can only run on a Mac computer.",
-  "loc.messages.SuccessfullyPublished": "Successfully published to %s"
+  "loc.messages.SuccessfullyPublished": "Successfully published to %s",
+  "loc.messages.NoIpaFilesFound": "No ipa file found using pattern: %s",
+  "loc.messages.MultipleIpaFilesFound": "More than one ipa file found using pattern: %s"
 }
