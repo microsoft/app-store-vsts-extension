@@ -39,7 +39,9 @@ To build the extension, run the following from the root of the repo:
 ```bash
 gulp
 ```
-This command will create the _build folder at the root of the repository. 
+This command will create the _build folder at the root of the repository.
+
+If you open the root of the repository in Visual Studio Code, you can build with Ctrl+Shift+B.
 
 ## Tests
 Tests should be run with changes.  Before you run tests, make sure you have built the extension.  Run the following from the root of the repo:
@@ -47,7 +49,23 @@ Tests should be run with changes.  Before you run tests, make sure you have buil
 ```bash
 gulp test
 ```
-To run the tests within Visual Studio Code, change the debug profile to "Launch L0 Tests", set a breakpoint directly in the L0.js file (e.g., _build/Tasks/AppStoreRelease/Tests/L0.js) and press `F5`.  At this time, you cannot debug the task itself during tests as a second node process is created.
+To run the tests within Visual Studio Code, select the Debug viewlet, change the debug profile to "Launch L0 Tests", set a breakpoint directly in the
+L0.js file (e.g., _build/Tasks/AppStoreRelease/Tests/L0.js) and press `F5`.  At this time, you cannot debug the task itself during tests as a second
+node process is created (in which the task is run).
+
+### Testing task changes
+In order to test your task changes, you will need to upload the new task to your own account and test it with a build definition.  First, create a build definition
+you can use to test your changes.  Then, after building the task you changed, upload the task to your account.  To upload a task, you will need to install the
+[tfx-cli](https://www.npmjs.com/package/tfx-cli) tool, login in to your account with it (e.g., https://**account**.visualstudio.com/DefaultCollection) and then upload
+the task.  To do the actual uploading you can run the following from the *_build/Tasks* folder:
+```bash
+tfx build tasks upload --task-path ./AppStorePromote
+```
+**Note**: The task will only be uploaded if the version of the task has been incremented.  To do this, update the *patch* version in the task's **task.json** and **task.loc.json** file.  You will
+need to re-build the task after making this change.
+
+To make subsequent changes, you can either remove the previous version of the task (using the tfx-cli tool) and re-upload an updated version, or simply increment the *patch* version again and re-upload the task.
+
 
 ## Package
 The package command will package the extension into a Visual Studio extension installer (.vsix file).
