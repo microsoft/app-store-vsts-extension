@@ -1,7 +1,7 @@
 {
   "name": "app-store-vsts-extension",
   "version": "0.0.2",
-  "description": "A set of VSTS tasks for publishing apps to the Apple App Store.",
+  "description": "A set of TFS/Team Services tasks for publishing apps to the Apple App Store.",
   "repository": {
     "type": "git",
     "url": "https://github.com/Microsoft/app-store-vsts-extension"
