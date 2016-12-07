@@ -75,15 +75,15 @@
             "type": "string",
             "label": "Bundle ID",
             "defaultValue": "",
-            "required": true,
+            "required": false,
             "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc). Required if the track is Production."
         },
         {
             "name": "ipaPath",
             "type": "filePath",
             "label": "Binary Path",
-            "defaultValue": "",
-            "required": false,
+            "defaultValue": "**/*.ipa",
+            "required": true,
             "helpMarkDown": "Path to the binary to publish (i.e. IPA). A glob pattern can be used but it must resolve to exactly one IPA file."
         },
         {
