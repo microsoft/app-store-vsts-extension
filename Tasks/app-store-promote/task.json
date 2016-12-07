@@ -110,7 +110,7 @@
             "label": "Team ID",
             "required": false,
             "groupName": "advanced",
-            "helpMarkDown": "The ID of your team if you are in multiple teams"
+            "helpMarkDown": "The ID of your team if you are in multiple teams."
         },
         {
             "name": "teamName",
@@ -118,7 +118,7 @@
             "label": "Team Name",
             "required": false,
             "groupName": "advanced",
-            "helpMarkDown": "The name of your team if you are in multiple teams"
+            "helpMarkDown": "The name of your team if you are in multiple teams."
         }
     ],
     "execution": {
