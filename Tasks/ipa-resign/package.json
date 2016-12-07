@@ -1,0 +1,31 @@
+{
+  "name": "ipa-resign",
+  "version": "0.0.1",
+  "description": "VSTS task to resign an ipa file",
+  "main": "ipa-resign.js",
+  "dependencies": {
+    "vsts-task-lib": "^0.9.7",
+    "vsts-tasks": "Microsoft/vsts-tasks"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Microsoft Corporation",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Microsoft/app-store-vsts-extension.git"
+  },
+  "keywords": [
+    "VSTS",
+    "Apple",
+    "Resign",
+    "IPA",
+    "Build"
+  ],
+  "bugs": {
+    "url": "https://github.com/Microsoft/app-store-vsts-extension/issues"
+  },
+  "homepage": "https://github.com/Microsoft/app-store-vsts-extension#readme"
+}
