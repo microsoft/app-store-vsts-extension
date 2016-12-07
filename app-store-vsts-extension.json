@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "app-store",
     "name": "Apple App Store",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "publisher": "ms-vsclient",
     "description": "Provides tasks for publishing to Apple's App Store from a TFS/Team Services build or release definition",
     "categories": [
@@ -26,9 +26,9 @@
             "id": "Microsoft.VisualStudio.Services"
         }
     ],
-	"icons": {
-		"default": "apple_default.png"
-	},
+    "icons": {
+        "default": "apple_default.png"
+    },
     "visibility": [
         "Build and release"
     ],
@@ -50,10 +50,10 @@
     },
     "files": [
         {
-            "path": "Tasks/app-store-promote"
+            "path": "_build/Tasks/AppStorePromote"
         },
         {
-            "path": "Tasks/app-store-release"
+            "path": "_build/Tasks/AppStoreRelease"
         },
         {
             "path": "images",

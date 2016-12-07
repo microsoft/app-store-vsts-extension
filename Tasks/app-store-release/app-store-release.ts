@@ -1,16 +1,23 @@
+ /*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+'use strict';
+
 import fs = require('fs');
 import os = require('os');
 import path = require('path');
 import tl = require('vsts-task-lib/task');
-import {ToolRunner} from 'vsts-task-lib/toolrunner';
+
+import { ToolRunner } from 'vsts-task-lib/toolrunner';
 
 class UserCredentials {
     username: string;
     password: string;
 
-    public UserCredentials() {
-
-    }
+    /* tslint:disable:no-empty */
+    public UserCredentials() { }
+    /* tslint:enable:no-empty */
 }
 
 function isValidFilePath(filePath: string) : boolean {
@@ -21,85 +28,106 @@ function isValidFilePath(filePath: string) : boolean {
     }
 }
 
+// Attempts to find a single ipa file to use by the task.
+// If a glob pattern is provided, only a single ipa is allowed.
+function findIpa(ipaPath: string) : string {
+    let paths: string[] = tl.glob(ipaPath);
+    if (!paths || paths.length === 0) {
+        throw new Error(tl.loc('NoIpaFilesFound', ipaPath));
+    }
+    if (paths.length > 1) {
+        throw new Error(tl.loc('MultipleIpaFilesFound', ipaPath));
+    }
+    return paths[0];
+}
+
 async function run() {
     try {
+        tl.setResourcePath(path.join( __dirname, 'task.json'));
+
         // Check if this is running on Mac and fail the task if not
-        if(os.platform() !== 'darwin') {
-            throw 'The Apple App Store Release task can only run on a Mac computer.';
+        if (os.platform() !== 'darwin') {
+            throw new Error(tl.loc('DarwinOnly'));
         }
 
         // Get input variables
-        var authType: string = tl.getInput('authType', false);
-        var credentials : UserCredentials = new UserCredentials();
+        let authType: string = tl.getInput('authType', true);
+        let credentials : UserCredentials = new UserCredentials();
         if (authType === 'ServiceEndpoint') {
-            var serviceEndpoint = tl.getEndpointAuthorization(tl.getInput('serviceEndpoint', true), false); 
+            let serviceEndpoint: tl.EndpointAuthorization = tl.getEndpointAuthorization(tl.getInput('serviceEndpoint', true), false);
             credentials.username = serviceEndpoint.parameters['username'];
             credentials.password = serviceEndpoint.parameters['password'];
-        } else if (authType == 'UserAndPass') {
+        } else if (authType === 'UserAndPass') {
             credentials.username = tl.getInput('username', true);
             credentials.password = tl.getInput('password', true);
         }
 
-        var bundleIdentifier: string = tl.getInput("appIdentifier", true);
-        var ipaPath: string = tl.getInput("ipaPath", true);
-        var skipBinaryUpload: boolean= tl.getBoolInput("skipBinaryUpload");
-        var uploadMetadata: boolean = tl.getBoolInput("uploadMetadata");
-        var metadataPath: string = tl.getInput("metadataPath", false);
-        var uploadScreenshots: boolean = tl.getBoolInput("uploadScreenshots");
-        var screenshotsPath: string = tl.getInput("screenshotsPath", false);
-        var releaseNotes: string = tl.getInput("releaseNotes", false);
-        var releaseTrack: string = tl.getInput("releaseTrack", true);
-        var shouldSkipWaitingForProcessing: boolean = tl.getBoolInput("shouldSkipWaitingForProcessing", false);
-        var shouldSubmitForReview: boolean = tl.getBoolInput("shouldSubmitForReview", false);
-        var shouldAutoRelease: boolean = tl.getBoolInput("shouldAutoRelease", false);
-        var shouldSkipSubmission: boolean = tl.getBoolInput("shouldSkipSubmission", false);
-        var teamId: string = tl.getInput("teamId", false);
-        var teamName: string = tl.getInput("teamName", false);
+        let ipaPath: string = tl.getInput('ipaPath', true);
+        let skipBinaryUpload: boolean = tl.getBoolInput('skipBinaryUpload', false);
+        let uploadMetadata: boolean = tl.getBoolInput('uploadMetadata', false);
+        let metadataPath: string = tl.getInput('metadataPath', false);
+        let uploadScreenshots: boolean = tl.getBoolInput('uploadScreenshots', false);
+        let screenshotsPath: string = tl.getInput('screenshotsPath', false);
+        let releaseNotes: string = tl.getInput('releaseNotes', false);
+        let releaseTrack: string = tl.getInput('releaseTrack', true);
+        let shouldSkipWaitingForProcessing: boolean = tl.getBoolInput('shouldSkipWaitingForProcessing', false);
+        let shouldSubmitForReview: boolean = tl.getBoolInput('shouldSubmitForReview', false);
+        let shouldAutoRelease: boolean = tl.getBoolInput('shouldAutoRelease', false);
+        let shouldSkipSubmission: boolean = tl.getBoolInput('shouldSkipSubmission', false);
+        let teamId: string = tl.getInput('teamId', false);
+        let teamName: string = tl.getInput('teamName', false);
 
         // Set up environment
-        var gemCache = process.env['GEM_CACHE'] || process.platform == 'win32' ? path.join(process.env['APPDATA'], 'gem-cache') : path.join(process.env['HOME'], '.gem-cache');
+        let gemCache: string = process.env['GEM_CACHE'] || process.platform === 'win32' ? path.join(process.env['APPDATA'], 'gem-cache') : path.join(process.env['HOME'], '.gem-cache');
         process.env['GEM_HOME'] = gemCache;
         process.env['FASTLANE_PASSWORD'] = credentials.password;
         process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
         process.env['FASTLANE_DISABLE_COLORS'] = true;
 
-        // Add bin of new gem home so we don't ahve to resolve it later;
-        process.env['PATH'] = process.env['PATH'] + ":" + gemCache + path.sep + "bin";
+        // Add bin of new gem home so we don't have to resolve it later
+        process.env['PATH'] = process.env['PATH'] + ':' + gemCache + path.sep + 'bin';
 
-        if (releaseTrack === "TestFlight") {
+        if (releaseTrack === 'TestFlight') {
+            // Determine which ipa package to pass to pilot
+            ipaPath = findIpa(ipaPath);
+
             // Install the ruby gem for fastlane pilot
             tl.debug('Checking for ruby install...');
             tl.which('ruby', true);
-            var installPilot: ToolRunner = tl.tool(tl.which('gem', true));
+            let installPilot: ToolRunner = tl.tool(tl.which('gem', true));
             installPilot.arg(['install', 'pilot']);
             await installPilot.exec();
 
             // Run pilot to upload to testflight
-            var pilotCommand: ToolRunner = tl.tool('pilot');
+            let pilotCommand: ToolRunner = tl.tool('pilot');
             pilotCommand.arg(['upload', '-u', credentials.username, '-i', ipaPath]);
-            if(isValidFilePath(releaseNotes)) {
+            if (isValidFilePath(releaseNotes)) {
                 pilotCommand.arg(['--changelog', fs.readFileSync(releaseNotes).toString()]);
             }
-            pilotCommand.argIf(teamId,['-q', teamId]);
-            pilotCommand.argIf(teamName,['-r', teamName]);
+            pilotCommand.argIf(teamId, ['-q', teamId]);
+            pilotCommand.argIf(teamName, ['-r', teamName]);
             pilotCommand.argIf(shouldSkipSubmission, ['--skip_submission', 'true']);
             pilotCommand.argIf(shouldSkipWaitingForProcessing, ['--skip_waiting_for_build_processing', 'true']);
             await pilotCommand.exec();
-        } else if (releaseTrack === "Production") {
+        } else if (releaseTrack === 'Production') {
+            let bundleIdentifier: string = tl.getInput('appIdentifier', true);
+            // Determine which ipa package to pass to deliver
+            ipaPath = findIpa(ipaPath);
+
             //Install the ruby gem for fastlane deliver
             tl.debug('Checking for ruby install...');
             tl.which('ruby', true);
-            var installDeliver: ToolRunner = tl.tool(tl.which('gem', true));
+            let installDeliver: ToolRunner = tl.tool(tl.which('gem', true));
             installDeliver.arg(['install', 'deliver']);
             await installDeliver.exec();
 
             // Run deliver to publish to Production track
             // See https://github.com/fastlane/deliver for more information on these arguments
-            var deliverCommand : ToolRunner = tl.tool('deliver');
+            let deliverCommand : ToolRunner = tl.tool('deliver');
             deliverCommand.arg(['--force', '-u', credentials.username, '-a', bundleIdentifier, '-i', ipaPath]);
             deliverCommand.argIf(skipBinaryUpload, ['--skip_binary_upload', 'true']);
             // upload metadata if specified
-            if(uploadMetadata && metadataPath) {
+            if (uploadMetadata && metadataPath) {
                 deliverCommand.arg(['-m', metadataPath]);
             } else {
                 deliverCommand.arg(['--skip_metadata', 'true']);
@@ -110,14 +138,14 @@ async function run() {
             } else {
                 deliverCommand.arg(['--skip_screenshots', 'true']);
             }
-            deliverCommand.argIf(teamId,['-q', teamId]);
-            deliverCommand.argIf(teamName,['-r', teamName]);
+            deliverCommand.argIf(teamId, ['-q', teamId]);
+            deliverCommand.argIf(teamName, ['-r', teamName]);
             deliverCommand.argIf(shouldSubmitForReview, ['--submit_for_review', 'true']);
             deliverCommand.argIf(shouldAutoRelease, ['--automatic_release', 'true']);
             await deliverCommand.exec();
         }
 
-        tl.setResult(tl.TaskResult.Succeeded, 'Successfully published to ' + releaseTrack);
+        tl.setResult(tl.TaskResult.Succeeded, tl.loc('SuccessfullyPublished', releaseTrack));
 
     } catch (err) {
         tl.setResult(tl.TaskResult.Failed, err);

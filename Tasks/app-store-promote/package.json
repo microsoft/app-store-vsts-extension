@@ -1,6 +1,6 @@
 {
   "name": "app-store-promote",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "VSTS task to promote a build in the Apple App Store",
   "main": "app-store-promote.js",
   "dependencies": {

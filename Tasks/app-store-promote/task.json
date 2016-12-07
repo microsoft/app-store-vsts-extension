@@ -3,6 +3,7 @@
     "name": "AppStorePromote",
     "friendlyName": "Apple App Store Promote",
     "description": "Release a build from iTunes Connect to the Apple App Store",
+    "helpMarkDown": "[More Information](https://marketplace.visualstudio.com/items?itemName=ms-vsclient.app-store)",
     "author": "Microsoft Corporation",
     "category": "Deploy",
     "visibility": [
@@ -12,7 +13,7 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "1",
+        "Minor": "2",
         "Patch": "0"
     },
     "minimumAgentVersion": "1.95.3",
@@ -109,7 +110,7 @@
             "label": "Team ID",
             "required": false,
             "groupName": "advanced",
-            "helpMarkDown": "The ID of your team if you are in multiple teams"
+            "helpMarkDown": "The ID of your team if you are in multiple teams."
         },
         {
             "name": "teamName",
@@ -117,7 +118,7 @@
             "label": "Team Name",
             "required": false,
             "groupName": "advanced",
-            "helpMarkDown": "The name of your team if you are in multiple teams"
+            "helpMarkDown": "The name of your team if you are in multiple teams."
         }
     ],
     "execution": {
@@ -125,5 +126,9 @@
             "target": "app-store-promote.js",
             "argumentFormat": ""
         }
+    },
+    "messages": {
+        "DarwinOnly": "The Apple App Store Promote task can only run on a Mac computer.",
+        "SuccessfullySubmitted": "Build successfully submitted for review."
     }
 }

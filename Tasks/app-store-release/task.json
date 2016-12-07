@@ -3,6 +3,7 @@
     "name": "AppStoreRelease",
     "friendlyName": "Apple App Store Release",
     "description": "Release an app to TestFlight or the Apple App Store",
+    "helpMarkDown": "[More Information](https://marketplace.visualstudio.com/items?itemName=ms-vsclient.app-store)",
     "author": "Microsoft Corporation",
     "category": "Deploy",
     "visibility": [
@@ -12,7 +13,7 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "1",
+        "Minor": "2",
         "Patch": "0"
     },
     "minimumAgentVersion": "1.95.3",
@@ -74,16 +75,16 @@
             "type": "string",
             "label": "Bundle ID",
             "defaultValue": "",
-            "required": true,
-            "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc)."
+            "required": false,
+            "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc). Required if the track is Production."
         },
         {
             "name": "ipaPath",
             "type": "filePath",
             "label": "Binary Path",
-            "defaultValue": "",
+            "defaultValue": "**/*.ipa",
             "required": true,
-            "helpMarkDown": "Path to the binary to publish (i.e. IPA)."
+            "helpMarkDown": "Path to the binary to publish (i.e. IPA). A glob pattern can be used but it must resolve to exactly one IPA file."
         },
         {
             "name": "releaseTrack",
@@ -219,5 +220,11 @@
             "target": "app-store-release.js",
             "argumentFormat": ""
         }
+    },
+    "messages": {
+        "DarwinOnly": "The Apple App Store Release task can only run on a Mac computer.",
+        "SuccessfullyPublished": "Successfully published to %s",
+        "NoIpaFilesFound": "No IPA file found using pattern: %s",
+        "MultipleIpaFilesFound": "More than one IPA file found using pattern: %s"
     }
 }

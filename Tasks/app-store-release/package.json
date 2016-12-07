@@ -1,6 +1,6 @@
 {
   "name": "app-store-release",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "VSTS task to publish your apps to the Apple App Store",
   "main": "app-store-release.js",
   "dependencies": {
