@@ -77,15 +77,15 @@
       "type": "string",
       "label": "ms-resource:loc.input.label.appIdentifier",
       "defaultValue": "",
-      "required": true,
+      "required": false,
       "helpMarkDown": "ms-resource:loc.input.help.appIdentifier"
     },
     {
       "name": "ipaPath",
       "type": "filePath",
       "label": "ms-resource:loc.input.label.ipaPath",
-      "defaultValue": "",
-      "required": false,
+      "defaultValue": "**/*.ipa",
+      "required": true,
       "helpMarkDown": "ms-resource:loc.input.help.ipaPath"
     },
     {

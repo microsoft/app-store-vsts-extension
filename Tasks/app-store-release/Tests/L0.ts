@@ -204,7 +204,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.invokedToolCount === 1, 'should have run only gem.');
+        assert(tr.invokedToolCount === 0, 'should not have run any tools.');
         assert(tr.stdout.indexOf('Error: loc_mock_MultipleIpaFilesFound') !== -1, 'Task should have written to stdout');
         assert(tr.failed, 'task should have failed');
 
@@ -218,7 +218,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.invokedToolCount === 1, 'should have run only gem.');
+        assert(tr.invokedToolCount === 0, 'should not have run any tools.');
         assert(tr.stdout.indexOf('Error: loc_mock_NoIpaFilesFound') !== -1, 'Task should have written to stdout');
         assert(tr.failed, 'task should have failed');
 
@@ -390,7 +390,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.invokedToolCount === 1, 'should have run only gem.');
+        assert(tr.invokedToolCount === 0, 'should not have run any tools.');
         assert(tr.stdout.indexOf('Error: loc_mock_MultipleIpaFilesFound') !== -1, 'Task should have written to stdout');
         assert(tr.failed, 'task should have failed');
 
@@ -404,7 +404,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.invokedToolCount === 1, 'should have run only gem.');
+        assert(tr.invokedToolCount === 0, 'should not have run any tools.');
         assert(tr.stdout.indexOf('Error: loc_mock_NoIpaFilesFound') !== -1, 'Task should have written to stdout');
         assert(tr.failed, 'task should have failed');
 

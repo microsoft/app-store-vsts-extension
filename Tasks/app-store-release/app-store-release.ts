@@ -88,6 +88,9 @@ async function run() {
         process.env['PATH'] = process.env['PATH'] + ':' + gemCache + path.sep + 'bin';
 
         if (releaseTrack === 'TestFlight') {
+            // Determine which ipa package to pass to pilot
+            ipaPath = findIpa(ipaPath);
+
             // Install the ruby gem for fastlane pilot
             tl.debug('Checking for ruby install...');
             tl.which('ruby', true);
@@ -97,8 +100,6 @@ async function run() {
 
             // Run pilot to upload to testflight
             let pilotCommand: ToolRunner = tl.tool('pilot');
-            // Determine which ipa package to pass to pilot
-            ipaPath = findIpa(ipaPath);
             pilotCommand.arg(['upload', '-u', credentials.username, '-i', ipaPath]);
             if (isValidFilePath(releaseNotes)) {
                 pilotCommand.arg(['--changelog', fs.readFileSync(releaseNotes).toString()]);
@@ -110,6 +111,8 @@ async function run() {
             await pilotCommand.exec();
         } else if (releaseTrack === 'Production') {
             let bundleIdentifier: string = tl.getInput('appIdentifier', true);
+            // Determine which ipa package to pass to deliver
+            ipaPath = findIpa(ipaPath);
 
             //Install the ruby gem for fastlane deliver
             tl.debug('Checking for ruby install...');
@@ -121,8 +124,6 @@ async function run() {
             // Run deliver to publish to Production track
             // See https://github.com/fastlane/deliver for more information on these arguments
             let deliverCommand : ToolRunner = tl.tool('deliver');
-            // Determine which ipa package to pass to deliver
-            ipaPath = findIpa(ipaPath);
             deliverCommand.arg(['--force', '-u', credentials.username, '-a', bundleIdentifier, '-i', ipaPath]);
             deliverCommand.argIf(skipBinaryUpload, ['--skip_binary_upload', 'true']);
             // upload metadata if specified
