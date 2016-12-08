@@ -70,7 +70,7 @@
             "type": "ms.vss-distributed-task.task",
             "targets": [ "ms.vss-distributed-task.tasks" ],
             "properties": {
-                "name": "Tasks/app-store-promote"
+                "name": "_build/Tasks/AppStorePromote"
             }
         },
         {
@@ -78,7 +78,7 @@
             "type": "ms.vss-distributed-task.task",
             "targets": [ "ms.vss-distributed-task.tasks" ],
             "properties": {
-                "name": "Tasks/app-store-release"
+                "name": "_build/Tasks/AppStoreRelease"
             }
         },
         {
