@@ -1,7 +1,8 @@
 import os = require('os');
 import path = require('path');
 import tl = require('vsts-task-lib/task');
-import sign = require('Agent.Tasks/Tasks/Common/ios-signing-common/ios-signing-common');
+import sign = require('./node_modules/Agent.Tasks/Tasks/Common/ios-signing-common/ios-signing-common');
+import util = require('./node_modules/Agent.Tasks/Tasks/Common/find-files-legacy/findfiles.legacy');
 import {ToolRunner} from 'vsts-task-lib/toolrunner';
 
 var userProvisioningProfilesPath = tl.resolve(tl.getVariable('HOME'), 'Library', 'MobileDevice', 'Provisioning Profiles');
@@ -18,28 +19,28 @@ async function run() {
         }
 
         // Get input variables
-        var ipaPath = tl.getPathInput('ipa', true, true);
+        var ipaPath = tl.getPathInput('ipaPath', true, false);
         
         var signMethod:string = tl.getInput('signMethod', true);
         if (signMethod === 'file') {
             var signFileP12Path = tl.getPathInput('signFileP12Path', false, true);
-            var signFileP12Password: string = tl.getInput("signFileP12Password");
+            var signFileP12Password: string = tl.getInput("signFileP12Password", true);
         } else if (signMethod == 'id') {
-            var signIdIdentity: string = tl.getInput("signIdIdentity");
-            var signIdUnlockKeychain: boolean = tl.getBoolInput("signIdUnlockKeychain");
-            var signIdKeychainPassword: string = tl.getInput("signIdKeychainPassword");
+            var signIdIdentity: string = tl.getInput("signIdIdentity", true);
+            var signIdUnlockKeychain: boolean = tl.getBoolInput("signIdUnlockKeychain", false);
+            var signIdKeychainPassword: string = tl.getInput("signIdKeychainPassword", false);
         }
 
         var provisionMethod:string = tl.getInput('provisionMethod', true);
         if (provisionMethod === 'file') {
             var provFileProfilePath = tl.getPathInput('provFileProfilePath', false, true);
-            var provFileRemoveProfile: boolean = tl.getBoolInput("provFileRemoveProfile");
+            var provFileRemoveProfile: boolean = tl.getBoolInput("provFileRemoveProfile", false);
         } else if (provisionMethod == 'id') {
-            var provIdProfileUuid: string = tl.getInput("provIdProfileUuid");
+            var provIdProfileUuid: string = tl.getInput("provIdProfileUuid", true);
         }
 
-        var sighResignArgs:string = tl.getInput('sighResignArgs', true);
-        var cwd = tl.getInput('cwdPath');
+        var sighResignArgs:string = tl.getInput('sighResignArgs', false);
+        var cwd = tl.getInput('cwdPath', false);
 
         // Process working directory
         var cwd = cwd
@@ -48,6 +49,16 @@ async function run() {
             || tl.getVariable('System.DefaultWorkingDirectory');
         tl.cd(cwd);
 
+        // Find the IPA file
+        var ipaFiles :Array<string> = util.findFiles(ipaPath, false);
+
+        // Fail if multiple matching files were found
+        if (ipaFiles.length > 1) {
+            throw new Error("Multiple matching files were found with search pattern: " + ipaPath + ". Only one ipa can be resigned at a time.");
+        }
+
+        var ipaFilePath = ipaFiles[0];
+        
         // Determine the params used when resigning based on sign method.
         var useKeychain:string;
         var deleteKeychain:boolean;
@@ -56,9 +67,9 @@ async function run() {
         if (signMethod === 'file') {
             signFileP12Path = tl.resolve(cwd, signFileP12Path);
             tl.debug('cwd = ' + cwd);
-            var keychain:string = tl.resolve(cwd, '_xamariniostasktmp.keychain');
-            var keychainPwd:string = '_xamariniostask_TmpKeychain_Pwd#1';
-
+            var keychain:string = tl.resolve(cwd, '_iparesigntasktmp.keychain');
+            var keychainPwd:string = '_iparesigntask_TmpKeychain_Pwd#1';
+            
             // Create a temporary keychain and install the p12 into that keychain
             tl.debug('installed cert in temp keychain');
             await sign.installCertInTemporaryKeychain(keychain, keychainPwd, signFileP12Path, signFileP12Password);
@@ -108,7 +119,7 @@ async function run() {
         // Run the sigh command 
         // See https://github.com/fastlane/fastlane/tree/master/sigh for more information on these arguments
         var sighCommand : ToolRunner = tl.tool('sigh');
-        sighCommand.arg('resign ' + ipaPath);
+        sighCommand.arg(['resign', ipaFilePath]);
         sighCommand.arg(['--keychain_path', useKeychain]);
         sighCommand.arg(['--signing_identity', useSigningIdentity]);
         sighCommand.arg(['--provisioning_profile', useProvProfilePath]);
@@ -120,7 +131,7 @@ async function run() {
         await sighCommand.exec();
 
         // Done
-        tl.setResult(tl.TaskResult.Succeeded, 'Successfully resigned ipa ' + ipaPath);
+        tl.setResult(tl.TaskResult.Succeeded, 'Successfully resigned ipa ' + ipaFilePath);
     } catch (err) {
         tl.setResult(tl.TaskResult.Failed, err);
     } finally {
