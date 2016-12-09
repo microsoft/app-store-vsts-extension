@@ -315,7 +315,7 @@ export async function deleteProvisioningProfile(uuid: string) {
     }
 }
 
-function getProvisioningProfilePath(uuid: string) : string {
+export function getProvisioningProfilePath(uuid: string) : string {
     return tl.resolve(userProvisioningProfilesPath, uuid.trim().concat('.mobileprovision'));
 }
 

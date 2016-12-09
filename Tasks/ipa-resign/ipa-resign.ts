@@ -4,10 +4,20 @@ import tl = require('vsts-task-lib/task');
 import sign = require('./ios-signing-common');
 import {ToolRunner} from 'vsts-task-lib/toolrunner';
 
-var userProvisioningProfilesPath = tl.resolve(tl.getVariable('HOME'), 'Library', 'MobileDevice', 'Provisioning Profiles');
+function findMatchExactlyOne(defaultRoot: string, pattern: string) : string {
+    var files :Array<string> = tl.findMatch(defaultRoot, pattern);
 
-function getProvisioningProfilePath(uuid: string) : string {
-    return tl.resolve(userProvisioningProfilesPath, uuid.trim().concat('.mobileprovision'));
+    if (!files || files.length === 0) {
+        throw new Error("No matching file was found with search pattern: " + pattern);
+    }
+
+    if (files.length > 1) {
+        throw new Error("Multiple matching files were found with search pattern: " + pattern + ". The pattern must match exactly one file.");
+    }
+
+    var filePath = files[0];
+
+    return filePath;
 }
 
 async function run() {
@@ -22,7 +32,7 @@ async function run() {
         
         var signMethod:string = tl.getInput('signMethod', true);
         if (signMethod === 'file') {
-            var signFileP12Path = tl.getPathInput('signFileP12Path', false, true);
+            var signFileP12Path = tl.getPathInput('signFileP12Path', true, false);
             var signFileP12Password: string = tl.getInput("signFileP12Password", true);
         } else if (signMethod == 'id') {
             var signIdIdentity: string = tl.getInput("signIdIdentity", true);
@@ -32,46 +42,45 @@ async function run() {
 
         var provisionMethod:string = tl.getInput('provisionMethod', true);
         if (provisionMethod === 'file') {
-            var provFileProfilePath = tl.getPathInput('provFileProfilePath', false, true);
+            var provFileProfilePath = tl.getPathInput('provFileProfilePath', true, false);
             var provFileRemoveProfile: boolean = tl.getBoolInput("provFileRemoveProfile", false);
         } else if (provisionMethod == 'id') {
             var provIdProfileUuid: string = tl.getInput("provIdProfileUuid", true);
         }
 
+        var entitlementsPath:string;
+        if (tl.filePathSupplied('entitlementsPath')) {
+            entitlementsPath = tl.getPathInput('entitlementsPath', false, false);
+        }
+        
         var sighResignArgs:string = tl.getInput('sighResignArgs', false);
-        var cwd = tl.getInput('cwdPath', false);
+        var cwdPath = tl.getInput('cwdPath', false);
 
         // Process working directory
-        var cwd = cwd
+        var cwd = cwdPath
             || tl.getVariable('build.sourceDirectory')
             || tl.getVariable('build.sourcesDirectory')
             || tl.getVariable('System.DefaultWorkingDirectory');
         tl.cd(cwd);
 
-        // Find the IPA file
-        var ipaFiles :Array<string> = tl.findMatch(cwd, ipaPath);
+        tl.debug('cwd = ' + cwd);
 
-        // Fail if multiple matching files were found
-        if (ipaFiles.length > 1) {
-            throw new Error("Multiple matching files were found with search pattern: " + ipaPath + ". Only one ipa can be resigned at a time.");
-        }
+        // Find the absolute ipa file path
+        var useIpaPath = findMatchExactlyOne(cwd, ipaPath);
 
-        var ipaFilePath = ipaFiles[0];
-        
         // Determine the params used when resigning based on sign method.
         var useKeychain:string;
         var deleteKeychain:boolean;
         var useSigningIdentity = null;
 
         if (signMethod === 'file') {
-            signFileP12Path = tl.resolve(cwd, signFileP12Path);
-            tl.debug('cwd = ' + cwd);
+            var signFilePath = findMatchExactlyOne(cwd, signFileP12Path);
             var keychain:string = tl.resolve(cwd, '_iparesigntasktmp.keychain');
             var keychainPwd:string = '_iparesigntask_TmpKeychain_Pwd#1';
             
             // Create a temporary keychain and install the p12 into that keychain
             tl.debug('installed cert in temp keychain');
-            await sign.installCertInTemporaryKeychain(keychain, keychainPwd, signFileP12Path, signFileP12Password);
+            await sign.installCertInTemporaryKeychain(keychain, keychainPwd, signFilePath, signFileP12Password);
 
             useKeychain = keychain;
             deleteKeychain = true;
@@ -92,11 +101,17 @@ async function run() {
         var deleteProvProfile:boolean;
 
         if (provisionMethod === 'file') {
-            useProvProfilePath = provFileProfilePath;
+            useProvProfilePath = findMatchExactlyOne(cwd, provFileProfilePath);
             deleteProvProfile = provFileRemoveProfile;
         } else if (provisionMethod === 'id') {
             // Gets the provisioning profile from the default path by uuid (~/Library/MobileDevice/Provisioning Profiles). 
-            useProvProfilePath = getProvisioningProfilePath(provIdProfileUuid);
+            useProvProfilePath = sign.getProvisioningProfilePath(provIdProfileUuid);
+        }
+
+        // Find the absolute entitlements file path.
+        var useEntitlementsFilePath:string;
+        if (entitlementsPath) {
+            useEntitlementsFilePath = findMatchExactlyOne(cwd, entitlementsPath);
         }
 
         // Having all the params ready configure the environment and exec fastlane sigh resign.
@@ -118,10 +133,12 @@ async function run() {
         // Run the sigh command 
         // See https://github.com/fastlane/fastlane/tree/master/sigh for more information on these arguments
         var sighCommand : ToolRunner = tl.tool('sigh');
-        sighCommand.arg(['resign', ipaFilePath]);
+        sighCommand.arg(['resign', useIpaPath]);
         sighCommand.arg(['--keychain_path', useKeychain]);
         sighCommand.arg(['--signing_identity', useSigningIdentity]);
         sighCommand.arg(['--provisioning_profile', useProvProfilePath]);
+
+        sighCommand.argIf(useEntitlementsFilePath, ['--entitlements', useEntitlementsFilePath]);
 
         if (sighResignArgs) {
             sighCommand.line(sighResignArgs);
@@ -130,7 +147,7 @@ async function run() {
         await sighCommand.exec();
 
         // Done
-        tl.setResult(tl.TaskResult.Succeeded, 'Successfully resigned ipa ' + ipaFilePath);
+        tl.setResult(tl.TaskResult.Succeeded, 'Successfully resigned ipa ' + useIpaPath);
     } catch (err) {
         tl.setResult(tl.TaskResult.Failed, err);
     } finally {
