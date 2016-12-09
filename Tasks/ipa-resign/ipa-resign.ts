@@ -1,8 +1,7 @@
 import os = require('os');
 import path = require('path');
 import tl = require('vsts-task-lib/task');
-import sign = require('./node_modules/Agent.Tasks/Tasks/Common/ios-signing-common/ios-signing-common');
-import util = require('./node_modules/Agent.Tasks/Tasks/Common/find-files-legacy/findfiles.legacy');
+import sign = require('./ios-signing-common');
 import {ToolRunner} from 'vsts-task-lib/toolrunner';
 
 var userProvisioningProfilesPath = tl.resolve(tl.getVariable('HOME'), 'Library', 'MobileDevice', 'Provisioning Profiles');
@@ -50,7 +49,7 @@ async function run() {
         tl.cd(cwd);
 
         // Find the IPA file
-        var ipaFiles :Array<string> = util.findFiles(ipaPath, false);
+        var ipaFiles :Array<string> = tl.findMatch(cwd, ipaPath);
 
         // Fail if multiple matching files were found
         if (ipaFiles.length > 1) {

@@ -4,9 +4,7 @@
   "description": "VSTS task to resign an ipa file",
   "main": "ipa-resign.js",
   "dependencies": {
-    "vsts-task-lib": "^0.9.7",
-    "vsts-tasks": "Microsoft/vsts-tasks",
-    "globule": "^1.0.0"
+    "vsts-task-lib": "^2.0.0-preview"
   },
   "devDependencies": {},
   "scripts": {
