@@ -1,0 +1,181 @@
+{
+  "id": "CBBF7F14-C386-4C1F-80A3-FE500E2BD977",
+  "name": "IpaResign",
+  "friendlyName": "ms-resource:loc.friendlyName",
+  "description": "ms-resource:loc.description",
+  "author": "Microsoft Corporation",
+  "category": "Build",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [
+    "xcode"
+  ],
+  "version": {
+    "Major": "1",
+    "Minor": "1",
+    "Patch": "0"
+  },
+  "minimumAgentVersion": "1.95.3",
+  "instanceNameFormat": "ms-resource:loc.instanceNameFormat",
+  "groups": [
+    {
+      "name": "sign",
+      "displayName": "ms-resource:loc.group.displayName.sign",
+      "isExpanded": true
+    },
+    {
+      "name": "provision",
+      "displayName": "ms-resource:loc.group.displayName.provision",
+      "isExpanded": true
+    },
+    {
+      "name": "advanced",
+      "displayName": "ms-resource:loc.group.displayName.advanced",
+      "isExpanded": false
+    }
+  ],
+  "inputs": [
+    {
+      "name": "ipaPath",
+      "type": "filePath",
+      "label": "ms-resource:loc.input.label.ipaPath",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "ms-resource:loc.input.help.ipaPath"
+    },
+    {
+      "name": "entitlementsPath",
+      "type": "filePath",
+      "label": "ms-resource:loc.input.label.entitlementsPath",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.entitlementsPath"
+    },
+    {
+      "name": "signMethod",
+      "type": "radio",
+      "label": "ms-resource:loc.input.label.signMethod",
+      "required": false,
+      "groupName": "sign",
+      "defaultValue": "file",
+      "helpMarkDown": "ms-resource:loc.input.help.signMethod",
+      "options": {
+        "file": "File Contents",
+        "id": "Identifiers"
+      }
+    },
+    {
+      "name": "signFileP12Path",
+      "type": "filePath",
+      "label": "ms-resource:loc.input.label.signFileP12Path",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.signFileP12Path",
+      "groupName": "sign",
+      "visibleRule": "signMethod = file"
+    },
+    {
+      "name": "signFileP12Password",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.signFileP12Password",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.signFileP12Password",
+      "groupName": "sign",
+      "visibleRule": "signMethod = file"
+    },
+    {
+      "name": "signIdIdentity",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.signIdIdentity",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.signIdIdentity",
+      "groupName": "sign",
+      "visibleRule": "signMethod = id"
+    },
+    {
+      "name": "signIdUnlockKeychain",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.signIdUnlockKeychain",
+      "defaultValue": false,
+      "required": true,
+      "helpMarkDown": "ms-resource:loc.input.help.signIdUnlockKeychain",
+      "groupName": "sign",
+      "visibleRule": "signMethod = id"
+    },
+    {
+      "name": "signIdKeychainPassword",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.signIdKeychainPassword",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.signIdKeychainPassword",
+      "groupName": "sign",
+      "visibleRule": "signMethod = id"
+    },
+    {
+      "name": "provisionMethod",
+      "type": "radio",
+      "label": "ms-resource:loc.input.label.provisionMethod",
+      "required": false,
+      "groupName": "provision",
+      "defaultValue": "file",
+      "helpMarkDown": "ms-resource:loc.input.help.provisionMethod",
+      "options": {
+        "file": "File Contents",
+        "id": "Identifiers"
+      }
+    },
+    {
+      "name": "provFileProfilePath",
+      "type": "filePath",
+      "label": "ms-resource:loc.input.label.provFileProfilePath",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.provFileProfilePath",
+      "groupName": "provision",
+      "visibleRule": "provisionMethod = file"
+    },
+    {
+      "name": "provFileRemoveProfile",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.provFileRemoveProfile",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.provFileRemoveProfile",
+      "groupName": "provision",
+      "visibleRule": "provisionMethod = file"
+    },
+    {
+      "name": "provIdProfileUuid",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.provIdProfileUuid",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.provIdProfileUuid",
+      "groupName": "provision",
+      "visibleRule": "provisionMethod = id"
+    },
+    {
+      "name": "sighResignArgs",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.sighResignArgs",
+      "required": false,
+      "groupName": "advanced",
+      "helpMarkDown": "ms-resource:loc.input.help.sighResignArgs"
+    },
+    {
+      "name": "cwdPath",
+      "type": "filePath",
+      "label": "ms-resource:loc.input.label.cwdPath",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.cwdPath",
+      "groupName": "advanced"
+    }
+  ],
+  "execution": {
+    "Node": {
+      "target": "ipa-resign.js",
+      "argumentFormat": ""
+    }
+  },
+  "helpMarkDown": "ms-resource:loc.helpMarkDown"
+}
