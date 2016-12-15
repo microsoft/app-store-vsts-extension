@@ -56,6 +56,9 @@
             "path": "_build/Tasks/AppStoreRelease"
         },
         {
+            "path": "Tasks/ipa-resign"
+        },
+        {
             "path": "images",
             "addressable": true
         }
@@ -79,6 +82,14 @@
             "targets": [ "ms.vss-distributed-task.tasks" ],
             "properties": {
                 "name": "_build/Tasks/AppStoreRelease"
+            }
+        },
+        {
+            "id": "ipa-resign",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [ "ms.vss-distributed-task.tasks" ],
+            "properties": {
+                "name": "Tasks/ipa-resign"
             }
         },
         {
