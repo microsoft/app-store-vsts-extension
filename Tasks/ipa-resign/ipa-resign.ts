@@ -20,6 +20,11 @@ function findMatchExactlyOne(defaultRoot: string, pattern: string) : string {
 }
 
 async function run() {
+    let deleteKeychain: boolean = false;
+    let useKeychain: string;
+    let deleteProvProfile: boolean = false;
+    let useProvProfilePath: string;
+
     try {
         // Check if this is running on Mac and fail the task if not
         if (os.platform() !== 'darwin') {
@@ -30,28 +35,36 @@ async function run() {
         let ipaPath: string = tl.getPathInput('ipaPath', true, false);
 
         let signMethod: string = tl.getInput('signMethod', true);
+        let signFileP12Path: string;
+        let signFileP12Password: string;
+        let signIdIdentity: string;
+        let signIdUnlockKeychain: boolean = false;
+        let signIdKeychainPassword: string;
         if (signMethod === 'file') {
-            let signFileP12Path: string = tl.getPathInput('signFileP12Path', true, false);
-            let signFileP12Password: string = tl.getInput('signFileP12Password', true);
+            signFileP12Path = tl.getPathInput('signFileP12Path', true, false);
+            signFileP12Password = tl.getInput('signFileP12Password', true);
         } else if (signMethod === 'id') {
-            let signIdIdentity: string = tl.getInput('signIdIdentity', true);
-            let signIdUnlockKeychain: boolean = tl.getBoolInput('signIdUnlockKeychain', false);
-            let signIdKeychainPassword: string = tl.getInput('signIdKeychainPassword', false);
+            signIdIdentity = tl.getInput('signIdIdentity', true);
+            signIdUnlockKeychain = tl.getBoolInput('signIdUnlockKeychain', false);
+            signIdKeychainPassword = tl.getInput('signIdKeychainPassword', false);
         }
 
         let provisionMethod: string = tl.getInput('provisionMethod', true);
+        let provFileProfilePath: string;
+        let provFileRemoveProfile: boolean = false;
+        let provIdProfileUuid: string;
         if (provisionMethod === 'file') {
-            let provFileProfilePath: string = tl.getPathInput('provFileProfilePath', true, false);
-            let provFileRemoveProfile: boolean = tl.getBoolInput('provFileRemoveProfile', false);
+            provFileProfilePath = tl.getPathInput('provFileProfilePath', true, false);
+            provFileRemoveProfile = tl.getBoolInput('provFileRemoveProfile', false);
         } else if (provisionMethod === 'id') {
-            let provIdProfileUuid: string = tl.getInput('provIdProfileUuid', true);
+            provIdProfileUuid = tl.getInput('provIdProfileUuid', true);
         }
 
         let entitlementsPath: string;
         if (tl.filePathSupplied('entitlementsPath')) {
             entitlementsPath = tl.getPathInput('entitlementsPath', false, false);
         }
-        
+
         let sighResignArgs: string = tl.getInput('sighResignArgs', false);
         let cwdPath: string = tl.getInput('cwdPath', false);
 
@@ -68,8 +81,6 @@ async function run() {
         let useIpaPath: string = findMatchExactlyOne(cwd, ipaPath);
 
         // Determine the params used when resigning based on sign method.
-        let useKeychain: string;
-        let deleteKeychain: boolean;
         let useSigningIdentity = null;
 
         if (signMethod === 'file') {
@@ -96,9 +107,6 @@ async function run() {
         }
 
         // Determine the params used when resigning based on provision method.
-        let useProvProfilePath: string;
-        let deleteProvProfile: boolean;
-
         if (provisionMethod === 'file') {
             useProvProfilePath = findMatchExactlyOne(cwd, provFileProfilePath);
             deleteProvProfile = provFileRemoveProfile;
