@@ -36,5 +36,9 @@
   "loc.messages.DarwinOnly": "The Ipa Resign task can only run on a Mac computer.",
   "loc.messages.SuccessfullyResigned": "Successfully resigned ipa %s",
   "loc.messages.FailedTemporaryKeyDeletion": "Failed to delete temporary keychain created during the resign process. %s",
-  "loc.messages.FailedProvisioningProfileDeletion": "Failed to delete the provisioning profile %s"
+  "loc.messages.FailedProvisioningProfileDeletion": "Failed to delete the provisioning profile %s",
+  "loc.messages.NoMatchingFileWithSearchPattern": "No matching file was found with search pattern: %s",
+  "loc.messages.MultipleFilesFound": "Multiple matching files were found with search pattern: %s. The pattern must match exactly one file.",
+  "loc.messages.P12FilePathNotAPath": "Path provided for P12 file is not a path: %s",
+  "loc.messages.ProvisionFilePathNotAPath": "Path provided for provisioning profile is not a path: %s"
 }

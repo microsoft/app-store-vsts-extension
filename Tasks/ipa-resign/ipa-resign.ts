@@ -9,11 +9,11 @@ function findMatchExactlyOne(defaultRoot: string, pattern: string): string {
     let files: Array<string> = tl.findMatch(defaultRoot, pattern);
 
     if (!files || files.length === 0) {
-        throw new Error('No matching file was found with search pattern: ' + pattern);
+        throw new Error(tl.loc('NoMatchingFileWithSearchPattern', pattern));
     }
 
     if (files.length > 1) {
-        throw new Error('Multiple matching files were found with search pattern: ' + pattern + '. The pattern must match exactly one file.');
+        throw new Error(tl.loc('MultipleFilesFound', pattern));
     }
 
     return files[0];
@@ -44,6 +44,10 @@ async function run() {
         let signIdKeychainPassword: string;
         if (signMethod === 'file') {
             signFileP12Path = tl.getPathInput('signFileP12Path', true, false);
+            // Ensure signFileP12Path is actually a path
+            if (!tl.filePathSupplied('signFileP12Path')) {
+                throw new Error(tl.loc('P12FilePathNotAPath', signFileP12Path));
+            }
             signFileP12Password = tl.getInput('signFileP12Password', true);
         } else if (signMethod === 'id') {
             signIdIdentity = tl.getInput('signIdIdentity', true);
@@ -56,8 +60,12 @@ async function run() {
         let provFileRemoveProfile: boolean = false;
         let provIdProfileUuid: string;
         if (provisionMethod === 'file') {
-            provFileProfilePath = tl.getPathInput('provFileProfilePath', true, false);
             provFileRemoveProfile = tl.getBoolInput('provFileRemoveProfile', false);
+            provFileProfilePath = tl.getPathInput('provFileProfilePath', true, false);
+            // Ensure provFileProfilePath is actually a path
+            if (!tl.filePathSupplied('provFileProfilePath')) {
+                throw new Error(tl.loc('ProvisionFilePathNotAPath', provFileProfilePath));
+            }
         } else if (provisionMethod === 'id') {
             provIdProfileUuid = tl.getInput('provIdProfileUuid', true);
         }

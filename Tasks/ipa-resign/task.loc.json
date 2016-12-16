@@ -181,7 +181,11 @@
     "DarwinOnly": "ms-resource:loc.messages.DarwinOnly",
     "SuccessfullyResigned": "ms-resource:loc.messages.SuccessfullyResigned",
     "FailedTemporaryKeyDeletion": "ms-resource:loc.messages.FailedTemporaryKeyDeletion",
-    "FailedProvisioningProfileDeletion": "ms-resource:loc.messages.FailedProvisioningProfileDeletion"
+    "FailedProvisioningProfileDeletion": "ms-resource:loc.messages.FailedProvisioningProfileDeletion",
+    "NoMatchingFileWithSearchPattern": "ms-resource:loc.messages.NoMatchingFileWithSearchPattern",
+    "MultipleFilesFound": "ms-resource:loc.messages.MultipleFilesFound",
+    "P12FilePathNotAPath": "ms-resource:loc.messages.P12FilePathNotAPath",
+    "ProvisionFilePathNotAPath": "ms-resource:loc.messages.ProvisionFilePathNotAPath"
   },
   "helpMarkDown": "ms-resource:loc.helpMarkDown"
 }
