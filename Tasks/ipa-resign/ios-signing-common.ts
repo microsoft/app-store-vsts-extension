@@ -1,6 +1,4 @@
 import fs = require('fs');
-//import path = require('path');
-//import Q = require('q');
 import tl = require('vsts-task-lib/task');
 
 import { ToolRunner } from 'vsts-task-lib/toolrunner';
