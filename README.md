@@ -131,9 +131,19 @@ Allows you to promote an app previously updated to iTunes Connect to the App Sto
 `DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS="-t DAV"`
 ![Fix Firewall issues](/images/variable-definition-firewall-issues.png)
 
-## Contact Us
+## Support
+Support for this extension is provided on our [GitHub Issue Tracker](https://github.com/Microsoft/app-store-vsts-extension/issues).  You
+can submit a [bug report](https://github.com/Microsoft/app-store-vsts-extension/issues/new), a [feature request](https://github.com/Microsoft/app-store-vsts-extension/issues/new)
+or participate in [discussions](https://github.com/Microsoft/app-store-vsts-extension/issues).
 
-[Report an issue](https://github.com/Microsoft/app-store-vsts-extension/issues)
+## Contributing to the Extension
+See the [developer documentation](CONTRIBUTING.md) for details on how to contribute to this extension.
 
+## Code of Conduct
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+## Privacy Statement
+The [Microsoft Visual Studio Product Family Privacy Statement](http://go.microsoft.com/fwlink/?LinkId=528096&clcid=0x409)
+describes the privacy statement of this software.
 
 Apple and the Apple logo are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc.
