@@ -12,8 +12,8 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "1",
-        "Patch": "0"
+        "Minor": "2",
+        "Patch": "1"
     },
     "minimumAgentVersion": "1.95.3",
     "instanceNameFormat": "Resign ipa file",
@@ -174,5 +174,15 @@
             "target": "ipa-resign.js",
             "argumentFormat": ""
         }
+    },
+    "messages": {
+        "DarwinOnly": "The Ipa Resign task can only run on a Mac computer.",
+        "SuccessfullyResigned": "Successfully resigned ipa %s",
+        "FailedTemporaryKeyDeletion": "Failed to delete temporary keychain created during the resign process. %s",
+        "FailedProvisioningProfileDeletion": "Failed to delete the provisioning profile %s",
+        "NoMatchingFileWithSearchPattern": "No matching file was found with search pattern: %s",
+        "MultipleFilesFound": "Multiple matching files were found with search pattern: %s. The pattern must match exactly one file.",
+        "P12FilePathNotAPath": "Path provided for P12 file is not a path: %s",
+        "ProvisionFilePathNotAPath": "Path provided for provisioning profile is not a path: %s"
     }
 }
