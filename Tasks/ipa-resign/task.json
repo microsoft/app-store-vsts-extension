@@ -174,5 +174,11 @@
             "target": "ipa-resign.js",
             "argumentFormat": ""
         }
+    },
+    "messages": {
+        "DarwinOnly": "The Ipa Resign task can only run on a Mac computer.",
+        "SuccessfullyResigned": "Successfully resigned ipa %s",
+        "FailedTemporaryKeyDeletion": "Failed to delete temporary keychain created during the resign process. %s",
+        "FailedProvisioningProfileDeletion": "Failed to delete the provisioning profile %s"
     }
 }

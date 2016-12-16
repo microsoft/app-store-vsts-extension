@@ -177,5 +177,11 @@
       "argumentFormat": ""
     }
   },
+  "messages": {
+    "DarwinOnly": "ms-resource:loc.messages.DarwinOnly",
+    "SuccessfullyResigned": "ms-resource:loc.messages.SuccessfullyResigned",
+    "FailedTemporaryKeyDeletion": "ms-resource:loc.messages.FailedTemporaryKeyDeletion",
+    "FailedProvisioningProfileDeletion": "ms-resource:loc.messages.FailedProvisioningProfileDeletion"
+  },
   "helpMarkDown": "ms-resource:loc.helpMarkDown"
 }

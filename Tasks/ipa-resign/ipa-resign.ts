@@ -5,7 +5,7 @@ import sign = require('./ios-signing-common');
 
 import { ToolRunner } from 'vsts-task-lib/toolrunner';
 
-function findMatchExactlyOne(defaultRoot: string, pattern: string) : string {
+function findMatchExactlyOne(defaultRoot: string, pattern: string): string {
     let files: Array<string> = tl.findMatch(defaultRoot, pattern);
 
     if (!files || files.length === 0) {
@@ -26,9 +26,11 @@ async function run() {
     let useProvProfilePath: string;
 
     try {
+        tl.setResourcePath(path.join( __dirname, 'task.json'));
+
         // Check if this is running on Mac and fail the task if not
         if (os.platform() !== 'darwin') {
-            throw 'The IPA Resign task can only run on a Mac computer.';
+            throw new Error(tl.loc('DarwinOnly'));
         }
 
         // Get input variables
@@ -74,7 +76,6 @@ async function run() {
             || tl.getVariable('build.sourcesDirectory')
             || tl.getVariable('System.DefaultWorkingDirectory');
         tl.cd(cwd);
-
         tl.debug('cwd = ' + cwd);
 
         // Find the absolute ipa file path
@@ -153,7 +154,7 @@ async function run() {
 
         await sighCommand.exec();
 
-        tl.setResult(tl.TaskResult.Succeeded, 'Successfully resigned ipa ' + useIpaPath);
+        tl.setResult(tl.TaskResult.Succeeded, tl.loc('SuccessfullyResigned', useIpaPath));
     } catch (err) {
         tl.setResult(tl.TaskResult.Failed, err);
     } finally {
@@ -163,7 +164,7 @@ async function run() {
                 await sign.deleteKeychain(useKeychain);
             } catch (err) {
                 tl.debug('Failed to delete temporary keychain. Error = ' + err);
-                tl.warning('Failed to delete temporary keychain created during the resign process. ' + useKeychain);
+                tl.warning(tl.loc('FailedTemporaryKeyDeletion', useKeychain));
             }
         }
 
@@ -173,7 +174,7 @@ async function run() {
                 await sign.deleteProvisioningProfile(useProvProfilePath);
             } catch (err) {
                 tl.debug('Failed to delete provisioning profile. Error = ' + err);
-                tl.warning('Failed to delete the provisioning profile ' + useProvProfilePath);
+                tl.warning(tl.loc('FailedProvisioningProfileDeletion', useProvProfilePath));
             }
         }
     }

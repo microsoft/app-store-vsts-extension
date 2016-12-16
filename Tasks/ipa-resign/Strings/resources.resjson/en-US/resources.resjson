@@ -32,5 +32,9 @@
   "loc.input.label.sighResignArgs": "Sigh Resign Arguments",
   "loc.input.help.sighResignArgs": "Additional Fastlane Sigh Resign arguments that should be used to resign.",
   "loc.input.label.cwdPath": "Working Directory",
-  "loc.input.help.cwdPath": "Working directory for signing. Defaults to the root of the repository."
+  "loc.input.help.cwdPath": "Working directory for signing. Defaults to the root of the repository.",
+  "loc.messages.DarwinOnly": "The Ipa Resign task can only run on a Mac computer.",
+  "loc.messages.SuccessfullyResigned": "Successfully resigned ipa %s",
+  "loc.messages.FailedTemporaryKeyDeletion": "Failed to delete temporary keychain created during the resign process. %s",
+  "loc.messages.FailedProvisioningProfileDeletion": "Failed to delete the provisioning profile %s"
 }
