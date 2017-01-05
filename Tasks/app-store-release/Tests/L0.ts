@@ -80,6 +80,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane pilot.');
         assert(tr.succeeded, 'task should have succeeded');
 
         done();
@@ -92,6 +93,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane pilot.');
         assert(tr.succeeded, 'task should have succeeded');
 
         done();
@@ -117,8 +119,8 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('pilot upload -u creds-username -i mypackage.ipa -q teamId'), 'pilot upload with teamId should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and pilot.');
+        assert(tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa -q teamId'), 'fastlane pilot upload with teamId should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane pilot.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -132,8 +134,8 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('pilot upload -u creds-username -i mypackage.ipa -r teamName'), 'pilot upload with teamName should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and pilot.');
+        assert(tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa -r teamName'), 'fastlane pilot upload with teamName should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane pilot.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -147,8 +149,8 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('pilot upload -u creds-username -i mypackage.ipa -q teamId -r teamName'), 'pilot upload with teamId and teamName should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and pilot.');
+        assert(tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa -q teamId -r teamName'), 'fastlane pilot upload with teamId and teamName should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane pilot.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -162,8 +164,8 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('pilot upload -u creds-username -i mypackage.ipa --skip_submission true'), 'pilot upload with skip_submission should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and pilot.');
+        assert(tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa --skip_submission true'), 'fastlane pilot upload with skip_submission should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane pilot.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -177,8 +179,8 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('pilot upload -u creds-username -i mypackage.ipa --skip_waiting_for_build_processing true'), 'pilot upload with skip_waiting_for_build_processing should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and pilot.');
+        assert(tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa --skip_waiting_for_build_processing true'), 'fastlane pilot upload with skip_waiting_for_build_processing should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane pilot.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -192,6 +194,9 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
+        assert(tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa'), 'fastlane pilot upload with one ip file should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane pilot.');
+        assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
         done();
@@ -232,6 +237,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
+        assert(tr.invokedToolCount === 2, 'should have run gem install and gem update.');
         assert(tr.stdout.indexOf('Input required: appIdentifier') !== -1, 'Task should have written to stdout');
         assert(tr.failed, 'task should have failed');
 
@@ -245,6 +251,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
+        assert(tr.invokedToolCount === 0, 'should not have any tools since ipaPath was not provided.');
         assert(tr.stdout.indexOf('Input required: ipaPath') !== -1, 'Task should have written to stdout');
         assert(tr.failed, 'task should have failed');
 
@@ -258,8 +265,8 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_binary_upload true --skip_metadata true --skip_screenshots true'), 'deliver with skip_binary_upload should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
+        assert(tr.ran('fastlane deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_binary_upload true --skip_metadata true --skip_screenshots true'), 'fastlane deliver with skip_binary_upload should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -273,8 +280,8 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true --skip_screenshots true -q teamId'), 'deliver with teamId should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
+        assert(tr.ran('fastlane deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true --skip_screenshots true -q teamId'), 'fastlane deliver with teamId should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -288,8 +295,8 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true --skip_screenshots true -r teamName'), 'deliver with teamName should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
+        assert(tr.ran('fastlane deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true --skip_screenshots true -r teamName'), 'fastlane deliver with teamName should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -303,8 +310,8 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true --skip_screenshots true -q teamId -r teamName'), 'deliver with teamId and teamName should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
+        assert(tr.ran('fastlane deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true --skip_screenshots true -q teamId -r teamName'), 'fastlane deliver with teamId and teamName should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -318,8 +325,8 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true --skip_screenshots true --submit_for_review true'), 'deliver with submit_for_review should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
+        assert(tr.ran('fastlane deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true --skip_screenshots true --submit_for_review true'), 'fastlane deliver with submit_for_review should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -333,8 +340,8 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true --skip_screenshots true --automatic_release true'), 'deliver with automatic_release should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
+        assert(tr.ran('fastlane deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true --skip_screenshots true --automatic_release true'), 'fastlane deliver with automatic_release should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -348,8 +355,8 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa -m <path> --skip_screenshots true'), 'deliver with -m should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
+        assert(tr.ran('fastlane deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa -m <path> --skip_screenshots true'), 'fastlane deliver with -m should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -363,8 +370,8 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true -w <path>'), 'deliver with -w should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
+        assert(tr.ran('fastlane deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true -w <path>'), 'fastlane deliver with -w should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -378,6 +385,8 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
+        assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
         done();

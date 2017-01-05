@@ -20,37 +20,45 @@ tmr.setInput('ipaPath', 'mypackage.ipa');
 
 tmr.setInput('shouldSkipWaitingForProcessing', 'true');
 
-// provide answers for task mock
-let a: ma.TaskLibAnswers = <ma.TaskLibAnswers> {
-    'which': {
-        'ruby': '/usr/bin/ruby',
-        'gem': '/usr/bin/gem',
-        'deliver': '/usr/bin/deliver',
-        'pilot': '/usr/bin/pilot'
+process.env['MOCK_NORMALIZE_SLASHES'] = true;
+process.env['HOME'] = '/usr/bin';
+let gemCache: string = '/usr/bin/.gem-cache';
+
+//construct a string that is JSON, call JSON.parse(string), send that to ma.TaskLibAnswers
+let myAnswers: string = `{
+    "which": {
+        "ruby": "/usr/bin/ruby",
+        "gem": "/usr/bin/gem",
+        "fastlane": "/usr/bin/fastlane"
     },
-    'checkPath' : {
-        '/usr/bin/ruby': true,
-        '/usr/bin/gem': true,
-        '/usr/bin/deliver': true,
-        '/usr/bin/pilot': true
+    "checkPath" : {
+        "/usr/bin/ruby": true,
+        "/usr/bin/gem": true,
+        "/usr/bin/fastlane": true
     },
-    'glob': {
-        'mypackage.ipa': [
-            'mypackage.ipa'
+    "glob": {
+        "mypackage.ipa": [
+            "mypackage.ipa"
         ]
     },
-    'exec': {
-        '/usr/bin/gem install pilot': {
-            'code': 0,
-            'stdout': '10 gems installed'
+    "exec": {
+        "/usr/bin/gem install fastlane": {
+            "code": 0,
+            "stdout": "1 gem installed"
         },
-        'pilot upload -u creds-username -i mypackage.ipa --skip_waiting_for_build_processing true': {
-            'code': 0,
-            'stdout': 'consider it uploaded!'
+        "/usr/bin/gem update fastlane -i ${gemCache}": {
+            "code": 0,
+            "stdout": "1 gem installed"
+        },
+        "fastlane pilot upload -u creds-username -i mypackage.ipa --skip_waiting_for_build_processing true": {
+            "code": 0,
+            "stdout": "consider it uploaded!"
         }
     }
-};
-tmr.setAnswers(a);
+ }`;
+let json: any = JSON.parse(myAnswers);
+// Cast the json blob into a TaskLibAnswers
+tmr.setAnswers(<ma.TaskLibAnswers>json);
 
 // This is how you can mock NPM packages...
 os.platform = () => {
