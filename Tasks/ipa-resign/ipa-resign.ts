@@ -132,8 +132,9 @@ async function run() {
 
         // Having all the params ready configure the environment and exec fastlane sigh resign.
         // Set up environment
-        let gemCache: string = process.env['GEM_CACHE'] || process.platform === 'win32' ? path.join(process.env['APPDATA'], 'gem-cache') : path.join(process.env['HOME'], '.gem-cache');
-        process.env['GEM_HOME'] = gemCache;
+        tl.debug(`GEM_CACHE=${process.env['GEM_CACHE']}`);
+        let gemCache: string = process.env['GEM_CACHE'] || path.join(process.env['HOME'], '.gem-cache');
+        tl.debug(`gemCache=${gemCache}`);
         process.env['FASTLANE_DISABLE_COLORS'] = true;
 
         // Add bin of new gem home so we don't ahve to resolve it later;

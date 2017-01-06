@@ -78,7 +78,8 @@ async function run() {
         let teamName: string = tl.getInput('teamName', false);
 
         // Set up environment
-        let gemCache: string = path.join(process.env['HOME'], '.gem-cache');
+        tl.debug(`GEM_CACHE=${process.env['GEM_CACHE']}`);
+        let gemCache: string = process.env['GEM_CACHE'] || path.join(process.env['HOME'], '.gem-cache');
         tl.debug(`gemCache=${gemCache}`);
         process.env['GEM_HOME'] = gemCache;
         process.env['FASTLANE_PASSWORD'] = credentials.password;

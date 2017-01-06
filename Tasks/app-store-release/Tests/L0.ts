@@ -73,6 +73,21 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
+    it('custom GEM_CACHE env var', (done:MochaDone) => {
+        this.timeout(1000);
+
+        //L0GemCacheEnvVar.ts sets the GEM_CACHE env var and expects it to be used when fastlane is updated.
+        let tp = path.join(__dirname, 'L0GemCacheEnvVar.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane pilot.');
+        assert(tr.succeeded, 'task should have succeeded');
+        assert(tr.ran('/usr/bin/gem update fastlane -i /usr/bin/customGemCache'));
+
+        done();
+    });
+
     it('testflight - username+password', (done:MochaDone) => {
         this.timeout(1000);
 
