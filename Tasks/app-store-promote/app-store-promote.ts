@@ -52,7 +52,9 @@ async function run() {
         tl.debug('Read all inputs.');
 
         // Set up environment
-        let gemCache: string = process.env['GEM_CACHE'] || process.platform === 'win32' ? path.join(process.env['APPDATA'], 'gem-cache') : path.join(process.env['HOME'], '.gem-cache');
+        tl.debug(`GEM_CACHE=${process.env['GEM_CACHE']}`);
+        let gemCache: string = process.env['GEM_CACHE'] || path.join(process.env['HOME'], '.gem-cache');
+        tl.debug(`gemCache=${gemCache}`);
         process.env['GEM_HOME'] = gemCache;
         process.env['FASTLANE_PASSWORD'] = credentials.password;
         process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
@@ -60,17 +62,22 @@ async function run() {
         // Add bin of new gem home so we don't have to resolve it later
         process.env['PATH'] = process.env['PATH'] + ':' + gemCache + path.sep + 'bin';
 
-        //Install the ruby gem for fastlane deliver
+        // Install the ruby gem for fastlane
         tl.debug('Checking for ruby install...');
         tl.which('ruby', true);
-        let installDeliver: ToolRunner = tl.tool(tl.which('gem', true));
-        installDeliver.arg(['install', 'deliver']);
-        await installDeliver.exec();
+        // Install the fastlane tools (if they're already present, should be a no-op)
+        let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
+        gemRunner.arg(['install', 'fastlane']);
+        await gemRunner.exec();
+        // Always update fastlane (if already latest, should be a no-op)
+        gemRunner = tl.tool(tl.which('gem', true));
+        gemRunner.arg(['update', 'fastlane', '-i', gemCache]);
+        await gemRunner.exec();
 
         //Run the deliver command 
         // See https://github.com/fastlane/deliver for more information on these arguments
-        let deliverCommand: ToolRunner = tl.tool('deliver');
-        deliverCommand.arg(['submit_build', '-u', credentials.username, '-a', appIdentifier]);
+        let deliverCommand: ToolRunner = tl.tool('fastlane');
+        deliverCommand.arg(['deliver', 'submit_build', '-u', credentials.username, '-a', appIdentifier]);
         if (chooseBuild.toLowerCase() === 'specify') {
            deliverCommand.arg(['-n', buildNumber]);
         }

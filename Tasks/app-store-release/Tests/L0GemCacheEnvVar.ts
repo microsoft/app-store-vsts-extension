@@ -9,20 +9,19 @@ import tmrm = require('vsts-task-lib/mock-run');
 import path = require('path');
 import os = require('os');
 
-let taskPath = path.join(__dirname, '..', 'app-store-promote.js');
+let taskPath = path.join(__dirname, '..', 'app-store-release.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
 tmr.setInput('authType', 'UserAndPass');
 tmr.setInput('username', 'creds-username');
 tmr.setInput('password', 'creds-password');
-tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
-tmr.setInput('chooseBuild', 'Specify');
-
-tmr.setInput('buildNumber', '42');
+tmr.setInput('releaseTrack', 'TestFlight');
+tmr.setInput('ipaPath', 'mypackage.ipa');
 
 process.env['MOCK_NORMALIZE_SLASHES'] = true;
-process.env['HOME'] = '/usr/bin';
-let gemCache: string = '/usr/bin/.gem-cache';
+//process.env['HOME'] = '/usr/bin';
+process.env['GEM_CACHE'] = '/usr/bin/customGemCache';
+let gemCache: string = process.env['GEM_CACHE'];
 
 //construct a string that is JSON, call JSON.parse(string), send that to ma.TaskLibAnswers
 let myAnswers: string = `{
@@ -36,6 +35,11 @@ let myAnswers: string = `{
         "/usr/bin/gem": true,
         "/usr/bin/fastlane": true
     },
+    "glob": {
+        "mypackage.ipa": [
+            "mypackage.ipa"
+        ]
+    },
     "exec": {
         "/usr/bin/gem install fastlane": {
             "code": 0,
@@ -45,9 +49,9 @@ let myAnswers: string = `{
             "code": 0,
             "stdout": "1 gem installed"
         },
-        "fastlane deliver submit_build -u creds-username -a com.microsoft.test.appId -n 42 --skip_binary_upload true --skip_metadata true --skip_screenshots true --force": {
+        "fastlane pilot upload -u creds-username -i mypackage.ipa": {
             "code": 0,
-            "stdout": "consider it delivered!"
+            "stdout": "consider it uploaded!"
         }
     }
  }`;

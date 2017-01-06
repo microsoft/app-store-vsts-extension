@@ -40,6 +40,7 @@ describe('app-store-promote L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.succeeded, 'task should have succeeded');
 
         done();
@@ -52,6 +53,7 @@ describe('app-store-promote L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.succeeded, 'task should have succeeded');
 
         done();
@@ -90,8 +92,8 @@ describe('app-store-promote L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver submit_build -u creds-username -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --force'), 'deliver with the latest build should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
+        assert(tr.ran('fastlane deliver submit_build -u creds-username -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --force'), 'fastlane deliver with the latest build should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -105,8 +107,8 @@ describe('app-store-promote L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver submit_build -u creds-username -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force'), 'deliver with auto release should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
+        assert(tr.ran('fastlane deliver submit_build -u creds-username -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force'), 'fastlane deliver with auto release should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -120,8 +122,8 @@ describe('app-store-promote L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver submit_build -u creds-username -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true -q teamId --force'), 'deliver with team id should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
+        assert(tr.ran('fastlane deliver submit_build -u creds-username -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true -q teamId --force'), 'fastlane deliver with team id should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -135,8 +137,8 @@ describe('app-store-promote L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver submit_build -u creds-username -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true -r teamName --force'), 'deliver with team name should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
+        assert(tr.ran('fastlane deliver submit_build -u creds-username -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true -r teamName --force'), 'fastlane deliver with team name should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -150,8 +152,8 @@ describe('app-store-promote L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver submit_build -u creds-username -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true -q teamId -r teamName --force'), 'deliver with team id and team name should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
+        assert(tr.ran('fastlane deliver submit_build -u creds-username -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true -q teamId -r teamName --force'), 'fastlane deliver with team id and team name should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -165,10 +167,27 @@ describe('app-store-promote L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('deliver submit_build -u creds-username -a com.microsoft.test.appId -n 42 --skip_binary_upload true --skip_metadata true --skip_screenshots true --force'), 'deliver with build number should have been run.');
-        assert(tr.invokedToolCount === 2, 'should have run both gem and deliver.');
+        assert(tr.ran('fastlane deliver submit_build -u creds-username -a com.microsoft.test.appId -n 42 --skip_binary_upload true --skip_metadata true --skip_screenshots true --force'), 'fastlane deliver with build number should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
+
+        done();
+    });
+
+    it('custom GEM_CACHE environment variable', (done:MochaDone) => {
+        this.timeout(1000);
+
+        //L0GemCacheEnvVar.ts sets the GEM_CACHE env var and expects it to be used when fastlane is updated.
+        let tp = path.join(__dirname, 'L0GemCacheEnvVar.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.ran('fastlane deliver submit_build -u creds-username -a com.microsoft.test.appId -n 42 --skip_binary_upload true --skip_metadata true --skip_screenshots true --force'), 'fastlane deliver with build number should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
+        assert(tr.stderr.length === 0, 'should not have written to stderr');
+        assert(tr.succeeded, 'task should have succeeded');
+        assert(tr.ran('/usr/bin/gem update fastlane -i /usr/bin/customGemCache'));
 
         done();
     });

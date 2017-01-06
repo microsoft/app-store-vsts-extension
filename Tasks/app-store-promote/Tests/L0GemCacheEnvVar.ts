@@ -21,8 +21,9 @@ tmr.setInput('chooseBuild', 'Specify');
 tmr.setInput('buildNumber', '42');
 
 process.env['MOCK_NORMALIZE_SLASHES'] = true;
-process.env['HOME'] = '/usr/bin';
-let gemCache: string = '/usr/bin/.gem-cache';
+process.env['GEM_CACHE'] = '/usr/bin/customGemCache';
+//process.env['HOME'] = '/usr/bin';
+let gemCache: string = process.env['GEM_CACHE'];
 
 //construct a string that is JSON, call JSON.parse(string), send that to ma.TaskLibAnswers
 let myAnswers: string = `{

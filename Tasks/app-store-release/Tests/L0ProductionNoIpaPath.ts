@@ -20,24 +20,27 @@ tmr.setInput('password', 'creds-password');
 tmr.setInput('releaseTrack', 'Production');
 
 // let ipaPath: string = tl.getInput('ipaPath', true);
-//tmr.setInput('ipaPath', '<path>');
+//tmr.setInput('ipaPath', 'mypackage.ipa');
 
-// provide answers for task mock
-let a: ma.TaskLibAnswers = <ma.TaskLibAnswers> {
-    'which': {
-        'ruby': '/usr/bin/ruby',
-        'gem': '/usr/bin/gem',
-        'deliver': '/usr/bin/deliver',
-        'pilot': '/usr/bin/pilot'
+process.env['MOCK_NORMALIZE_SLASHES'] = true;
+process.env['HOME'] = '/usr/bin';
+
+//construct a string that is JSON, call JSON.parse(string), send that to ma.TaskLibAnswers
+let myAnswers: string = `{
+    "which": {
+        "ruby": "/usr/bin/ruby",
+        "gem": "/usr/bin/gem",
+        "fastlane": "/usr/bin/fastlane"
     },
-    'checkPath' : {
-        '/usr/bin/ruby': true,
-        '/usr/bin/gem': true,
-        '/usr/bin/deliver': true,
-        '/usr/bin/pilot': true
+    "checkPath" : {
+        "/usr/bin/ruby": true,
+        "/usr/bin/gem": true,
+        "/usr/bin/fastlane": true
     }
-};
-tmr.setAnswers(a);
+ }`;
+let json: any = JSON.parse(myAnswers);
+// Cast the json blob into a TaskLibAnswers
+tmr.setAnswers(<ma.TaskLibAnswers>json);
 
 // This is how you can mock NPM packages...
 os.platform = () => {

@@ -23,23 +23,17 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers> {
     'which': {
         'ruby': '/usr/bin/ruby',
         'gem': '/usr/bin/gem',
-        'deliver': '/usr/bin/deliver',
-        'pilot': '/usr/bin/pilot'
+        'deliver': '/usr/bin/deliver'
     },
     'checkPath' : {
         '/usr/bin/ruby': true,
         '/usr/bin/gem': true,
-        '/usr/bin/deliver': true,
-        '/usr/bin/pilot': true
+        '/usr/bin/deliver': true
     },
     'exec': {
         '/usr/bin/gem install deliver': {
             'code': 0,
             'stdout': '1 gem installed'
-        },
-        'deliver submit_build -u creds-username': {
-            'code': 0,
-            'stdout': 'consider it delivered!'
         }
     }
 };

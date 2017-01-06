@@ -78,7 +78,9 @@ async function run() {
         let teamName: string = tl.getInput('teamName', false);
 
         // Set up environment
-        let gemCache: string = process.env['GEM_CACHE'] || process.platform === 'win32' ? path.join(process.env['APPDATA'], 'gem-cache') : path.join(process.env['HOME'], '.gem-cache');
+        tl.debug(`GEM_CACHE=${process.env['GEM_CACHE']}`);
+        let gemCache: string = process.env['GEM_CACHE'] || path.join(process.env['HOME'], '.gem-cache');
+        tl.debug(`gemCache=${gemCache}`);
         process.env['GEM_HOME'] = gemCache;
         process.env['FASTLANE_PASSWORD'] = credentials.password;
         process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
@@ -87,20 +89,26 @@ async function run() {
         // Add bin of new gem home so we don't have to resolve it later
         process.env['PATH'] = process.env['PATH'] + ':' + gemCache + path.sep + 'bin';
 
+        // Ensure there's exactly one ipa before installing fastlane tools
+        ipaPath = findIpa(ipaPath);
+
+        // Install the ruby gem for fastlane
+        tl.debug('Checking for ruby install...');
+        tl.which('ruby', true);
+        // Install the fastlane tools (if they're already present, should be a no-op)
+        let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
+        gemRunner.arg(['install', 'fastlane']);
+        await gemRunner.exec();
+        // Always update fastlane (if already latest, should be a no-op)
+        gemRunner = tl.tool(tl.which('gem', true));
+        gemRunner.arg(['update', 'fastlane', '-i', gemCache]);
+        await gemRunner.exec();
+
+        //gem update fastlane -i ~/.gem-cache
         if (releaseTrack === 'TestFlight') {
-            // Determine which ipa package to pass to pilot
-            ipaPath = findIpa(ipaPath);
-
-            // Install the ruby gem for fastlane pilot
-            tl.debug('Checking for ruby install...');
-            tl.which('ruby', true);
-            let installPilot: ToolRunner = tl.tool(tl.which('gem', true));
-            installPilot.arg(['install', 'pilot']);
-            await installPilot.exec();
-
-            // Run pilot to upload to testflight
-            let pilotCommand: ToolRunner = tl.tool('pilot');
-            pilotCommand.arg(['upload', '-u', credentials.username, '-i', ipaPath]);
+            // Run pilot (via fastlane) to upload to testflight
+            let pilotCommand: ToolRunner = tl.tool('fastlane');
+            pilotCommand.arg(['pilot', 'upload', '-u', credentials.username, '-i', ipaPath]);
             if (isValidFilePath(releaseNotes)) {
                 pilotCommand.arg(['--changelog', fs.readFileSync(releaseNotes).toString()]);
             }
@@ -111,20 +119,10 @@ async function run() {
             await pilotCommand.exec();
         } else if (releaseTrack === 'Production') {
             let bundleIdentifier: string = tl.getInput('appIdentifier', true);
-            // Determine which ipa package to pass to deliver
-            ipaPath = findIpa(ipaPath);
-
-            //Install the ruby gem for fastlane deliver
-            tl.debug('Checking for ruby install...');
-            tl.which('ruby', true);
-            let installDeliver: ToolRunner = tl.tool(tl.which('gem', true));
-            installDeliver.arg(['install', 'deliver']);
-            await installDeliver.exec();
-
-            // Run deliver to publish to Production track
+            // Run deliver (via fastlane) to publish to Production track
             // See https://github.com/fastlane/deliver for more information on these arguments
-            let deliverCommand : ToolRunner = tl.tool('deliver');
-            deliverCommand.arg(['--force', '-u', credentials.username, '-a', bundleIdentifier, '-i', ipaPath]);
+            let deliverCommand: ToolRunner = tl.tool('fastlane');
+            deliverCommand.arg(['deliver', '--force', '-u', credentials.username, '-a', bundleIdentifier, '-i', ipaPath]);
             deliverCommand.argIf(skipBinaryUpload, ['--skip_binary_upload', 'true']);
             // upload metadata if specified
             if (uploadMetadata && metadataPath) {
