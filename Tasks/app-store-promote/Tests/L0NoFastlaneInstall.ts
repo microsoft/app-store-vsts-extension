@@ -9,24 +9,20 @@ import tmrm = require('vsts-task-lib/mock-run');
 import path = require('path');
 import os = require('os');
 
-let taskPath = path.join(__dirname, '..', 'app-store-release.js');
+let taskPath = path.join(__dirname, '..', 'app-store-promote.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
 tmr.setInput('authType', 'UserAndPass');
 tmr.setInput('username', 'creds-username');
 tmr.setInput('password', 'creds-password');
-tmr.setInput('releaseTrack', 'Production');
-tmr.setInput('ipaPath', 'mypackage.ipa');
 tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
-tmr.setInput('installFastlane', 'true');
-tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
-
-tmr.setInput('uploadMetadata', 'true');
-tmr.setInput('metadataPath', '<path>');
+tmr.setInput('chooseBuild', 'latest');
+tmr.setInput('shouldAutoRelease', 'true');
+tmr.setInput('installFastlane', 'false');
+//tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
 
 process.env['MOCK_NORMALIZE_SLASHES'] = true;
 process.env['HOME'] = '/usr/bin';
-let gemCache: string = '/usr/bin/.gem-cache';
 
 //construct a string that is JSON, call JSON.parse(string), send that to ma.TaskLibAnswers
 let myAnswers: string = `{
@@ -40,21 +36,8 @@ let myAnswers: string = `{
         "/usr/bin/gem": true,
         "/usr/bin/fastlane": true
     },
-    "glob": {
-        "mypackage.ipa": [
-            "mypackage.ipa"
-        ]
-    },
     "exec": {
-        "/usr/bin/gem install fastlane": {
-            "code": 0,
-            "stdout": "1 gem installed"
-        },
-        "/usr/bin/gem update fastlane -i ${gemCache}": {
-            "code": 0,
-            "stdout": "1 gem installed"
-        },
-        "fastlane deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa -m <path> --skip_screenshots true": {
+        "fastlane deliver submit_build -u creds-username -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force": {
             "code": 0,
             "stdout": "consider it delivered!"
         }

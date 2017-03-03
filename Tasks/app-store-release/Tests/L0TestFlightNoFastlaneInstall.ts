@@ -15,18 +15,13 @@ let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 tmr.setInput('authType', 'UserAndPass');
 tmr.setInput('username', 'creds-username');
 tmr.setInput('password', 'creds-password');
-tmr.setInput('releaseTrack', 'Production');
+tmr.setInput('releaseTrack', 'TestFlight');
 tmr.setInput('ipaPath', 'mypackage.ipa');
-tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
-tmr.setInput('installFastlane', 'true');
-tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
-
-tmr.setInput('uploadMetadata', 'true');
-tmr.setInput('metadataPath', '<path>');
+tmr.setInput('installFastlane', 'false');
+//tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
 
 process.env['MOCK_NORMALIZE_SLASHES'] = true;
 process.env['HOME'] = '/usr/bin';
-let gemCache: string = '/usr/bin/.gem-cache';
 
 //construct a string that is JSON, call JSON.parse(string), send that to ma.TaskLibAnswers
 let myAnswers: string = `{
@@ -46,17 +41,9 @@ let myAnswers: string = `{
         ]
     },
     "exec": {
-        "/usr/bin/gem install fastlane": {
+        "fastlane pilot upload -u creds-username -i mypackage.ipa": {
             "code": 0,
-            "stdout": "1 gem installed"
-        },
-        "/usr/bin/gem update fastlane -i ${gemCache}": {
-            "code": 0,
-            "stdout": "1 gem installed"
-        },
-        "fastlane deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa -m <path> --skip_screenshots true": {
-            "code": 0,
-            "stdout": "consider it delivered!"
+            "stdout": "consider it uploaded!"
         }
     }
  }`;

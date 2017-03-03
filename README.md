@@ -13,7 +13,7 @@ This extension contains a set of deployment tasks which allow you to automate th
 ## Prerequisites
 
 * In order to automate the release of app updates to the App Store, you need to have manually released at least one version of the app beforehand.
-* The tasks install and use [fastlane](https://github.com/fastlane/fastlane) tools. Fastlane requires Ruby 2.0.0 or above and recommends having the latest Xcode command line tools installed on the MacOS computer. 
+* The tasks install and use [fastlane](https://github.com/fastlane/fastlane) tools. fastlane requires Ruby 2.0.0 or above and recommends having the latest Xcode command line tools installed on the MacOS computer. 
 
 ## Quick Start
 
@@ -103,6 +103,12 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 2. **Team Name** *(String)* - The name of the producing team. Only necessary when in multiple teams.
 
+3. **Install fastlane** *(Checkbox)* - By default, install a version of the [fastlane](https://github.com/fastlane/fastlane) tools.  Uncheck if your build machine already has the version of fastlane to use.
+
+4. **fastlane Version** - **Latest Version** or **Specific Version**.  If *Specific Version* is chosen, you must provide a value for *fastlane Specific Version*.
+
+5. **fastlane Specific Version** *(String)* - The version of fastlane to install (e.g., 2.15.1).
+
 ### App Store Promote
 
 Allows you to promote an app previously updated to iTunes Connect to the App Store, and includes the following options:
@@ -125,9 +131,15 @@ Allows you to promote an app previously updated to iTunes Connect to the App Sto
 
 2. **Team Name** *(String)* - The name of the producing team. Only necessary when in multiple teams.
 
+3. **Install fastlane** *(Checkbox)* - By default, install a version of the [fastlane](https://github.com/fastlane/fastlane) tools.  Uncheck if your build machine already has the version of fastlane to use.
+
+4. **fastlane Version** - **Latest Version** or **Specific Version**.  If *Specific Version* is chosen, you must provide a value for *fastlane Specific Version*.
+
+5. **fastlane Specific Version** *(String)* - The version of fastlane to install (e.g., 2.15.1).
+
 ## Firewall Issues
 
-[fastlane](https://github.com/fastlane/fastlane) tools uses the iTunes Transporter to upload metadata and binaries. In case you are behind a firewall, you can specify a different transporter protocol injecting in your release definition a variable:
+The [fastlane](https://github.com/fastlane/fastlane) tools use the iTunes Transporter to upload metadata and binaries. In case you are behind a firewall, you can specify a different transporter protocol injecting in your release definition a variable:
 `DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS="-t DAV"`
 ![Fix Firewall issues](/images/variable-definition-firewall-issues.png)
 

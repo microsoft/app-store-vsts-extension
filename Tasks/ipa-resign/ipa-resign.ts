@@ -140,17 +140,38 @@ async function run() {
         // Add bin of new gem home so we don't ahve to resolve it later;
         process.env['PATH'] = process.env['PATH'] + ':' + gemCache + path.sep + 'bin';
 
+        let installFastlane: boolean = tl.getBoolInput('installFastlane', false);
+        let fastlaneVersionChoice: string = tl.getInput('fastlaneToolsVersion', false);
+        let fastlaneVersionToInstall: string;  //defaults to 'LatestVersion'
+        if (fastlaneVersionChoice === 'SpecificVersion') {
+            fastlaneVersionToInstall = tl.getInput('fastlaneToolsSpecificVersion', true);
+        }
+
         // Install the ruby gem for fastlane
         tl.debug('Checking for ruby install...');
         tl.which('ruby', true);
-        // Install the fastlane tools (if they're already present, should be a no-op)
-        let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
-        gemRunner.arg(['install', 'fastlane']);
-        await gemRunner.exec();
-        // Always update fastlane (if already latest, should be a no-op)
-        gemRunner = tl.tool(tl.which('gem', true));
-        gemRunner.arg(['update', 'fastlane', '-i', gemCache]);
-        await gemRunner.exec();
+
+        // If desired, install the fastlane tools (if they're already present, should be a no-op)
+        if (installFastlane) {
+            tl.debug('Installing fastlane...');
+            let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
+            gemRunner.arg(['install', 'fastlane']);
+            if (fastlaneVersionToInstall) {
+                tl.debug(`Installing specific version of fastlane: ${fastlaneVersionToInstall}`);
+                gemRunner.arg(['-v', fastlaneVersionToInstall]);
+            }
+            await gemRunner.exec();
+
+            // If desired, update fastlane (if already latest, should be a no-op)
+            if (!fastlaneVersionToInstall) {
+                tl.debug('Updating fastlane...');
+                gemRunner = tl.tool(tl.which('gem', true));
+                gemRunner.arg(['update', 'fastlane', '-i', gemCache]);
+                await gemRunner.exec();
+            }
+        } else {
+            tl.debug('Skipped fastlane installation.');
+        }
 
         // Run the sigh command 
         // See https://github.com/fastlane/fastlane/tree/master/sigh for more information on these arguments

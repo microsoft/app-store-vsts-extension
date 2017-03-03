@@ -18,6 +18,8 @@ process.env['ENDPOINT_AUTH_MyServiceEndpoint'] = '{ "parameters": {"username": "
 tmr.setInput('authType', 'ServiceEndpoint');
 tmr.setInput('serviceEndpoint', 'MyServiceEndpoint');
 tmr.setInput('releaseTrack', 'TestFlight');
+tmr.setInput('installFastlane', 'true');
+tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
 
 tmr.setInput('ipaPath', 'mypackage.ipa');
 

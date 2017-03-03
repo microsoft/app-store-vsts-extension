@@ -101,6 +101,46 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
+    it('testflight - username+password - no fastlane install', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0TestFlightNoFastlaneInstall.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.invokedToolCount === 1, 'should have only run fastlane pilot.');
+        assert(tr.succeeded, 'task should have succeeded');
+
+        done();
+    });
+
+    it('testflight - username+password - specific fastlane install', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0TestFlightSpecificFastlaneInstall.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.ran('/usr/bin/gem install fastlane -v 2.15.1'), 'gem install fastlane with a specific version should have been run.');
+        assert(tr.invokedToolCount === 2, 'should have run only gem install and fastlane pilot.');
+        assert(tr.succeeded, 'task should have succeeded');
+
+        done();
+    });
+
+    it('testflight - username+password - specific fastlane install - no version', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0TestFlightSpecificFastlaneInstallNoVersion.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.stdout.indexOf('Input required: fastlaneToolsSpecificVersion') !== -1, 'Task should have written to stdout');
+        assert(tr.failed, 'task should have failed');
+
+        done();
+    });
+
     it('testflight - service endpoint', (done:MochaDone) => {
         this.timeout(1000);
 
