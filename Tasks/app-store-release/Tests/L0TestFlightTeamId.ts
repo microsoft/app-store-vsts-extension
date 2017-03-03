@@ -18,6 +18,8 @@ tmr.setInput('password', 'creds-password');
 tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
 tmr.setInput('releaseTrack', 'TestFlight');
 tmr.setInput('ipaPath', 'mypackage.ipa');
+tmr.setInput('installFastlane', 'true');
+tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
 
 tmr.setInput('teamId', 'teamId');
 

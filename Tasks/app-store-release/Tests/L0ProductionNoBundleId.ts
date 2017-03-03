@@ -17,6 +17,8 @@ tmr.setInput('username', 'creds-username');
 tmr.setInput('password', 'creds-password');
 tmr.setInput('releaseTrack', 'Production');
 tmr.setInput('ipaPath', 'mypackage.ipa');
+tmr.setInput('installFastlane', 'true');
+tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
 
 //tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
 
