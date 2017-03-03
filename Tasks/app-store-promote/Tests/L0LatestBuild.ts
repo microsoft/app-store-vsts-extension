@@ -16,6 +16,8 @@ tmr.setInput('authType', 'UserAndPass');
 tmr.setInput('username', 'creds-username');
 tmr.setInput('password', 'creds-password');
 tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
+tmr.setInput('installFastlane', 'true');
+tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
 
 tmr.setInput('chooseBuild', 'Latest');
 
