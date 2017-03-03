@@ -12,7 +12,7 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "112",
+        "Minor": "114",
         "Patch": "0"
     },
     "minimumAgentVersion": "1.95.3",
@@ -167,6 +167,38 @@
             "required": false,
             "helpMarkDown": "Working directory for signing. Defaults to the root of the repository.",
             "groupName": "advanced"
+        },
+        {
+            "name": "installFastlane",
+            "type": "boolean",
+            "label": "Install Fastlane",
+            "required": false,
+            "defaultValue": true,
+            "groupName": "advanced",
+            "helpMarkDown": "Select to install a version of the Fastlane tools.  Uncheck if your build machine already has the version of Fastlane to use."
+        },
+        {
+            "name": "fastlaneToolsVersion",
+            "type": "pickList",
+            "label": "Fastlane Version",
+            "defaultValue": "LatestVersion",
+            "options": {
+                "LatestVersion": "Latest Version",
+                "SpecificVersion": "Specific Version"
+            },
+            "groupName": "advanced",
+            "helpMarkDown": "Choose to install either the lastest version of fastlane or a specific version.",
+            "visibleRule": "installFastlane = true"
+        },
+        {
+            "name": "fastlaneToolsSpecificVersion",
+            "type": "string",
+            "label": "Fastlane Specific Version",
+            "defaultValue": "",
+            "required": true,
+            "groupName": "advanced",
+            "helpMarkDown": "Provide the version of fastlane to install (e.g., 2.15.1).",
+            "visibleRule": "fastlaneToolsVersion = SpecificVersion"
         }
     ],
     "execution": {
