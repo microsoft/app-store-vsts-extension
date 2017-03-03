@@ -1,0 +1,23 @@
+{
+    // Use IntelliSense to learn about possible Node.js debug attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+
+    // From https://gist.github.com/paambaati/54d33e409b4f7cf059cc:
+    // The underscore in _mocha is really important - without the _ you run the mocha launcher which will not break in VS Code.
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch L0 Tests",
+            "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+            "cwd": "${workspaceRoot}",
+            "args": [
+                "${workspaceRoot}/_build/Tasks/**/Tests/L0.js",
+                "--no-timeouts"
+            ],
+            "stopOnEntry": false
+        }
+    ]
+}
