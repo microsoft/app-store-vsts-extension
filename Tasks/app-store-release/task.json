@@ -217,16 +217,16 @@
         {
             "name": "installFastlane",
             "type": "boolean",
-            "label": "Install Fastlane",
+            "label": "Install fastlane",
             "required": false,
             "defaultValue": true,
             "groupName": "advanced",
-            "helpMarkDown": "Select to install a version of the Fastlane tools.  Uncheck if your build machine already has the version of Fastlane to use."
+            "helpMarkDown": "Select to install a version of the fastlane tools.  Uncheck if your build machine already has the version of fastlane to use."
         },
         {
             "name": "fastlaneToolsVersion",
             "type": "pickList",
-            "label": "Fastlane Version",
+            "label": "fastlane Version",
             "defaultValue": "LatestVersion",
             "options": {
                 "LatestVersion": "Latest Version",
@@ -239,7 +239,7 @@
         {
             "name": "fastlaneToolsSpecificVersion",
             "type": "string",
-            "label": "Fastlane Specific Version",
+            "label": "fastlane Specific Version",
             "defaultValue": "",
             "required": true,
             "groupName": "advanced",
