@@ -49,6 +49,12 @@ async function run() {
         let teamId: string = tl.getInput('teamId', false);
         let teamName: string = tl.getInput('teamName', false);
 
+        let installFastlane: boolean = tl.getBoolInput('installFastlane', false);
+        let fastlaneVersionChoice: string = tl.getInput('fastlaneToolsVersion', false);
+        let fastlaneVersionToInstall: string;  //defaults to 'LatestVersion'
+        if (fastlaneVersionChoice === 'SpecificVersion') {
+            fastlaneVersionToInstall = tl.getInput('fastlaneToolsSpecificVersion', true);
+        }
         tl.debug('Read all inputs.');
 
         // Set up environment
@@ -65,14 +71,28 @@ async function run() {
         // Install the ruby gem for fastlane
         tl.debug('Checking for ruby install...');
         tl.which('ruby', true);
-        // Install the fastlane tools (if they're already present, should be a no-op)
-        let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
-        gemRunner.arg(['install', 'fastlane']);
-        await gemRunner.exec();
-        // Always update fastlane (if already latest, should be a no-op)
-        gemRunner = tl.tool(tl.which('gem', true));
-        gemRunner.arg(['update', 'fastlane', '-i', gemCache]);
-        await gemRunner.exec();
+
+        // If desired, install the fastlane tools (if they're already present, should be a no-op)
+        if (installFastlane) {
+            tl.debug('Installing fastlane...');
+            let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
+            gemRunner.arg(['install', 'fastlane']);
+            if (fastlaneVersionToInstall) {
+                tl.debug(`Installing specific version of fastlane: ${fastlaneVersionToInstall}`);
+                gemRunner.arg(['-v', fastlaneVersionToInstall]);
+            }
+            await gemRunner.exec();
+
+            // If desired, update fastlane (if already latest, should be a no-op)
+            if (!fastlaneVersionToInstall) {
+                tl.debug('Updating fastlane...');
+                gemRunner = tl.tool(tl.which('gem', true));
+                gemRunner.arg(['update', 'fastlane', '-i', gemCache]);
+                await gemRunner.exec();
+            }
+        } else {
+            tl.debug('Skipped fastlane installation.');
+        }
 
         //Run the deliver command 
         // See https://github.com/fastlane/deliver for more information on these arguments
