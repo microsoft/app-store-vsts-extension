@@ -15,7 +15,7 @@
   ],
   "version": {
     "Major": "1",
-    "Minor": "112",
+    "Minor": "114",
     "Patch": "0"
   },
   "minimumAgentVersion": "1.95.3",
@@ -215,6 +215,38 @@
       "required": false,
       "groupName": "advanced",
       "helpMarkDown": "ms-resource:loc.input.help.teamName"
+    },
+    {
+      "name": "installFastlane",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.installFastlane",
+      "required": false,
+      "defaultValue": true,
+      "groupName": "advanced",
+      "helpMarkDown": "ms-resource:loc.input.help.installFastlane"
+    },
+    {
+      "name": "fastlaneToolsVersion",
+      "type": "pickList",
+      "label": "ms-resource:loc.input.label.fastlaneToolsVersion",
+      "defaultValue": "LatestVersion",
+      "options": {
+        "LatestVersion": "Latest Version",
+        "SpecificVersion": "Specific Version"
+      },
+      "groupName": "advanced",
+      "helpMarkDown": "ms-resource:loc.input.help.fastlaneToolsVersion",
+      "visibleRule": "installFastlane = true"
+    },
+    {
+      "name": "fastlaneToolsSpecificVersion",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.fastlaneToolsSpecificVersion",
+      "defaultValue": "",
+      "required": true,
+      "groupName": "advanced",
+      "helpMarkDown": "ms-resource:loc.input.help.fastlaneToolsSpecificVersion",
+      "visibleRule": "fastlaneToolsVersion = SpecificVersion"
     }
   ],
   "execution": {
