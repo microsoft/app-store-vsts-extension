@@ -103,6 +103,12 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 2. **Team Name** *(String)* - The name of the producing team. Only necessary when in multiple teams.
 
+3. **Install Fastlane** *(Checkbox)* - By default, install a version of the Fastlane tools.  Uncheck if your build machine already has the version of Fastlane to use.
+
+4. **Fastlane Version** - **Latest Version** or **Specific Version**.  If *Specific Version* is chosen, you must provide a value for *Fastlane Specific Version*.
+
+5. **Fastlane Specific Version** *(String)* - The version of Fastlane to install (e.g., 2.15.1).
+
 ### App Store Promote
 
 Allows you to promote an app previously updated to iTunes Connect to the App Store, and includes the following options:
@@ -124,6 +130,12 @@ Allows you to promote an app previously updated to iTunes Connect to the App Sto
 1. **Team Id** *(String)* - The ID of the producing team. Only necessary when in multiple teams.
 
 2. **Team Name** *(String)* - The name of the producing team. Only necessary when in multiple teams.
+
+3. **Install Fastlane** *(Checkbox)* - By default, install a version of the Fastlane tools.  Uncheck if your build machine already has the version of Fastlane to use.
+
+4. **Fastlane Version** - **Latest Version** or **Specific Version**.  If *Specific Version* is chosen, you must provide a value for *Fastlane Specific Version*.
+
+5. **Fastlane Specific Version** *(String)* - The version of Fastlane to install (e.g., 2.15.1).
 
 ## Firewall Issues
 
