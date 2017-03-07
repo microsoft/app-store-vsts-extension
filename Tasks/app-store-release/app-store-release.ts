@@ -103,6 +103,15 @@ async function run() {
         tl.debug('Checking for ruby install...');
         tl.which('ruby', true);
 
+        //Whenever a specific version of fastlane is requested, we're going to uninstall all installed
+        //versions of fastlane beforehand.  Note that this doesn't uninstall dependencies of fastlane.
+        if (installFastlane && fastlaneVersionToInstall) {
+            let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
+            gemRunner.arg(['uninstall', 'fastlane']);
+            tl.debug(`Uninstalling all fastlane versions...`);
+            gemRunner.arg(['-a', '-I']);  //uninstall all versions
+            await gemRunner.exec();
+        }
         // If desired, install the fastlane tools (if they're already present, should be a no-op)
         if (installFastlane) {
             tl.debug('Installing fastlane...');
@@ -141,7 +150,7 @@ async function run() {
         } else if (releaseTrack === 'Production') {
             let bundleIdentifier: string = tl.getInput('appIdentifier', true);
             // Run deliver (via fastlane) to publish to Production track
-            // See https://github.com/fastlane/deliver for more information on these arguments
+            // See https://github.com/fastlane/fastlane/blob/master/deliver/lib/deliver/options.rb for more information on these arguments
             let deliverCommand: ToolRunner = tl.tool('fastlane');
             deliverCommand.arg(['deliver', '--force', '-u', credentials.username, '-a', bundleIdentifier, '-i', ipaPath]);
             deliverCommand.argIf(skipBinaryUpload, ['--skip_binary_upload', 'true']);
@@ -157,8 +166,8 @@ async function run() {
             } else {
                 deliverCommand.arg(['--skip_screenshots', 'true']);
             }
-            deliverCommand.argIf(teamId, ['-q', teamId]);
-            deliverCommand.argIf(teamName, ['-r', teamName]);
+            deliverCommand.argIf(teamId, ['-k', teamId]);
+            deliverCommand.argIf(teamName, ['-e', teamName]);
             deliverCommand.argIf(shouldSubmitForReview, ['--submit_for_review', 'true']);
             deliverCommand.argIf(shouldAutoRelease, ['--automatic_release', 'true']);
             await deliverCommand.exec();

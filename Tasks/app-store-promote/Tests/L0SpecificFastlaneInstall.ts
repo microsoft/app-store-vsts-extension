@@ -38,6 +38,10 @@ let myAnswers: string = `{
         "/usr/bin/fastlane": true
     },
     "exec": {
+        "/usr/bin/gem uninstall fastlane -a -I": {
+            "code": 0,
+            "stdout": "Successfully uninstalled fastlane-2.15.1"
+        },
         "/usr/bin/gem install fastlane -v 2.15.1": {
             "code": 0,
             "stdout": "1 gem installed"

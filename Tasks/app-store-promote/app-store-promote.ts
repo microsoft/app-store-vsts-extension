@@ -72,6 +72,15 @@ async function run() {
         tl.debug('Checking for ruby install...');
         tl.which('ruby', true);
 
+        //Whenever a specific version of fastlane is requested, we're going to uninstall all installed
+        //versions of fastlane beforehand.  Note that this doesn't uninstall dependencies of fastlane.
+        if (installFastlane && fastlaneVersionToInstall) {
+            let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
+            gemRunner.arg(['uninstall', 'fastlane']);
+            tl.debug(`Uninstalling all fastlane versions...`);
+            gemRunner.arg(['-a', '-I']);  //uninstall all versions
+            await gemRunner.exec();
+        }
         // If desired, install the fastlane tools (if they're already present, should be a no-op)
         if (installFastlane) {
             tl.debug('Installing fastlane...');
@@ -95,7 +104,7 @@ async function run() {
         }
 
         //Run the deliver command 
-        // See https://github.com/fastlane/deliver for more information on these arguments
+        // See https://github.com/fastlane/fastlane/blob/master/deliver/lib/deliver/options.rb for more information on these arguments
         let deliverCommand: ToolRunner = tl.tool('fastlane');
         deliverCommand.arg(['deliver', 'submit_build', '-u', credentials.username, '-a', appIdentifier]);
         if (chooseBuild.toLowerCase() === 'specify') {
@@ -103,8 +112,8 @@ async function run() {
         }
         deliverCommand.arg(['--skip_binary_upload', 'true', '--skip_metadata', 'true', '--skip_screenshots', 'true']);
         deliverCommand.argIf(shouldAutoRelease, '--automatic_release');
-        deliverCommand.argIf(teamId, ['-q', teamId]);
-        deliverCommand.argIf(teamName, ['-r', teamName]);
+        deliverCommand.argIf(teamId, ['-k', teamId]);
+        deliverCommand.argIf(teamName, ['-e', teamName]);
         deliverCommand.arg('--force');
 
         await deliverCommand.exec();
