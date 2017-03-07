@@ -135,7 +135,7 @@ Allows you to promote an app previously updated to iTunes Connect to the App Sto
 
 4. **fastlane Version** - **Latest Version** or **Specific Version**.  If *Specific Version* is chosen, you must provide a value for *fastlane Specific Version*.
 
-5. **fastlane Specific Version** *(String)* - The version of fastlane to install (e.g., 2.15.1).
+5. **fastlane Specific Version** *(String)* - The version of fastlane to install (e.g., 2.15.1).  If a specific version of fastlane is installed, all previously installed versions will be uninstalled beforehand.
 
 ## Firewall Issues
 

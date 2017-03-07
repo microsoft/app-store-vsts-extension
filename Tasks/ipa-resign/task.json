@@ -197,7 +197,7 @@
             "defaultValue": "",
             "required": true,
             "groupName": "advanced",
-            "helpMarkDown": "Provide the version of fastlane to install (e.g., 2.15.1).",
+            "helpMarkDown": "Provide the version of fastlane to install (e.g., 2.15.1).  If a specific version of fastlane is installed, all previously installed versions will be uninstalled beforehand.",
             "visibleRule": "fastlaneToolsVersion = SpecificVersion"
         }
     ],
