@@ -65,6 +65,34 @@
             "helpMarkDown": "The password of the account used to publish to the Apple App Store.",
             "visibleRule": "authType = UserAndPass"
         },
+                {
+            "name": "isTwoFactorAuth",
+            "type": "boolean",
+            "label": "Use Two-Factor Authentication",
+            "defaultValue": false,
+            "required": false,
+            "helpMarkDown": "Select if the Apple account above has two-factor authentication enabled. (See: https://appleid.apple.com/account/manage -> Security)",
+            "visibleRule": "authType = UserAndPass"
+        },
+        {
+            "name": "appSpecificPassword",
+            "type": "string",
+            "label": "App Specific Password",
+            "defaultValue": "",
+            "isConfidential": true,
+            "required": true,
+            "helpMarkDown": "The supplementary Apple-supplied password used with two-factor authentication enabled (https://appleid.apple.com/account/manage -> Security -> APP-SPECIFIC PASSWORDS)",
+            "visibleRule": "isTwoFactorAuth = true"
+        },
+        {
+            "name": "fastlaneSession",
+            "type": "string",
+            "label": "Fastlane Session for Two-Factor Authentication",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Used with two-factor authentication.  Create by running: 'fastlane spaceauth -u [email]'",
+            "visibleRule": "authType = ServiceEndpoint || isTwoFactorAuth = true"
+        },
         {
             "name": "appIdentifier",
             "type": "string",

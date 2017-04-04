@@ -68,6 +68,34 @@
       "visibleRule": "authType = UserAndPass"
     },
     {
+      "name": "isTwoFactorAuth",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.isTwoFactorAuth",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.isTwoFactorAuth",
+      "visibleRule": "authType = UserAndPass"
+    },
+    {
+      "name": "appSpecificPassword",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.appSpecificPassword",
+      "defaultValue": "",
+      "isConfidential": true,
+      "required": true,
+      "helpMarkDown": "ms-resource:loc.input.help.appSpecificPassword",
+      "visibleRule": "isTwoFactorAuth = true"
+    },
+    {
+      "name": "fastlaneSession",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.fastlaneSession",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.fastlaneSession",
+      "visibleRule": "authType = ServiceEndpoint || isTwoFactorAuth = true"
+    },
+    {
       "name": "appIdentifier",
       "type": "string",
       "label": "ms-resource:loc.input.label.appIdentifier",

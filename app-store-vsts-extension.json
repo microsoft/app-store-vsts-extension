@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "app-store",
     "name": "Apple App Store",
-    "version": "1.115.0",
+    "version": "1.116.0",
     "publisher": "ms-vsclient",
     "description": "Provides tasks for publishing to Apple's App Store from a TFS/Team Services build or release definition",
     "categories": [
@@ -127,6 +127,17 @@
                                 "isConfidential": true,
                                 "validation": {
                                     "isRequired": true,
+                                    "dataType": "string"
+                                }
+                            },
+                            {
+                                "id": "appSpecificPassword",
+                                "name": "App-Specific Password",
+                                "description": "Used with two-factor authentication. (See: https://appleid.apple.com/account/manage -> Security -> APP-SPECIFIC PASSWORDS)",
+                                "inputMode": "passwordbox",
+                                "isConfidential": true,
+                                "validation": {
+                                    "isRequired": false,
                                     "dataType": "string"
                                 }
                             }

@@ -100,6 +100,62 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
+    it('app specific password', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0AppSpecificPassword.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.invokedToolCount === 1, 'should have run fastlane deliver.');
+        assert(tr.succeeded, 'task should have succeeded Stdout: [' + tr.stdout + '] err[' + tr.stderr + ']');
+        assert(tr.stdout.indexOf('Using two-factor authentication') !== -1, 'Task should have set the app-specific password');
+        assert(tr.stdout.indexOf('Clearing two-factor authentication environment variables') !== -1, 'Task should have cleared the app-specific password');
+
+        done();
+    });
+
+    it('app specific password using service end point', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0AppSpecificPasswordEndPoint.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.invokedToolCount === 1, 'should have run fastlane deliver. Stdout: [' + tr.stdout + '] err[' + tr.stderr + ']');
+        assert(tr.succeeded, 'task should have succeeded');
+        assert(tr.stdout.indexOf('Using two-factor authentication') !== -1, 'Task should have set the app-specific password');
+        assert(tr.stdout.indexOf('Clearing two-factor authentication environment variables') !== -1, 'Task should have cleared the app-specific password');
+
+        done();
+    });
+
+    it('two factor authentication using service end point without fastlane session', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0AppSpecificPasswordEndPointIncomplete.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.stdout.indexOf('Input required: fastlaneSession') !== -1, 'Task should have written to stdout');
+        assert(tr.failed, 'task should have failed');
+
+        done();
+    });
+
+    it('two factor authenitcation app specific password without fastlane session', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0AppSpecificPasswordNoFastlaneSession.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.stdout.indexOf('Input required: fastlaneSession') !== -1, 'Task should have written to stdout');
+        assert(tr.failed, 'task should have failed');
+
+        done();
+    });
+
     it('no bundle id', (done:MochaDone) => {
         this.timeout(1000);
 

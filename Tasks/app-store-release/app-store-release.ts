@@ -111,6 +111,7 @@ async function run() {
             // 2) App-specific password (Apple account->Security where two factor authentication is set)
             // 3) FASTLANE_SESSION, which is essentially a cookie granting access to Apple accounts
             // To get a FASTLANE_SESSION, run 'fastlane spaceauth -u [email]' interactively (requires PIN)
+            // See: https://github.com/fastlane/fastlane/blob/master/spaceship/README.md
             tl.debug('Using two-factor authentication');
             process.env[fastlaneSessionEnvVar] = tl.getInput('fastlaneSession', true);
             process.env[appSpecificPasswordEnvVar] = credentials.appSpecificPassword;
