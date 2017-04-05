@@ -91,9 +91,9 @@
       "type": "string",
       "label": "ms-resource:loc.input.label.fastlaneSession",
       "defaultValue": "",
-      "required": false,
+      "required": true,
       "helpMarkDown": "ms-resource:loc.input.help.fastlaneSession",
-      "visibleRule": "authType = ServiceEndpoint || isTwoFactorAuth = true"
+      "visibleRule": "isTwoFactorAuth = true"
     },
     {
       "name": "appIdentifier",
@@ -191,6 +191,7 @@
   },
   "messages": {
     "DarwinOnly": "ms-resource:loc.messages.DarwinOnly",
-    "SuccessfullySubmitted": "ms-resource:loc.messages.SuccessfullySubmitted"
+    "SuccessfullySubmitted": "ms-resource:loc.messages.SuccessfullySubmitted",
+    "FastlaneSessionEmpty": "ms-resource:loc.messages.FastlaneSessionEmpty"
   }
 }

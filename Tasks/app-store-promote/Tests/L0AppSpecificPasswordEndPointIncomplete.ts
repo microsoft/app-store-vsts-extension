@@ -12,7 +12,7 @@ import os = require('os');
 let taskPath = path.join(__dirname, '..', 'app-store-promote.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
-process.env['ENDPOINT_AUTH_MyServiceEndpoint'] = '{ "parameters": {"username": "creds-username", "password": "creds-password", "appSpecificPassword": "p@$$w0rd" }, "scheme": "whatever" }';
+process.env['ENDPOINT_AUTH_MyServiceEndpoint'] = '{ "parameters": {"username": "creds-username", "password": "creds-password", "appSpecificPassword": "p@$$w0rd", "fastlaneSession": "" }, "scheme": "whatever" }';
 
 tmr.setInput('authType', 'ServiceEndpoint');
 tmr.setInput('serviceEndpoint', 'MyServiceEndpoint');

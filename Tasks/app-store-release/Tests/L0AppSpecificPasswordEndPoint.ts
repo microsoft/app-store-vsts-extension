@@ -12,13 +12,12 @@ import os = require('os');
 let taskPath = path.join(__dirname, '..', 'app-store-release.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
-process.env['ENDPOINT_AUTH_MyServiceEndpoint'] = '{ "parameters": {"username": "creds-username", "password": "creds-password", "appSpecificPassword": "creds-appSpecificPassword" }, "scheme": "whatever" }';
+process.env['ENDPOINT_AUTH_MyServiceEndpoint'] = '{ "parameters": {"username": "creds-username", "password": "creds-password", "appSpecificPassword": "creds-appSpecificPassword", "fastlaneSession" : "session" }, "scheme": "whatever" }';
 
 tmr.setInput('authType', 'ServiceEndpoint');
 tmr.setInput('serviceEndpoint', 'MyServiceEndpoint');
 tmr.setInput('releaseTrack', 'TestFlight');
 tmr.setInput('ipaPath', 'mypackage.ipa');
-tmr.setInput('fastlaneSession', 'session...');
 
 process.env['MOCK_NORMALIZE_SLASHES'] = true;
 process.env['HOME'] = '/usr/bin';

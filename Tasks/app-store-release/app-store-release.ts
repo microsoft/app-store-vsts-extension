@@ -15,6 +15,7 @@ class UserCredentials {
     username: string;
     password: string;
     appSpecificPassword: string;
+    fastlaneSession: string;
 
     /* tslint:disable:no-empty */
     public UserCredentials() { }
@@ -64,6 +65,11 @@ async function run() {
             credentials.appSpecificPassword = serviceEndpoint.parameters['appSpecificPassword'];
             if (credentials.appSpecificPassword) {
                 isTwoFactorAuthEnabled = true;
+                let fastlaneSession: string = serviceEndpoint.parameters['fastlaneSession'];
+                if (!fastlaneSession) {
+                    throw Error(tl.loc('FastlaneSessionEmpty'));
+                }
+                credentials.fastlaneSession = fastlaneSession;
             }
         } else if (authType === 'UserAndPass') {
             credentials.username = tl.getInput('username', true);
@@ -71,6 +77,7 @@ async function run() {
             isTwoFactorAuthEnabled = tl.getBoolInput('isTwoFactorAuth');
             if (isTwoFactorAuthEnabled) {
                 credentials.appSpecificPassword = tl.getInput('appSpecificPassword', true);
+                credentials.fastlaneSession = tl.getInput('fastlaneSession', true);
             }
         }
 
@@ -113,7 +120,7 @@ async function run() {
             // To get a FASTLANE_SESSION, run 'fastlane spaceauth -u [email]' interactively (requires PIN)
             // See: https://github.com/fastlane/fastlane/blob/master/spaceship/README.md
             tl.debug('Using two-factor authentication');
-            process.env[fastlaneSessionEnvVar] = tl.getInput('fastlaneSession', true);
+            process.env[fastlaneSessionEnvVar] = credentials.fastlaneSession;
             process.env[appSpecificPasswordEnvVar] = credentials.appSpecificPassword;
         }
 

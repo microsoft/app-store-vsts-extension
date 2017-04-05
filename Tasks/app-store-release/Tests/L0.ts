@@ -88,14 +88,14 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('app specific password using service end point', (done:MochaDone) => {
+    it('app specific password using service endpoint', (done:MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0AppSpecificPasswordEndPoint.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.invokedToolCount === 1, 'should have run fastlane pilot.');
+        assert(tr.invokedToolCount === 1, 'should have run fastlane pilot. std=' + tr.stdout + ' err=' + tr.stderr);
         assert(tr.succeeded, 'task should have succeeded');
         assert(tr.stdout.indexOf('Using two-factor authentication') !== -1, 'Task should have set the app-specific password');
         assert(tr.stdout.indexOf('Clearing two-factor authentication environment variables') !== -1, 'Task should have cleared the app-specific password');
@@ -103,14 +103,14 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('two factor authentication using service end point without fastlane session', (done:MochaDone) => {
+    it('two factor authentication using service endpoint without fastlane session', (done:MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0AppSpecificPasswordEndPointIncomplete.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.stdout.indexOf('Input required: fastlaneSession') !== -1, 'Task should have written to stdout');
+        assert.equal(true, tr.createdErrorIssue('Error: loc_mock_FastlaneSessionEmpty'));
         assert(tr.failed, 'task should have failed');
 
         done();

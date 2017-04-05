@@ -65,33 +65,33 @@
             "helpMarkDown": "The password of the account used to publish to the Apple App Store.",
             "visibleRule": "authType = UserAndPass"
         },
-                {
+        {
             "name": "isTwoFactorAuth",
             "type": "boolean",
-            "label": "Use Two-Factor Authentication",
+            "label": "Use Two-step Verification (Two-factor Authentication)",
             "defaultValue": false,
             "required": false,
-            "helpMarkDown": "Select if the Apple account above has two-factor authentication enabled. (See: https://appleid.apple.com/account/manage -> Security)",
+            "helpMarkDown": "Select if the Apple account above has two-step verification enabled. (See: https://appleid.apple.com/account/manage -> Security)",
             "visibleRule": "authType = UserAndPass"
         },
         {
             "name": "appSpecificPassword",
             "type": "string",
-            "label": "App Specific Password",
+            "label": "App-specific Password",
             "defaultValue": "",
             "isConfidential": true,
             "required": true,
-            "helpMarkDown": "The supplementary Apple-supplied password used with two-factor authentication enabled (https://appleid.apple.com/account/manage -> Security -> APP-SPECIFIC PASSWORDS)",
+            "helpMarkDown": "The supplementary Apple-supplied password used with two-step verification enabled (See: https://appleid.apple.com/account/manage -> Security -> App-specific passwords). Use a new variable with its lock enabled on the Variables tab to encrypt this value.",
             "visibleRule": "isTwoFactorAuth = true"
         },
         {
             "name": "fastlaneSession",
             "type": "string",
-            "label": "Fastlane Session for Two-Factor Authentication",
+            "label": "Fastlane Session for Two-step Verification",
             "defaultValue": "",
-            "required": false,
-            "helpMarkDown": "Used with two-factor authentication.  Create by running: 'fastlane spaceauth -u [email]'",
-            "visibleRule": "authType = ServiceEndpoint || isTwoFactorAuth = true"
+            "required": true,
+            "helpMarkDown": "Used with two-step verification.  Create by running: 'fastlane spaceauth -u [email]'",
+            "visibleRule": "isTwoFactorAuth = true"
         },
         {
             "name": "appIdentifier",
@@ -189,6 +189,7 @@
     },
     "messages": {
         "DarwinOnly": "The Apple App Store Promote task can only run on a Mac computer.",
-        "SuccessfullySubmitted": "Build successfully submitted for review."
+        "SuccessfullySubmitted": "Build successfully submitted for review.",
+        "FastlaneSessionEmpty": "'Fastlane Session' is not set in the service endpoint configured for two-step verification."
     }
 }

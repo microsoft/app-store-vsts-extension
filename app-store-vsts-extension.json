@@ -132,10 +132,21 @@
                             },
                             {
                                 "id": "appSpecificPassword",
-                                "name": "App-Specific Password",
+                                "name": "App-specific Password",
                                 "description": "Used with two-factor authentication. (See: https://appleid.apple.com/account/manage -> Security -> APP-SPECIFIC PASSWORDS)",
                                 "inputMode": "passwordbox",
                                 "isConfidential": true,
+                                "validation": {
+                                    "isRequired": false,
+                                    "dataType": "string"
+                                }
+                            },
+                            {
+                                "id": "fastlaneSession",
+                                "name": "Fastlane Session",
+                                "description": "Used with two-factor authentication. (See: https://github.com/fastlane/fastlane/blob/master/spaceship/README.md#support-for-ci-machines)",
+                                "inputMode": "textarea",
+                                "isConfidential": false,
                                 "validation": {
                                     "isRequired": false,
                                     "dataType": "string"
