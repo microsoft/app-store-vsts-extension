@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "app-store",
     "name": "Apple App Store",
-    "version": "1.115.0",
+    "version": "1.116.0",
     "publisher": "ms-vsclient",
     "description": "Provides tasks for publishing to Apple's App Store from a TFS/Team Services build or release definition",
     "categories": [
@@ -127,6 +127,28 @@
                                 "isConfidential": true,
                                 "validation": {
                                     "isRequired": true,
+                                    "dataType": "string"
+                                }
+                            },
+                            {
+                                "id": "appSpecificPassword",
+                                "name": "App-specific Password",
+                                "description": "Used with two-step verification. (See: https://appleid.apple.com/account/manage -> Security -> App-specific Passwords)",
+                                "inputMode": "passwordbox",
+                                "isConfidential": true,
+                                "validation": {
+                                    "isRequired": false,
+                                    "dataType": "string"
+                                }
+                            },
+                            {
+                                "id": "fastlaneSession",
+                                "name": "Fastlane Session",
+                                "description": "Used with two-step verification. (See: https://github.com/fastlane/fastlane/blob/master/spaceship/README.md#support-for-ci-machines)",
+                                "inputMode": "textarea",
+                                "isConfidential": false,
+                                "validation": {
+                                    "isRequired": false,
                                     "dataType": "string"
                                 }
                             }

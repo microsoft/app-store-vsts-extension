@@ -12,6 +12,12 @@
   "loc.input.help.username": "The email of the account used to publish to the Apple App Store.",
   "loc.input.label.password": "Password",
   "loc.input.help.password": "The password of the account used to publish to the Apple App Store.",
+  "loc.input.label.isTwoFactorAuth": "Use Two-step Verification (Two-factor Authentication)",
+  "loc.input.help.isTwoFactorAuth": "Select if the Apple account above has two-step verification enabled. (See: https://appleid.apple.com/account/manage -> Security)",
+  "loc.input.label.appSpecificPassword": "App-specific Password",
+  "loc.input.help.appSpecificPassword": "The supplementary Apple-supplied password used with two-step verification enabled (See: https://appleid.apple.com/account/manage -> Security -> App-specific Passwords). Use a new variable with its lock enabled on the Variables tab to encrypt this value.",
+  "loc.input.label.fastlaneSession": "Fastlane Session for Two-step Verification",
+  "loc.input.help.fastlaneSession": "Used with two-step verification.  Create by running: 'fastlane spaceauth -u [email]'",
   "loc.input.label.appIdentifier": "Bundle ID",
   "loc.input.help.appIdentifier": "The unique app identifier (e.g. com.myapp.etc). Required if the track is Production.",
   "loc.input.label.ipaPath": "Binary Path",
@@ -50,5 +56,6 @@
   "loc.messages.DarwinOnly": "The Apple App Store Release task can only run on a Mac computer.",
   "loc.messages.SuccessfullyPublished": "Successfully published to %s",
   "loc.messages.NoIpaFilesFound": "No IPA file found using pattern: %s",
-  "loc.messages.MultipleIpaFilesFound": "More than one IPA file found using pattern: %s"
+  "loc.messages.MultipleIpaFilesFound": "More than one IPA file found using pattern: %s",
+  "loc.messages.FastlaneSessionEmpty": "'Fastlane Session' is not set in the service endpoint configured for two-step verification."
 }

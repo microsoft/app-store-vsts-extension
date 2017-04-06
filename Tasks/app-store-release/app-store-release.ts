@@ -14,6 +14,8 @@ import { ToolRunner } from 'vsts-task-lib/toolrunner';
 class UserCredentials {
     username: string;
     password: string;
+    appSpecificPassword: string;
+    fastlaneSession: string;
 
     /* tslint:disable:no-empty */
     public UserCredentials() { }
@@ -42,6 +44,9 @@ function findIpa(ipaPath: string) : string {
 }
 
 async function run() {
+    const appSpecificPasswordEnvVar: string = 'FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD';
+    const fastlaneSessionEnvVar: string = 'FASTLANE_SESSION';
+    let isTwoFactorAuthEnabled: boolean = false;
     try {
         tl.setResourcePath(path.join( __dirname, 'task.json'));
 
@@ -57,9 +62,23 @@ async function run() {
             let serviceEndpoint: tl.EndpointAuthorization = tl.getEndpointAuthorization(tl.getInput('serviceEndpoint', true), false);
             credentials.username = serviceEndpoint.parameters['username'];
             credentials.password = serviceEndpoint.parameters['password'];
+            credentials.appSpecificPassword = serviceEndpoint.parameters['appSpecificPassword'];
+            if (credentials.appSpecificPassword) {
+                isTwoFactorAuthEnabled = true;
+                let fastlaneSession: string = serviceEndpoint.parameters['fastlaneSession'];
+                if (!fastlaneSession) {
+                    throw Error(tl.loc('FastlaneSessionEmpty'));
+                }
+                credentials.fastlaneSession = fastlaneSession;
+            }
         } else if (authType === 'UserAndPass') {
             credentials.username = tl.getInput('username', true);
             credentials.password = tl.getInput('password', true);
+            isTwoFactorAuthEnabled = tl.getBoolInput('isTwoFactorAuth');
+            if (isTwoFactorAuthEnabled) {
+                credentials.appSpecificPassword = tl.getInput('appSpecificPassword', true);
+                credentials.fastlaneSession = tl.getInput('fastlaneSession', true);
+            }
         }
 
         let ipaPath: string = tl.getInput('ipaPath', true);
@@ -92,6 +111,18 @@ async function run() {
         process.env['FASTLANE_PASSWORD'] = credentials.password;
         process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
         process.env['FASTLANE_DISABLE_COLORS'] = true;
+
+        if (isTwoFactorAuthEnabled) {
+            // Properties required for two-factor authentication:
+            // 1) Account username and password
+            // 2) App-specific password (Apple account->Security where two factor authentication is set)
+            // 3) FASTLANE_SESSION, which is essentially a cookie granting access to Apple accounts
+            // To get a FASTLANE_SESSION, run 'fastlane spaceauth -u [email]' interactively (requires PIN)
+            // See: https://github.com/fastlane/fastlane/blob/master/spaceship/README.md
+            tl.debug('Using two-factor authentication');
+            process.env[fastlaneSessionEnvVar] = credentials.fastlaneSession;
+            process.env[appSpecificPasswordEnvVar] = credentials.appSpecificPassword;
+        }
 
         // Add bin of new gem home so we don't have to resolve it later
         process.env['PATH'] = process.env['PATH'] + ':' + gemCache + path.sep + 'bin';
@@ -177,6 +208,12 @@ async function run() {
 
     } catch (err) {
         tl.setResult(tl.TaskResult.Failed, err);
+    } finally {
+        if (isTwoFactorAuthEnabled) {
+            tl.debug('Clearing two-factor authentication environment variables');
+            process.env[fastlaneSessionEnvVar] = '';
+            process.env[appSpecificPasswordEnvVar] = '';
+        }
     }
 }
 

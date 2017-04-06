@@ -13,7 +13,7 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "115",
+        "Minor": "116",
         "Patch": "0"
     },
     "minimumAgentVersion": "1.95.3",
@@ -69,6 +69,34 @@
             "required": true,
             "helpMarkDown": "The password of the account used to publish to the Apple App Store.",
             "visibleRule": "authType = UserAndPass"
+        },
+        {
+            "name": "isTwoFactorAuth",
+            "type": "boolean",
+            "label": "Use Two-step Verification (Two-factor Authentication)",
+            "defaultValue": false,
+            "required": false,
+            "helpMarkDown": "Select if the Apple account above has two-step verification enabled. (See: https://appleid.apple.com/account/manage -> Security)",
+            "visibleRule": "authType = UserAndPass"
+        },
+        {
+            "name": "appSpecificPassword",
+            "type": "string",
+            "label": "App-specific Password",
+            "defaultValue": "",
+            "isConfidential": true,
+            "required": true,
+            "helpMarkDown": "The supplementary Apple-supplied password used with two-step verification enabled (See: https://appleid.apple.com/account/manage -> Security -> App-specific Passwords). Use a new variable with its lock enabled on the Variables tab to encrypt this value.",
+            "visibleRule": "isTwoFactorAuth = true"
+        },
+        {
+            "name": "fastlaneSession",
+            "type": "string",
+            "label": "Fastlane Session for Two-step Verification",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Used with two-step verification.  Create by running: 'fastlane spaceauth -u [email]'",
+            "visibleRule": "isTwoFactorAuth = true"
         },
         {
             "name": "appIdentifier",
@@ -257,6 +285,7 @@
         "DarwinOnly": "The Apple App Store Release task can only run on a Mac computer.",
         "SuccessfullyPublished": "Successfully published to %s",
         "NoIpaFilesFound": "No IPA file found using pattern: %s",
-        "MultipleIpaFilesFound": "More than one IPA file found using pattern: %s"
+        "MultipleIpaFilesFound": "More than one IPA file found using pattern: %s",
+        "FastlaneSessionEmpty": "'Fastlane Session' is not set in the service endpoint configured for two-step verification."
     }
 }
