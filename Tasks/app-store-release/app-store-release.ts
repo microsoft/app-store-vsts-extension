@@ -169,12 +169,14 @@ async function run() {
         if (releaseTrack === 'TestFlight') {
             // Run pilot (via fastlane) to upload to testflight
             let pilotCommand: ToolRunner = tl.tool('fastlane');
+            let bundleIdentifier: string = tl.getInput('appIdentifier', false);
             pilotCommand.arg(['pilot', 'upload', '-u', credentials.username, '-i', ipaPath]);
             if (isValidFilePath(releaseNotes)) {
                 pilotCommand.arg(['--changelog', fs.readFileSync(releaseNotes).toString()]);
             }
             pilotCommand.argIf(teamId, ['-q', teamId]);
             pilotCommand.argIf(teamName, ['-r', teamName]);
+            pilotCommand.argIf(bundleIdentifier, ['-a', bundleIdentifier]);
             pilotCommand.argIf(shouldSkipSubmission, ['--skip_submission', 'true']);
             pilotCommand.argIf(shouldSkipWaitingForProcessing, ['--skip_waiting_for_build_processing', 'true']);
 

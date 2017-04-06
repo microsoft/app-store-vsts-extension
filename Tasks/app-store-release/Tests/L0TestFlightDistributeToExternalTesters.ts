@@ -43,7 +43,7 @@ let myAnswers: string = `{
         ]
     },
     "exec": {
-        "fastlane pilot upload -u creds-username -i mypackage.ipa --distribute_external true": {
+        "fastlane pilot upload -u creds-username -i mypackage.ipa -a com.microsoft.test.appId --distribute_external true": {
             "code": 0,
             "stdout": "consider it uploaded!"
         }
