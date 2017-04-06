@@ -232,7 +232,7 @@
             "label": "Distribute to External Testers",
             "required": false,
             "defaultValue": false,
-            "helpMarkDown": "Select to distribute the build to external testers (cannot be used with 'Skip Build Processing Wait') ",
+            "helpMarkDown": "Select to distribute the build to external testers (cannot be used with 'Skip Build Processing Wait' and 'Skip Submission') ",
             "groupName": "releaseOptions",
             "visibleRule": "releaseTrack = TestFlight"
         },
