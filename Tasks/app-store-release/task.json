@@ -86,7 +86,7 @@
             "defaultValue": "",
             "isConfidential": true,
             "required": true,
-            "helpMarkDown": "The supplementary Apple-supplied password used with two-step verification enabled (See: https://appleid.apple.com/account/manage -> Security -> App-specific passwords). Use a new variable with its lock enabled on the Variables tab to encrypt this value.",
+            "helpMarkDown": "The supplementary Apple-supplied password used with two-step verification enabled (See: https://appleid.apple.com/account/manage -> Security -> App-specific Passwords). Use a new variable with its lock enabled on the Variables tab to encrypt this value.",
             "visibleRule": "isTwoFactorAuth = true"
         },
         {
