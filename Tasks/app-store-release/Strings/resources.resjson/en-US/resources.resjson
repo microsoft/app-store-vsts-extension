@@ -44,7 +44,7 @@
   "loc.input.label.shouldSkipSubmission": "Skip Submission",
   "loc.input.help.shouldSkipSubmission": "Select to upload the IPA but not distribute it to testers.",
   "loc.input.label.distributedToExternalTesters": "Distribute to External Testers",
-  "loc.input.help.distributedToExternalTesters": "Select to distribute the build to external testers (cannot be used with 'skip build processing wait') ",
+  "loc.input.help.distributedToExternalTesters": "Select to distribute the build to external testers (cannot be used with 'Skip Build Processing Wait') ",
   "loc.input.label.teamId": "Team ID",
   "loc.input.help.teamId": "The ID of your team if you are in multiple teams.",
   "loc.input.label.teamName": "Team Name",
