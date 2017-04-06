@@ -227,6 +227,16 @@
             "visibleRule": "releaseTrack = TestFlight"
         },
         {
+            "name": "distributedToExternalTesters",
+            "type": "boolean",
+            "label": "Distribute to External Testers",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Select to distribute the build to external testers (cannot be used with 'skip build processing wait') ",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = TestFlight"
+        },
+        {
             "name": "teamId",
             "type": "string",
             "label": "Team ID",

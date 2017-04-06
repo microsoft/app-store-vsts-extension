@@ -299,6 +299,19 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
+    it('testflight - distribute external', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0TestFlightDistributeToExternalTesters.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa --distribute_external true'), 'fastlane pilot upload -u creds-username -i mypackage.ipa --distribute_external true should have been run.');
+        assert(tr.invokedToolCount === 1, 'should have run fastlane pilot.');
+        assert(tr.succeeded, 'task should have succeeded');
+        done();
+    });
+
     it('testflight - one ipa file', (done:MochaDone) => {
         this.timeout(1000);
 

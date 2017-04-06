@@ -229,6 +229,16 @@
       "visibleRule": "releaseTrack = TestFlight"
     },
     {
+      "name": "distributedToExternalTesters",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.distributedToExternalTesters",
+      "required": false,
+      "defaultValue": false,
+      "helpMarkDown": "ms-resource:loc.input.help.distributedToExternalTesters",
+      "groupName": "releaseOptions",
+      "visibleRule": "releaseTrack = TestFlight"
+    },
+    {
       "name": "teamId",
       "type": "string",
       "label": "ms-resource:loc.input.label.teamId",

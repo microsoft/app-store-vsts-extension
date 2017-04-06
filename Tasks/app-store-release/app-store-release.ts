@@ -177,6 +177,12 @@ async function run() {
             pilotCommand.argIf(teamName, ['-r', teamName]);
             pilotCommand.argIf(shouldSkipSubmission, ['--skip_submission', 'true']);
             pilotCommand.argIf(shouldSkipWaitingForProcessing, ['--skip_waiting_for_build_processing', 'true']);
+
+            let distributedToExternalTesters: boolean = tl.getBoolInput('distributedToExternalTesters', false);
+            pilotCommand.argIf(distributedToExternalTesters, ['--distribute_external', 'true']);
+            if (shouldSkipWaitingForProcessing && distributedToExternalTesters) {
+                tl.warning("'Skip Build Processing Wait' is not supported with 'Distribute to External Testers'. Please check your build configuration.");
+            }
             await pilotCommand.exec();
         } else if (releaseTrack === 'Production') {
             let bundleIdentifier: string = tl.getInput('appIdentifier', true);
