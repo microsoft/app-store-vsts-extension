@@ -171,7 +171,8 @@ async function run() {
             let pilotCommand: ToolRunner = tl.tool('fastlane');
             let bundleIdentifier: string = tl.getInput('appIdentifier', false);
             pilotCommand.arg(['pilot', 'upload', '-u', credentials.username, '-i', ipaPath]);
-            if (isValidFilePath(releaseNotes)) {
+            let usingReleaseNotes: boolean = isValidFilePath(releaseNotes);
+            if (usingReleaseNotes) {
                 pilotCommand.arg(['--changelog', fs.readFileSync(releaseNotes).toString()]);
             }
             pilotCommand.argIf(teamId, ['-q', teamId]);
@@ -181,9 +182,15 @@ async function run() {
             pilotCommand.argIf(shouldSkipWaitingForProcessing, ['--skip_waiting_for_build_processing', 'true']);
 
             let distributedToExternalTesters: boolean = tl.getBoolInput('distributedToExternalTesters', false);
-            pilotCommand.argIf(distributedToExternalTesters, ['--distribute_external', 'true']);
-            if ((shouldSkipSubmission || shouldSkipWaitingForProcessing) && distributedToExternalTesters) {
-                tl.warning("'Skip Build Processing Wait' and 'Skip Submission' is not supported with 'Distribute to External Testers'. Please check your build configuration.");
+            if (distributedToExternalTesters) {
+                tl.debug('Distributing to external testers');
+                if (!usingReleaseNotes) {
+                    throw new Error(tl.loc('ReleaseNotesRequiredForExternalTesting'));
+                }
+                pilotCommand.arg(['--distribute_external', 'true']);
+                if (shouldSkipSubmission || shouldSkipWaitingForProcessing) {
+                    tl.warning("'Skip Build Processing Wait' and 'Skip Submission' is not supported with 'Distribute to External Testers'. Please check your build configuration.");
+                }
             }
             await pilotCommand.exec();
         } else if (releaseTrack === 'Production') {

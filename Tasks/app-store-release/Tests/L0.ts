@@ -299,16 +299,16 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - distribute external', (done:MochaDone) => {
+    it('testflight - distribute external no release notes', (done:MochaDone) => {
         this.timeout(1000);
 
-        let tp = path.join(__dirname, 'L0TestFlightDistributeToExternalTesters.js');
+        let tp = path.join(__dirname, 'L0TestFlightDistributeToExternalTestersNoReleaseNotes.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa -a com.microsoft.test.appId --distribute_external true'), 'fastlane pilot upload -u creds-username -i mypackage.ipa --distribute_external true should have been run.');
-        assert(tr.invokedToolCount === 1, 'should have run fastlane pilot.');
-        assert(tr.succeeded, 'task should have succeeded');
+        assert(tr.invokedToolCount === 0, 'should not have run any tools.');
+        assert(tr.stdout.indexOf('Error: loc_mock_ReleaseNotesRequiredForExternalTesting') !== -1, 'Task should have written to stdout');
+        assert(tr.failed, 'task should have failed');
         done();
     });
 
