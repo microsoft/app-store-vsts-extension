@@ -298,6 +298,7 @@
     "SuccessfullyPublished": "ms-resource:loc.messages.SuccessfullyPublished",
     "NoIpaFilesFound": "ms-resource:loc.messages.NoIpaFilesFound",
     "MultipleIpaFilesFound": "ms-resource:loc.messages.MultipleIpaFilesFound",
-    "FastlaneSessionEmpty": "ms-resource:loc.messages.FastlaneSessionEmpty"
+    "FastlaneSessionEmpty": "ms-resource:loc.messages.FastlaneSessionEmpty",
+    "ReleaseNotesRequiredForExternalTesting": "ms-resource:loc.messages.ReleaseNotesRequiredForExternalTesting"
   }
 }
