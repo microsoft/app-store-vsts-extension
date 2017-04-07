@@ -229,6 +229,16 @@
       "visibleRule": "releaseTrack = TestFlight"
     },
     {
+      "name": "distributedToExternalTesters",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.distributedToExternalTesters",
+      "required": false,
+      "defaultValue": false,
+      "helpMarkDown": "ms-resource:loc.input.help.distributedToExternalTesters",
+      "groupName": "releaseOptions",
+      "visibleRule": "releaseTrack = TestFlight"
+    },
+    {
       "name": "teamId",
       "type": "string",
       "label": "ms-resource:loc.input.label.teamId",
@@ -288,6 +298,8 @@
     "SuccessfullyPublished": "ms-resource:loc.messages.SuccessfullyPublished",
     "NoIpaFilesFound": "ms-resource:loc.messages.NoIpaFilesFound",
     "MultipleIpaFilesFound": "ms-resource:loc.messages.MultipleIpaFilesFound",
-    "FastlaneSessionEmpty": "ms-resource:loc.messages.FastlaneSessionEmpty"
+    "FastlaneSessionEmpty": "ms-resource:loc.messages.FastlaneSessionEmpty",
+    "ReleaseNotesRequiredForExternalTesting": "ms-resource:loc.messages.ReleaseNotesRequiredForExternalTesting",
+    "ExternalTestersCannotSkipWarning": "ms-resource:loc.messages.ExternalTestersCannotSkipWarning"
   }
 }

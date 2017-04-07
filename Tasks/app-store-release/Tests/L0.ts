@@ -299,6 +299,19 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
+    it('testflight - distribute external no release notes', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0TestFlightDistributeToExternalTestersNoReleaseNotes.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.invokedToolCount === 0, 'should not have run any tools.');
+        assert(tr.stdout.indexOf('Error: loc_mock_ReleaseNotesRequiredForExternalTesting') !== -1, 'Task should have written to stdout');
+        assert(tr.failed, 'task should have failed');
+        done();
+    });
+
     it('testflight - one ipa file', (done:MochaDone) => {
         this.timeout(1000);
 

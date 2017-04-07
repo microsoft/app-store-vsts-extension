@@ -43,6 +43,8 @@
   "loc.input.help.shouldSkipWaitingForProcessing": "Select to skip waiting for the Apple App Store to finish processing the build.",
   "loc.input.label.shouldSkipSubmission": "Skip Submission",
   "loc.input.help.shouldSkipSubmission": "Select to upload the IPA but not distribute it to testers.",
+  "loc.input.label.distributedToExternalTesters": "Distribute to External Testers",
+  "loc.input.help.distributedToExternalTesters": "Select to distribute the build to external testers (cannot be used with 'Skip Build Processing Wait' and 'Skip Submission').  Using this option requires setting release notes in 'What to Test?'",
   "loc.input.label.teamId": "Team ID",
   "loc.input.help.teamId": "The ID of your team if you are in multiple teams.",
   "loc.input.label.teamName": "Team Name",
@@ -57,5 +59,7 @@
   "loc.messages.SuccessfullyPublished": "Successfully published to %s",
   "loc.messages.NoIpaFilesFound": "No IPA file found using pattern: %s",
   "loc.messages.MultipleIpaFilesFound": "More than one IPA file found using pattern: %s",
-  "loc.messages.FastlaneSessionEmpty": "'Fastlane Session' is not set in the service endpoint configured for two-step verification."
+  "loc.messages.FastlaneSessionEmpty": "'Fastlane Session' is not set in the service endpoint configured for two-step verification.",
+  "loc.messages.ReleaseNotesRequiredForExternalTesting": "'What to Test?' is required when using 'Distribute to External Testers'.",
+  "loc.messages.ExternalTestersCannotSkipWarning": "'Skip Build Processing Wait' and 'Skip Submission' is not supported with 'Distribute to External Testers'. Please check your build configuration."
 }

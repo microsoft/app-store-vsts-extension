@@ -170,13 +170,26 @@ async function run() {
             // Run pilot (via fastlane) to upload to testflight
             let pilotCommand: ToolRunner = tl.tool('fastlane');
             pilotCommand.arg(['pilot', 'upload', '-u', credentials.username, '-i', ipaPath]);
-            if (isValidFilePath(releaseNotes)) {
+            let usingReleaseNotes: boolean = isValidFilePath(releaseNotes);
+            if (usingReleaseNotes) {
                 pilotCommand.arg(['--changelog', fs.readFileSync(releaseNotes).toString()]);
             }
             pilotCommand.argIf(teamId, ['-q', teamId]);
             pilotCommand.argIf(teamName, ['-r', teamName]);
             pilotCommand.argIf(shouldSkipSubmission, ['--skip_submission', 'true']);
             pilotCommand.argIf(shouldSkipWaitingForProcessing, ['--skip_waiting_for_build_processing', 'true']);
+
+            let distributedToExternalTesters: boolean = tl.getBoolInput('distributedToExternalTesters', false);
+            if (distributedToExternalTesters) {
+                tl.debug('Distributing to external testers');
+                if (!usingReleaseNotes) {
+                    throw new Error(tl.loc('ReleaseNotesRequiredForExternalTesting'));
+                }
+                pilotCommand.arg(['--distribute_external', 'true']);
+                if (shouldSkipSubmission || shouldSkipWaitingForProcessing) {
+                    tl.warning(tl.loc('ExternalTestersCannotSkipWarning'));
+                }
+            }
             await pilotCommand.exec();
         } else if (releaseTrack === 'Production') {
             let bundleIdentifier: string = tl.getInput('appIdentifier', true);
