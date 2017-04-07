@@ -231,7 +231,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa -q teamId'), 'fastlane pilot upload with teamId should have been run.');
+        assert(tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa -q teamId -a com.microsoft.test.appId'), 'fastlane pilot upload with teamId should have been run.');
         assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane pilot.');
         assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');

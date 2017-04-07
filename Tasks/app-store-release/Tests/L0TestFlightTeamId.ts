@@ -53,7 +53,7 @@ let myAnswers: string = `{
             "code": 0,
             "stdout": "1 gem installed"
         },
-        "fastlane pilot upload -u creds-username -i mypackage.ipa -q teamId": {
+        "fastlane pilot upload -u creds-username -i mypackage.ipa -q teamId -a com.microsoft.test.appId": {
             "code": 0,
             "stdout": "consider it uploaded!"
         }
