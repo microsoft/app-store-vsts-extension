@@ -297,6 +297,7 @@
         "NoIpaFilesFound": "No IPA file found using pattern: %s",
         "MultipleIpaFilesFound": "More than one IPA file found using pattern: %s",
         "FastlaneSessionEmpty": "'Fastlane Session' is not set in the service endpoint configured for two-step verification.",
-        "ReleaseNotesRequiredForExternalTesting": "'What to Test?' is required when using 'Distribute to External Testers'."
+        "ReleaseNotesRequiredForExternalTesting": "'What to Test?' is required when using 'Distribute to External Testers'.",
+        "ExternalTestersCannotSkipWarning": "'Skip Build Processing Wait' and 'Skip Submission' is not supported with 'Distribute to External Testers'. Please check your build configuration."
     }
 }
