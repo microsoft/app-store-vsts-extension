@@ -299,6 +299,7 @@
     "NoIpaFilesFound": "ms-resource:loc.messages.NoIpaFilesFound",
     "MultipleIpaFilesFound": "ms-resource:loc.messages.MultipleIpaFilesFound",
     "FastlaneSessionEmpty": "ms-resource:loc.messages.FastlaneSessionEmpty",
-    "ReleaseNotesRequiredForExternalTesting": "ms-resource:loc.messages.ReleaseNotesRequiredForExternalTesting"
+    "ReleaseNotesRequiredForExternalTesting": "ms-resource:loc.messages.ReleaseNotesRequiredForExternalTesting",
+    "ExternalTestersCannotSkipWarning": "ms-resource:loc.messages.ExternalTestersCannotSkipWarning"
   }
 }

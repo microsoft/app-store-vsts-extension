@@ -187,7 +187,7 @@ async function run() {
                 }
                 pilotCommand.arg(['--distribute_external', 'true']);
                 if (shouldSkipSubmission || shouldSkipWaitingForProcessing) {
-                    tl.warning("'Skip Build Processing Wait' and 'Skip Submission' is not supported with 'Distribute to External Testers'. Please check your build configuration.");
+                    tl.warning(tl.loc('ExternalTestersCannotSkipWarning'));
                 }
             }
             await pilotCommand.exec();
