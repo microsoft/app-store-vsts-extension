@@ -135,6 +135,7 @@ async function run() {
         tl.debug(`GEM_CACHE=${process.env['GEM_CACHE']}`);
         let gemCache: string = process.env['GEM_CACHE'] || path.join(process.env['HOME'], '.gem-cache');
         tl.debug(`gemCache=${gemCache}`);
+        process.env['GEM_HOME'] = gemCache;
         process.env['FASTLANE_DISABLE_COLORS'] = true;
 
         // Add bin of new gem home so we don't ahve to resolve it later;
