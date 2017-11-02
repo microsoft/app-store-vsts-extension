@@ -13,7 +13,7 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "116",
+        "Minor": "126",
         "Patch": "0"
     },
     "minimumAgentVersion": "1.95.3",
@@ -237,6 +237,16 @@
             "visibleRule": "releaseTrack = TestFlight"
         },
         {
+            "name": "externalTestersGroups",
+            "type": "string",
+            "label": "Groups",
+            "required": false,
+            "defaultValue": "",
+            "helpMarkDown": "Optionally specify the group(s) of external testers this build should be distributed to. To specify multiple groups, separate group names by commas e.g. 'External Beta Testers,TestVendors'. If not specified the default 'External Testers' is used.",
+            "groupName": "releaseOptions",
+            "visibleRule": "distributedToExternalTesters = true"
+        },
+        {
             "name": "teamId",
             "type": "string",
             "label": "Team ID",
@@ -283,6 +293,15 @@
             "groupName": "advanced",
             "helpMarkDown": "Provide the version of fastlane to install (e.g., 2.15.1).  If a specific version of fastlane is installed, all previously installed versions will be uninstalled beforehand.",
             "visibleRule": "fastlaneToolsVersion = SpecificVersion"
+        },
+        {
+            "name": "fastlaneArguments",
+            "type": "string",
+            "label": "Additional fastlane arguments",
+            "defaultValue": "",
+            "required": false,
+            "groupName": "advanced",
+            "helpMarkDown": "Any additional arguments to pass to the fastlane command."
         }
     ],
     "execution": {

@@ -165,6 +165,8 @@ async function run() {
             tl.debug('Skipped fastlane installation.');
         }
 
+        let fastlaneArguments: string = tl.getInput('fastlaneArguments');
+
         //gem update fastlane -i ~/.gem-cache
         if (releaseTrack === 'TestFlight') {
             // Run pilot (via fastlane) to upload to testflight
@@ -191,7 +193,11 @@ async function run() {
                 if (shouldSkipSubmission || shouldSkipWaitingForProcessing) {
                     tl.warning(tl.loc('ExternalTestersCannotSkipWarning'));
                 }
+
+                let externalTestersGroups: string = tl.getInput('externalTestersGroups');
+                pilotCommand.argIf(externalTestersGroups, ['--groups', externalTestersGroups]);
             }
+            pilotCommand.argIf(fastlaneArguments, fastlaneArguments);
             await pilotCommand.exec();
         } else if (releaseTrack === 'Production') {
             let bundleIdentifier: string = tl.getInput('appIdentifier', true);
@@ -216,6 +222,7 @@ async function run() {
             deliverCommand.argIf(teamName, ['-e', teamName]);
             deliverCommand.argIf(shouldSubmitForReview, ['--submit_for_review', 'true']);
             deliverCommand.argIf(shouldAutoRelease, ['--automatic_release', 'true']);
+            deliverCommand.argIf(fastlaneArguments, fastlaneArguments);
             await deliverCommand.exec();
         }
 
