@@ -46,7 +46,14 @@
         },
         "support": {
             "uri": "https://github.com/microsoft/app-store-vsts-extension/issues"
+        },
+        "issues": {
+            "uri": "https://github.com/microsoft/app-store-vsts-extension/issues"    
         }
+    },
+    "repository": {
+        "type": "git",
+        "uri": "https://github.com/microsoft/app-store-vsts-extension/"
     },
     "files": [
         {
