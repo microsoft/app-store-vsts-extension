@@ -312,6 +312,18 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
+    it('testflight - distribute external with groups', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0TestFlightDistributeToExternalTestersWithGroups.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.invokedToolCount === 1, 'should have run fastlane pilot.');
+        assert(tr.succeeded, 'task should have succeeded');
+        done();
+    });
+
     it('testflight - one ipa file', (done:MochaDone) => {
         this.timeout(1000);
 
@@ -351,6 +363,21 @@ describe('app-store-release L0 Suite', function () {
         assert(tr.invokedToolCount === 0, 'should not have run any tools.');
         assert(tr.stdout.indexOf('Error: loc_mock_NoIpaFilesFound') !== -1, 'Task should have written to stdout');
         assert(tr.failed, 'task should have failed');
+
+        done();
+    });
+
+    it('testflight - additional arguments', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0TestFlightFastlaneArguments.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa -args someadditioanlargs'), 'fastlane pilot upload with one ip file should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane pilot.');
+        assert(tr.stderr.length === 0, 'should not have written to stderr');
+        assert(tr.succeeded, 'task should have succeeded');
 
         done();
     });
@@ -541,6 +568,20 @@ describe('app-store-release L0 Suite', function () {
         assert(tr.invokedToolCount === 0, 'should not have run any tools.');
         assert(tr.stdout.indexOf('Error: loc_mock_NoIpaFilesFound') !== -1, 'Task should have written to stdout');
         assert(tr.failed, 'task should have failed');
+
+        done();
+    });
+
+    it('production - fastlane arguments', (done:MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0ProductionFastlaneArguments.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
+        assert(tr.stderr.length === 0, 'should not have written to stderr');
+        assert(tr.succeeded, 'task should have succeeded');
 
         done();
     });

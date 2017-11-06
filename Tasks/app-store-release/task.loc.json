@@ -15,7 +15,7 @@
   ],
   "version": {
     "Major": "1",
-    "Minor": "116",
+    "Minor": "126",
     "Patch": "0"
   },
   "minimumAgentVersion": "1.95.3",
@@ -239,6 +239,16 @@
       "visibleRule": "releaseTrack = TestFlight"
     },
     {
+      "name": "externalTestersGroups",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.externalTestersGroups",
+      "required": false,
+      "defaultValue": "",
+      "helpMarkDown": "ms-resource:loc.input.help.externalTestersGroups",
+      "groupName": "releaseOptions",
+      "visibleRule": "distributedToExternalTesters = true"
+    },
+    {
       "name": "teamId",
       "type": "string",
       "label": "ms-resource:loc.input.label.teamId",
@@ -285,6 +295,15 @@
       "groupName": "advanced",
       "helpMarkDown": "ms-resource:loc.input.help.fastlaneToolsSpecificVersion",
       "visibleRule": "fastlaneToolsVersion = SpecificVersion"
+    },
+    {
+      "name": "fastlaneArguments",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.fastlaneArguments",
+      "defaultValue": "",
+      "required": false,
+      "groupName": "advanced",
+      "helpMarkDown": "ms-resource:loc.input.help.fastlaneArguments"
     }
   ],
   "execution": {
