@@ -1,7 +1,7 @@
- /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------
+*  Copyright (c) Microsoft Corporation. All rights reserved.
+*  Licensed under the MIT License. See License.txt in the project root for license information.
+*--------------------------------------------------------------------------------------------*/
 'use strict';
 
 import os = require('os');
@@ -26,7 +26,7 @@ async function run() {
     const fastlaneSessionEnvVar: string = 'FASTLANE_SESSION';
     let isTwoFactorAuthEnabled: boolean = false;
     try {
-        tl.setResourcePath(path.join( __dirname, 'task.json'));
+        tl.setResourcePath(path.join(__dirname, 'task.json'));
 
         //check if this is running on Mac and fail the task if not
         if (os.platform() !== 'darwin') {
@@ -75,6 +75,7 @@ async function run() {
         if (fastlaneVersionChoice === 'SpecificVersion') {
             fastlaneVersionToInstall = tl.getInput('fastlaneToolsSpecificVersion', true);
         }
+        let fastlaneArguments: string = tl.getInput('fastlaneArguments');
         tl.debug('Read all inputs.');
 
         // Set up environment
@@ -140,13 +141,14 @@ async function run() {
         let deliverCommand: ToolRunner = tl.tool('fastlane');
         deliverCommand.arg(['deliver', 'submit_build', '-u', credentials.username, '-a', appIdentifier]);
         if (chooseBuild.toLowerCase() === 'specify') {
-           deliverCommand.arg(['-n', buildNumber]);
+            deliverCommand.arg(['-n', buildNumber]);
         }
         deliverCommand.arg(['--skip_binary_upload', 'true', '--skip_metadata', 'true', '--skip_screenshots', 'true']);
         deliverCommand.argIf(shouldAutoRelease, '--automatic_release');
         deliverCommand.argIf(teamId, ['-k', teamId]);
         deliverCommand.argIf(teamName, ['-e', teamName]);
         deliverCommand.arg('--force');
+        deliverCommand.argIf(fastlaneArguments, fastlaneArguments);
 
         await deliverCommand.exec();
 

@@ -121,7 +121,7 @@ Allows you to promote an app previously updated to iTunes Connect to the App Sto
 
 4. **Build Number** - Required if `Specify build number` option is selected in **Choose Build** above. The build number in iTunes Connect that you wish to submit for review.
 
-4. **Release Automatically** *(Checkbox)* - Check to automatically release the app once the approval process is completed.
+5. **Release Automatically** *(Checkbox)* - Check to automatically release the app once the approval process is completed.
 
 #### Advanced Options
 
@@ -134,6 +134,8 @@ Allows you to promote an app previously updated to iTunes Connect to the App Sto
 4. **fastlane Version** - **Latest Version** or **Specific Version**.  If *Specific Version* is chosen, you must provide a value for *fastlane Specific Version*.
 
 5. **fastlane Specific Version** *(String)* - The version of fastlane to install (e.g., 2.15.1).  If a specific version of fastlane is installed, all previously installed versions will be uninstalled beforehand.
+
+6. **Additional fastlane arguments** *(String)* - Any additional arguments to pass to the fastlane command.
 
 ## Firewall Issues
 

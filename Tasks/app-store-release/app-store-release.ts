@@ -1,7 +1,7 @@
- /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------
+*  Copyright (c) Microsoft Corporation. All rights reserved.
+*  Licensed under the MIT License. See License.txt in the project root for license information.
+*--------------------------------------------------------------------------------------------*/
 'use strict';
 
 import fs = require('fs');
@@ -22,7 +22,7 @@ class UserCredentials {
     /* tslint:enable:no-empty */
 }
 
-function isValidFilePath(filePath: string) : boolean {
+function isValidFilePath(filePath: string): boolean {
     try {
         return fs.statSync(filePath).isFile();
     } catch (error) {
@@ -32,7 +32,7 @@ function isValidFilePath(filePath: string) : boolean {
 
 // Attempts to find a single ipa file to use by the task.
 // If a glob pattern is provided, only a single ipa is allowed.
-function findIpa(ipaPath: string) : string {
+function findIpa(ipaPath: string): string {
     let paths: string[] = tl.glob(ipaPath);
     if (!paths || paths.length === 0) {
         throw new Error(tl.loc('NoIpaFilesFound', ipaPath));
@@ -48,7 +48,7 @@ async function run() {
     const fastlaneSessionEnvVar: string = 'FASTLANE_SESSION';
     let isTwoFactorAuthEnabled: boolean = false;
     try {
-        tl.setResourcePath(path.join( __dirname, 'task.json'));
+        tl.setResourcePath(path.join(__dirname, 'task.json'));
 
         // Check if this is running on Mac and fail the task if not
         if (os.platform() !== 'darwin') {
@@ -57,7 +57,7 @@ async function run() {
 
         // Get input variables
         let authType: string = tl.getInput('authType', true);
-        let credentials : UserCredentials = new UserCredentials();
+        let credentials: UserCredentials = new UserCredentials();
         if (authType === 'ServiceEndpoint') {
             let serviceEndpoint: tl.EndpointAuthorization = tl.getEndpointAuthorization(tl.getInput('serviceEndpoint', true), false);
             credentials.username = serviceEndpoint.parameters['username'];
