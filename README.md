@@ -1,3 +1,5 @@
+![Build Status](https://mseng.visualstudio.com/_apis/public/build/definitions/b924d696-3eae-4116-8443-9a18392d8544/4518/badge)
+
 <table style="width: 100%; border-style: none;"><tr>
 <td width="140px" style="text-align: center;"><img src="apple_default.png" style="max-width:100%" /></td>
 <td><strong>Visual Studio Team Services Extension for the Apple App Store</strong><br />
