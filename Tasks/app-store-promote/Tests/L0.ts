@@ -1,7 +1,7 @@
- /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------
+*  Copyright (c) Microsoft Corporation. All rights reserved.
+*  Licensed under the MIT License. See License.txt in the project root for license information.
+*--------------------------------------------------------------------------------------------*/
 'use strict';
 
 // npm install mocha --save-dev
@@ -20,7 +20,7 @@ describe('app-store-promote L0 Suite', function () {
     });
     /* tslint:enable:no-empty */
 
-    it('enforce darwin', (done:MochaDone) => {
+    it('enforce darwin', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0EnforceDarwin.js');
@@ -33,7 +33,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('username+password with deliver', (done:MochaDone) => {
+    it('username+password with deliver', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0UserPassDeliver.js');
@@ -46,7 +46,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('username+password - no fastlane install', (done:MochaDone) => {
+    it('username+password - no fastlane install', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0NoFastlaneInstall.js');
@@ -59,7 +59,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('username+password - specific fastlane install', (done:MochaDone) => {
+    it('username+password - specific fastlane install', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0SpecificFastlaneInstall.js');
@@ -74,7 +74,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('username+password - specific fastlane install - no version', (done:MochaDone) => {
+    it('username+password - specific fastlane install - no version', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0SpecificFastlaneInstallNoVersion.js');
@@ -87,7 +87,21 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('service endpoint with deliver', (done:MochaDone) => {
+    it('additional fastlane install', (done: MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0AdditionalFastlaneArguments.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.invokedToolCount === 1, 'should have run fastlane deliver.');
+        assert(tr.ran('fastlane deliver submit_build -u creds-username -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force --app-version 2.1.5'), 'should have run fastlane deliver with additional fastlane arguments.');
+        assert(tr.succeeded, 'task should have succeeded');
+
+        done();
+    });
+
+    it('service endpoint with deliver', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ServiceEndpointDeliver.js');
@@ -100,7 +114,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('app specific password', (done:MochaDone) => {
+    it('app specific password', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0AppSpecificPassword.js');
@@ -115,7 +129,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('app specific password using service end point', (done:MochaDone) => {
+    it('app specific password using service end point', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0AppSpecificPasswordEndPoint.js');
@@ -130,7 +144,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('two factor authentication using service end point without fastlane session', (done:MochaDone) => {
+    it('two factor authentication using service end point without fastlane session', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0AppSpecificPasswordEndPointIncomplete.js');
@@ -143,7 +157,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('two factor authenitcation app specific password without fastlane session', (done:MochaDone) => {
+    it('two factor authenitcation app specific password without fastlane session', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0AppSpecificPasswordNoFastlaneSession.js');
@@ -156,7 +170,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('no bundle id', (done:MochaDone) => {
+    it('no bundle id', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0NoBundleId.js');
@@ -169,7 +183,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('no choose build', (done:MochaDone) => {
+    it('no choose build', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0NoChooseBuild.js');
@@ -182,7 +196,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('latest build', (done:MochaDone) => {
+    it('latest build', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0LatestBuild.js');
@@ -197,7 +211,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('should auto release', (done:MochaDone) => {
+    it('should auto release', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ShouldAutoRelease.js');
@@ -212,7 +226,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('team id', (done:MochaDone) => {
+    it('team id', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TeamId.js');
@@ -227,7 +241,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('team name', (done:MochaDone) => {
+    it('team name', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TeamName.js');
@@ -242,7 +256,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('team id and team name', (done:MochaDone) => {
+    it('team id and team name', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TeamIdTeamName.js');
@@ -257,7 +271,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('build number', (done:MochaDone) => {
+    it('build number', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0BuildNumber.js');
@@ -272,7 +286,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('custom GEM_CACHE environment variable', (done:MochaDone) => {
+    it('custom GEM_CACHE environment variable', (done: MochaDone) => {
         this.timeout(1000);
 
         //L0GemCacheEnvVar.ts sets the GEM_CACHE env var and expects it to be used when fastlane is updated.
