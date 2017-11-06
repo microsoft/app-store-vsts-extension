@@ -81,6 +81,10 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 3. **Skip Submission** *(Checkbox)* - Upload a beta app without distributing to testers.
 
+4. **Distribute to External Testers** *(Checkbox)* - Select to distribute the build to external testers (cannot be used with 'Skip Build Processing Wait' and 'Skip Submission').  Using this option requires setting release notes in 'What to Test?'.
+
+5. **Groups** *(String)* - Optionally specify the group(s) of external testers this build should be distributed to. To specify multiple groups, separate group names by commas e.g. 'External Beta Testers,TestVendors'. If not specified the default 'External Testers' is used.
+
 ##### Release Options for Production track
 
 1. **Skip Binary Upload** *(Checkbox)* - Skip binary upload and only update metadata and screenshots.
@@ -108,6 +112,8 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 4. **fastlane Version** - **Latest Version** or **Specific Version**.  If *Specific Version* is chosen, you must provide a value for *fastlane Specific Version*.
 
 5. **fastlane Specific Version** *(String)* - The version of fastlane to install (e.g., 2.15.1).
+
+6. **Additional fastlane arguments** *(String)* - Any additional arguments to pass to the fastlane command.
 
 ### App Store Promote
 
