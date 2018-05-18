@@ -51,6 +51,14 @@ In addition to specifying your publisher credentials directly within each build 
 
 6. Select this endpoint using the name you chose in the previous step whenever you add either the **App Store Release** or **App Store Promote** tasks to a build or release definition.
 
+### Supporting Two-Factor Verification
+
+If the Apple account used to publish the app has two-factor authentication enabled, you need to setup the `Fastlane Session` variable on the service endpoint. 
+
+1. Create the fastlane session token by following its [instruction](https://docs.fastlane.tools/best-practices/continuous-integration/#use-of-application-specific-passwords-and-spaceauth).
+
+2. Set this value on the service endpoint.
+
 ## Task Reference
 
 In addition to the custom service endpoint, this extension also contributes the following build and release tasks:
