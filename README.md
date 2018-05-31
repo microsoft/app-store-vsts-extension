@@ -51,7 +51,9 @@ In addition to specifying your publisher credentials directly within each build 
 
 6. Select this endpoint using the name you chose in the previous step whenever you add either the **App Store Release** or **App Store Promote** tasks to a build or release definition.
 
-### Supporting Two-Factor Verification
+### Two-Factor Authentication
+
+We do not recommend using two-factor authentication if you're using cloud hosted build agents. Apple authentication is region specific, and cloud hosted agents may not be in the same region as your developer machine. Instead, we recommend that you create a separate Apple ID that doesn't have two-factor authentication enabled with a strong password and restricted access.  See [this](https://docs.fastlane.tools/best-practices/continuous-integration/#separate-apple-id-for-ci) link for more details.
 
 If the Apple account used to publish the app has two-factor authentication enabled, you need to setup the `Fastlane Session` variable on the Apple App Store service endpoint. 
 
