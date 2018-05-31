@@ -43,7 +43,7 @@ In addition to specifying your publisher credentials directly within each build 
 
 ### Two-Factor Authentication
 
-We do not recommend using two-factor authentication if you're using cloud hosted build agents. Apple authentication is region specific, and cloud hosted agents may not be in the same region as your developer machine. Instead, we recommend that you create a separate Apple ID that doesn't have two-factor authentication enabled with a strong password and restricted access. See this link for more details.
+We do not recommend using two-factor authentication if you're using cloud hosted build agents. Apple authentication is region specific, and cloud hosted agents may not be in the same region as your developer machine. Instead, we recommend that you create a separate Apple ID that doesn't have two-factor authentication enabled with a strong password and restricted access.  See [this](https://docs.fastlane.tools/best-practices/continuous-integration/#separate-apple-id-for-ci) link for more details.
 
 If the Apple account used to publish the app has two-factor authentication enabled, you need to setup the `Fastlane Session` variable on the Apple App Store service endpoint. 
 
