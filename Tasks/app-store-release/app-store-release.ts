@@ -140,6 +140,7 @@ async function run() {
             let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
             gemRunner.arg(['list', 'fastlane'])
             gemRunner.arg(['-i']);
+            gemRunner.exec();
         }
 
         //Whenever a specific version of fastlane is requested, we're going to uninstall all installed
