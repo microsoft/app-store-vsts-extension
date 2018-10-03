@@ -38,6 +38,10 @@ let myAnswers: string = `{
         "/usr/bin/fastlane": true
     },
     "exec": {
+        "/usr/bin/gem list fastlane -i": {
+            "code": 0,
+            "stdout": "false"
+        },
         "fastlane deliver submit_build -u creds-username -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force": {
             "code": 0,
             "stdout": "consider it delivered!"
