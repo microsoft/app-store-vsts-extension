@@ -43,6 +43,27 @@ function findIpa(ipaPath: string): string {
     return paths[0];
 }
 
+async function isFastlaneInstalled(): Promise<boolean> {
+    tl.debug('Checking for previous fastlane version first...');
+    let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
+    gemRunner.arg(['list', 'fastlane']);
+    gemRunner.arg(['-i']);
+    let fastlaneListOutput: string;
+
+    gemRunner.on('stdout', (data) => {
+        fastlaneListOutput = data.toString().trim();
+    });
+
+    await gemRunner.exec();
+
+    if (fastlaneListOutput === 'true') {
+        // fastlane is installed
+        return Promise.resolve(true);
+    } else {
+        return Promise.resolve(false);
+    }
+}
+
 async function run() {
     const appSpecificPasswordEnvVar: string = 'FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD';
     const fastlaneSessionEnvVar: string = 'FASTLANE_SESSION';
@@ -134,19 +155,11 @@ async function run() {
         tl.debug('Checking for ruby install...');
         tl.which('ruby', true);
 
-        // check for previous fastlane first
-        function previousVersionCheck () {
-            tl.debug('Checking for previous fastlane version first...')
-            let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
-            gemRunner.arg(['list', 'fastlane'])
-            gemRunner.arg(['-i']);
-            gemRunner.exec();
-        }
-
-        //Whenever a specific version of fastlane is requested, we're going to uninstall all installed
+        //Whenever a specific version of fastlane is requested, we're going to uninstall any installed
         //versions of fastlane beforehand if exist.  Note that this doesn't uninstall dependencies of fastlane.
-        if (previousVersionCheck()){
-            if (installFastlane && fastlaneVersionToInstall) {
+        if (installFastlane && fastlaneVersionToInstall) {
+            let fastlaneInstalled: boolean = await isFastlaneInstalled();
+            if (fastlaneInstalled) {
                 let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
                 gemRunner.arg(['uninstall', 'fastlane']);
                 gemRunner.arg(['-a', '-I']);  //uninstall all versions
