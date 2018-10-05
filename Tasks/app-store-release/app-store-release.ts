@@ -48,8 +48,8 @@ function isFastlaneInstalled(): boolean {
     const gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
     gemRunner.arg(['list', 'fastlane', '-i']);
     const fastlaneListResult = gemRunner.execSync();
-    if (fastlaneListResult && 
-        fastlaneListResult.code === tl.TaskResult.Succeeded && 
+    if (fastlaneListResult &&
+        fastlaneListResult.code === tl.TaskResult.Succeeded &&
         fastlaneListResult.stdout.trim() === 'true') {
         return true;
     }
