@@ -43,25 +43,17 @@ function findIpa(ipaPath: string): string {
     return paths[0];
 }
 
-async function isFastlaneInstalled(): Promise<boolean> {
+function isFastlaneInstalled(): boolean {
     tl.debug('Checking for previous fastlane version first...');
-    let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
-    gemRunner.arg(['list', 'fastlane']);
-    gemRunner.arg(['-i']);
-    let fastlaneListOutput: string;
-
-    gemRunner.on('stdout', (data) => {
-        fastlaneListOutput = data.toString().trim();
-    });
-
-    await gemRunner.exec();
-
-    if (fastlaneListOutput === 'true') {
-        // fastlane is installed
-        return Promise.resolve(true);
-    } else {
-        return Promise.resolve(false);
+    const gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
+    gemRunner.arg(['list', 'fastlane', '-i']);
+    const fastlaneListResult = gemRunner.execSync();
+    if (fastlaneListResult && 
+        fastlaneListResult.code === tl.TaskResult.Succeeded && 
+        fastlaneListResult.stdout.trim() === 'true') {
+        return true;
     }
+    return false;
 }
 
 async function run() {
@@ -156,10 +148,9 @@ async function run() {
         tl.which('ruby', true);
 
         //Whenever a specific version of fastlane is requested, we're going to uninstall any installed
-        //versions of fastlane beforehand if exist.  Note that this doesn't uninstall dependencies of fastlane.
+        //versions of fastlane beforehand if any exist.  Note that this doesn't uninstall dependencies of fastlane.
         if (installFastlane && fastlaneVersionToInstall) {
-            let fastlaneInstalled: boolean = await isFastlaneInstalled();
-            if (fastlaneInstalled) {
+            if (isFastlaneInstalled()) {
                 let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
                 gemRunner.arg(['uninstall', 'fastlane']);
                 gemRunner.arg(['-a', '-I']);  //uninstall all versions
