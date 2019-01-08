@@ -43,7 +43,7 @@
             "label": "Service Endpoint",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "The TFS/Team Services service endpoint that specifies the identity used to publish the app.",
+            "helpMarkDown": "The TFS/Azure DevOps service endpoint that specifies the identity used to publish the app.",
             "visibleRule": "authType = ServiceEndpoint"
         },
         {

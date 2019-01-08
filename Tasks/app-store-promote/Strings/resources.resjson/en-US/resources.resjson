@@ -6,7 +6,7 @@
   "loc.group.displayName.advanced": "Advanced",
   "loc.input.label.authType": "Authentication Method",
   "loc.input.label.serviceEndpoint": "Service Endpoint",
-  "loc.input.help.serviceEndpoint": "The TFS/Team Services service endpoint that specifies the identity used to publish the app.",
+  "loc.input.help.serviceEndpoint": "The TFS/Azure DevOps service endpoint that specifies the identity used to publish the app.",
   "loc.input.label.username": "Email",
   "loc.input.help.username": "The email of the account used to publish to the Apple App Store.",
   "loc.input.label.password": "Password",

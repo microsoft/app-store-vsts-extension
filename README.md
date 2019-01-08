@@ -2,13 +2,13 @@
 
 <table style="width: 100%; border-style: none;"><tr>
 <td width="140px" style="text-align: center;"><img src="apple_default.png" style="max-width:100%" /></td>
-<td><strong>Visual Studio Team Services Extension for the Apple App Store</strong><br />
+<td><strong>Azure DevOps Extension for the Apple App Store</strong><br />
 <i>Provides build/release tasks that enable performing continuous delivery to Apple's App Store from an automated VSTS build or release definition</i><br />
 <a href="https://marketplace.visualstudio.com/items/ms-vsclient.app-store">Install now!</a>
 </td>
 </tr></table>
 
-# Visual Studio Team Services Extension for the Apple App Store
+# Azure DevOps Extension for the Apple App Store
 
 This extension contains a set of deployment tasks which allow you to automate the release and promotion of app updates to Apple's App Store from your CI environment. This can reduce the effort needed to keep your beta and production deployments up-to-date, since you can simply push changes to the configured source control branches, and let your automated build take care of the rest.
 
@@ -23,7 +23,7 @@ Once you have created or retrieved credentials for your App Store account, perfo
 
 1. Install the App Store extension from the [VSTS Marketplace](https://marketplace.visualstudio.com/items/ms-vsclient.app-store).
 
-2. Go to your Visual Studio Team Services or TFS project, click on the **Build** tab, and create a new build definition (the "+" icon) that is hooked up to your project's appropriate source repository.
+2. Go to your Azure DevOps or TFS project, click on the **Build** tab, and create a new build definition (the "+" icon) that is hooked up to your project's appropriate source repository.
 
 3. Click **Add build step...** and select the necessary tasks to generate your release assets (e.g. **Gulp**, **Cordova Build**).
 
@@ -41,7 +41,7 @@ In addition to specifying your publisher credentials directly within each build 
 
 1. Setup an Apple developer account (https://developer.apple.com/).
 
-2. Go into your Visual Studio Team Services or TFS project and click on the gear icon in the upper right corner.
+2. Go into your Azure DevOps or TFS project and click on the gear icon in the upper right corner.
 
 3. Click on the **Services** tab.
 
