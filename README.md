@@ -23,7 +23,7 @@ Once you have created or retrieved credentials for your App Store account, perfo
 
 1. Install the App Store extension from the [Azure DevOps Marketplace](https://marketplace.visualstudio.com/items/ms-vsclient.app-store).
 
-2. Go to your Azure DevOps or TFS project, click on the **Build** tab, and create a new build definition (the "+" icon) that is hooked up to your project's appropriate source repository.
+2. Go to your Azure DevOps or TFS project, click on the **Build** tab, and create a new pipeline (the "+" icon) that is hooked up to your project's appropriate source repository.
 
 3. Click **Add build step...** and select the necessary tasks to generate your release assets (e.g. **Gulp**, **Cordova Build**).
 
