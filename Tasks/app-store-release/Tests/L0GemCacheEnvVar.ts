@@ -20,7 +20,7 @@ tmr.setInput('ipaPath', 'mypackage.ipa');
 tmr.setInput('installFastlane', 'true');
 tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
 
-process.env['MOCK_NORMALIZE_SLASHES'] = true;
+process.env['MOCK_NORMALIZE_SLASHES'] = 'true';
 //process.env['HOME'] = '/usr/bin';
 process.env['GEM_CACHE'] = '/usr/bin/customGemCache';
 let gemCache: string = process.env['GEM_CACHE'];

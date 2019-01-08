@@ -84,7 +84,7 @@ async function run() {
         tl.debug(`gemCache=${gemCache}`);
         process.env['GEM_HOME'] = gemCache;
         process.env['FASTLANE_PASSWORD'] = credentials.password;
-        process.env['FASTLANE_DONT_STORE_PASSWORD'] = true;
+        process.env['FASTLANE_DONT_STORE_PASSWORD'] = 'true';
 
         if (isTwoFactorAuthEnabled) {
             // Properties required for two-factor authentication:

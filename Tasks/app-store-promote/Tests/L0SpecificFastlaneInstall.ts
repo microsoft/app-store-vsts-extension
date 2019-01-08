@@ -22,7 +22,7 @@ tmr.setInput('installFastlane', 'true');
 tmr.setInput('fastlaneToolsVersion', 'SpecificVersion');
 tmr.setInput('fastlaneToolsSpecificVersion', '2.15.1');
 
-process.env['MOCK_NORMALIZE_SLASHES'] = true;
+process.env['MOCK_NORMALIZE_SLASHES'] = 'true';
 process.env['HOME'] = '/usr/bin';
 
 //construct a string that is JSON, call JSON.parse(string), send that to ma.TaskLibAnswers

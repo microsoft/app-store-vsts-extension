@@ -22,7 +22,7 @@ tmr.setInput('releaseTrack', 'Production');
 // let ipaPath: string = tl.getInput('ipaPath', true);
 //tmr.setInput('ipaPath', 'mypackage.ipa');
 
-process.env['MOCK_NORMALIZE_SLASHES'] = true;
+process.env['MOCK_NORMALIZE_SLASHES'] = 'true';
 process.env['HOME'] = '/usr/bin';
 
 //construct a string that is JSON, call JSON.parse(string), send that to ma.TaskLibAnswers

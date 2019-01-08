@@ -22,7 +22,7 @@ tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
 
 tmr.setInput('buildNumber', '42');
 
-process.env['MOCK_NORMALIZE_SLASHES'] = true;
+process.env['MOCK_NORMALIZE_SLASHES'] = 'true';
 process.env['GEM_CACHE'] = '/usr/bin/customGemCache';
 //process.env['HOME'] = '/usr/bin';
 let gemCache: string = process.env['GEM_CACHE'];
