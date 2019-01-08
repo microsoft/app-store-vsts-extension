@@ -19,7 +19,7 @@ tmr.setInput('releaseTrack', 'TestFlight');
 tmr.setInput('ipaPath', '**/*.ipa');
 tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
 
-process.env['MOCK_NORMALIZE_SLASHES'] = true;
+process.env['MOCK_NORMALIZE_SLASHES'] = 'true';
 process.env['HOME'] = '/usr/bin';
 let gemCache: string = '/usr/bin/.gem-cache';
 

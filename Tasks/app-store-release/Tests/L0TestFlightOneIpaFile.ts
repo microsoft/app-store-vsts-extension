@@ -22,7 +22,7 @@ tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
 // let ipaPath: string = tl.getInput('ipaPath', true);
 tmr.setInput('ipaPath', '**/*.ipa');
 
-process.env['MOCK_NORMALIZE_SLASHES'] = true;
+process.env['MOCK_NORMALIZE_SLASHES'] = 'true';
 process.env['HOME'] = '/usr/bin';
 let gemCache: string = '/usr/bin/.gem-cache';
 

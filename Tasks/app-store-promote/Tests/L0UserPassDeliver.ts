@@ -21,7 +21,7 @@ tmr.setInput('shouldAutoRelease', 'true');
 tmr.setInput('installFastlane', 'true');
 tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
 
-process.env['MOCK_NORMALIZE_SLASHES'] = true;
+process.env['MOCK_NORMALIZE_SLASHES'] = 'true';
 process.env['HOME'] = '/usr/bin';
 let gemCache: string = '/usr/bin/.gem-cache';
 

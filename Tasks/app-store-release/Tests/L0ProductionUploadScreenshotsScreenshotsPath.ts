@@ -24,7 +24,7 @@ tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
 tmr.setInput('uploadScreenshots', 'true');
 tmr.setInput('screenshotsPath', '<path>');
 
-process.env['MOCK_NORMALIZE_SLASHES'] = true;
+process.env['MOCK_NORMALIZE_SLASHES'] = 'true';
 process.env['HOME'] = '/usr/bin';
 let gemCache: string = '/usr/bin/.gem-cache';
 

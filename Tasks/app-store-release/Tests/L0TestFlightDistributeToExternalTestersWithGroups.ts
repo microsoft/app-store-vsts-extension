@@ -24,7 +24,7 @@ tmr.setInput('distributedToExternalTesters', 'true');
 tmr.setInput('releaseNotes', '/usr/build/releasenotes');
 tmr.setInput('externalTestersGroups', 'Group1,Group 2');
 
-process.env['MOCK_NORMALIZE_SLASHES'] = true;
+process.env['MOCK_NORMALIZE_SLASHES'] = 'true';
 process.env['HOME'] = '/usr/bin';
 let gemCache: string = '/usr/bin/.gem-cache';
 

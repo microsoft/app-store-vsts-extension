@@ -21,7 +21,7 @@ tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
 tmr.setInput('isTwoFactorAuth', 'true');
 tmr.setInput('appSpecificPassword', '@PP$pecificP@$$word');
 
-process.env['MOCK_NORMALIZE_SLASHES'] = true;
+process.env['MOCK_NORMALIZE_SLASHES'] = 'true';
 process.env['HOME'] = '/usr/bin';
 
 //construct a string that is JSON, call JSON.parse(string), send that to ma.TaskLibAnswers
