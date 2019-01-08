@@ -3,7 +3,7 @@ The instructions below will help you set up your development environment to cont
 Make sure you've already cloned the repo.  :smile:
 
 ## Ways to Contribute
-Interested in contributing to the vsts-vscode project? There are plenty of ways to contribute, all of which help make the project better.
+Interested in contributing to this project? There are plenty of ways to contribute, all of which help make the project better.
 * Submit a [bug report](https://github.com/Microsoft/app-store-vsts-extension/issues/new) or [feature request](https://github.com/Microsoft/app-store-vsts-extension/issues/new) through the Issue Tracker
 * Review the [source code changes](https://github.com/Microsoft/app-store-vsts-extension/pulls)
 * Submit a code fix for a bug (see `Submitting Pull Requests` below)

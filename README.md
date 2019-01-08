@@ -3,7 +3,7 @@
 <table style="width: 100%; border-style: none;"><tr>
 <td width="140px" style="text-align: center;"><img src="apple_default.png" style="max-width:100%" /></td>
 <td><strong>Azure DevOps Extension for the Apple App Store</strong><br />
-<i>Provides build/release tasks that enable performing continuous delivery to Apple's App Store from an automated VSTS build or release definition</i><br />
+<i>Provides build/release tasks that enable performing continuous delivery to Apple's App Store from an automated Azure DevOps build or release definition</i><br />
 <a href="https://marketplace.visualstudio.com/items/ms-vsclient.app-store">Install now!</a>
 </td>
 </tr></table>
@@ -19,9 +19,9 @@ This extension contains a set of deployment tasks which allow you to automate th
 
 ## Quick Start
 
-Once you have created or retrieved credentials for your App Store account, perform the following steps to automate releasing updates from a VSTS build or release definition:
+Once you have created or retrieved credentials for your App Store account, perform the following steps to automate releasing updates from an Azure DevOps build or release definition:
 
-1. Install the App Store extension from the [VSTS Marketplace](https://marketplace.visualstudio.com/items/ms-vsclient.app-store).
+1. Install the App Store extension from the [Azure DevOps Marketplace](https://marketplace.visualstudio.com/items/ms-vsclient.app-store).
 
 2. Go to your Azure DevOps or TFS project, click on the **Build** tab, and create a new build definition (the "+" icon) that is hooked up to your project's appropriate source repository.
 
