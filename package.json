@@ -13,6 +13,9 @@
   },
   "homepage": "https://github.com/Microsoft/app-store-vsts-extension",
   "devDependencies": {
+    "@types/node": "^6.0.101",
+    "@types/q": "^1.0.7",
+    "@types/mocha": "5.2.0",
     "adm-zip": "^0.4.13",
     "del": "^3.0.0",
     "gulp": "^4.0.0",
