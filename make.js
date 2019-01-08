@@ -103,7 +103,7 @@ target.clean = function () {
 target.build = function() {
     target.clean();
 
-    ensureTool('tsc', '--version', 'Version 1.8.7');
+    ensureTool('tsc', '--version', 'Version 3.2.2');
     ensureTool('npm', '--version', function (output) {
         if (semver.lt(output, '3.0.0')) {
             fail('expected 3.0.0 or higher');
@@ -243,8 +243,8 @@ target.build = function() {
 // node make.js test --task ShellScript --suite L0
 //
 target.test = function() {
-    ensureTool('tsc', '--version', 'Version 1.8.7');
-    ensureTool('mocha', '--version', '2.3.3');
+    ensureTool('tsc', '--version', 'Version 3.2.2');
+    ensureTool('mocha', '--version', '5.2.0');
 
     // run the tests
     var suiteType = options.suite || 'L0';
