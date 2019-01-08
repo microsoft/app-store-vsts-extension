@@ -13,7 +13,7 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "126",
+        "Minor": "147",
         "Patch": "0"
     },
     "minimumAgentVersion": "1.95.3",
@@ -38,17 +38,17 @@
             "defaultValue": "ServiceEndpoint",
             "helpMarkDown": "",
             "options": {
-                "ServiceEndpoint": "Service Endpoint",
+                "ServiceEndpoint": "Service Connection",
                 "UserAndPass": "Username and Password"
             }
         },
         {
             "name": "serviceEndpoint",
             "type": "connectedService:apple-app-store",
-            "label": "Service Endpoint",
+            "label": "Service Connection",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "The TFS/Azure DevOps service endpoint that specifies the identity used to publish the app.",
+            "helpMarkDown": "The TFS/Azure DevOps service connection that specifies the identity used to publish the app.",
             "visibleRule": "authType = ServiceEndpoint"
         },
         {
@@ -315,7 +315,7 @@
         "SuccessfullyPublished": "Successfully published to %s",
         "NoIpaFilesFound": "No IPA file found using pattern: %s",
         "MultipleIpaFilesFound": "More than one IPA file found using pattern: %s",
-        "FastlaneSessionEmpty": "'Fastlane Session' is not set in the service endpoint configured for two-step verification.",
+        "FastlaneSessionEmpty": "'Fastlane Session' is not set in the service connection configured for two-step verification.",
         "ReleaseNotesRequiredForExternalTesting": "'What to Test?' is required when using 'Distribute to External Testers'.",
         "ExternalTestersCannotSkipWarning": "'Skip Build Processing Wait' and 'Skip Submission' is not supported with 'Distribute to External Testers'. Please check your build configuration."
     }

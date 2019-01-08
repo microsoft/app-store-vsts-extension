@@ -15,7 +15,7 @@
   ],
   "version": {
     "Major": "1",
-    "Minor": "126",
+    "Minor": "147",
     "Patch": "0"
   },
   "minimumAgentVersion": "1.95.3",
@@ -35,7 +35,7 @@
       "defaultValue": "ServiceEndpoint",
       "helpMarkDown": "",
       "options": {
-        "ServiceEndpoint": "Service Endpoint",
+        "ServiceEndpoint": "Service Connection",
         "UserAndPass": "Username and Password"
       }
     },

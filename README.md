@@ -45,7 +45,7 @@ In addition to specifying your publisher credentials directly within each build 
 
 3. Click on the **Services** tab.
 
-4. Click on **New Service Endpoint** and select **Apple App Store**.
+4. Click on **New service connection** and select **Apple App Store**.
 
 5. Give the new endpoint a name and enter the credentials for your Apple developer account.
 
@@ -55,15 +55,15 @@ In addition to specifying your publisher credentials directly within each build 
 
 We do not recommend using two-factor authentication if you're using Microsoft-hosted build agents. Apple authentication is region specific, and Microsoft-hosted agents may not be in the same region as your developer machine. Instead, we recommend that you create a separate Apple ID that doesn't have two-factor authentication enabled with a strong password and restricted access.  See [this](https://docs.fastlane.tools/best-practices/continuous-integration/#separate-apple-id-for-ci) link for more details.
 
-If the Apple account used to publish the app has two-factor authentication enabled, you need to setup the `Fastlane Session` variable on the Apple App Store service endpoint. 
+If the Apple account used to publish the app has two-factor authentication enabled, you need to setup the `Fastlane Session` variable on the Apple App Store service connection. 
 
 1. Create the fastlane session token by following these [instructions](https://docs.fastlane.tools/best-practices/continuous-integration/#use-of-application-specific-passwords-and-spaceauth).
 
-2. Set this value on the Apple App Store service endpoint.
+2. Set this value on the Apple App Store service connection.
 
 ## Task Reference
 
-In addition to the custom service endpoint, this extension also contributes the following build and release tasks:
+In addition to the custom service connection, this extension also contributes the following build and release tasks:
 
 * [App Store Release](#app-store-release) - Allows automating the release of updates to existing iOS TestFlight beta apps or production apps in the App Store.
 
@@ -75,7 +75,7 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 ![Release task](/images/release-task-with-advanced.png)
 
-1. **Username and Password** or **Service Endpoint** - The credentials used to authenticate with the App Store. Credentials can be provided directly or configured via a service endpoint that can be referenced from the task (via the `Service Endpoint` authentication method).
+1. **Username and Password** or **Service Connection** - The credentials used to authenticate with the App Store. Credentials can be provided directly or configured via a service connection that can be referenced from the task (via the `Service Connection` authentication method).
 
 2. **Bundle ID** *(String)* - Unique app identifier (e.g. com.myapp.etc).  The **Bundle ID** is only required if "Track" is *Production*.
 
@@ -133,7 +133,7 @@ Allows you to promote an app previously updated to iTunes Connect to the App Sto
 
 ![Promote task](/images/promote-task-with-advanced.png)
 
-1. **Username and Password** or **Service Endpoint** - The credentials used to authenticate with the App Store. Credentials can be provided directly or configured via a service endpoint that can be referenced from the task (via the `Service Endpoint` authentication method).
+1. **Username and Password** or **Service Connection** - The credentials used to authenticate with the App Store. Credentials can be provided directly or configured via a service connection that can be referenced from the task (via the `Service Connection` authentication method).
 
 2. **Bundle ID** *(String, required)* - The unique identifier for the app to be promoted.
 
