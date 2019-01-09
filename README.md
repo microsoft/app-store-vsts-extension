@@ -2,13 +2,13 @@
 
 <table style="width: 100%; border-style: none;"><tr>
 <td width="140px" style="text-align: center;"><img src="apple_default.png" style="max-width:100%" /></td>
-<td><strong>Visual Studio Team Services Extension for the Apple App Store</strong><br />
-<i>Provides build/release tasks that enable performing continuous delivery to Apple's App Store from an automated VSTS build or release definition</i><br />
+<td><strong>Azure DevOps Extension for the Apple App Store</strong><br />
+<i>Provides build/release tasks that enable performing continuous delivery to Apple's App Store from an automated Azure DevOps build or release pipeline</i><br />
 <a href="https://marketplace.visualstudio.com/items/ms-vsclient.app-store">Install now!</a>
 </td>
 </tr></table>
 
-# Visual Studio Team Services Extension for the Apple App Store
+# Azure DevOps Extension for the Apple App Store
 
 This extension contains a set of deployment tasks which allow you to automate the release and promotion of app updates to Apple's App Store from your CI environment. This can reduce the effort needed to keep your beta and production deployments up-to-date, since you can simply push changes to the configured source control branches, and let your automated build take care of the rest.
 
@@ -19,11 +19,11 @@ This extension contains a set of deployment tasks which allow you to automate th
 
 ## Quick Start
 
-Once you have created or retrieved credentials for your App Store account, perform the following steps to automate releasing updates from a VSTS build or release definition:
+Once you have created or retrieved credentials for your App Store account, perform the following steps to automate releasing updates from an Azure DevOps build or release pipeline:
 
-1. Install the App Store extension from the [VSTS Marketplace](https://marketplace.visualstudio.com/items/ms-vsclient.app-store).
+1. Install the App Store extension from the [Azure DevOps Marketplace](https://marketplace.visualstudio.com/items/ms-vsclient.app-store).
 
-2. Go to your Visual Studio Team Services or TFS project, click on the **Build** tab, and create a new build definition (the "+" icon) that is hooked up to your project's appropriate source repository.
+2. Go to your Azure DevOps or TFS project, click on the **Build** tab, and create a new pipeline (the "+" icon) that is hooked up to your project's appropriate source repository.
 
 3. Click **Add build step...** and select the necessary tasks to generate your release assets (e.g. **Gulp**, **Cordova Build**).
 
@@ -37,33 +37,33 @@ Once you have created or retrieved credentials for your App Store account, perfo
 
 ## Configuring Your App Store Publisher Credentials
 
-In addition to specifying your publisher credentials directly within each build task, you can also configure your credentials globally and refer to them within each build or release definition as needed. To do this, perform the following steps:
+In addition to specifying your publisher credentials directly within each build task, you can also configure your credentials globally and refer to them within each build or release pipeline as needed. To do this, perform the following steps:
 
 1. Setup an Apple developer account (https://developer.apple.com/).
 
-2. Go into your Visual Studio Team Services or TFS project and click on the gear icon in the upper right corner.
+2. Go into your Azure DevOps or TFS project and click on the gear icon in the upper right corner.
 
 3. Click on the **Services** tab.
 
-4. Click on **New Service Endpoint** and select **Apple App Store**.
+4. Click on **New service connection** and select **Apple App Store**.
 
-5. Give the new endpoint a name and enter the credentials for your Apple developer account.
+5. Give the new connection a name and enter the credentials for your Apple developer account.
 
-6. Select this endpoint using the name you chose in the previous step whenever you add either the **App Store Release** or **App Store Promote** tasks to a build or release definition.
+6. Select this connection using the name you chose in the previous step whenever you add either the **App Store Release** or **App Store Promote** tasks to a build or release pipeline.
 
 ### Two-Factor Authentication
 
 We do not recommend using two-factor authentication if you're using Microsoft-hosted build agents. Apple authentication is region specific, and Microsoft-hosted agents may not be in the same region as your developer machine. Instead, we recommend that you create a separate Apple ID that doesn't have two-factor authentication enabled with a strong password and restricted access.  See [this](https://docs.fastlane.tools/best-practices/continuous-integration/#separate-apple-id-for-ci) link for more details.
 
-If the Apple account used to publish the app has two-factor authentication enabled, you need to setup the `Fastlane Session` variable on the Apple App Store service endpoint. 
+If the Apple account used to publish the app has two-factor authentication enabled, you need to setup the `Fastlane Session` variable on the Apple App Store service connection. 
 
 1. Create the fastlane session token by following these [instructions](https://docs.fastlane.tools/best-practices/continuous-integration/#use-of-application-specific-passwords-and-spaceauth).
 
-2. Set this value on the Apple App Store service endpoint.
+2. Set this value on the Apple App Store service connection.
 
 ## Task Reference
 
-In addition to the custom service endpoint, this extension also contributes the following build and release tasks:
+In addition to the custom service connection, this extension also contributes the following build and release tasks:
 
 * [App Store Release](#app-store-release) - Allows automating the release of updates to existing iOS TestFlight beta apps or production apps in the App Store.
 
@@ -75,7 +75,7 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 ![Release task](/images/release-task-with-advanced.png)
 
-1. **Username and Password** or **Service Endpoint** - The credentials used to authenticate with the App Store. Credentials can be provided directly or configured via a service endpoint that can be referenced from the task (via the `Service Endpoint` authentication method).
+1. **Username and Password** or **Service Connection** - The credentials used to authenticate with the App Store. Credentials can be provided directly or configured via a service connection that can be referenced from the task (via the `Service Connection` authentication method).
 
 2. **Bundle ID** *(String)* - Unique app identifier (e.g. com.myapp.etc).  The **Bundle ID** is only required if "Track" is *Production*.
 
@@ -133,7 +133,7 @@ Allows you to promote an app previously updated to iTunes Connect to the App Sto
 
 ![Promote task](/images/promote-task-with-advanced.png)
 
-1. **Username and Password** or **Service Endpoint** - The credentials used to authenticate with the App Store. Credentials can be provided directly or configured via a service endpoint that can be referenced from the task (via the `Service Endpoint` authentication method).
+1. **Username and Password** or **Service Connection** - The credentials used to authenticate with the App Store. Credentials can be provided directly or configured via a service connection that can be referenced from the task (via the `Service Connection` authentication method).
 
 2. **Bundle ID** *(String, required)* - The unique identifier for the app to be promoted.
 
@@ -159,7 +159,7 @@ Allows you to promote an app previously updated to iTunes Connect to the App Sto
 
 ## Firewall Issues
 
-The [fastlane](https://github.com/fastlane/fastlane) tools use the iTunes Transporter to upload metadata and binaries. In case you are behind a firewall, you can specify a different transporter protocol injecting in your release definition a variable:
+The [fastlane](https://github.com/fastlane/fastlane) tools use the iTunes Transporter to upload metadata and binaries. In case you are behind a firewall, you can specify a different transporter protocol injecting in your release pipeline a variable:
 `DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS="-t DAV"`
 ![Fix Firewall issues](/images/variable-definition-firewall-issues.png)
 

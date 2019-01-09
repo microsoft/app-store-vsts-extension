@@ -5,8 +5,8 @@
   "loc.instanceNameFormat": "Submit to the App Store for review",
   "loc.group.displayName.advanced": "Advanced",
   "loc.input.label.authType": "Authentication Method",
-  "loc.input.label.serviceEndpoint": "Service Endpoint",
-  "loc.input.help.serviceEndpoint": "The TFS/Team Services service endpoint that specifies the identity used to publish the app.",
+  "loc.input.label.serviceEndpoint": "Service Connection",
+  "loc.input.help.serviceEndpoint": "The TFS/Azure DevOps service connection that specifies the identity used to publish the app.",
   "loc.input.label.username": "Email",
   "loc.input.help.username": "The email of the account used to publish to the Apple App Store.",
   "loc.input.label.password": "Password",
@@ -38,5 +38,5 @@
   "loc.input.help.fastlaneArguments": "Any additional arguments to pass to the fastlane command.",
   "loc.messages.DarwinOnly": "The Apple App Store Promote task can only run on a Mac computer.",
   "loc.messages.SuccessfullySubmitted": "Build successfully submitted for review.",
-  "loc.messages.FastlaneSessionEmpty": "'Fastlane Session' is not set in the service endpoint configured for two-step verification."
+  "loc.messages.FastlaneSessionEmpty": "'Fastlane Session' is not set in the service connection configured for two-step verification."
 }

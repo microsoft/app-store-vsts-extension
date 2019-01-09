@@ -6,8 +6,8 @@
   "loc.group.displayName.releaseOptions": "Release Options",
   "loc.group.displayName.advanced": "Advanced",
   "loc.input.label.authType": "Authentication Method",
-  "loc.input.label.serviceEndpoint": "Service Endpoint",
-  "loc.input.help.serviceEndpoint": "The TFS/Team Services service endpoint that specifies the identity used to publish the app.",
+  "loc.input.label.serviceEndpoint": "Service Connection",
+  "loc.input.help.serviceEndpoint": "The TFS/Azure DevOps service connection that specifies the identity used to publish the app.",
   "loc.input.label.username": "Email",
   "loc.input.help.username": "The email of the account used to publish to the Apple App Store.",
   "loc.input.label.password": "Password",
@@ -63,7 +63,7 @@
   "loc.messages.SuccessfullyPublished": "Successfully published to %s",
   "loc.messages.NoIpaFilesFound": "No IPA file found using pattern: %s",
   "loc.messages.MultipleIpaFilesFound": "More than one IPA file found using pattern: %s",
-  "loc.messages.FastlaneSessionEmpty": "'Fastlane Session' is not set in the service endpoint configured for two-step verification.",
+  "loc.messages.FastlaneSessionEmpty": "'Fastlane Session' is not set in the service connection configured for two-step verification.",
   "loc.messages.ReleaseNotesRequiredForExternalTesting": "'What to Test?' is required when using 'Distribute to External Testers'.",
   "loc.messages.ExternalTestersCannotSkipWarning": "'Skip Build Processing Wait' and 'Skip Submission' is not supported with 'Distribute to External Testers'. Please check your build configuration."
 }

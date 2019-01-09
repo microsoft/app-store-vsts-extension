@@ -13,7 +13,7 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "126",
+        "Minor": "147",
         "Patch": "0"
     },
     "minimumAgentVersion": "1.95.3",
@@ -33,17 +33,17 @@
             "defaultValue": "ServiceEndpoint",
             "helpMarkDown": "",
             "options": {
-                "ServiceEndpoint": "Service Endpoint",
+                "ServiceEndpoint": "Service Connection",
                 "UserAndPass": "Username and Password"
             }
         },
         {
             "name": "serviceEndpoint",
             "type": "connectedService:apple-app-store",
-            "label": "Service Endpoint",
+            "label": "Service Connection",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "The TFS/Team Services service endpoint that specifies the identity used to publish the app.",
+            "helpMarkDown": "The TFS/Azure DevOps service connection that specifies the identity used to publish the app.",
             "visibleRule": "authType = ServiceEndpoint"
         },
         {
@@ -199,6 +199,6 @@
     "messages": {
         "DarwinOnly": "The Apple App Store Promote task can only run on a Mac computer.",
         "SuccessfullySubmitted": "Build successfully submitted for review.",
-        "FastlaneSessionEmpty": "'Fastlane Session' is not set in the service endpoint configured for two-step verification."
+        "FastlaneSessionEmpty": "'Fastlane Session' is not set in the service connection configured for two-step verification."
     }
 }

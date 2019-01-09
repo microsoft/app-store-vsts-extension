@@ -1,9 +1,9 @@
-# Visual Studio Team Services Extension for the Apple App Store Contributor Guide
+# Azure DevOps Extension for the Apple App Store Contributor Guide
 The instructions below will help you set up your development environment to contribute to this repository.
 Make sure you've already cloned the repo.  :smile:
 
 ## Ways to Contribute
-Interested in contributing to the vsts-vscode project? There are plenty of ways to contribute, all of which help make the project better.
+Interested in contributing to this project? There are plenty of ways to contribute, all of which help make the project better.
 * Submit a [bug report](https://github.com/Microsoft/app-store-vsts-extension/issues/new) or [feature request](https://github.com/Microsoft/app-store-vsts-extension/issues/new) through the Issue Tracker
 * Review the [source code changes](https://github.com/Microsoft/app-store-vsts-extension/pulls)
 * Submit a code fix for a bug (see `Submitting Pull Requests` below)
@@ -54,9 +54,9 @@ L0.js file (e.g., _build/Tasks/AppStoreRelease/Tests/L0.js) and press `F5`.  At 
 node process is created (in which the task is run).
 
 ### Testing task changes
-In order to test your task changes, you will need to upload the new task to your own account and test it with a build definition.  First, create a build definition
-you can use to test your changes.  Then, after building the task you changed, upload the task to your account.  To upload a task, you will need to install the
-[tfx-cli](https://www.npmjs.com/package/tfx-cli) tool, login in to your account with it (e.g., https://**account**.visualstudio.com/DefaultCollection) and then upload
+In order to test your task changes, you will need to upload the new task to your own organization and test it with a build or release pipeline.  First, create a pipeline 
+you can use to test your changes.  Then, after building the task you changed, upload the task to your organization.  To upload a task, you will need to install the
+[tfx-cli](https://www.npmjs.com/package/tfx-cli) tool, login in to your organization with it (e.g., https://dev.azure.com/**organization**) and then upload
 the task.  To do the actual uploading you can run the following from the *_build/Tasks* folder:
 ```bash
 tfx build tasks upload --task-path ./AppStorePromote

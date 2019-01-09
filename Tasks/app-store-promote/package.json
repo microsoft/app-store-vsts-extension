@@ -1,7 +1,7 @@
 {
   "name": "app-store-promote",
   "version": "1.112.0",
-  "description": "VSTS task to promote a build in the Apple App Store",
+  "description": "Azure Pipelines task to promote a build in the Apple App Store",
   "main": "app-store-promote.js",
   "dependencies": {
     "vsts-task-lib": "^0.9.7"
