@@ -40,6 +40,7 @@
   "loc.input.label.fastlaneToolsSpecificVersion": "fastlane Specific Version",
   "loc.input.help.fastlaneToolsSpecificVersion": "Provide the version of fastlane to install (e.g., 2.15.1).  If a specific version of fastlane is installed, all previously installed versions will be uninstalled beforehand.",
   "loc.messages.DarwinOnly": "The Ipa Resign task can only run on a Mac computer.",
+  "loc.messages.UninstallFastlaneFailed": "There were errors when trying to uninstall fastlane. Review the error and if required add a script to your pipeline to cleanly uninstall fastlane prior to running this task. Uninstall error: %s",
   "loc.messages.SuccessfullyResigned": "Successfully resigned ipa %s",
   "loc.messages.FailedTemporaryKeyDeletion": "Failed to delete temporary keychain created during the resign process. %s",
   "loc.messages.FailedProvisioningProfileDeletion": "Failed to delete the provisioning profile %s",

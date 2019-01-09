@@ -14,7 +14,7 @@
   ],
   "version": {
     "Major": "1",
-    "Minor": "115",
+    "Minor": "147",
     "Patch": "0"
   },
   "minimumAgentVersion": "1.95.3",
@@ -211,6 +211,7 @@
   },
   "messages": {
     "DarwinOnly": "ms-resource:loc.messages.DarwinOnly",
+    "UninstallFastlaneFailed": "ms-resource:loc.messages.UninstallFastlaneFailed",
     "SuccessfullyResigned": "ms-resource:loc.messages.SuccessfullyResigned",
     "FailedTemporaryKeyDeletion": "ms-resource:loc.messages.FailedTemporaryKeyDeletion",
     "FailedProvisioningProfileDeletion": "ms-resource:loc.messages.FailedProvisioningProfileDeletion",
