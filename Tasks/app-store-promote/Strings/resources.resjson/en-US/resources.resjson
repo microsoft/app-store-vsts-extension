@@ -37,6 +37,7 @@
   "loc.input.label.fastlaneArguments": "Additional fastlane arguments",
   "loc.input.help.fastlaneArguments": "Any additional arguments to pass to the fastlane command.",
   "loc.messages.DarwinOnly": "The Apple App Store Promote task can only run on a Mac computer.",
+  "loc.messages.UninstallFastlaneFailed": "There were errors when trying to uninstall fastlane. Review the error and if required add a script to your pipeline to cleanly uninstall fastlane prior to running this task. Uninstall error: %s",
   "loc.messages.SuccessfullySubmitted": "Build successfully submitted for review.",
   "loc.messages.FastlaneSessionEmpty": "'Fastlane Session' is not set in the service connection configured for two-step verification."
 }

@@ -200,6 +200,7 @@
   },
   "messages": {
     "DarwinOnly": "ms-resource:loc.messages.DarwinOnly",
+    "UninstallFastlaneFailed": "ms-resource:loc.messages.UninstallFastlaneFailed",
     "SuccessfullySubmitted": "ms-resource:loc.messages.SuccessfullySubmitted",
     "FastlaneSessionEmpty": "ms-resource:loc.messages.FastlaneSessionEmpty"
   }

@@ -314,6 +314,7 @@
   },
   "messages": {
     "DarwinOnly": "ms-resource:loc.messages.DarwinOnly",
+    "UninstallFastlaneFailed": "ms-resource:loc.messages.UninstallFastlaneFailed",
     "SuccessfullyPublished": "ms-resource:loc.messages.SuccessfullyPublished",
     "NoIpaFilesFound": "ms-resource:loc.messages.NoIpaFilesFound",
     "MultipleIpaFilesFound": "ms-resource:loc.messages.MultipleIpaFilesFound",
