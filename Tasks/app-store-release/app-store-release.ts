@@ -143,7 +143,6 @@ async function run() {
                 gemRunner.arg(['-a', '-I']);  //uninstall all versions
                 await gemRunner.exec();
             } catch (err) {
-                tl.debug('Error trying to uninstall fastlane: ' + err);
                 tl.warning(tl.loc('UninstallFastlaneFailed', err));
             }
         }
