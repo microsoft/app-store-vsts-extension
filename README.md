@@ -3,7 +3,7 @@
 <table style="width: 100%; border-style: none;"><tr>
 <td width="140px" style="text-align: center;"><img src="apple_default.png" style="max-width:100%" /></td>
 <td><strong>Azure DevOps Extension for the Apple App Store</strong><br />
-<i>Provides build/release tasks that enable performing continuous delivery to Apple's App Store from an automated Azure DevOps build or release definition</i><br />
+<i>Provides build/release tasks that enable performing continuous delivery to Apple's App Store from an automated Azure DevOps build or release pipeline</i><br />
 <a href="https://marketplace.visualstudio.com/items/ms-vsclient.app-store">Install now!</a>
 </td>
 </tr></table>
@@ -19,7 +19,7 @@ This extension contains a set of deployment tasks which allow you to automate th
 
 ## Quick Start
 
-Once you have created or retrieved credentials for your App Store account, perform the following steps to automate releasing updates from an Azure DevOps build or release definition:
+Once you have created or retrieved credentials for your App Store account, perform the following steps to automate releasing updates from an Azure DevOps build or release pipeline:
 
 1. Install the App Store extension from the [Azure DevOps Marketplace](https://marketplace.visualstudio.com/items/ms-vsclient.app-store).
 
@@ -37,7 +37,7 @@ Once you have created or retrieved credentials for your App Store account, perfo
 
 ## Configuring Your App Store Publisher Credentials
 
-In addition to specifying your publisher credentials directly within each build task, you can also configure your credentials globally and refer to them within each build or release definition as needed. To do this, perform the following steps:
+In addition to specifying your publisher credentials directly within each build task, you can also configure your credentials globally and refer to them within each build or release pipeline as needed. To do this, perform the following steps:
 
 1. Setup an Apple developer account (https://developer.apple.com/).
 
@@ -47,9 +47,9 @@ In addition to specifying your publisher credentials directly within each build 
 
 4. Click on **New service connection** and select **Apple App Store**.
 
-5. Give the new endpoint a name and enter the credentials for your Apple developer account.
+5. Give the new connection a name and enter the credentials for your Apple developer account.
 
-6. Select this endpoint using the name you chose in the previous step whenever you add either the **App Store Release** or **App Store Promote** tasks to a build or release definition.
+6. Select this connection using the name you chose in the previous step whenever you add either the **App Store Release** or **App Store Promote** tasks to a build or release pipeline.
 
 ### Two-Factor Authentication
 
@@ -159,7 +159,7 @@ Allows you to promote an app previously updated to iTunes Connect to the App Sto
 
 ## Firewall Issues
 
-The [fastlane](https://github.com/fastlane/fastlane) tools use the iTunes Transporter to upload metadata and binaries. In case you are behind a firewall, you can specify a different transporter protocol injecting in your release definition a variable:
+The [fastlane](https://github.com/fastlane/fastlane) tools use the iTunes Transporter to upload metadata and binaries. In case you are behind a firewall, you can specify a different transporter protocol injecting in your release pipeline a variable:
 `DELIVER_ITMSTRANSPORTER_ADDITIONAL_UPLOAD_PARAMETERS="-t DAV"`
 ![Fix Firewall issues](/images/variable-definition-firewall-issues.png)
 

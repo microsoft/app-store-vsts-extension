@@ -4,7 +4,7 @@
     "name": "Apple App Store",
     "version": "1.147.0",
     "publisher": "ms-vsclient",
-    "description": "Provides tasks for publishing to Apple's App Store from a TFS/Azure DevOps build or release definition",
+    "description": "Provides tasks for publishing to Apple's App Store from a TFS/Azure DevOps build or release pipeline",
     "categories": [
         "Build and release"
     ],

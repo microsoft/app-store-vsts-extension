@@ -54,9 +54,9 @@ L0.js file (e.g., _build/Tasks/AppStoreRelease/Tests/L0.js) and press `F5`.  At 
 node process is created (in which the task is run).
 
 ### Testing task changes
-In order to test your task changes, you will need to upload the new task to your own account and test it with a build pipeline.  First, create a build pipeline
-you can use to test your changes.  Then, after building the task you changed, upload the task to your account.  To upload a task, you will need to install the
-[tfx-cli](https://www.npmjs.com/package/tfx-cli) tool, login in to your account with it (e.g., https://**account**.visualstudio.com/DefaultCollection) and then upload
+In order to test your task changes, you will need to upload the new task to your own organization and test it with a build or release pipeline.  First, create a pipeline 
+you can use to test your changes.  Then, after building the task you changed, upload the task to your organization.  To upload a task, you will need to install the
+[tfx-cli](https://www.npmjs.com/package/tfx-cli) tool, login in to your organization with it (e.g., https://dev.azure.com/**organization**) and then upload
 the task.  To do the actual uploading you can run the following from the *_build/Tasks* folder:
 ```bash
 tfx build tasks upload --task-path ./AppStorePromote
