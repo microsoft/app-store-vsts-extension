@@ -60,6 +60,7 @@
   "loc.input.label.fastlaneArguments": "Additional fastlane arguments",
   "loc.input.help.fastlaneArguments": "Any additional arguments to pass to the fastlane command.",
   "loc.messages.DarwinOnly": "The Apple App Store Release task can only run on a Mac computer.",
+  "loc.messages.UninstallFastlaneFailed": "There were errors when trying to uninstall fastlane. Review the error and if required add a script to your pipeline to cleanly uninstall fastlane prior to running this task. Uninstall error: %s",
   "loc.messages.SuccessfullyPublished": "Successfully published to %s",
   "loc.messages.NoIpaFilesFound": "No IPA file found using pattern: %s",
   "loc.messages.MultipleIpaFilesFound": "More than one IPA file found using pattern: %s",

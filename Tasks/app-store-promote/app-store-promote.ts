@@ -105,14 +105,18 @@ async function run() {
         tl.debug('Checking for ruby install...');
         tl.which('ruby', true);
 
-        //Whenever a specific version of fastlane is requested, we're going to uninstall all installed
-        //versions of fastlane beforehand.  Note that this doesn't uninstall dependencies of fastlane.
+        //Whenever a specific version of fastlane is requested, we're going to attempt to uninstall any installed
+        //versions of fastlane.  Note that this doesn't uninstall dependencies of fastlane.
         if (installFastlane && fastlaneVersionToInstall) {
-            let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
-            gemRunner.arg(['uninstall', 'fastlane']);
-            tl.debug(`Uninstalling all fastlane versions...`);
-            gemRunner.arg(['-a', '-I']);  //uninstall all versions
-            await gemRunner.exec();
+            try {
+                let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
+                gemRunner.arg(['uninstall', 'fastlane']);
+                gemRunner.arg(['-a', '-I']);  //uninstall all versions
+                await gemRunner.exec();
+            } catch (err) {
+                tl.debug('Error trying to uninstall fastlane: ' + err);
+                tl.warning(tl.loc('UninstallFastlaneFailed', err));
+            }
         }
         // If desired, install the fastlane tools (if they're already present, should be a no-op)
         if (installFastlane) {

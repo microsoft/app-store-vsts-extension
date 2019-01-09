@@ -43,19 +43,6 @@ function findIpa(ipaPath: string): string {
     return paths[0];
 }
 
-function isFastlaneInstalled(): boolean {
-    tl.debug('Checking for previous fastlane version first...');
-    const gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
-    gemRunner.arg(['list', 'fastlane', '-i']);
-    const fastlaneListResult = gemRunner.execSync();
-    if (fastlaneListResult &&
-        fastlaneListResult.code === tl.TaskResult.Succeeded &&
-        fastlaneListResult.stdout.trim() === 'true') {
-        return true;
-    }
-    return false;
-}
-
 async function run() {
     const appSpecificPasswordEnvVar: string = 'FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD';
     const fastlaneSessionEnvVar: string = 'FASTLANE_SESSION';
@@ -147,14 +134,17 @@ async function run() {
         tl.debug('Checking for ruby install...');
         tl.which('ruby', true);
 
-        //Whenever a specific version of fastlane is requested, we're going to uninstall any installed
-        //versions of fastlane beforehand if any exist.  Note that this doesn't uninstall dependencies of fastlane.
+        //Whenever a specific version of fastlane is requested, we're going to attempt to uninstall any installed
+        //versions of fastlane.  Note that this doesn't uninstall dependencies of fastlane.
         if (installFastlane && fastlaneVersionToInstall) {
-            if (isFastlaneInstalled()) {
+            try {
                 let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
                 gemRunner.arg(['uninstall', 'fastlane']);
                 gemRunner.arg(['-a', '-I']);  //uninstall all versions
                 await gemRunner.exec();
+            } catch (err) {
+                tl.debug('Error trying to uninstall fastlane: ' + err);
+                tl.warning(tl.loc('UninstallFastlaneFailed', err));
             }
         }
 
