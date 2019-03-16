@@ -81,7 +81,7 @@ async function run() {
             }
         }
 
-        let filePath: string = tl.getInput('appPath', true);
+        let filePath: string = tl.getInput('ipaPath', true);
         let skipBinaryUpload: boolean = tl.getBoolInput('skipBinaryUpload', false);
         let uploadMetadata: boolean = tl.getBoolInput('uploadMetadata', false);
         let metadataPath: string = tl.getInput('metadataPath', false);
@@ -179,7 +179,7 @@ async function run() {
             // Run pilot (via fastlane) to upload to testflight
             let pilotCommand: ToolRunner = tl.tool('fastlane');
             let bundleIdentifier: string = tl.getInput('appIdentifier', false);
-            pilotCommand.arg(['pilot', 'upload', '-u', credentials.username, '-i', ipaPath]);
+            pilotCommand.arg(['pilot', 'upload', '-u', credentials.username, '-i', filePath]);
             let usingReleaseNotes: boolean = isValidFilePath(releaseNotes);
             if (usingReleaseNotes) {
                 pilotCommand.arg(['--changelog', fs.readFileSync(releaseNotes).toString()]);
@@ -214,19 +214,24 @@ async function run() {
             deliverCommand.arg(['deliver', '--force', '-u', credentials.username, '-a', bundleIdentifier]);
             deliverCommand.argIf(skipBinaryUpload, ['--skip_binary_upload', 'true']);
 
-            //Sets -i or -c depending if app submission is for (-i) iOS/TVOS or (-c) MacOS
+            //Sets -i or -c depending if app submission is for (-i) iOS/tvOS or (-c) MacOS
             switch (applicationType.toLocaleLowerCase()) {
-                case 'osx':
+                case 'macos':
                     // Use the -C flag &
                     deliverCommand.arg(['-c', filePath]);
-                    deliverCommand.arg(['-j', applicationType]);
+                    deliverCommand.arg(['-j', 'osx']); //Fastlane wants arg as OSX
                     break;
 
                 case 'ios':
-                case 'appletvos':
                     //Use the -I flag for ipa's
                     deliverCommand.arg(['-i', filePath]);
-                    deliverCommand.arg(['-j', applicationType]);
+                    deliverCommand.arg(['-j', 'ios']);
+                    break;
+
+                case 'tvos':
+                    //Use the -I flag for ipa's
+                    deliverCommand.arg(['-i', filePath]);
+                    deliverCommand.arg(['-j', 'appletvos']);
                     break;
 
                 default:
