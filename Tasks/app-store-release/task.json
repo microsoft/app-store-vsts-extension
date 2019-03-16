@@ -13,7 +13,7 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "147",
+        "Minor": "150",
         "Patch": "0"
     },
     "minimumAgentVersion": "1.95.3",
@@ -112,14 +112,15 @@
             "label": "Application Type",
             "helpMarkDown": "The type of application you wish to submit",
             "required": true,
+            "defaultValue": "iOS",
             "options": {
                 "iOS": "iOS",
-                "AppleTVOS": "AppleTVOS",
-                "OSX": "OSX"
+                "tvOS": "tvOS",
+                "macOS": "macOS"
             }
         },
         {
-            "name": "appPath",
+            "name": "ipaPath",
             "type": "filePath",
             "label": "Binary Path",
             "defaultValue": "**/*.ipa",
@@ -331,6 +332,6 @@
         "FastlaneSessionEmpty": "'Fastlane Session' is not set in the service connection configured for two-step verification.",
         "ReleaseNotesRequiredForExternalTesting": "'What to Test?' is required when using 'Distribute to External Testers'.",
         "ExternalTestersCannotSkipWarning": "'Skip Build Processing Wait' and 'Skip Submission' is not supported with 'Distribute to External Testers'. Please check your build configuration.",
-        "NotValidAppType": "An incorrect ApplicationType was chosen. Valid values osx, ios or appletvos. Value set: %s"
+        "NotValidAppType": "An incorrect ApplicationType was chosen. Valid values iOS, macOS or tvOS. Value set: %s"
     }
 }
