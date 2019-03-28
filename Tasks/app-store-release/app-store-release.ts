@@ -81,7 +81,7 @@ async function run() {
             }
         }
 
-        let ipaPath: string = tl.getInput('ipaPath', true);
+        let filePath: string = tl.getInput('ipaPath', true);
         let skipBinaryUpload: boolean = tl.getBoolInput('skipBinaryUpload', false);
         let uploadMetadata: boolean = tl.getBoolInput('uploadMetadata', false);
         let metadataPath: string = tl.getInput('metadataPath', false);
@@ -95,6 +95,8 @@ async function run() {
         let shouldSkipSubmission: boolean = tl.getBoolInput('shouldSkipSubmission', false);
         let teamId: string = tl.getInput('teamId', false);
         let teamName: string = tl.getInput('teamName', false);
+
+        let applicationType: string = tl.getInput('appType', true);
 
         let installFastlane: boolean = tl.getBoolInput('installFastlane', false);
         let fastlaneVersionChoice: string = tl.getInput('fastlaneToolsVersion', false);
@@ -128,7 +130,7 @@ async function run() {
         process.env['PATH'] = process.env['PATH'] + ':' + gemCache + path.sep + 'bin';
 
         // Ensure there's exactly one ipa before installing fastlane tools
-        ipaPath = findIpa(ipaPath);
+        filePath = findIpa(filePath);
 
         // Install the ruby gem for fastlane
         tl.debug('Checking for ruby install...');
@@ -177,7 +179,7 @@ async function run() {
             // Run pilot (via fastlane) to upload to testflight
             let pilotCommand: ToolRunner = tl.tool('fastlane');
             let bundleIdentifier: string = tl.getInput('appIdentifier', false);
-            pilotCommand.arg(['pilot', 'upload', '-u', credentials.username, '-i', ipaPath]);
+            pilotCommand.arg(['pilot', 'upload', '-u', credentials.username, '-i', filePath]);
             let usingReleaseNotes: boolean = isValidFilePath(releaseNotes);
             if (usingReleaseNotes) {
                 pilotCommand.arg(['--changelog', fs.readFileSync(releaseNotes).toString()]);
@@ -209,8 +211,33 @@ async function run() {
             // Run deliver (via fastlane) to publish to Production track
             // See https://github.com/fastlane/fastlane/blob/master/deliver/lib/deliver/options.rb for more information on these arguments
             let deliverCommand: ToolRunner = tl.tool('fastlane');
-            deliverCommand.arg(['deliver', '--force', '-u', credentials.username, '-a', bundleIdentifier, '-i', ipaPath]);
+            deliverCommand.arg(['deliver', '--force', '-u', credentials.username, '-a', bundleIdentifier]);
             deliverCommand.argIf(skipBinaryUpload, ['--skip_binary_upload', 'true']);
+
+            //Sets -i or -c depending if app submission is for (-i) iOS/tvOS or (-c) MacOS
+            switch (applicationType.toLocaleLowerCase()) {
+                case 'macos':
+                    // Use the -C flag &
+                    deliverCommand.arg(['-c', filePath]);
+                    deliverCommand.arg(['-j', 'osx']); //Fastlane wants arg as OSX
+                    break;
+
+                case 'ios':
+                    //Use the -I flag for ipa's
+                    deliverCommand.arg(['-i', filePath]);
+                    deliverCommand.arg(['-j', 'ios']);
+                    break;
+
+                case 'tvos':
+                    //Use the -I flag for ipa's
+                    deliverCommand.arg(['-i', filePath]);
+                    deliverCommand.arg(['-j', 'appletvos']);
+                    break;
+
+                default:
+                    throw new Error(tl.loc('NotValidAppType', applicationType));
+            }
+
             // upload metadata if specified
             if (uploadMetadata && metadataPath) {
                 deliverCommand.arg(['-m', metadataPath]);

@@ -109,12 +109,24 @@
       "helpMarkDown": "ms-resource:loc.input.help.appIdentifier"
     },
     {
-      "name": "ipaPath",
+      "name": "appType",
+      "type": "pickList",
+      "label": "ms-resource:loc.input.label.appType",
+      "helpMarkDown": "ms-resource:loc.input.help.appType",
+      "required": true,
+      "options": {
+        "iOS": "iOS",
+        "AppleTVOS": "AppleTVOS",
+        "OSX": "OSX"
+      }
+    },
+    {
+      "name": "appPath",
       "type": "filePath",
-      "label": "ms-resource:loc.input.label.ipaPath",
+      "label": "ms-resource:loc.input.label.appPath",
       "defaultValue": "**/*.ipa",
       "required": true,
-      "helpMarkDown": "ms-resource:loc.input.help.ipaPath"
+      "helpMarkDown": "ms-resource:loc.input.help.appPath"
     },
     {
       "name": "releaseTrack",
@@ -320,6 +332,7 @@
     "MultipleIpaFilesFound": "ms-resource:loc.messages.MultipleIpaFilesFound",
     "FastlaneSessionEmpty": "ms-resource:loc.messages.FastlaneSessionEmpty",
     "ReleaseNotesRequiredForExternalTesting": "ms-resource:loc.messages.ReleaseNotesRequiredForExternalTesting",
-    "ExternalTestersCannotSkipWarning": "ms-resource:loc.messages.ExternalTestersCannotSkipWarning"
+    "ExternalTestersCannotSkipWarning": "ms-resource:loc.messages.ExternalTestersCannotSkipWarning",
+    "NotValidAppType": "ms-resource:loc.messages.NotValidAppType"
   }
 }
