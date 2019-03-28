@@ -20,6 +20,7 @@ tmr.setInput('installFastlane', 'true');
 tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
 
 // let ipaPath: string = tl.getInput('ipaPath', true);
+tmr.setInput('appType', 'iOS');
 tmr.setInput('ipaPath', '**/*.ipa');
 
 process.env['MOCK_NORMALIZE_SLASHES'] = 'true';

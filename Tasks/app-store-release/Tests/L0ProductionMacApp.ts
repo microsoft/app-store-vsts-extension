@@ -15,16 +15,18 @@ let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 tmr.setInput('authType', 'UserAndPass');
 tmr.setInput('username', 'creds-username');
 tmr.setInput('password', 'creds-password');
-tmr.setInput('releaseTrack', 'TestFlight');
-tmr.setInput('appType', 'iOS');
-tmr.setInput('ipaPath', 'mypackage.ipa');
+tmr.setInput('releaseTrack', 'Production');
+tmr.setInput('appType', 'macOS');
+tmr.setInput('ipaPath', 'mypackage.app');
+tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
+tmr.setInput('installFastlane', 'true');
+tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
 
-tmr.setInput('isTwoFactorAuth', 'true');
-tmr.setInput('appSpecificPassword', '@PP$pecificP@$$word');
-tmr.setInput('fastlaneSession', 'session...');
+tmr.setInput('shouldSubmitForReview', 'true');
 
 process.env['MOCK_NORMALIZE_SLASHES'] = 'true';
 process.env['HOME'] = '/usr/bin';
+let gemCache: string = '/usr/bin/.gem-cache';
 
 //construct a string that is JSON, call JSON.parse(string), send that to ma.TaskLibAnswers
 let myAnswers: string = `{
@@ -39,14 +41,22 @@ let myAnswers: string = `{
         "/usr/bin/fastlane": true
     },
     "glob": {
-        "mypackage.ipa": [
-            "mypackage.ipa"
+        "mypackage.app": [
+            "mypackage.app"
         ]
     },
     "exec": {
-        "fastlane pilot upload -u creds-username -i mypackage.ipa": {
+        "/usr/bin/gem install fastlane": {
             "code": 0,
-            "stdout": "consider it uploaded!"
+            "stdout": "1 gem installed"
+        },
+        "/usr/bin/gem update fastlane -i ${gemCache}": {
+            "code": 0,
+            "stdout": "1 gem installed"
+        },
+        "fastlane deliver --force -u creds-username -a com.microsoft.test.appId -c mypackage.app -j osx --skip_metadata true --skip_screenshots true --submit_for_review true": {
+            "code": 0,
+            "stdout": "consider it delivered!"
         }
     }
  }`;

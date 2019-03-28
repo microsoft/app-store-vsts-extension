@@ -19,6 +19,7 @@ tmr.setInput('password', 'creds-password');
 //tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
 tmr.setInput('releaseTrack', 'Production');
 
+tmr.setInput('appType', 'iOS');
 // let ipaPath: string = tl.getInput('ipaPath', true);
 //tmr.setInput('ipaPath', 'mypackage.ipa');
 

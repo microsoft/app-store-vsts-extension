@@ -20,6 +20,7 @@ tmr.setInput('releaseTrack', 'Production');
 tmr.setInput('installFastlane', 'true');
 tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
 
+tmr.setInput('appType', 'iOS');
 tmr.setInput('ipaPath', '**/*.ipa');
 
 process.env['MOCK_NORMALIZE_SLASHES'] = 'true';
@@ -52,7 +53,7 @@ let myAnswers: string = `{
             "code": 0,
             "stdout": "1 gem installed"
         },
-        "fastlane deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true --skip_screenshots true": {
+        "fastlane deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa -j ios --skip_metadata true --skip_screenshots true": {
             "code": 0,
             "stdout": "consider it delivered!"
         }
