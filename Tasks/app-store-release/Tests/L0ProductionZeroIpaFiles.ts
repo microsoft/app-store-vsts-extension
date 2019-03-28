@@ -16,6 +16,7 @@ tmr.setInput('authType', 'UserAndPass');
 tmr.setInput('username', 'creds-username');
 tmr.setInput('password', 'creds-password');
 tmr.setInput('releaseTrack', 'Production');
+tmr.setInput('appType', 'iOS');
 tmr.setInput('ipaPath', '**/*.ipa');
 tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
 

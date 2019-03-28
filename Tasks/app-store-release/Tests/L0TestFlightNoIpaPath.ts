@@ -16,6 +16,7 @@ tmr.setInput('authType', 'UserAndPass');
 tmr.setInput('username', 'creds-username');
 tmr.setInput('password', 'creds-password');
 tmr.setInput('releaseTrack', 'TestFlight');
+tmr.setInput('appType', 'iOS');
 
 // let ipaPath: string = tl.getInput('ipaPath', true);
 //tmr.setInput('ipaPath', '<path>');

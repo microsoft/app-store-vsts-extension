@@ -16,6 +16,7 @@ tmr.setInput('authType', 'UserAndPass');
 tmr.setInput('username', 'creds-username');
 tmr.setInput('password', 'creds-password');
 tmr.setInput('releaseTrack', 'TestFlight');
+tmr.setInput('appType', 'iOS');
 tmr.setInput('ipaPath', 'mypackage.ipa');
 tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
 tmr.setInput('distributedToExternalTesters', 'true');

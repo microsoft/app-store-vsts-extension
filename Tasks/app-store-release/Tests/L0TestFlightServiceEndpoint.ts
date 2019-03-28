@@ -21,6 +21,7 @@ tmr.setInput('releaseTrack', 'TestFlight');
 tmr.setInput('installFastlane', 'true');
 tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
 
+tmr.setInput('appType', 'iOS');
 tmr.setInput('ipaPath', 'mypackage.ipa');
 
 process.env['MOCK_NORMALIZE_SLASHES'] = 'true';

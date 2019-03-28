@@ -16,6 +16,7 @@ tmr.setInput('authType', 'UserAndPass');
 tmr.setInput('username', 'creds-username');
 tmr.setInput('password', 'creds-password');
 tmr.setInput('releaseTrack', 'Production');
+tmr.setInput('appType', 'iOS');
 tmr.setInput('ipaPath', 'mypackage.ipa');
 tmr.setInput('appIdentifier', 'com.microsoft.test.appId');
 tmr.setInput('installFastlane', 'true');
@@ -54,7 +55,7 @@ let myAnswers: string = `{
             "code": 0,
             "stdout": "1 gem installed"
         },
-        "fastlane deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa --skip_metadata true -w <path>": {
+        "fastlane deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa -j ios --skip_metadata true -w <path>": {
             "code": 0,
             "stdout": "consider it delivered!"
         }
