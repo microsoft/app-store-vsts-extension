@@ -1,3 +1,5 @@
+![Build Status](https://mseng.visualstudio.com/_apis/public/build/definitions/b924d696-3eae-4116-8443-9a18392d8544/4518/badge)
+
 # Azure DevOps Extension for the Apple App Store
 
 This extension contains a set of deployment tasks which allow you to automate the release and promotion of app updates to Apple's App Store from your CI environment. This can reduce the effort needed to keep your beta and production deployments up-to-date, since you can simply push changes to the configured source control branches, and let your automated build take care of the rest.
@@ -43,9 +45,9 @@ In addition to specifying your publisher credentials directly within each build 
 
 ### Two-Factor Authentication
 
-We do not recommend using two-factor authentication if you're using Microsoft-hosted build agents. Apple authentication is region specific, and Microsoft-hosted agents may not be in the same region as your developer machine. Instead, we recommend that you create a separate Apple ID that doesn't have two-factor authentication enabled with a strong password and restricted access.  See [this](https://docs.fastlane.tools/best-practices/continuous-integration/#separate-apple-id-for-ci) link for more details.
+Apple authentication is region specific, and Microsoft-hosted agents may not be in the same region as your developer machine. Instead, we recommend that you create a separate Apple ID with a strong password and restricted access.  See [this](https://docs.fastlane.tools/best-practices/continuous-integration/#separate-apple-id-for-ci) link for more details.
 
-If the Apple account used to publish the app has two-factor authentication enabled, you need to setup the `Fastlane Session` variable on the Apple App Store service connection. 
+To use two-factor authentication, you need to setup the `Fastlane Session` variable on the Apple App Store service connection. 
 
 1. Create the fastlane session token by following these [instructions](https://docs.fastlane.tools/best-practices/continuous-integration/#use-of-application-specific-passwords-and-spaceauth).
 

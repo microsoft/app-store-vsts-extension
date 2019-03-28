@@ -217,7 +217,7 @@ async function run() {
             //Sets -i or -c depending if app submission is for (-i) iOS/tvOS or (-c) MacOS
             switch (applicationType.toLocaleLowerCase()) {
                 case 'macos':
-                    // Use the -C flag &
+                    // Use the -C flag for apps
                     deliverCommand.arg(['-c', filePath]);
                     deliverCommand.arg(['-j', 'osx']); //Fastlane wants arg as OSX
                     break;

@@ -23,7 +23,7 @@ Once you have created or retrieved credentials for your App Store account, perfo
 
 1. Install the App Store extension from the [Azure DevOps Marketplace](https://marketplace.visualstudio.com/items/ms-vsclient.app-store).
 
-2. Go to your Azure DevOps or TFS project, click on the **Build** tab, and create a new pipeline (the "+" icon) that is hooked up to your project's appropriate source repository.
+2. Go to your Azure DevOps or TFS project, click on the **Pipelines** tab, and create a new pipeline (the "+" icon) that is hooked up to your project's appropriate source repository.
 
 3. Click **Add build step...** and select the necessary tasks to generate your release assets (e.g. **Gulp**, **Cordova Build**).
 
@@ -53,9 +53,9 @@ In addition to specifying your publisher credentials directly within each build 
 
 ### Two-Factor Authentication
 
-We do not recommend using two-factor authentication if you're using Microsoft-hosted build agents. Apple authentication is region specific, and Microsoft-hosted agents may not be in the same region as your developer machine. Instead, we recommend that you create a separate Apple ID that doesn't have two-factor authentication enabled with a strong password and restricted access.  See [this](https://docs.fastlane.tools/best-practices/continuous-integration/#separate-apple-id-for-ci) link for more details.
+Apple authentication is region specific, and Microsoft-hosted agents may not be in the same region as your developer machine. Instead, we recommend that you create a separate Apple ID with a strong password and restricted access.  See [this](https://docs.fastlane.tools/best-practices/continuous-integration/#separate-apple-id-for-ci) link for more details.
 
-If the Apple account used to publish the app has two-factor authentication enabled, you need to setup the `Fastlane Session` variable on the Apple App Store service connection. 
+To use two-factor authentication, you need to setup the `Fastlane Session` variable on the Apple App Store service connection. 
 
 1. Create the fastlane session token by following these [instructions](https://docs.fastlane.tools/best-practices/continuous-integration/#use-of-application-specific-passwords-and-spaceauth).
 
