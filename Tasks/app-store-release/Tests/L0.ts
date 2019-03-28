@@ -586,6 +586,36 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
+    it('production - macOS app', (done: MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0ProductionMacApp.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.ran('fastlane deliver --force -u creds-username -a com.microsoft.test.appId -c mypackage.app -j osx --skip_metadata true --skip_screenshots true --submit_for_review true'), 'fastlane deliver for macOS should have run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
+        //assert(tr.stderr.length === 0, 'should not have written to stderr');
+        assert(tr.succeeded, 'task should have succeeded');
+
+        done();
+    });
+
+    it('production - tvOS app', (done: MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0ProductionTVApp.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.ran('fastlane deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa -j appletvos --skip_metadata true --skip_screenshots true --submit_for_review true'), 'fastlane deliver for tvOS should have run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
+        //assert(tr.stderr.length === 0, 'should not have written to stderr');
+        assert(tr.succeeded, 'task should have succeeded');
+
+        done();
+    });
+
     //No tests for every combination of uploadMetadata and metadataPath (one true, one false)
     //No tests for every combination of uploadScreenshots and screenshotsPath (one true, one false)
 
