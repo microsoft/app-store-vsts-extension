@@ -204,7 +204,11 @@ async function run() {
                 let externalTestersGroups: string = tl.getInput('externalTestersGroups');
                 pilotCommand.argIf(externalTestersGroups, ['--groups', externalTestersGroups]);
             }
-            pilotCommand.argIf(fastlaneArguments, fastlaneArguments);
+            
+            if (fastlaneArguments) {
+                pilotCommand.line(fastlaneArguments);
+            }
+
             await pilotCommand.exec();
         } else if (releaseTrack === 'Production') {
             let bundleIdentifier: string = tl.getInput('appIdentifier', true);
@@ -254,7 +258,11 @@ async function run() {
             deliverCommand.argIf(teamName, ['-e', teamName]);
             deliverCommand.argIf(shouldSubmitForReview, ['--submit_for_review', 'true']);
             deliverCommand.argIf(shouldAutoRelease, ['--automatic_release', 'true']);
-            deliverCommand.argIf(fastlaneArguments, fastlaneArguments);
+
+            if (fastlaneArguments) {
+                deliverCommand.line(fastlaneArguments);
+            }
+
             await deliverCommand.exec();
         }
 
