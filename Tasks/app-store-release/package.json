@@ -1,6 +1,6 @@
 {
   "name": "app-store-release",
-  "version": "1.116.0",
+  "version": "1.158.0",
   "description": "Azure Pipelines task to publish your apps to the Apple App Store",
   "main": "app-store-release.js",
   "dependencies": {

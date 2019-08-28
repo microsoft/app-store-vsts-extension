@@ -204,7 +204,7 @@ async function run() {
                 let externalTestersGroups: string = tl.getInput('externalTestersGroups');
                 pilotCommand.argIf(externalTestersGroups, ['--groups', externalTestersGroups]);
             }
-            
+
             if (fastlaneArguments) {
                 pilotCommand.line(fastlaneArguments);
             }
