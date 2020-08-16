@@ -10,7 +10,9 @@
         "Build",
         "Release"
     ],
-    "demands": [ "xcode" ],
+    "demands": [
+        "xcode"
+    ],
     "version": {
         "Major": "1",
         "Minor": "158",
@@ -306,6 +308,14 @@
             "groupName": "advanced",
             "helpMarkDown": "Provide the version of fastlane to install (e.g., 2.15.1).  If a specific version of fastlane is installed, all previously installed versions will be uninstalled beforehand.",
             "visibleRule": "fastlaneToolsVersion = SpecificVersion"
+        },
+        {
+            "name": "usesIdfa",
+            "type": "boolean",
+            "label": "App uses the Advertising Identifier",
+            "defaultValue": false,
+            "required": false,
+            "helpMarkDown": "Select to set the use of IDFA to yes, is required if SubmitForReview is true."
         },
         {
             "name": "fastlaneArguments",
