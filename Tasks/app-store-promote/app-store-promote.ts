@@ -152,7 +152,10 @@ async function run() {
         deliverCommand.argIf(teamId, ['-k', teamId]);
         deliverCommand.argIf(teamName, ['-e', teamName]);
         deliverCommand.arg('--force');
-        deliverCommand.argIf(fastlaneArguments, fastlaneArguments);
+
+        //use .line instead of arg/argif to support mulitple parameters input by user
+        if(fastlaneArguments)
+            deliverCommand.line(fastlaneArguments);
 
         await deliverCommand.exec();
 
