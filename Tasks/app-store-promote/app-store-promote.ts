@@ -154,8 +154,9 @@ async function run() {
         deliverCommand.arg('--force');
 
         //use .line instead of arg/argif to support mulitple parameters input by user
-        if(fastlaneArguments)
+        if (fastlaneArguments) {
             deliverCommand.line(fastlaneArguments);
+        }
 
         await deliverCommand.exec();
 
