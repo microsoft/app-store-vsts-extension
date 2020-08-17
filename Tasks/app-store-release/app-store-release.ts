@@ -92,7 +92,7 @@ async function run() {
         let shouldSkipWaitingForProcessing: boolean = tl.getBoolInput('shouldSkipWaitingForProcessing', false);
         let shouldSubmitForReview: boolean = tl.getBoolInput('shouldSubmitForReview', false);
         let shouldAutoRelease: boolean = tl.getBoolInput('shouldAutoRelease', false);
-        let usesIdfa: boolean = tl.getBoolInput('usesIdfa', shouldSubmitForReview);
+        let usesIdfa: boolean = tl.getBoolInput('usesIdfa', false);
         let shouldSkipSubmission: boolean = tl.getBoolInput('shouldSkipSubmission', false);
         let teamId: string = tl.getInput('teamId', false);
         let teamName: string = tl.getInput('teamName', false);
@@ -259,7 +259,7 @@ async function run() {
             deliverCommand.argIf(teamName, ['-e', teamName]);
             deliverCommand.argIf(shouldSubmitForReview, ['--submit_for_review', 'true']);
             deliverCommand.argIf(shouldAutoRelease, ['--automatic_release', 'true']);
-            deliverCommand.argIf(usesIdfa, ['--submission_information', 'true']);
+            deliverCommand.argIf(usesIdfa, ['--submission_information', `'{'add_id_info_uses_idfa': ${usesIdfa}}'`]);
 
             if (fastlaneArguments) {
                 deliverCommand.line(fastlaneArguments);
