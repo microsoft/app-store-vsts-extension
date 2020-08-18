@@ -87,7 +87,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('additional fastlane install', (done: MochaDone) => {
+    it('additional fastlane arguments', (done: MochaDone) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0AdditionalFastlaneArguments.js');
