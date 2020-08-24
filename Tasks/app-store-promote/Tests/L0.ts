@@ -96,6 +96,7 @@ describe('app-store-promote L0 Suite', function () {
         tr.run();
         assert(tr.invokedToolCount === 1, 'should have run fastlane deliver.');
         assert(tr.ran('fastlane deliver submit_build -u creds-username -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force --app-version 2.1.5'), 'should have run fastlane deliver with additional fastlane arguments.');
+        assert(tr.stdOutContained('##vso[task.debug]   2.1.5'), 'should have sent app-version parameter as a separate argument');
         assert(tr.succeeded, 'task should have succeeded');
 
         done();
