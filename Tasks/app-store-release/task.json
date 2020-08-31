@@ -13,7 +13,7 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "158",
+        "Minor": "175",
         "Patch": "0"
     },
     "minimumAgentVersion": "1.95.3",

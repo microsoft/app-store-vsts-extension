@@ -177,6 +177,7 @@ async function run() {
         //gem update fastlane -i ~/.gem-cache
         if (releaseTrack === 'TestFlight') {
             // Run pilot (via fastlane) to upload to testflight
+            // See https://github.com/fastlane/fastlane/blob/master/pilot/lib/pilot/options.rb for more information on these arguments
             let pilotCommand: ToolRunner = tl.tool('fastlane');
             let bundleIdentifier: string = tl.getInput('appIdentifier', false);
             pilotCommand.arg(['pilot', 'upload', '-u', credentials.username, '-i', filePath]);
@@ -255,7 +256,7 @@ async function run() {
                 deliverCommand.arg(['--skip_screenshots', 'true']);
             }
             deliverCommand.argIf(teamId, ['-k', teamId]);
-            deliverCommand.argIf(teamName, ['-e', teamName]);
+            deliverCommand.argIf(teamName, ['--team_name', teamName]);
             deliverCommand.argIf(shouldSubmitForReview, ['--submit_for_review', 'true']);
             deliverCommand.argIf(shouldAutoRelease, ['--automatic_release', 'true']);
 
