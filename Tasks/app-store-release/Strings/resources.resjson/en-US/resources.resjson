@@ -66,7 +66,6 @@
   "loc.messages.SuccessfullyPublished": "Successfully published to %s",
   "loc.messages.NoIpaFilesFound": "No IPA file found using pattern: %s",
   "loc.messages.MultipleIpaFilesFound": "More than one IPA file found using pattern: %s",
-  "loc.messages.FastlaneSessionEmpty": "'Fastlane Session' is not set in the service connection configured for two-step verification.",
   "loc.messages.ReleaseNotesRequiredForExternalTesting": "'What to Test?' is required when using 'Distribute to External Testers'.",
   "loc.messages.ExternalTestersCannotSkipWarning": "'Skip Build Processing Wait' and 'Skip Submission' is not supported with 'Distribute to External Testers'. Please check your build configuration.",
   "loc.messages.NotValidAppType": "An incorrect ApplicationType was chosen. Valid values iOS, macOS or tvOS. Value set: %s"

@@ -13,7 +13,7 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "158",
+        "Minor": "175",
         "Patch": "0"
     },
     "minimumAgentVersion": "1.95.3",
@@ -329,7 +329,6 @@
         "SuccessfullyPublished": "Successfully published to %s",
         "NoIpaFilesFound": "No IPA file found using pattern: %s",
         "MultipleIpaFilesFound": "More than one IPA file found using pattern: %s",
-        "FastlaneSessionEmpty": "'Fastlane Session' is not set in the service connection configured for two-step verification.",
         "ReleaseNotesRequiredForExternalTesting": "'What to Test?' is required when using 'Distribute to External Testers'.",
         "ExternalTestersCannotSkipWarning": "'Skip Build Processing Wait' and 'Skip Submission' is not supported with 'Distribute to External Testers'. Please check your build configuration.",
         "NotValidAppType": "An incorrect ApplicationType was chosen. Valid values iOS, macOS or tvOS. Value set: %s"

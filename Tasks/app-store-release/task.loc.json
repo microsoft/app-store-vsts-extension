@@ -15,7 +15,7 @@
   ],
   "version": {
     "Major": "1",
-    "Minor": "158",
+    "Minor": "175",
     "Patch": "0"
   },
   "minimumAgentVersion": "1.95.3",
@@ -331,7 +331,6 @@
     "SuccessfullyPublished": "ms-resource:loc.messages.SuccessfullyPublished",
     "NoIpaFilesFound": "ms-resource:loc.messages.NoIpaFilesFound",
     "MultipleIpaFilesFound": "ms-resource:loc.messages.MultipleIpaFilesFound",
-    "FastlaneSessionEmpty": "ms-resource:loc.messages.FastlaneSessionEmpty",
     "ReleaseNotesRequiredForExternalTesting": "ms-resource:loc.messages.ReleaseNotesRequiredForExternalTesting",
     "ExternalTestersCannotSkipWarning": "ms-resource:loc.messages.ExternalTestersCannotSkipWarning",
     "NotValidAppType": "ms-resource:loc.messages.NotValidAppType"

@@ -103,19 +103,6 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('two factor authentication using service endpoint without fastlane session', (done: MochaDone) => {
-        this.timeout(1000);
-
-        let tp = path.join(__dirname, 'L0AppSpecificPasswordEndPointIncomplete.js');
-        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
-
-        tr.run();
-        assert.equal(true, tr.createdErrorIssue('Error: loc_mock_FastlaneSessionEmpty'));
-        assert(tr.failed, 'task should have failed');
-
-        done();
-    });
-
     it('two factor authenitcation app specific password without fastlane session', (done: MochaDone) => {
         this.timeout(1000);
 

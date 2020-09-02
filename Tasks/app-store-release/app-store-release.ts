@@ -64,12 +64,11 @@ async function run() {
             credentials.password = serviceEndpoint.parameters['password'];
             credentials.appSpecificPassword = serviceEndpoint.parameters['appSpecificPassword'];
             if (credentials.appSpecificPassword) {
-                isTwoFactorAuthEnabled = true;
                 let fastlaneSession: string = serviceEndpoint.parameters['fastlaneSession'];
-                if (!fastlaneSession) {
-                    throw Error(tl.loc('FastlaneSessionEmpty'));
+                if (fastlaneSession) {
+                    isTwoFactorAuthEnabled = true;
+                    credentials.fastlaneSession = fastlaneSession;
                 }
-                credentials.fastlaneSession = fastlaneSession;
             }
         } else if (authType === 'UserAndPass') {
             credentials.username = tl.getInput('username', true);
