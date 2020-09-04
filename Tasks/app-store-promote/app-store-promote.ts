@@ -150,7 +150,7 @@ async function run() {
         deliverCommand.arg(['--skip_binary_upload', 'true', '--skip_metadata', 'true', '--skip_screenshots', 'true']);
         deliverCommand.argIf(shouldAutoRelease, '--automatic_release');
         deliverCommand.argIf(teamId, ['-k', teamId]);
-        deliverCommand.argIf(teamName, ['-e', teamName]);
+        deliverCommand.argIf(teamName, ['--team_name', teamName]);
         deliverCommand.arg('--force');
         deliverCommand.argIf(fastlaneArguments, fastlaneArguments);
 
