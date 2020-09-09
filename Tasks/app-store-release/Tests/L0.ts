@@ -558,6 +558,20 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
+    it('production - contains submission information with idfa', (done: MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0ProductionUsesIdfa.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.ran(`fastlane deliver --force -u creds-username -a com.microsoft.test.appId -i mypackage.ipa -j ios --skip_metadata true --skip_screenshots true --submission_information '{'add_id_info_uses_idfa': true}'`), 'fastlane deliver with submission_information should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
+        assert(tr.succeeded, 'task should have succeeded');
+
+        done();
+    });
+
     it('production - zero ipa files', (done: MochaDone) => {
         this.timeout(1000);
 

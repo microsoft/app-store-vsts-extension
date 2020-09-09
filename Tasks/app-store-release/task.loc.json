@@ -310,6 +310,14 @@
       "visibleRule": "fastlaneToolsVersion = SpecificVersion"
     },
     {
+      "name": "usesIdfa",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.usesIdfa",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.usesIdfa"
+    },
+    {
       "name": "fastlaneArguments",
       "type": "string",
       "label": "ms-resource:loc.input.label.fastlaneArguments",
