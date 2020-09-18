@@ -4,6 +4,7 @@
   "description": "Azure Pipelines task to promote a build in the Apple App Store",
   "main": "app-store-promote.js",
   "dependencies": {
+    "azure-pipelines-task-lib": "^2.11.1",
     "vsts-task-lib": "^0.9.7"
   },
   "devDependencies": {},
