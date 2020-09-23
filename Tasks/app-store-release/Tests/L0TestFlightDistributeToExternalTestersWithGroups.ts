@@ -57,7 +57,7 @@ let myAnswers: string = `{
         "/usr/bin/fastlane": true,
         "/usr/bin/pilot": true
     },
-    "glob": {
+    "findMatch": {
         "mypackage.ipa": [
             "mypackage.ipa"
         ]

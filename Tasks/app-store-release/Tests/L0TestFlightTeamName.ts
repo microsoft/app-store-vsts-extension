@@ -39,7 +39,7 @@ let myAnswers: string = `{
         "/usr/bin/gem": true,
         "/usr/bin/fastlane": true
     },
-    "glob": {
+    "findMatch": {
         "mypackage.ipa": [
             "mypackage.ipa"
         ]
