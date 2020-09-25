@@ -99,6 +99,15 @@
             "visibleRule": "isTwoFactorAuth = true"
         },
         {
+            "name": "appleID",
+            "type": "string",
+            "label": "Apple Id",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Apple ID",
+            "visibleRule": "isTwoFactorAuth = true"
+        },
+        {
             "name": "appIdentifier",
             "type": "string",
             "label": "Bundle ID",
