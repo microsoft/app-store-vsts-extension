@@ -37,6 +37,8 @@
   "loc.input.help.screenshotsPath": "Path to the screenshots to publish.",
   "loc.input.label.shouldSubmitForReview": "Submit for Review",
   "loc.input.help.shouldSubmitForReview": "Select to automatically submit the new app version for review after the upload is completed.",
+  "loc.input.label.appSpecificId": "App specific apple Id",
+  "loc.input.help.appSpecificId": "App specific apple Id: this value should be taken from Apple ID property in the App Information section in App Store Connect",
   "loc.input.label.shouldAutoRelease": "Release Automatically",
   "loc.input.help.shouldAutoRelease": "Select to automatically release the app once it is approved.",
   "loc.input.label.releaseNotes": "What to Test?",
