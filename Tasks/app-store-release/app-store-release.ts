@@ -95,7 +95,7 @@ async function run() {
         let shouldSkipSubmission: boolean = tl.getBoolInput('shouldSkipSubmission', false);
         let teamId: string = tl.getInput('teamId', false);
         let teamName: string = tl.getInput('teamName', false);
-        const appleID: string = tl.getInput('appleId', false);
+        const appSpecificId: string = tl.getInput('appSpecificId', false);
 
         let applicationType: string = tl.getInput('appType', true);
 
@@ -123,7 +123,7 @@ async function run() {
             // To get a FASTLANE_SESSION, run 'fastlane spaceauth -u [email]' interactively (requires PIN)
             // See: https://github.com/fastlane/fastlane/blob/master/spaceship/README.md
             tl.debug('Using two-factor authentication');
-            if (!appleID) {
+            if (!appSpecificId) {
                 process.env[fastlaneSessionEnvVar] = credentials.fastlaneSession;
             }
             process.env[appSpecificPasswordEnvVar] = credentials.appSpecificPassword;
@@ -193,7 +193,7 @@ async function run() {
             pilotCommand.argIf(bundleIdentifier, ['-a', bundleIdentifier]);
             pilotCommand.argIf(shouldSkipSubmission, ['--skip_submission', 'true']);
             pilotCommand.argIf(shouldSkipWaitingForProcessing, ['--skip_waiting_for_build_processing', 'true']);
-            pilotCommand.argIf(appleID, ['-p', appleID]);
+            pilotCommand.argIf(appSpecificId, ['-p', appSpecificId]);
 
             let distributedToExternalTesters: boolean = tl.getBoolInput('distributedToExternalTesters', false);
             if (distributedToExternalTesters) {

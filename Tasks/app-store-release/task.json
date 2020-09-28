@@ -99,15 +99,6 @@
             "visibleRule": "isTwoFactorAuth = true"
         },
         {
-            "name": "appleID",
-            "type": "string",
-            "label": "Apple Id",
-            "defaultValue": "",
-            "required": false,
-            "helpMarkDown": "Apple ID",
-            "visibleRule": "isTwoFactorAuth = true"
-        },
-        {
             "name": "appIdentifier",
             "type": "string",
             "label": "Bundle ID",
@@ -207,6 +198,15 @@
             "helpMarkDown": "Select to automatically submit the new app version for review after the upload is completed.",
             "groupName": "releaseOptions",
             "visibleRule": "releaseTrack = Production"
+        },
+        {
+            "name": "appSpecificId",
+            "type": "string",
+            "label": "App specific apple Id",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "App specific apple Id: this value should be taken from Apple ID property in the App Information section in App Store Connect",
+            "visibleRule": "releaseTrack = TestFlight"
         },
         {
             "name": "shouldAutoRelease",
