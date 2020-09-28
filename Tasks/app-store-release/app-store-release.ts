@@ -7,9 +7,9 @@
 import fs = require('fs');
 import os = require('os');
 import path = require('path');
-import tl = require('vsts-task-lib/task');
+import tl = require('azure-pipelines-task-lib/task');
 
-import { ToolRunner } from 'vsts-task-lib/toolrunner';
+import { ToolRunner } from 'azure-pipelines-task-lib/toolrunner';
 
 class UserCredentials {
     username: string;
@@ -33,7 +33,7 @@ function isValidFilePath(filePath: string): boolean {
 // Attempts to find a single ipa file to use by the task.
 // If a glob pattern is provided, only a single ipa is allowed.
 function findIpa(ipaPath: string): string {
-    let paths: string[] = tl.glob(ipaPath);
+    let paths: string[] = tl.findMatch('', ipaPath);
     if (!paths || paths.length === 0) {
         throw new Error(tl.loc('NoIpaFilesFound', ipaPath));
     }
