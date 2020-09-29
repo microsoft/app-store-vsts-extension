@@ -94,7 +94,7 @@
             "type": "string",
             "label": "Fastlane Session for Two-step Verification",
             "defaultValue": "",
-            "required": true,
+            "required": false,
             "helpMarkDown": "Used with two-step verification.  Create by running: 'fastlane spaceauth -u [email]'",
             "visibleRule": "isTwoFactorAuth = true"
         },

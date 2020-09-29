@@ -96,7 +96,7 @@
       "type": "string",
       "label": "ms-resource:loc.input.label.fastlaneSession",
       "defaultValue": "",
-      "required": true,
+      "required": false,
       "helpMarkDown": "ms-resource:loc.input.help.fastlaneSession",
       "visibleRule": "isTwoFactorAuth = true"
     },

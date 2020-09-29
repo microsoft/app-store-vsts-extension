@@ -77,7 +77,7 @@ async function run() {
             isTwoFactorAuthEnabled = tl.getBoolInput('isTwoFactorAuth');
             if (isTwoFactorAuthEnabled) {
                 credentials.appSpecificPassword = tl.getInput('appSpecificPassword', true);
-                credentials.fastlaneSession = tl.getInput('fastlaneSession', true);
+                credentials.fastlaneSession = tl.getInput('fastlaneSession', false);
             }
         }
 
