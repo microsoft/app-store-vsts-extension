@@ -89,13 +89,15 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 1. **What to Test?** *(File path)* - Path to the file containing notes on what to test for this release.
 
-2. **Skip Build Processing Wait** *(Checkbox)* - Skip waiting for App Store to finish the build processing.
+2. **App specific apple Id** *(String)* - App specific apple Id allows you to upload applications to a TestFlight track without triggering 2FA. This value should be taken from Apple ID property in the App Information section in App Store Connect.
 
-3. **Skip Submission** *(Checkbox)* - Upload a beta app without distributing to testers.
+3. **Skip Build Processing Wait** *(Checkbox)* - Skip waiting for App Store to finish the build processing.
 
-4. **Distribute to External Testers** *(Checkbox)* - Select to distribute the build to external testers (cannot be used with 'Skip Build Processing Wait' and 'Skip Submission').  Using this option requires setting release notes in 'What to Test?'.
+4. **Skip Submission** *(Checkbox)* - Upload a beta app without distributing to testers.
 
-5. **Groups** *(String)* - Optionally specify the group(s) of external testers this build should be distributed to. To specify multiple groups, separate group names by commas e.g. 'External Beta Testers,TestVendors'. If not specified the default 'External Testers' is used.
+5. **Distribute to External Testers** *(Checkbox)* - Select to distribute the build to external testers (cannot be used with 'Skip Build Processing Wait' and 'Skip Submission').  Using this option requires setting release notes in 'What to Test?'.
+
+6. **Groups** *(String)* - Optionally specify the group(s) of external testers this build should be distributed to. To specify multiple groups, separate group names by commas e.g. 'External Beta Testers,TestVendors'. If not specified the default 'External Testers' is used.
 
 ##### Release Options for Production track
 

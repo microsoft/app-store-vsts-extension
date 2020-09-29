@@ -200,15 +200,6 @@
             "visibleRule": "releaseTrack = Production"
         },
         {
-            "name": "appSpecificId",
-            "type": "string",
-            "label": "App specific apple Id",
-            "defaultValue": "",
-            "required": false,
-            "helpMarkDown": "App specific apple Id: this value should be taken from Apple ID property in the App Information section in App Store Connect",
-            "visibleRule": "releaseTrack = TestFlight"
-        },
-        {
             "name": "shouldAutoRelease",
             "type": "boolean",
             "label": "Release Automatically",
@@ -226,6 +217,15 @@
             "required": false,
             "helpMarkDown": "Path to the file containing notes on what to test for this release.",
             "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = TestFlight"
+        },
+        {
+            "name": "appSpecificId",
+            "type": "string",
+            "label": "App specific apple Id",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "App specific apple Id: this value should be taken from Apple ID property in the App Information section in App Store Connect",
             "visibleRule": "releaseTrack = TestFlight"
         },
         {
