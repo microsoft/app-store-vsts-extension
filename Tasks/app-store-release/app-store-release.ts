@@ -123,10 +123,18 @@ async function run() {
             // To get a FASTLANE_SESSION, run 'fastlane spaceauth -u [email]' interactively (requires PIN)
             // See: https://github.com/fastlane/fastlane/blob/master/spaceship/README.md
             tl.debug('Using two-factor authentication');
-            if (!appSpecificId) {
+            if (credentials.fastlaneSession) {
                 process.env[fastlaneSessionEnvVar] = credentials.fastlaneSession;
+            } else {
+                if (!appSpecificId) {
+                    tl.warning(tl.loc('SessionAndAppIdNotSet'));
+                }
+                if (!shouldSkipWaitingForProcessing) {
+                    tl.warning(tl.loc('SessionAndAppIdNotSet'));
+                }
             }
             process.env[appSpecificPasswordEnvVar] = credentials.appSpecificPassword;
+
         }
 
         // Add bin of new gem home so we don't have to resolve it later

@@ -202,15 +202,6 @@
       "visibleRule": "releaseTrack = Production"
     },
     {
-      "name": "appSpecificId",
-      "type": "string",
-      "label": "ms-resource:loc.input.label.appSpecificId",
-      "defaultValue": "",
-      "required": false,
-      "helpMarkDown": "ms-resource:loc.input.help.appSpecificId",
-      "visibleRule": "releaseTrack = TestFlight"
-    },
-    {
       "name": "shouldAutoRelease",
       "type": "boolean",
       "label": "ms-resource:loc.input.label.shouldAutoRelease",
@@ -228,6 +219,15 @@
       "required": false,
       "helpMarkDown": "ms-resource:loc.input.help.releaseNotes",
       "groupName": "releaseOptions",
+      "visibleRule": "releaseTrack = TestFlight"
+    },
+    {
+      "name": "appSpecificId",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.appSpecificId",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.appSpecificId",
       "visibleRule": "releaseTrack = TestFlight"
     },
     {
@@ -343,6 +343,8 @@
     "FastlaneSessionEmpty": "ms-resource:loc.messages.FastlaneSessionEmpty",
     "ReleaseNotesRequiredForExternalTesting": "ms-resource:loc.messages.ReleaseNotesRequiredForExternalTesting",
     "ExternalTestersCannotSkipWarning": "ms-resource:loc.messages.ExternalTestersCannotSkipWarning",
-    "NotValidAppType": "ms-resource:loc.messages.NotValidAppType"
+    "NotValidAppType": "ms-resource:loc.messages.NotValidAppType",
+    "SessionAndAppIdNotSet": "ms-resource:loc.messages.SessionAndAppIdNotSet",
+    "ShouldSkipWaitingForProcessingNotTrue": "ms-resource:loc.messages.ShouldSkipWaitingForProcessingNotTrue"
   }
 }
