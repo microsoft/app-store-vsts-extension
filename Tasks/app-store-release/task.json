@@ -342,7 +342,7 @@
         "ReleaseNotesRequiredForExternalTesting": "'What to Test?' is required when using 'Distribute to External Testers'.",
         "ExternalTestersCannotSkipWarning": "'Skip Build Processing Wait' and 'Skip Submission' is not supported with 'Distribute to External Testers'. Please check your build configuration.",
         "NotValidAppType": "An incorrect ApplicationType was chosen. Valid values iOS, macOS or tvOS. Value set: %s",
-        "SessionAndAppIdNotSet": "Your faslane session is incorrect and app specific id is not set. Please set correct fastlane session or app specific id",
+        "SessionAndAppIdNotSet": "Your fastlane session is incorrect and app specific id is not set. Please set correct fastlane session or app specific id",
         "ReleaseNotesRequiresFastlaneSession": "You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work"
     }
 }

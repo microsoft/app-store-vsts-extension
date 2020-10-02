@@ -98,7 +98,7 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 1. **What to Test?** *(File path)* - Path to the file containing notes on what to test for this release.
 
-2. **App specific apple Id** *(String)* - App specific apple Id allows you to upload applications to a TestFlight track without triggering 2FA. This value should be taken from Apple ID property in the App Information section in App Store Connect.
+2. **App Specific Apple Id** *(String)* - App specific apple Id allows you to upload applications to a TestFlight track without triggering 2FA. This value should be taken from Apple ID property in the App Information section in App Store Connect.
 
 3. **Skip Build Processing Wait** *(Checkbox)* - Skip waiting for App Store to finish the build processing.
 
