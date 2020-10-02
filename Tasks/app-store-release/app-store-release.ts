@@ -130,7 +130,7 @@ async function run() {
                     tl.warning(tl.loc('SessionAndAppIdNotSet'));
                 }
                 if (!shouldSkipWaitingForProcessing) {
-                    tl.warning(tl.loc('SessionAndAppIdNotSet'));
+                    tl.warning(tl.loc('ShouldSkipWaitingForProcessingNotTrue'));
                 }
             }
             process.env[appSpecificPasswordEnvVar] = credentials.appSpecificPassword;
