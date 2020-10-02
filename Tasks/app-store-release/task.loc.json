@@ -345,6 +345,6 @@
     "ExternalTestersCannotSkipWarning": "ms-resource:loc.messages.ExternalTestersCannotSkipWarning",
     "NotValidAppType": "ms-resource:loc.messages.NotValidAppType",
     "SessionAndAppIdNotSet": "ms-resource:loc.messages.SessionAndAppIdNotSet",
-    "ShouldSkipWaitingForProcessingNotTrue": "ms-resource:loc.messages.ShouldSkipWaitingForProcessingNotTrue"
+    "ReleaseNotesRequiresFastlaneSession": "ms-resource:loc.messages.ReleaseNotesRequiresFastlaneSession"
   }
 }

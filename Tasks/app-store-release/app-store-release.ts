@@ -194,6 +194,10 @@ async function run() {
             pilotCommand.arg(['pilot', 'upload', '-u', credentials.username, '-i', filePath]);
             let usingReleaseNotes: boolean = isValidFilePath(releaseNotes);
             if (usingReleaseNotes) {
+                if (!credentials.fastlaneSession) {
+                    tl.warning(tl.loc('ReleaseNotesRequiresFastlaneSession'));
+                }
+
                 pilotCommand.arg(['--changelog', fs.readFileSync(releaseNotes).toString()]);
             }
             pilotCommand.argIf(teamId, ['-q', teamId]);
