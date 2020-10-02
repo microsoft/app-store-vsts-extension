@@ -1,19 +1,19 @@
-name: Assign Triage label to new tickets and add to project board
+name: Assign triage label to new tickets and add to project board
 on:
   issues:
     types: [opened]
 
 jobs:
-    label: Add Triage label abd add to project
+  assignTriagenAndAddToProject: 
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
-    - uses: actions-ecosystem/action-add-labels@v1
-    with:
-      github_token: ${{ secrets.GITHUB_TOKEN }}
+    - name: "Add triage label"
+      uses: actions-ecosystem/action-add-labels@v1
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
       labels: triage
-
     - name: "Assign issues to project board"
       uses: srggrs/assign-one-project-github-action@1.2.0
       with:
