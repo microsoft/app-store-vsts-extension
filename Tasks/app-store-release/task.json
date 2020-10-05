@@ -222,10 +222,10 @@
         {
             "name": "appSpecificId",
             "type": "string",
-            "label": "App specific apple Id",
+            "label": "App Specific Apple Id",
             "defaultValue": "",
             "required": false,
-            "helpMarkDown": "App specific apple Id: this value should be taken from Apple ID property in the App Information section in App Store Connect",
+            "helpMarkDown": "App Specific Apple Id: this value should be taken from Apple ID property in the App Information section in App Store Connect",
             "visibleRule": "releaseTrack = TestFlight"
         },
         {
