@@ -131,7 +131,7 @@ async function run() {
 
         if (!skipBinaryUpload) {
             if (!filePath) {
-                throw new Error(tl.loc('ipaPathNotSpecified'));
+                throw new Error(tl.loc('IpaPathNotSpecified'));
             }
             // Ensure there's exactly one ipa before installing fastlane tools
             filePath = findIpa(filePath);

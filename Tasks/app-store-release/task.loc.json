@@ -336,6 +336,6 @@
     "ReleaseNotesRequiredForExternalTesting": "ms-resource:loc.messages.ReleaseNotesRequiredForExternalTesting",
     "ExternalTestersCannotSkipWarning": "ms-resource:loc.messages.ExternalTestersCannotSkipWarning",
     "NotValidAppType": "ms-resource:loc.messages.NotValidAppType",
-    "ipaPathNotSpecified": "ms-resource:loc.messages.ipaPathNotSpecified"
+    "IpaPathNotSpecified": "ms-resource:loc.messages.IpaPathNotSpecified"
   }
 }

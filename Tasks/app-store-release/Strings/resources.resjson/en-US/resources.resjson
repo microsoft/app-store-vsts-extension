@@ -70,5 +70,5 @@
   "loc.messages.ReleaseNotesRequiredForExternalTesting": "'What to Test?' is required when using 'Distribute to External Testers'.",
   "loc.messages.ExternalTestersCannotSkipWarning": "'Skip Build Processing Wait' and 'Skip Submission' is not supported with 'Distribute to External Testers'. Please check your build configuration.",
   "loc.messages.NotValidAppType": "An incorrect ApplicationType was chosen. Valid values iOS, macOS or tvOS. Value set: %s",
-  "loc.messages.ipaPathNotSpecified": "You need to specify ipaPath - since skipBinaryUpload = false"
+  "loc.messages.IpaPathNotSpecified": "You need to specify ipaPath - since skipBinaryUpload = false"
 }
