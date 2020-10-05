@@ -228,19 +228,25 @@ async function run() {
             switch (applicationType.toLocaleLowerCase()) {
                 case 'macos':
                     // Use the -C flag for apps
-                    deliverCommand.arg(['-c', filePath]);
+                    if (!skipBinaryUpload) {
+                        deliverCommand.arg(['-c', filePath]);
+                    }
                     deliverCommand.arg(['-j', 'osx']); //Fastlane wants arg as OSX
                     break;
 
                 case 'ios':
                     //Use the -I flag for ipa's
-                    deliverCommand.arg(['-i', filePath]);
+                    if (!skipBinaryUpload) {
+                        deliverCommand.arg(['-i', filePath]);
+                    }
                     deliverCommand.arg(['-j', 'ios']);
                     break;
 
                 case 'tvos':
                     //Use the -I flag for ipa's
-                    deliverCommand.arg(['-i', filePath]);
+                    if (!skipBinaryUpload) {
+                        deliverCommand.arg(['-i', filePath]);
+                    }
                     deliverCommand.arg(['-j', 'appletvos']);
                     break;
 
