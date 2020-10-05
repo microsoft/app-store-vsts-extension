@@ -81,7 +81,7 @@ async function run() {
             }
         }
 
-        let filePath: string = tl.getInput('ipaPath', true);
+        let filePath: string = tl.getInput('ipaPath', false);
         let skipBinaryUpload: boolean = tl.getBoolInput('skipBinaryUpload', false);
         let uploadMetadata: boolean = tl.getBoolInput('uploadMetadata', false);
         let metadataPath: string = tl.getInput('metadataPath', false);
@@ -129,8 +129,13 @@ async function run() {
         // Add bin of new gem home so we don't have to resolve it later
         process.env['PATH'] = process.env['PATH'] + ':' + gemCache + path.sep + 'bin';
 
-        // Ensure there's exactly one ipa before installing fastlane tools
-        filePath = findIpa(filePath);
+        if (!skipBinaryUpload) {
+            if (!filePath) {
+                throw new Error(tl.loc('ipaPathNotSpecified'));
+            }
+            // Ensure there's exactly one ipa before installing fastlane tools
+            filePath = findIpa(filePath);
+        }
 
         // Install the ruby gem for fastlane
         tl.debug('Checking for ruby install...');

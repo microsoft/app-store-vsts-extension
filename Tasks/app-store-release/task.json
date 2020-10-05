@@ -124,8 +124,9 @@
             "type": "filePath",
             "label": "Binary Path",
             "defaultValue": "**/*.ipa",
-            "required": true,
-            "helpMarkDown": "Path to the binary to publish (i.e. IPA or PKG). A glob pattern can be used but it must resolve to exactly one IPA or PKG file."
+            "required": false,
+            "helpMarkDown": "Path to the binary to publish (i.e. IPA or PKG). A glob pattern can be used but it must resolve to exactly one IPA or PKG file.",
+            "visibleRule": "skipBinaryUpload = false"
         },
         {
             "name": "releaseTrack",
@@ -332,6 +333,7 @@
         "FastlaneSessionEmpty": "'Fastlane Session' is not set in the service connection configured for two-step verification.",
         "ReleaseNotesRequiredForExternalTesting": "'What to Test?' is required when using 'Distribute to External Testers'.",
         "ExternalTestersCannotSkipWarning": "'Skip Build Processing Wait' and 'Skip Submission' is not supported with 'Distribute to External Testers'. Please check your build configuration.",
-        "NotValidAppType": "An incorrect ApplicationType was chosen. Valid values iOS, macOS or tvOS. Value set: %s"
+        "NotValidAppType": "An incorrect ApplicationType was chosen. Valid values iOS, macOS or tvOS. Value set: %s",
+        "ipaPathNotSpecified": "You need to specify ipaPath - since skipBinaryUpload = false"
     }
 }
