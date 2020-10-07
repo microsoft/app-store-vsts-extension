@@ -1,7 +1,7 @@
 {
-    "id": "2e371150-da5e-11e5-83da-0943b1acc572",
-    "name": "AppStoreRelease",
-    "friendlyName": "Apple App Store Release",
+    "id": "2e371150-da5e-11e5-8002-0943b1acc572",
+    "name": "AppStoreReleaseSkipBinaryTest",
+    "friendlyName": "Apple App Store Release Skip Binary test",
     "description": "Release an app to TestFlight or the Apple App Store",
     "helpMarkDown": "[More Information](https://marketplace.visualstudio.com/items?itemName=ms-vsclient.app-store)",
     "author": "Microsoft Corporation",
@@ -145,7 +145,7 @@
             "label": "Skip Binary Upload",
             "required": false,
             "defaultValue": false,
-            "helpMarkDown": "Select to skip binary upload and only update metadata and screenshots.",
+            "helpMarkDown": "Select to skip binary upload and only update metadata and screenshots. Please note that with enabling this option you also need to pass --description or --pkg as additional fastlane parameters.",
             "groupName": "releaseOptions",
             "visibleRule": "releaseTrack = Production"
         },
