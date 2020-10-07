@@ -1,7 +1,7 @@
 {
-    "id": "2e371150-da5e-11e5-8002-0943b1acc572",
-    "name": "AppStoreReleaseSkipBinaryTest",
-    "friendlyName": "Apple App Store Release Skip Binary test",
+    "id": "2e371150-da5e-11e5-83da-0943b1acc572",
+    "name": "AppStoreRelease",
+    "friendlyName": "Apple App Store Release",
     "description": "Release an app to TestFlight or the Apple App Store",
     "helpMarkDown": "[More Information](https://marketplace.visualstudio.com/items?itemName=ms-vsclient.app-store)",
     "author": "Microsoft Corporation",

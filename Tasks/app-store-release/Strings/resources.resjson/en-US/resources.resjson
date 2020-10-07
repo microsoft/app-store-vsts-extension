@@ -1,5 +1,5 @@
 {
-  "loc.friendlyName": "Apple App Store Release Skip Binary test",
+  "loc.friendlyName": "Apple App Store Release",
   "loc.helpMarkDown": "[More Information](https://marketplace.visualstudio.com/items?itemName=ms-vsclient.app-store)",
   "loc.description": "Release an app to TestFlight or the Apple App Store",
   "loc.instanceNameFormat": "Publish to the App Store $(releaseTrack) track",
