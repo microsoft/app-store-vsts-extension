@@ -66,10 +66,9 @@ async function run() {
             if (credentials.appSpecificPassword) {
                 isTwoFactorAuthEnabled = true;
                 let fastlaneSession: string = serviceEndpoint.parameters['fastlaneSession'];
-                if (!fastlaneSession) {
-                    throw Error(tl.loc('FastlaneSessionEmpty'));
+                if (fastlaneSession) {
+                    credentials.fastlaneSession = fastlaneSession;
                 }
-                credentials.fastlaneSession = fastlaneSession;
             }
         } else if (authType === 'UserAndPass') {
             credentials.username = tl.getInput('username', true);
@@ -77,7 +76,7 @@ async function run() {
             isTwoFactorAuthEnabled = tl.getBoolInput('isTwoFactorAuth');
             if (isTwoFactorAuthEnabled) {
                 credentials.appSpecificPassword = tl.getInput('appSpecificPassword', true);
-                credentials.fastlaneSession = tl.getInput('fastlaneSession', true);
+                credentials.fastlaneSession = tl.getInput('fastlaneSession', false);
             }
         }
 
@@ -95,6 +94,7 @@ async function run() {
         let shouldSkipSubmission: boolean = tl.getBoolInput('shouldSkipSubmission', false);
         let teamId: string = tl.getInput('teamId', false);
         let teamName: string = tl.getInput('teamName', false);
+        const appSpecificId: string = tl.getInput('appSpecificId', false);
 
         let applicationType: string = tl.getInput('appType', true);
 
@@ -122,8 +122,18 @@ async function run() {
             // To get a FASTLANE_SESSION, run 'fastlane spaceauth -u [email]' interactively (requires PIN)
             // See: https://github.com/fastlane/fastlane/blob/master/spaceship/README.md
             tl.debug('Using two-factor authentication');
-            process.env[fastlaneSessionEnvVar] = credentials.fastlaneSession;
+            if (credentials.fastlaneSession) {
+                process.env[fastlaneSessionEnvVar] = credentials.fastlaneSession;
+            } else {
+                if (!appSpecificId) {
+                    tl.warning(tl.loc('SessionAndAppIdNotSet'));
+                }
+                if (!shouldSkipWaitingForProcessing) {
+                    tl.warning(tl.loc('ShouldSkipWaitingForProcessingNotTrue'));
+                }
+            }
             process.env[appSpecificPasswordEnvVar] = credentials.appSpecificPassword;
+
         }
 
         // Add bin of new gem home so we don't have to resolve it later
@@ -188,6 +198,10 @@ async function run() {
             pilotCommand.arg(['pilot', 'upload', '-u', credentials.username, '-i', filePath]);
             let usingReleaseNotes: boolean = isValidFilePath(releaseNotes);
             if (usingReleaseNotes) {
+                if (!credentials.fastlaneSession) {
+                    tl.warning(tl.loc('ReleaseNotesRequiresFastlaneSession'));
+                }
+
                 pilotCommand.arg(['--changelog', fs.readFileSync(releaseNotes).toString()]);
             }
             pilotCommand.argIf(teamId, ['-q', teamId]);
@@ -195,6 +209,7 @@ async function run() {
             pilotCommand.argIf(bundleIdentifier, ['-a', bundleIdentifier]);
             pilotCommand.argIf(shouldSkipSubmission, ['--skip_submission', 'true']);
             pilotCommand.argIf(shouldSkipWaitingForProcessing, ['--skip_waiting_for_build_processing', 'true']);
+            pilotCommand.argIf(appSpecificId, ['-p', appSpecificId]);
 
             let distributedToExternalTesters: boolean = tl.getBoolInput('distributedToExternalTesters', false);
             if (distributedToExternalTesters) {
@@ -208,7 +223,7 @@ async function run() {
                 }
 
                 let externalTestersGroups: string = tl.getInput('externalTestersGroups');
-                pilotCommand.argIf(externalTestersGroups, ['--groups', externalTestersGroups]);
+                pilotCommand.argIf(externalTestersGroups, ['--groups', `"${externalTestersGroups}"`]);
             }
 
             if (fastlaneArguments) {

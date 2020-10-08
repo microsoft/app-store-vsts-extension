@@ -41,6 +41,8 @@
   "loc.input.help.shouldAutoRelease": "Select to automatically release the app once it is approved.",
   "loc.input.label.releaseNotes": "What to Test?",
   "loc.input.help.releaseNotes": "Path to the file containing notes on what to test for this release.",
+  "loc.input.label.appSpecificId": "App Specific Apple Id",
+  "loc.input.help.appSpecificId": "App Specific Apple Id: this value should be taken from Apple ID property in the App Information section in App Store Connect",
   "loc.input.label.shouldSkipWaitingForProcessing": "Skip Build Processing Wait",
   "loc.input.help.shouldSkipWaitingForProcessing": "Select to skip waiting for the Apple App Store to finish processing the build.",
   "loc.input.label.shouldSkipSubmission": "Skip Submission",
@@ -70,5 +72,7 @@
   "loc.messages.ReleaseNotesRequiredForExternalTesting": "'What to Test?' is required when using 'Distribute to External Testers'.",
   "loc.messages.ExternalTestersCannotSkipWarning": "'Skip Build Processing Wait' and 'Skip Submission' is not supported with 'Distribute to External Testers'. Please check your build configuration.",
   "loc.messages.NotValidAppType": "An incorrect ApplicationType was chosen. Valid values iOS, macOS or tvOS. Value set: %s",
-  "loc.messages.IpaPathNotSpecified": "You need to specify ipaPath - since skipBinaryUpload = false"
+  "loc.messages.IpaPathNotSpecified": "You need to specify ipaPath - since skipBinaryUpload = false",
+  "loc.messages.SessionAndAppIdNotSet": "Your fastlane session is incorrect and app specific id is not set. Please set correct fastlane session or app specific id",
+  "loc.messages.ReleaseNotesRequiresFastlaneSession": "You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work"
 }

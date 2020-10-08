@@ -96,7 +96,7 @@
       "type": "string",
       "label": "ms-resource:loc.input.label.fastlaneSession",
       "defaultValue": "",
-      "required": true,
+      "required": false,
       "helpMarkDown": "ms-resource:loc.input.help.fastlaneSession",
       "visibleRule": "isTwoFactorAuth = true"
     },
@@ -223,6 +223,15 @@
       "visibleRule": "releaseTrack = TestFlight"
     },
     {
+      "name": "appSpecificId",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.appSpecificId",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.appSpecificId",
+      "visibleRule": "releaseTrack = TestFlight"
+    },
+    {
       "name": "shouldSkipWaitingForProcessing",
       "type": "boolean",
       "label": "ms-resource:loc.input.label.shouldSkipWaitingForProcessing",
@@ -336,6 +345,8 @@
     "ReleaseNotesRequiredForExternalTesting": "ms-resource:loc.messages.ReleaseNotesRequiredForExternalTesting",
     "ExternalTestersCannotSkipWarning": "ms-resource:loc.messages.ExternalTestersCannotSkipWarning",
     "NotValidAppType": "ms-resource:loc.messages.NotValidAppType",
-    "IpaPathNotSpecified": "ms-resource:loc.messages.IpaPathNotSpecified"
+    "IpaPathNotSpecified": "ms-resource:loc.messages.IpaPathNotSpecified",
+    "SessionAndAppIdNotSet": "ms-resource:loc.messages.SessionAndAppIdNotSet",
+    "ReleaseNotesRequiresFastlaneSession": "ms-resource:loc.messages.ReleaseNotesRequiresFastlaneSession"
   }
 }
