@@ -110,7 +110,7 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 ##### Release Options for Production track
 
-1. **Skip Binary Upload** *(Checkbox)* - Skip binary upload and only update metadata and screenshots.
+1. **Skip Binary Upload** *(Checkbox)* - Skip binary upload and only update metadata and screenshots. Please note that with enabling this option you also need to pass --description or --pkg as additional fastlane parameters.
 
 2. **Upload Metadata** *(Checkbox)* - Upload app metadata to the App Store (e.g. title, description, changelog).
 

@@ -126,8 +126,9 @@
       "type": "filePath",
       "label": "ms-resource:loc.input.label.ipaPath",
       "defaultValue": "**/*.ipa",
-      "required": true,
-      "helpMarkDown": "ms-resource:loc.input.help.ipaPath"
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.ipaPath",
+      "visibleRule": "skipBinaryUpload = false"
     },
     {
       "name": "releaseTrack",
@@ -344,6 +345,7 @@
     "ReleaseNotesRequiredForExternalTesting": "ms-resource:loc.messages.ReleaseNotesRequiredForExternalTesting",
     "ExternalTestersCannotSkipWarning": "ms-resource:loc.messages.ExternalTestersCannotSkipWarning",
     "NotValidAppType": "ms-resource:loc.messages.NotValidAppType",
+    "IpaPathNotSpecified": "ms-resource:loc.messages.IpaPathNotSpecified",
     "SessionAndAppIdNotSet": "ms-resource:loc.messages.SessionAndAppIdNotSet",
     "ReleaseNotesRequiresFastlaneSession": "ms-resource:loc.messages.ReleaseNotesRequiresFastlaneSession"
   }

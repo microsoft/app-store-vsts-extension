@@ -110,9 +110,8 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert.equal(true, tr.createdErrorIssue('Error: loc_mock_FastlaneSessionEmpty'));
-        assert(tr.failed, 'task should have failed');
 
+        assert(tr.succeeded, 'task should have succeeded');
         done();
     });
 
@@ -123,8 +122,8 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.stdout.indexOf('Input required: fastlaneSession') !== -1, 'Task should have written to stdout');
-        assert(tr.failed, 'task should have failed');
+
+        assert(tr.succeeded, 'task should have succeeded');
 
         done();
     });
@@ -218,7 +217,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.stdout.indexOf('Input required: ipaPath') !== -1, 'Task should have written to stdout');
+        assert(tr.stdout.indexOf('Error: loc_mock_IpaPathNotSpecified') >= 0, 'IPA path not specified error should be thrown');
         assert(tr.failed, 'task should have failed');
 
         done();
@@ -403,8 +402,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.invokedToolCount === 0, 'should not have any tools since ipaPath was not provided.');
-        assert(tr.stdout.indexOf('Input required: ipaPath') !== -1, 'Task should have written to stdout');
+        assert(tr.stdout.indexOf('Error: loc_mock_IpaPathNotSpecified') >= 0, 'IPA path not specified error should be thrown');
         assert(tr.failed, 'task should have failed');
 
         done();
@@ -417,7 +415,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert(tr.ran('fastlane deliver --force -u creds-username -a com.microsoft.test.appId --skip_binary_upload true -i mypackage.ipa -j ios --skip_metadata true --skip_screenshots true'), 'fastlane deliver with skip_binary_upload should have been run.');
+        assert(tr.ran('fastlane deliver --force -u creds-username -a com.microsoft.test.appId --skip_binary_upload true -j ios --skip_metadata true --skip_screenshots true'), 'fastlane deliver with skip_binary_upload should have been run.');
         assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         //assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');

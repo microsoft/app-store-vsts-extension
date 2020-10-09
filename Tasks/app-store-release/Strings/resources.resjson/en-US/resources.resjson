@@ -26,7 +26,7 @@
   "loc.input.help.ipaPath": "Path to the binary to publish (i.e. IPA or PKG). A glob pattern can be used but it must resolve to exactly one IPA or PKG file.",
   "loc.input.label.releaseTrack": "Track",
   "loc.input.label.skipBinaryUpload": "Skip Binary Upload",
-  "loc.input.help.skipBinaryUpload": "Select to skip binary upload and only update metadata and screenshots.",
+  "loc.input.help.skipBinaryUpload": "Select to skip binary upload and only update metadata and screenshots. Please note that with enabling this option you also need to pass --description or --pkg as additional fastlane parameters.",
   "loc.input.label.uploadMetadata": "Upload Metadata",
   "loc.input.help.uploadMetadata": "Select to upload app metadata to the Apple App Store (e.g. title, description, changelog).",
   "loc.input.label.metadataPath": "Metadata Path",
@@ -72,6 +72,7 @@
   "loc.messages.ReleaseNotesRequiredForExternalTesting": "'What to Test?' is required when using 'Distribute to External Testers'.",
   "loc.messages.ExternalTestersCannotSkipWarning": "'Skip Build Processing Wait' and 'Skip Submission' is not supported with 'Distribute to External Testers'. Please check your build configuration.",
   "loc.messages.NotValidAppType": "An incorrect ApplicationType was chosen. Valid values iOS, macOS or tvOS. Value set: %s",
+  "loc.messages.IpaPathNotSpecified": "You need to specify ipaPath - since skipBinaryUpload = false",
   "loc.messages.SessionAndAppIdNotSet": "Your fastlane session is incorrect and app specific id is not set. Please set correct fastlane session or app specific id",
   "loc.messages.ReleaseNotesRequiresFastlaneSession": "You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work"
 }
