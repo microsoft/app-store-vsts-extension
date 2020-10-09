@@ -41,6 +41,10 @@ let myAnswers: string = `{
         ]
     },
     "exec": {
+        "fastlane pilot upload -u creds-username -i mypackage.ipa": {
+            "code": 0,
+            "stdout": "consider it uploaded!"
+        }
     }
  }`;
 let json: any = JSON.parse(myAnswers);

@@ -18,6 +18,8 @@ tmr.setInput('password', 'creds-password');
 tmr.setInput('releaseTrack', 'TestFlight');
 tmr.setInput('appType', 'iOS');
 
+process.env['HOME'] = '/usr/bin';
+
 // let ipaPath: string = tl.getInput('ipaPath', true);
 //tmr.setInput('ipaPath', '<path>');
 
