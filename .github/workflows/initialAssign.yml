@@ -12,7 +12,7 @@ jobs:
       uses: actions-ecosystem/action-add-labels@v1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-      labels: triage
+        labels: triage
     - name: "Assign issues to project board"
       uses: srggrs/assign-one-project-github-action@1.2.0
       with:
