@@ -16,7 +16,7 @@
   "version": {
     "Major": "1",
     "Minor": "177",
-    "Patch": "0"
+    "Patch": "1"
   },
   "minimumAgentVersion": "1.95.3",
   "instanceNameFormat": "ms-resource:loc.instanceNameFormat",
@@ -122,6 +122,16 @@
       }
     },
     {
+      "name": "skipBinaryUpload",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.skipBinaryUpload",
+      "required": false,
+      "defaultValue": false,
+      "helpMarkDown": "ms-resource:loc.input.help.skipBinaryUpload",
+      "groupName": "releaseOptions",
+      "visibleRule": "releaseTrack = Production"
+    },
+    {
       "name": "ipaPath",
       "type": "filePath",
       "label": "ms-resource:loc.input.label.ipaPath",
@@ -141,16 +151,6 @@
         "TestFlight": "TestFlight"
       },
       "groupName": "releaseOptions"
-    },
-    {
-      "name": "skipBinaryUpload",
-      "type": "boolean",
-      "label": "ms-resource:loc.input.label.skipBinaryUpload",
-      "required": false,
-      "defaultValue": false,
-      "helpMarkDown": "ms-resource:loc.input.help.skipBinaryUpload",
-      "groupName": "releaseOptions",
-      "visibleRule": "releaseTrack = Production"
     },
     {
       "name": "uploadMetadata",
