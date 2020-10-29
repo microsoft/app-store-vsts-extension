@@ -14,7 +14,7 @@
     "version": {
         "Major": "1",
         "Minor": "177",
-        "Patch": "0"
+        "Patch": "1"
     },
     "minimumAgentVersion": "1.95.3",
     "instanceNameFormat": "Publish to the App Store $(releaseTrack) track",
@@ -120,6 +120,16 @@
             }
         },
         {
+            "name": "skipBinaryUpload",
+            "type": "boolean",
+            "label": "Skip Binary Upload",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Select to skip binary upload and only update metadata and screenshots. Please note that with enabling this option you also need to pass --description or --pkg as additional fastlane parameters.",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = Production"
+        },
+        {
             "name": "ipaPath",
             "type": "filePath",
             "label": "Binary Path",
@@ -139,16 +149,6 @@
                 "TestFlight": "TestFlight"
             },
             "groupName": "releaseOptions"
-        },
-        {
-            "name": "skipBinaryUpload",
-            "type": "boolean",
-            "label": "Skip Binary Upload",
-            "required": false,
-            "defaultValue": false,
-            "helpMarkDown": "Select to skip binary upload and only update metadata and screenshots. Please note that with enabling this option you also need to pass --description or --pkg as additional fastlane parameters.",
-            "groupName": "releaseOptions",
-            "visibleRule": "releaseTrack = Production"
         },
         {
             "name": "uploadMetadata",
