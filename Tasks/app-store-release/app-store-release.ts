@@ -33,6 +33,7 @@ function isValidFilePath(filePath: string): boolean {
 // Attempts to find a single ipa file to use by the task.
 // If a glob pattern is provided, only a single ipa is allowed.
 function findIpa(ipaPath: string): string {
+    // We need to allow broken symlinks since there could be broken symlinks found in source folder, but filtered by contents pattern
     const findOptions: tl.FindOptions = {
         allowBrokenSymbolicLinks: true,
         followSymbolicLinks: true,
