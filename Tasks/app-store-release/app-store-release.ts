@@ -37,7 +37,7 @@ function findIpa(ipaPath: string): string {
         allowBrokenSymbolicLinks: true,
         followSymbolicLinks: true,
         followSpecifiedSymbolicLink: true
-    }
+    };
 
     let paths: string[] = tl.findMatch('', ipaPath, findOptions);
     if (!paths || paths.length === 0) {
