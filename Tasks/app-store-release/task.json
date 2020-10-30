@@ -120,6 +120,18 @@
             }
         },
         {
+            "name": "releaseTrack",
+            "type": "pickList",
+            "label": "Track",
+            "defaultValue": "TestFlight",
+            "helpMarkDown": "",
+            "options": {
+                "Production": "Production",
+                "TestFlight": "TestFlight"
+            },
+            "groupName": "releaseOptions"
+        },
+        {
             "name": "skipBinaryUpload",
             "type": "boolean",
             "label": "Skip Binary Upload",
@@ -137,18 +149,6 @@
             "required": false,
             "helpMarkDown": "Path to the binary to publish (i.e. IPA or PKG). A glob pattern can be used but it must resolve to exactly one IPA or PKG file.",
             "visibleRule": "skipBinaryUpload = false"
-        },
-        {
-            "name": "releaseTrack",
-            "type": "pickList",
-            "label": "Track",
-            "defaultValue": "TestFlight",
-            "helpMarkDown": "",
-            "options": {
-                "Production": "Production",
-                "TestFlight": "TestFlight"
-            },
-            "groupName": "releaseOptions"
         },
         {
             "name": "uploadMetadata",

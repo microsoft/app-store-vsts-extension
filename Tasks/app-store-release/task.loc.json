@@ -122,6 +122,18 @@
       }
     },
     {
+      "name": "releaseTrack",
+      "type": "pickList",
+      "label": "ms-resource:loc.input.label.releaseTrack",
+      "defaultValue": "TestFlight",
+      "helpMarkDown": "",
+      "options": {
+        "Production": "Production",
+        "TestFlight": "TestFlight"
+      },
+      "groupName": "releaseOptions"
+    },
+    {
       "name": "skipBinaryUpload",
       "type": "boolean",
       "label": "ms-resource:loc.input.label.skipBinaryUpload",
@@ -139,18 +151,6 @@
       "required": false,
       "helpMarkDown": "ms-resource:loc.input.help.ipaPath",
       "visibleRule": "skipBinaryUpload = false"
-    },
-    {
-      "name": "releaseTrack",
-      "type": "pickList",
-      "label": "ms-resource:loc.input.label.releaseTrack",
-      "defaultValue": "TestFlight",
-      "helpMarkDown": "",
-      "options": {
-        "Production": "Production",
-        "TestFlight": "TestFlight"
-      },
-      "groupName": "releaseOptions"
     },
     {
       "name": "uploadMetadata",
