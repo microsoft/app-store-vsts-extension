@@ -33,7 +33,13 @@ function isValidFilePath(filePath: string): boolean {
 // Attempts to find a single ipa file to use by the task.
 // If a glob pattern is provided, only a single ipa is allowed.
 function findIpa(ipaPath: string): string {
-    let paths: string[] = tl.findMatch('', ipaPath);
+    const findOptions: tl.FindOptions = {
+        allowBrokenSymbolicLinks: true,
+        followSymbolicLinks: true,
+        followSpecifiedSymbolicLink: true
+    }
+
+    let paths: string[] = tl.findMatch('', ipaPath, findOptions);
     if (!paths || paths.length === 0) {
         throw new Error(tl.loc('NoIpaFilesFound', ipaPath));
     }
