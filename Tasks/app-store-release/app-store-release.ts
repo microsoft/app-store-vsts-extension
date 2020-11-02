@@ -40,7 +40,7 @@ function findIpa(ipaPath: string): string {
         followSpecifiedSymbolicLink: true
     };
 
-    let paths: string[] = tl.findMatch('', ipaPath, findOptions);
+    const paths: string[] = tl.findMatch('', ipaPath, findOptions);
     if (!paths || paths.length === 0) {
         throw new Error(tl.loc('NoIpaFilesFound', ipaPath));
     }
