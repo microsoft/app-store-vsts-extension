@@ -15,8 +15,8 @@
   ],
   "version": {
     "Major": "1",
-    "Minor": "177",
-    "Patch": "2"
+    "Minor": "178",
+    "Patch": "0"
   },
   "minimumAgentVersion": "1.95.3",
   "instanceNameFormat": "ms-resource:loc.instanceNameFormat",
