@@ -94,14 +94,26 @@ async function run() {
         let apiKey: ApiKey = undefined;
         if (authType === 'ServiceEndpoint') {
             let serviceEndpoint: tl.EndpointAuthorization = tl.getEndpointAuthorization(tl.getInput('serviceEndpoint', true), false);
-            credentials.username = serviceEndpoint.parameters['username'];
-            credentials.password = serviceEndpoint.parameters['password'];
-            credentials.appSpecificPassword = serviceEndpoint.parameters['appSpecificPassword'];
-            if (credentials.appSpecificPassword) {
-                isTwoFactorAuthEnabled = true;
-                let fastlaneSession: string = serviceEndpoint.parameters['fastlaneSession'];
-                if (fastlaneSession) {
-                    credentials.fastlaneSession = fastlaneSession;
+
+            if (serviceEndpoint.scheme === 'ms.vss-endpoint.endpoint-auth-scheme-token') {
+                // Using App Store Connect API Key
+                isUsingApiKey = true;
+                apiKey = {
+                    key_id: serviceEndpoint.parameters['apiKeyId'],
+                    issuer_id: serviceEndpoint.parameters['apiKeyIssuerId'],
+                    key: serviceEndpoint.parameters['apiKeyContent'],
+                    in_house: serviceEndpoint.parameters['apiKeyInHouse'] === 'true'
+                };
+            } else {
+                credentials.username = serviceEndpoint.parameters['username'];
+                credentials.password = serviceEndpoint.parameters['password'];
+                credentials.appSpecificPassword = serviceEndpoint.parameters['appSpecificPassword'];
+                if (credentials.appSpecificPassword) {
+                    isTwoFactorAuthEnabled = true;
+                    let fastlaneSession: string = serviceEndpoint.parameters['fastlaneSession'];
+                    if (fastlaneSession) {
+                        credentials.fastlaneSession = fastlaneSession;
+                    }
                 }
             }
         } else if (authType === 'UserAndPass') {

@@ -129,6 +129,32 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
+    it('api key using service endpoint', (done: MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0ApiKeyEndPoint.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.ran('fastlane pilot upload --api_key_path api_key.json -i mypackage.ipa'), 'fastlane pilot upload with api key should have been run.');
+        assert(tr.invokedToolCount === 1, 'should have run only fastlane pilot.');
+        assert(tr.succeeded, 'task should have succeeded');
+
+        assert(fs.existsSync('api_key.json'), 'api_key.json file should have been created');
+
+        let rawdata = fs.readFileSync('api_key.json', 'utf8');
+        let apiKey = JSON.parse(rawdata);
+
+        assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
+        assert(apiKey.issuer_id === '6053b7fe-68a8-4acb-89be-165aa6465141', 'issuer_id should be correct');
+        assert(apiKey.key === '-----BEGIN PRIVATE KEY-----\nMIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHknlhdlYdLu\n-----END PRIVATE KEY-----', 'key should be correct');
+        assert(apiKey.in_house === false, 'in_house should be correct');
+
+        fs.unlinkSync('api_key.json');
+
+        done();
+    });
+
     it('custom GEM_CACHE env var', (done: MochaDone) => {
         this.timeout(1000);
 
