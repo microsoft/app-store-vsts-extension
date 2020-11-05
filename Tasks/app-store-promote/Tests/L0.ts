@@ -7,6 +7,7 @@
 // npm install mocha --save-dev
 // typings install dt~mocha --save --global
 
+import * as fs from 'fs';
 import * as path from 'path';
 import * as assert from 'assert';
 import * as ttm from 'azure-pipelines-task-lib/mock-test';
@@ -111,6 +112,32 @@ describe('app-store-promote L0 Suite', function () {
         tr.run();
         assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.succeeded, 'task should have succeeded');
+
+        done();
+    });
+
+    it('api key with deliver', (done: MochaDone) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0ApiKeyDeliver.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.ran('fastlane deliver submit_build --api_key_path api_key.json -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force'), 'fastlane deliver with api key should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
+        assert(tr.succeeded, 'task should have succeeded');
+
+        assert(fs.existsSync('api_key.json'), 'api_key.json file should have been created');
+
+        let rawdata = fs.readFileSync('api_key.json', 'utf8');
+        let apiKey = JSON.parse(rawdata);
+
+        assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
+        assert(apiKey.issuer_id === '6053b7fe-68a8-4acb-89be-165aa6465141', 'issuer_id should be correct');
+        assert(apiKey.key === '-----BEGIN PRIVATE KEY-----\nMIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHknlhdlYdLu\n-----END PRIVATE KEY-----', 'key should be correct');
+        assert(apiKey.in_house === false, 'in_house should be correct');
+
+        fs.unlinkSync('api_key.json');
 
         done();
     });

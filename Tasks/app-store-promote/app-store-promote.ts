@@ -4,6 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 'use strict';
 
+import fs = require('fs');
 import os = require('os');
 import path = require('path');
 import tl = require('azure-pipelines-task-lib/task');
@@ -21,10 +22,36 @@ export class UserCredentials {
     /* tslint:enable:no-empty */
 }
 
+/**
+ * Information for the App Store Connect API key used by fastlane
+ * See https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file
+ */
+export interface ApiKey {
+    /**
+     * Key ID (for example 'D383SF740')
+     */
+    key_id: string;
+    /**
+     * Issuer ID (for example '6053b7fe-68a8-4acb-89be-165aa6465141')
+     */
+    issuer_id: string;
+    /**
+     * The private key contents of the p8 file from Apple.
+     * For example '-----BEGIN PRIVATE KEY-----\nMIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHknlhdlYdLu\n-----END PRIVATE KEY-----'
+     */
+    key: string;
+    /**
+     * Optional, set to true to use Enterprise account
+     */
+    in_house?: boolean;
+}
+
 async function run() {
     const appSpecificPasswordEnvVar: string = 'FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD';
     const fastlaneSessionEnvVar: string = 'FASTLANE_SESSION';
+    const apiKeyFileName: string = 'api_key.json';
     let isTwoFactorAuthEnabled: boolean = false;
+    let isUsingApiKey: boolean = false;
     try {
         tl.setResourcePath(path.join(__dirname, 'task.json'));
 
@@ -38,6 +65,8 @@ async function run() {
         // Get input variables
         let authType: string = tl.getInput('authType', false);
         let credentials: UserCredentials = new UserCredentials();
+        let apiKey: ApiKey = undefined;
+
         if (authType === 'ServiceEndpoint') {
             let serviceEndpoint: tl.EndpointAuthorization = tl.getEndpointAuthorization(tl.getInput('serviceEndpoint', true), false);
             credentials.username = serviceEndpoint.parameters['username'];
@@ -60,6 +89,14 @@ async function run() {
                 credentials.appSpecificPassword = tl.getInput('appSpecificPassword', true);
                 credentials.fastlaneSession = tl.getInput('fastlaneSession', true);
             }
+        } else if (authType === 'ApiKey') {
+            isUsingApiKey = true;
+            apiKey = {
+                key_id: tl.getInput('apiKeyId', true),
+                issuer_id: tl.getInput('apiKeyIssuerId', true),
+                key: tl.getInput('apiKeyContent', true),
+                in_house: tl.getBoolInput('apiKeyInHouse', false)
+            };
         }
 
         let appIdentifier: string = tl.getInput('appIdentifier', true);
@@ -143,7 +180,16 @@ async function run() {
         //Run the deliver command 
         // See https://github.com/fastlane/fastlane/blob/master/deliver/lib/deliver/options.rb for more information on these arguments
         let deliverCommand: ToolRunner = tl.tool('fastlane');
-        deliverCommand.arg(['deliver', 'submit_build', '-u', credentials.username, '-a', appIdentifier]);
+        if (isUsingApiKey) {
+            if (fs.existsSync(apiKeyFileName)) {
+                fs.unlinkSync(apiKeyFileName);
+            }
+            let apiKeyJsonData = JSON.stringify(apiKey);
+            fs.writeFileSync(apiKeyFileName, apiKeyJsonData);
+            deliverCommand.arg(['deliver', 'submit_build', '--api_key_path', apiKeyFileName, '-a', appIdentifier]);
+        } else {
+            deliverCommand.arg(['deliver', 'submit_build', '-u', credentials.username, '-a', appIdentifier]);
+        }
         if (chooseBuild.toLowerCase() === 'specify') {
             deliverCommand.arg(['-n', buildNumber]);
         }

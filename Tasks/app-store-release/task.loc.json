@@ -16,7 +16,7 @@
   "version": {
     "Major": "1",
     "Minor": "178",
-    "Patch": "0"
+    "Patch": "1"
   },
   "minimumAgentVersion": "1.95.3",
   "instanceNameFormat": "ms-resource:loc.instanceNameFormat",
@@ -40,6 +40,7 @@
       "defaultValue": "ServiceEndpoint",
       "helpMarkDown": "",
       "options": {
+        "ApiKey": "App Store Connect API Key",
         "ServiceEndpoint": "Service Connection",
         "UserAndPass": "Username and Password"
       }
@@ -52,6 +53,42 @@
       "required": true,
       "helpMarkDown": "ms-resource:loc.input.help.serviceEndpoint",
       "visibleRule": "authType = ServiceEndpoint"
+    },
+    {
+      "name": "apiKeyId",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.apiKeyId",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "ms-resource:loc.input.help.apiKeyId",
+      "visibleRule": "authType = ApiKey"
+    },
+    {
+      "name": "apiKeyIssuerId",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.apiKeyIssuerId",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "ms-resource:loc.input.help.apiKeyIssuerId",
+      "visibleRule": "authType = ApiKey"
+    },
+    {
+      "name": "apiKeyContent",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.apiKeyContent",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "ms-resource:loc.input.help.apiKeyContent",
+      "visibleRule": "authType = ApiKey"
+    },
+    {
+      "name": "apiKeyInHouse",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.apiKeyInHouse",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.apiKeyInHouse",
+      "visibleRule": "authType = ApiKey"
     },
     {
       "name": "username",

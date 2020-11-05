@@ -22,6 +22,30 @@ class UserCredentials {
     /* tslint:enable:no-empty */
 }
 
+/**
+ * Information for the App Store Connect API key used by fastlane
+ * See https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file
+ */
+export interface ApiKey {
+    /**
+     * Key ID (for example 'D383SF740')
+     */
+    key_id: string;
+    /**
+     * Issuer ID (for example '6053b7fe-68a8-4acb-89be-165aa6465141')
+     */
+    issuer_id: string;
+    /**
+     * The private key contents of the p8 file from Apple.
+     * For example '-----BEGIN PRIVATE KEY-----\nMIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHknlhdlYdLu\n-----END PRIVATE KEY-----'
+     */
+    key: string;
+    /**
+     * Optional, set to true to use Enterprise account
+     */
+    in_house?: boolean;
+}
+
 function isValidFilePath(filePath: string): boolean {
     try {
         return fs.statSync(filePath).isFile();
@@ -53,7 +77,9 @@ function findIpa(ipaPath: string): string {
 async function run() {
     const appSpecificPasswordEnvVar: string = 'FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD';
     const fastlaneSessionEnvVar: string = 'FASTLANE_SESSION';
+    const apiKeyFileName: string = 'api_key.json';
     let isTwoFactorAuthEnabled: boolean = false;
+    let isUsingApiKey: boolean = false;
     try {
         tl.setResourcePath(path.join(__dirname, 'task.json'));
 
@@ -65,6 +91,7 @@ async function run() {
         // Get input variables
         let authType: string = tl.getInput('authType', true);
         let credentials: UserCredentials = new UserCredentials();
+        let apiKey: ApiKey = undefined;
         if (authType === 'ServiceEndpoint') {
             let serviceEndpoint: tl.EndpointAuthorization = tl.getEndpointAuthorization(tl.getInput('serviceEndpoint', true), false);
             credentials.username = serviceEndpoint.parameters['username'];
@@ -85,6 +112,14 @@ async function run() {
                 credentials.appSpecificPassword = tl.getInput('appSpecificPassword', true);
                 credentials.fastlaneSession = tl.getInput('fastlaneSession', false);
             }
+        } else if (authType === 'ApiKey') {
+            isUsingApiKey = true;
+            apiKey = {
+                key_id: tl.getInput('apiKeyId', true),
+                issuer_id: tl.getInput('apiKeyIssuerId', true),
+                key: tl.getInput('apiKeyContent', true),
+                in_house: tl.getBoolInput('apiKeyInHouse', false)
+            };
         }
 
         let filePath: string = tl.getInput('ipaPath', false);
@@ -196,13 +231,25 @@ async function run() {
 
         let fastlaneArguments: string = tl.getInput('fastlaneArguments');
 
+        if (isUsingApiKey) {
+            if (fs.existsSync(apiKeyFileName)) {
+                fs.unlinkSync(apiKeyFileName);
+            }
+            let apiKeyJsonData = JSON.stringify(apiKey);
+            fs.writeFileSync(apiKeyFileName, apiKeyJsonData);
+        }
+
         //gem update fastlane -i ~/.gem-cache
         if (releaseTrack === 'TestFlight') {
             // Run pilot (via fastlane) to upload to testflight
             // See https://github.com/fastlane/fastlane/blob/master/pilot/lib/pilot/options.rb for more information on these arguments
             let pilotCommand: ToolRunner = tl.tool('fastlane');
             let bundleIdentifier: string = tl.getInput('appIdentifier', false);
-            pilotCommand.arg(['pilot', 'upload', '-u', credentials.username, '-i', filePath]);
+            if (isUsingApiKey) {
+                pilotCommand.arg(['pilot', 'upload', '--api_key_path', apiKeyFileName, '-i', filePath]);
+            } else {
+                pilotCommand.arg(['pilot', 'upload', '-u', credentials.username, '-i', filePath]);
+            }
             let usingReleaseNotes: boolean = isValidFilePath(releaseNotes);
             if (usingReleaseNotes) {
                 if (!credentials.fastlaneSession) {
@@ -243,7 +290,11 @@ async function run() {
             // Run deliver (via fastlane) to publish to Production track
             // See https://github.com/fastlane/fastlane/blob/master/deliver/lib/deliver/options.rb for more information on these arguments
             let deliverCommand: ToolRunner = tl.tool('fastlane');
-            deliverCommand.arg(['deliver', '--force', '-u', credentials.username, '-a', bundleIdentifier]);
+            if (isUsingApiKey) {
+                deliverCommand.arg(['deliver', '--force', '--api_key_path', apiKeyFileName, '-a', bundleIdentifier]);
+            } else {
+                deliverCommand.arg(['deliver', '--force', '-u', credentials.username, '-a', bundleIdentifier]);
+            }
             deliverCommand.argIf(skipBinaryUpload, ['--skip_binary_upload', 'true']);
 
             //Sets -i or -c depending if app submission is for (-i) iOS/tvOS or (-c) MacOS

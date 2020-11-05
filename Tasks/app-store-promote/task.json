@@ -13,8 +13,8 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "177",
-        "Patch": "2"
+        "Minor": "178",
+        "Patch": "0"
     },
     "minimumAgentVersion": "1.95.3",
     "instanceNameFormat": "Submit to the App Store for review",
@@ -33,6 +33,7 @@
             "defaultValue": "ServiceEndpoint",
             "helpMarkDown": "",
             "options": {
+                "ApiKey": "App Store Connect API Key",
                 "ServiceEndpoint": "Service Connection",
                 "UserAndPass": "Username and Password"
             }
@@ -45,6 +46,42 @@
             "required": true,
             "helpMarkDown": "The TFS/Azure DevOps service connection that specifies the identity used to publish the app.",
             "visibleRule": "authType = ServiceEndpoint"
+        },
+        {
+            "name": "apiKeyId",
+            "type": "string",
+            "label": "App Store Connect API Key ID",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The key_id of the account used to publish to the Apple App Store.",
+            "visibleRule": "authType = ApiKey"
+        },
+        {
+            "name": "apiKeyIssuerId",
+            "type": "string",
+            "label": "App Store Connect API Issuer ID",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The issuer_id of the account used to publish to the Apple App Store.",
+            "visibleRule": "authType = ApiKey"
+        },
+        {
+            "name": "apiKeyContent",
+            "type": "string",
+            "label": "App Store Connect API Key Content",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The content of the P8 file of the account used to publish to the Apple App Store.",
+            "visibleRule": "authType = ApiKey"
+        },
+        {
+            "name": "apiKeyInHouse",
+            "type": "boolean",
+            "label": "App Store Connect API In House (Enterprise)",
+            "defaultValue": false,
+            "required": false,
+            "helpMarkDown": "Whether the account used to publish to the Apple App Store is an Enterprise account or not.",
+            "visibleRule": "authType = ApiKey"
         },
         {
             "name": "username",
