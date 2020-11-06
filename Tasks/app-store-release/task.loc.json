@@ -16,7 +16,7 @@
   "version": {
     "Major": "1",
     "Minor": "178",
-    "Patch": "0"
+    "Patch": "1"
   },
   "minimumAgentVersion": "1.95.3",
   "instanceNameFormat": "ms-resource:loc.instanceNameFormat",
@@ -150,7 +150,7 @@
       "defaultValue": "**/*.ipa",
       "required": false,
       "helpMarkDown": "ms-resource:loc.input.help.ipaPath",
-      "visibleRule": "skipBinaryUpload = false"
+      "visibleRule": "skipBinaryUpload = false || releaseTrack = TestFlight"
     },
     {
       "name": "uploadMetadata",
