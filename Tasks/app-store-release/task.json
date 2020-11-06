@@ -73,10 +73,10 @@
         {
             "name": "apiKeyContent",
             "type": "string",
-            "label": "App Store Connect API Key Content",
+            "label": "App Store Connect API Key Content (base64-encoded)",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "The content of the P8 file of the account used to publish to the Apple App Store.",
+            "helpMarkDown": "The base64-encoded content of the P8 file of the account used to publish to the Apple App Store.",
             "visibleRule": "authType = ApiKey"
         },
         {

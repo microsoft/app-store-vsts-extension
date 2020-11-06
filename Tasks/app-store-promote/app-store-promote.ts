@@ -36,14 +36,17 @@ export interface ApiKey {
      */
     issuer_id: string;
     /**
-     * The private key contents of the p8 file from Apple.
-     * For example '-----BEGIN PRIVATE KEY-----\nMIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHknlhdlYdLu\n-----END PRIVATE KEY-----'
+     * The base64-encoded private key contents of the p8 file from Apple.
      */
     key: string;
     /**
      * Optional, set to true to use Enterprise account
      */
     in_house?: boolean;
+    /**
+     * Indicates whether the key content is base64 encoded
+     */
+    is_key_content_base64: boolean;
 }
 
 async function run() {
@@ -77,7 +80,8 @@ async function run() {
                     key_id: serviceEndpoint.parameters['apiKeyId'],
                     issuer_id: serviceEndpoint.parameters['apiKeyIssuerId'],
                     key: serviceEndpoint.parameters['apiKeyContent'],
-                    in_house: serviceEndpoint.parameters['apiKeyInHouse'] === 'true'
+                    in_house: serviceEndpoint.parameters['apiKeyInHouse'] === 'true',
+                    is_key_content_base64: true
                 };
             } else {
                 credentials.username = serviceEndpoint.parameters['username'];
@@ -106,7 +110,8 @@ async function run() {
                 key_id: tl.getInput('apiKeyId', true),
                 issuer_id: tl.getInput('apiKeyIssuerId', true),
                 key: tl.getInput('apiKeyContent', true),
-                in_house: tl.getBoolInput('apiKeyInHouse', false)
+                in_house: tl.getBoolInput('apiKeyInHouse', false),
+                is_key_content_base64: true
             };
         }
 

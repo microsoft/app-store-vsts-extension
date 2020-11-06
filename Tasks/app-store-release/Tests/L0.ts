@@ -147,8 +147,9 @@ describe('app-store-release L0 Suite', function () {
 
         assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
         assert(apiKey.issuer_id === '6053b7fe-68a8-4acb-89be-165aa6465141', 'issuer_id should be correct');
-        assert(apiKey.key === '-----BEGIN PRIVATE KEY-----\nMIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHknlhdlYdLu\n-----END PRIVATE KEY-----', 'key should be correct');
+        assert(apiKey.key === 'LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR1RBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJIa25saGRsWWRMdQotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0t', 'key should be correct');
         assert(apiKey.in_house === false, 'in_house should be correct');
+        assert(apiKey.is_key_content_base64 === true, 'is_key_content_base64 should be correct');
 
         fs.unlinkSync('api_key.json');
 
@@ -201,8 +202,9 @@ describe('app-store-release L0 Suite', function () {
 
         assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
         assert(apiKey.issuer_id === '6053b7fe-68a8-4acb-89be-165aa6465141', 'issuer_id should be correct');
-        assert(apiKey.key === '-----BEGIN PRIVATE KEY-----\nMIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHknlhdlYdLu\n-----END PRIVATE KEY-----', 'key should be correct');
+        assert(apiKey.key === 'LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR1RBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJIa25saGRsWWRMdQotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0t', 'key should be correct');
         assert(apiKey.in_house === false, 'in_house should be correct');
+        assert(apiKey.is_key_content_base64 === true, 'is_key_content_base64 should be correct');
 
         fs.unlinkSync('api_key.json');
 
@@ -452,8 +454,9 @@ describe('app-store-release L0 Suite', function () {
 
         assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
         assert(apiKey.issuer_id === '6053b7fe-68a8-4acb-89be-165aa6465141', 'issuer_id should be correct');
-        assert(apiKey.key === '-----BEGIN PRIVATE KEY-----\nMIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHknlhdlYdLu\n-----END PRIVATE KEY-----', 'key should be correct');
+        assert(apiKey.key === 'LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR1RBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJIa25saGRsWWRMdQotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0t', 'key should be correct');
         assert(apiKey.in_house === false, 'in_house should be correct');
+        assert(apiKey.is_key_content_base64 === true, 'is_key_content_base64 should be correct');
 
         fs.unlinkSync('api_key.json');
 
