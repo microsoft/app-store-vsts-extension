@@ -1,6 +1,6 @@
 {
   "name": "app-store-vsts-extension",
-  "version": "1.177.2",
+  "version": "1.178.2",
   "description": "A set of TFS/Azure Pipelines tasks for publishing apps to the Apple App Store.",
   "repository": {
     "type": "git",
