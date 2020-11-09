@@ -14,8 +14,7 @@
     "version": {
         "Major": "1",
         "Minor": "178",
-        "Patch": "1"
-        "Patch": "2"
+        "Patch": "4"
     },
     "minimumAgentVersion": "1.95.3",
     "instanceNameFormat": "Publish to the App Store $(releaseTrack) track",
@@ -185,8 +184,7 @@
             "label": "Binary Path",
             "defaultValue": "**/*.ipa",
             "required": false,
-            "helpMarkDown": "Path to the binary to publish (i.e. IPA or PKG). A glob pattern can be used but it must resolve to exactly one IPA or PKG file.",
-            "visibleRule": "skipBinaryUpload = false || releaseTrack = TestFlight"
+            "helpMarkDown": "Path to the binary to publish (i.e. IPA or PKG). A glob pattern can be used but it must resolve to exactly one IPA or PKG file."
         },
         {
             "name": "uploadMetadata",
