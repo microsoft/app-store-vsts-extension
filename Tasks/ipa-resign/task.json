@@ -13,7 +13,7 @@
     "version": {
         "Major": "1",
         "Minor": "178",
-        "Patch": "4"
+        "Patch": "2"
     },
     "minimumAgentVersion": "1.95.3",
     "instanceNameFormat": "Resign ipa file",
