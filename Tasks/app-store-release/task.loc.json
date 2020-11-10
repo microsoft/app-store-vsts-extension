@@ -16,7 +16,7 @@
   "version": {
     "Major": "1",
     "Minor": "178",
-    "Patch": "3"
+    "Patch": "4"
   },
   "minimumAgentVersion": "1.95.3",
   "instanceNameFormat": "ms-resource:loc.instanceNameFormat",
@@ -222,15 +222,6 @@
       "visibleRule": "releaseTrack = TestFlight"
     },
     {
-      "name": "appSpecificId",
-      "type": "string",
-      "label": "ms-resource:loc.input.label.appSpecificId",
-      "defaultValue": "",
-      "required": false,
-      "helpMarkDown": "ms-resource:loc.input.help.appSpecificId",
-      "visibleRule": "releaseTrack = TestFlight"
-    },
-    {
       "name": "shouldSkipWaitingForProcessing",
       "type": "boolean",
       "label": "ms-resource:loc.input.label.shouldSkipWaitingForProcessing",
@@ -269,6 +260,16 @@
       "helpMarkDown": "ms-resource:loc.input.help.externalTestersGroups",
       "groupName": "releaseOptions",
       "visibleRule": "distributedToExternalTesters = true"
+    },
+    {
+      "name": "appSpecificId",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.appSpecificId",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.appSpecificId",
+      "groupName": "releaseOptions",
+      "visibleRule": "releaseTrack = TestFlight"
     },
     {
       "name": "teamId",
