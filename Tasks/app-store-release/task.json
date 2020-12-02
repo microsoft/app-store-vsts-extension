@@ -257,15 +257,6 @@
             "visibleRule": "releaseTrack = TestFlight"
         },
         {
-            "name": "appSpecificId",
-            "type": "string",
-            "label": "App Specific Apple Id",
-            "defaultValue": "",
-            "required": false,
-            "helpMarkDown": "App Specific Apple Id: this value should be taken from Apple ID property in the App Information section in App Store Connect",
-            "visibleRule": "releaseTrack = TestFlight"
-        },
-        {
             "name": "shouldSkipWaitingForProcessing",
             "type": "boolean",
             "label": "Skip Build Processing Wait",
@@ -304,6 +295,16 @@
             "helpMarkDown": "Optionally specify the group(s) of external testers this build should be distributed to. To specify multiple groups, separate group names by commas e.g. 'External Beta Testers,TestVendors'. If not specified the default 'External Testers' is used.",
             "groupName": "releaseOptions",
             "visibleRule": "distributedToExternalTesters = true"
+        },
+        {
+            "name": "appSpecificId",
+            "type": "string",
+            "label": "App Specific Apple Id",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "App Specific Apple Id: this value should be taken from Apple ID property in the App Information section in App Store Connect",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = TestFlight"
         },
         {
             "name": "teamId",
