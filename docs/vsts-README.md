@@ -119,6 +119,33 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 6. **Additional fastlane arguments** *(String)* - Any additional arguments to pass to the fastlane command.
 
+#### Upload without triggering 2FA - when 2FA is enabled for account
+
+To upload an app without triggering 2FA for App Store Release task the following conditions are required:
+
+- Apple id should be provided (-p "your apple id" in fastlaneArguments input). Please note that there should be app specific apple id in a numeric format (you can take it as a value of Apple ID property in the App Information section in App Store Connect)
+- 'shouldSkipWaitingForProcessing' should be set to 'true'
+ - 'isTwoFactorAuth' should be set to 'true' (for user and password authentication; for service connection - app specific password should be provided)
+ - 'releaseNotes' should be empty
+
+Example of using task without triggering 2FA (for account with 2FA enabled):
+```
+- task: AppStoreRelease@1
+  inputs:
+    authType: 'UserAndPass'
+    username: '$(fastLane.auth.userName)'
+    password: '$(fastLane.auth.password)'
+    isTwoFactorAuth: true
+    appSpecificPassword: '$(fastLane.auth.appPassword)'
+    fastlaneSession: '$(fastLane.auth.session)'
+    appIdentifier: '$(fastLane.auth.bundleID)'
+    appType: 'iOS'
+    ipaPath: '**/*.ipa'
+    releaseTrack: 'TestFlight' 
+    shouldSkipWaitingForProcessing: true
+    appSpecificId: '1234567890'
+```
+
 ### App Store Promote
 
 Allows you to promote an app previously updated to iTunes Connect to the App Store, and includes the following options:
