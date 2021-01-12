@@ -1010,4 +1010,90 @@ var storeNonAggregatedZip = function (zipPath, release, commit) {
     fs.writeFileSync(destMarker, '');
 }
 exports.storeNonAggregatedZip = storeNonAggregatedZip;
+
+var installNode = function (nodeVersion) {
+    switch (nodeVersion || '') {
+        case '14':
+            nodeVersion = 'v14.10.1';
+            break;
+        case '10':
+            nodeVersion = 'v10.21.0';
+            break;
+        case '6':
+        case '':
+            nodeVersion = 'v6.10.3';
+            break;
+        case '5':
+            nodeVersion = 'v5.10.1';
+            break;
+        default:
+            fail(`Unexpected node version '${nodeVersion}'. Expected 5 or 6.`);
+    }
+
+    if (nodeVersion === run('node -v')) {
+        console.log('skipping node install for tests since correct version is running');
+        return;
+    }
+
+    // determine the platform
+    var platform = os.platform();
+    if (platform != 'darwin' && platform != 'linux' && platform != 'win32') {
+        throw new Error('Unexpected platform: ' + platform);
+    }
+
+    var nodeUrl = 'https://nodejs.org/dist';
+    switch (platform) {
+        case 'darwin':
+            var nodeArchivePath = downloadArchive(nodeUrl + '/' + nodeVersion + '/node-' + nodeVersion + '-darwin-x64.tar.gz');
+            addPath(path.join(nodeArchivePath, 'node-' + nodeVersion + '-darwin-x64', 'bin'));
+            break;
+        case 'linux':
+            var nodeArchivePath = downloadArchive(nodeUrl + '/' + nodeVersion + '/node-' + nodeVersion + '-linux-x64.tar.gz');
+            addPath(path.join(nodeArchivePath, 'node-' + nodeVersion + '-linux-x64', 'bin'));
+            break;
+        case 'win32':
+            var nodeDirectory = path.join(downloadPath, `node-${nodeVersion}`);
+            var marker = nodeDirectory + '.completed';
+            if (!test('-f', marker)) {
+                var nodeExePath = downloadFile(nodeUrl + '/' + nodeVersion + '/win-x64/node.exe');
+                var nodeLibPath = downloadFile(nodeUrl + '/' + nodeVersion + '/win-x64/node.lib');
+                rm('-Rf', nodeDirectory);
+                mkdir('-p', nodeDirectory);
+                cp(nodeExePath, path.join(nodeDirectory, 'node.exe'));
+                cp(nodeLibPath, path.join(nodeDirectory, 'node.lib'));
+                fs.writeFileSync(marker, '');
+            }
+
+            addPath(nodeDirectory);
+            break;
+    }
+}
+exports.installNode = installNode;
+
+var getTaskNodeVersion = function(buildPath, taskName) {
+    var taskJsonPath = path.join(buildPath, taskName, "task.json");
+    if (!fs.existsSync(taskJsonPath)) {
+        console.warn('Unable to find task.json, defaulting to use Node 14');
+        return 14;
+    }
+    var taskJsonContents = fs.readFileSync(taskJsonPath, { encoding: 'utf-8' });
+    var taskJson = JSON.parse(taskJsonContents);
+    var execution = taskJson['execution'] || taskJson['prejobexecution'];
+    for (var key of Object.keys(execution)) {
+        if (key.toLowerCase() == 'node14') {
+            // Prefer node 14 and return immediately.
+            return 14;
+        } else if (key.toLowerCase() == 'node10') {
+            // Prefer node 10 and return immediately.
+            return 10;
+        } else if (key.toLowerCase() == 'node') {
+            return 6;
+        }
+    }
+
+    console.warn('Unable to determine execution type from task.json, defaulting to use Node 10');
+    return 10;
+}
+exports.getTaskNodeVersion = getTaskNodeVersion;
+
 //------------------------------------------------------------------------------
