@@ -367,8 +367,21 @@ var downloadArchive = function (url, omitExtensionCheck) {
         throw new Error('Parameter "url" must be set.');
     }
 
-    if (!omitExtensionCheck && !url.match(/\.zip$/)) {
-        throw new Error('Expected .zip');
+    var isZip;
+    var isTargz;
+    if (omitExtensionCheck) {
+        isZip = true;
+    }
+    else {
+        if (url.match(/\.zip$/)) {
+            isZip = true;
+        }
+        else if (url.match(/\.tar\.gz$/) && (process.platform == 'darwin' || process.platform == 'linux')) {
+            isTargz = true;
+        }
+        else {
+            throw new Error('Unexpected archive extension');
+        }
     }
 
     // skip if already downloaded and extracted
@@ -387,8 +400,27 @@ var downloadArchive = function (url, omitExtensionCheck) {
 
         // extract
         mkdir('-p', targetPath);
-        var zip = new admZip(archivePath);
-        zip.extractAllTo(targetPath);
+        if (isZip) {
+            if (process.platform == 'win32') {
+                let escapedFile = archivePath.replace(/'/g, "''").replace(/"|\n|\r/g, ''); // double-up single quotes, remove double quotes and newlines
+                let escapedDest = targetPath.replace(/'/g, "''").replace(/"|\n|\r/g, '');
+
+                let command = `$ErrorActionPreference = 'Stop' ; try { Add-Type -AssemblyName System.IO.Compression.FileSystem } catch { } ; [System.IO.Compression.ZipFile]::ExtractToDirectory('${escapedFile}', '${escapedDest}')`;
+                run(`powershell -Command "${command}"`);
+            } else {
+                run(`unzip ${archivePath} -d ${targetPath}`);
+            }
+        }
+        else if (isTargz) {
+            var originalCwd = process.cwd();
+            cd(targetPath);
+            try {
+                run(`tar -xzf "${archivePath}"`);
+            }
+            finally {
+                cd(originalCwd);
+            }
+        }
 
         // write the completed marker
         fs.writeFileSync(marker, '');
