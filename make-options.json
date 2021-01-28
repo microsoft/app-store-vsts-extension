@@ -1,8 +1,8 @@
 {
     "tasks": [
-        "app-store-promote",
-        "app-store-release",
-        "ipa-resign"
+        "AppStorePromote",
+        "AppStoreRelease",
+        "IpaResign"
     ],
     "taskResources": [
         "*.ps1",
