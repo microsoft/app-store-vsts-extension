@@ -1,0 +1,45 @@
+pool:
+  name: Hosted macOS
+  demands:
+  - npm
+  - node.js
+
+steps:
+- task: Npm@0
+  displayName: 'npm install'
+
+- task: gulp@0
+  displayName: 'gulp build'
+  inputs:
+    targets: build
+
+- task: gulp@0
+  displayName: 'gulp testwithresults'
+  inputs:
+    targets: testwithresults
+    arguments: '--reporter=junit'
+    publishJUnitResults: true
+    testResultsFiles: '**/test-*.xml'
+
+- task: gulp@0
+  displayName: 'gulp packageprod'
+  inputs:
+    targets: packageprod
+
+- task: gulp@0
+  displayName: 'gulp packagetest'
+  inputs:
+    targets: packagetest
+
+- task: CopyFiles@1
+  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  inputs:
+    SourceFolder: '$(build.sourcesdirectory)'
+    Contents: '*.vsix'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: ExtensionVsixFiles'
+  inputs:
+    PathtoPublish: '$(build.artifactstagingdirectory)'
+    ArtifactName: ExtensionVsixFiles
