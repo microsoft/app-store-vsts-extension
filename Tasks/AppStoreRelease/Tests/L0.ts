@@ -27,7 +27,7 @@ describe('app-store-release L0 Suite', function () {
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert.equal(true, tr.createdErrorIssue('Error: loc_mock_DarwinOnly'));
+        assert(tr.createdErrorIssue('Error: loc_mock_DarwinOnly'), 'Should have written error message');
         assert(tr.failed, 'task should have failed');
 
         done();
