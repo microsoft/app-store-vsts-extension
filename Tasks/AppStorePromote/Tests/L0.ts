@@ -19,6 +19,7 @@ describe('app-store-promote L0 Suite', function () {
     after(() => {
     });
     /* tslint:enable:no-empty */
+    this.timeout(parseInt(process.env.TASK_TEST_TIMEOUT) || 20000);
 
     it('enforce darwin', (done: Mocha.Done) => {
         this.timeout(1000);
