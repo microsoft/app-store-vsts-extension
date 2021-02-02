@@ -4,6 +4,8 @@
   "description": "Azure Pipelines task to publish your apps to the Apple App Store",
   "main": "app-store-release.js",
   "dependencies": {
+    "@types/node": "^10.17.0",
+    "@types/mocha": "^5.2.7",
     "azure-pipelines-task-lib": "^3.0.6-preview.1"
   },
   "devDependencies": {
