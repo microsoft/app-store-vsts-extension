@@ -73,7 +73,7 @@ async function run() {
         if (authType === 'ServiceEndpoint') {
             let serviceEndpoint: tl.EndpointAuthorization = tl.getEndpointAuthorization(tl.getInput('serviceEndpoint', true), false);
 
-            if (serviceEndpoint.scheme === 'ms.vss-endpoint.endpoint-auth-scheme-token') {
+            if (serviceEndpoint.scheme === 'Token') {
                 // Using App Store Connect API Key
                 isUsingApiKey = true;
                 apiKey = {
