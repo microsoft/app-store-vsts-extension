@@ -117,7 +117,6 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-<<<<<<< HEAD:Tasks/app-store-promote/Tests/L0.ts
     it('service endpoint with api key', (done: MochaDone) => {
         this.timeout(1000);
 
@@ -173,9 +172,6 @@ describe('app-store-promote L0 Suite', function () {
     });
 
     it('app specific password', (done: MochaDone) => {
-=======
-    it('app specific password', (done: Mocha.Done) => {
->>>>>>> e79cd3d7466c069610d06858c1997a83f204bded:Tasks/AppStorePromote/Tests/L0.ts
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0AppSpecificPassword.js');
