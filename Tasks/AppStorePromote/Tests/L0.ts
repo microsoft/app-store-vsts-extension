@@ -122,15 +122,21 @@ describe('app-store-promote L0 Suite', function () {
 
         let tp = path.join(__dirname, 'L0ApiKeyEndPoint.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        const buildPath = 'test_build_path';
+        const keyFilePath = `${buildPath}/api_keyD383SF739.json`;
+
+        if (!fs.existsSync(buildPath)) {
+            fs.mkdirSync(buildPath);
+        }
 
         tr.run();
-        assert(tr.ran('fastlane deliver submit_build --api_key_path api_key.json -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --force'), 'fastlane deliver with api key should have been run.');
+        assert(tr.ran(`fastlane deliver submit_build --api_key_path ${keyFilePath} -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --force`), 'fastlane deliver with api key should have been run.');
         assert(tr.invokedToolCount === 1, 'should have run only fastlane deliver.');
         assert(tr.succeeded, 'task should have succeeded');
 
-        assert(fs.existsSync('api_key.json'), 'api_key.json file should have been created');
+        assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
 
-        let rawdata = fs.readFileSync('api_key.json', 'utf8');
+        let rawdata = fs.readFileSync(keyFilePath, 'utf8');
         let apiKey = JSON.parse(rawdata);
 
         assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
@@ -139,7 +145,8 @@ describe('app-store-promote L0 Suite', function () {
         assert(apiKey.in_house === false, 'in_house should be correct');
         assert(apiKey.is_key_content_base64 === true, 'is_key_content_base64 should be correct');
 
-        fs.unlinkSync('api_key.json');
+        fs.unlinkSync(keyFilePath);
+        fs.rmdirSync(buildPath);
 
         done();
     });
@@ -149,15 +156,21 @@ describe('app-store-promote L0 Suite', function () {
 
         let tp = path.join(__dirname, 'L0ApiKeyDeliver.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        const buildPath = 'test_build_path';
+        const keyFilePath = `${buildPath}/api_keyD383SF739.json`;
+
+        if (!fs.existsSync(buildPath)) {
+            fs.mkdirSync(buildPath);
+        }
 
         tr.run();
-        assert(tr.ran('fastlane deliver submit_build --api_key_path api_key.json -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force'), 'fastlane deliver with api key should have been run.');
+        assert(tr.ran(`fastlane deliver submit_build --api_key_path ${keyFilePath} -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force`), 'fastlane deliver with api key should have been run.');
         assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.succeeded, 'task should have succeeded');
 
-        assert(fs.existsSync('api_key.json'), 'api_key.json file should have been created');
+        assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
 
-        let rawdata = fs.readFileSync('api_key.json', 'utf8');
+        let rawdata = fs.readFileSync(keyFilePath, 'utf8');
         let apiKey = JSON.parse(rawdata);
 
         assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
@@ -166,7 +179,8 @@ describe('app-store-promote L0 Suite', function () {
         assert(apiKey.in_house === false, 'in_house should be correct');
         assert(apiKey.is_key_content_base64 === true, 'is_key_content_base64 should be correct');
 
-        fs.unlinkSync('api_key.json');
+        fs.unlinkSync(keyFilePath);
+        fs.rmdirSync(buildPath);
 
         done();
     });

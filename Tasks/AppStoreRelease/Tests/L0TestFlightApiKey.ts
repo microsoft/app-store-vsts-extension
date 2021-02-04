@@ -24,6 +24,9 @@ tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
 
 process.env['MOCK_NORMALIZE_SLASHES'] = 'true';
 process.env['HOME'] = '/usr/bin';
+process.env['AGENT_BUILDDIRECTORY'] = 'test_build_path';
+// Keeps the API key file from being deleted, so we can inspect it in our test
+process.env['DEBUG_API_KEY_FILE'] = 'true';
 let gemCache: string = '/usr/bin/.gem-cache';
 
 //construct a string that is JSON, call JSON.parse(string), send that to ma.TaskLibAnswers
@@ -52,7 +55,7 @@ let myAnswers: string = `{
             "code": 0,
             "stdout": "1 gem installed"
         },
-        "fastlane pilot upload --api_key_path api_key.json -i mypackage.ipa": {
+        "fastlane pilot upload --api_key_path test_build_path/api_keyD383SF739.json -i mypackage.ipa": {
             "code": 0,
             "stdout": "consider it uploaded!"
         }

@@ -80,7 +80,7 @@ function findIpa(ipaPath: string): string {
 async function run() {
     const appSpecificPasswordEnvVar: string = 'FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD';
     const fastlaneSessionEnvVar: string = 'FASTLANE_SESSION';
-    const apiKeyFileName: string = 'api_key.json';
+    let apiKeyFileName: string = undefined;
     let isTwoFactorAuthEnabled: boolean = false;
     let isUsingApiKey: boolean = false;
     try {
@@ -95,12 +95,19 @@ async function run() {
         let authType: string = tl.getInput('authType', true);
         let credentials: UserCredentials = new UserCredentials();
         let apiKey: ApiKey = undefined;
+
+        const createApiKeyFileName = (apiKeyId: string) => {
+            const tempPath = tl.getVariable('Agent.BuildDirectory') || tl.getVariable('Agent.TempDirectory');
+            return path.join(tempPath, `api_key${apiKeyId}.json`);
+        };
+
         if (authType === 'ServiceEndpoint') {
             let serviceEndpoint: tl.EndpointAuthorization = tl.getEndpointAuthorization(tl.getInput('serviceEndpoint', true), false);
 
             if (serviceEndpoint.scheme === 'Token') {
                 // Using App Store Connect API Key
                 isUsingApiKey = true;
+                apiKeyFileName = createApiKeyFileName(serviceEndpoint.parameters['apiKeyId']);
                 apiKey = {
                     key_id: serviceEndpoint.parameters['apiKeyId'],
                     issuer_id: serviceEndpoint.parameters['apiKeyIssuerId'],
@@ -130,6 +137,7 @@ async function run() {
             }
         } else if (authType === 'ApiKey') {
             isUsingApiKey = true;
+            apiKeyFileName = createApiKeyFileName(tl.getInput('apiKeyId', true));
             apiKey = {
                 key_id: tl.getInput('apiKeyId', true),
                 issuer_id: tl.getInput('apiKeyIssuerId', true),
@@ -377,6 +385,12 @@ async function run() {
             tl.debug('Clearing two-factor authentication environment variables');
             process.env[fastlaneSessionEnvVar] = '';
             process.env[appSpecificPasswordEnvVar] = '';
+        }
+        if (isUsingApiKey && apiKeyFileName && process.env['DEBUG_API_KEY_FILE'] !== 'true') {
+            tl.debug('Clearing API Key file');
+            if (fs.existsSync(apiKeyFileName)) {
+                fs.unlinkSync(apiKeyFileName);
+            }
         }
     }
 }
