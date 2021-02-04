@@ -20,21 +20,22 @@ describe('app-store-release L0 Suite', function () {
     after(() => {
     });
     /* tslint:enable:no-empty */
+    this.timeout(parseInt(process.env.TASK_TEST_TIMEOUT) || 20000);
 
-    it('enforce darwin', (done: MochaDone) => {
+    it('enforce darwin', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0EnforceDarwin.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         tr.run();
-        assert.equal(true, tr.createdErrorIssue('Error: loc_mock_DarwinOnly'));
+        assert(tr.createdErrorIssue('Error: loc_mock_DarwinOnly'), 'Should have written error message');
         assert(tr.failed, 'task should have failed');
 
         done();
     });
 
-    it('no authtype', (done: MochaDone) => {
+    it('no authtype', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0NoAuthType.js');
@@ -47,7 +48,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('no service endpoint', (done: MochaDone) => {
+    it('no service endpoint', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0NoEndpoint.js');
@@ -60,7 +61,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('no username+password', (done: MochaDone) => {
+    it('no username+password', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0NoUserPass.js');
@@ -74,7 +75,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('app specific password', (done: MochaDone) => {
+    it('app specific password', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0AppSpecificPassword.js');
@@ -89,7 +90,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('app specific password using service endpoint', (done: MochaDone) => {
+    it('app specific password using service endpoint', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0AppSpecificPasswordEndPoint.js');
@@ -104,7 +105,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('two factor authentication using service endpoint without fastlane session', (done: MochaDone) => {
+    it('two factor authentication using service endpoint without fastlane session', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0AppSpecificPasswordEndPointIncomplete.js');
@@ -116,7 +117,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('two factor authenitcation app specific password without fastlane session', (done: MochaDone) => {
+    it('two factor authenitcation app specific password without fastlane session', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0AppSpecificPasswordNoFastlaneSession.js');
@@ -129,6 +130,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
+<<<<<<< HEAD:Tasks/app-store-release/Tests/L0.ts
     it('api key using service endpoint', (done: MochaDone) => {
         this.timeout(1000);
 
@@ -157,6 +159,9 @@ describe('app-store-release L0 Suite', function () {
     });
 
     it('custom GEM_CACHE env var', (done: MochaDone) => {
+=======
+    it('custom GEM_CACHE env var', (done: Mocha.Done) => {
+>>>>>>> e79cd3d7466c069610d06858c1997a83f204bded:Tasks/AppStoreRelease/Tests/L0.ts
         this.timeout(1000);
 
         //L0GemCacheEnvVar.ts sets the GEM_CACHE env var and expects it to be used when fastlane is updated.
@@ -171,7 +176,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - username+password', (done: MochaDone) => {
+    it('testflight - username+password', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightUserPass.js');
@@ -184,6 +189,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
+<<<<<<< HEAD:Tasks/app-store-release/Tests/L0.ts
     it('testflight - api key', (done: MochaDone) => {
         this.timeout(1000);
 
@@ -212,6 +218,9 @@ describe('app-store-release L0 Suite', function () {
     });
 
     it('testflight - username+password - no fastlane install', (done: MochaDone) => {
+=======
+    it('testflight - username+password - no fastlane install', (done: Mocha.Done) => {
+>>>>>>> e79cd3d7466c069610d06858c1997a83f204bded:Tasks/AppStoreRelease/Tests/L0.ts
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightNoFastlaneInstall.js');
@@ -224,7 +233,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - username+password - specific fastlane install', (done: MochaDone) => {
+    it('testflight - username+password - specific fastlane install', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightSpecificFastlaneInstall.js');
@@ -239,7 +248,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - username+password - specific fastlane install - no version', (done: MochaDone) => {
+    it('testflight - username+password - specific fastlane install - no version', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightSpecificFastlaneInstallNoVersion.js');
@@ -252,7 +261,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - service endpoint', (done: MochaDone) => {
+    it('testflight - service endpoint', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightServiceEndpoint.js');
@@ -265,7 +274,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - no ipa path', (done: MochaDone) => {
+    it('testflight - no ipa path', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightNoIpaPath.js');
@@ -278,7 +287,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - team id', (done: MochaDone) => {
+    it('testflight - team id', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightTeamId.js');
@@ -293,7 +302,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - team name', (done: MochaDone) => {
+    it('testflight - team name', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightTeamName.js');
@@ -308,7 +317,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - team id and team name', (done: MochaDone) => {
+    it('testflight - team id and team name', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightTeamIdTeamName.js');
@@ -323,7 +332,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - should skip submission', (done: MochaDone) => {
+    it('testflight - should skip submission', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightShouldSkipSubmission.js');
@@ -338,7 +347,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - should skip waiting for processing', (done: MochaDone) => {
+    it('testflight - should skip waiting for processing', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightShouldSkipWaitingForProcessing.js');
@@ -353,7 +362,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - distribute external no release notes', (done: MochaDone) => {
+    it('testflight - distribute external no release notes', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightDistributeToExternalTestersNoReleaseNotes.js');
@@ -366,7 +375,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - distribute external with groups', (done: MochaDone) => {
+    it('testflight - distribute external with groups', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightDistributeToExternalTestersWithGroups.js');
@@ -378,7 +387,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - one ipa file', (done: MochaDone) => {
+    it('testflight - one ipa file', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightOneIpaFile.js');
@@ -393,7 +402,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - multiple ipa files', (done: MochaDone) => {
+    it('testflight - multiple ipa files', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightMultipleIpaFiles.js');
@@ -407,7 +416,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - zero ipa files', (done: MochaDone) => {
+    it('testflight - zero ipa files', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightZeroIpaFiles.js');
@@ -421,7 +430,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - additional arguments', (done: MochaDone) => {
+    it('testflight - additional arguments', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightFastlaneArguments.js');
@@ -436,6 +445,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
+<<<<<<< HEAD:Tasks/app-store-release/Tests/L0.ts
     it('production - api key', (done: MochaDone) => {
         this.timeout(1000);
 
@@ -464,6 +474,9 @@ describe('app-store-release L0 Suite', function () {
     });
 
     it('production - no bundle id', (done: MochaDone) => {
+=======
+    it('production - no bundle id', (done: Mocha.Done) => {
+>>>>>>> e79cd3d7466c069610d06858c1997a83f204bded:Tasks/AppStoreRelease/Tests/L0.ts
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionNoBundleId.js');
@@ -477,7 +490,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('production - no ipa path', (done: MochaDone) => {
+    it('production - no ipa path', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionNoIpaPath.js');
@@ -490,7 +503,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('production - should skip binary upload', (done: MochaDone) => {
+    it('production - should skip binary upload', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionShouldSkipBinaryUpload.js');
@@ -505,7 +518,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('production - team id', (done: MochaDone) => {
+    it('production - team id', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionTeamId.js');
@@ -520,7 +533,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('production - team name', (done: MochaDone) => {
+    it('production - team name', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionTeamName.js');
@@ -535,7 +548,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('production - team id and team name', (done: MochaDone) => {
+    it('production - team id and team name', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionTeamIdTeamName.js');
@@ -550,7 +563,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('production - should submit for review', (done: MochaDone) => {
+    it('production - should submit for review', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionShouldSubmitForReview.js');
@@ -565,7 +578,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('production - automatic release', (done: MochaDone) => {
+    it('production - automatic release', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionShouldAutoRelease.js');
@@ -580,7 +593,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('production - upload metadata with metadata path', (done: MochaDone) => {
+    it('production - upload metadata with metadata path', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionUploadMetadataMetadataPath.js');
@@ -595,7 +608,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('production - upload screenshots with screenshots path', (done: MochaDone) => {
+    it('production - upload screenshots with screenshots path', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionUploadScreenshotsScreenshotsPath.js');
@@ -610,7 +623,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('production - one ipa file', (done: MochaDone) => {
+    it('production - one ipa file', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionOneIpaFile.js');
@@ -624,7 +637,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('production - multiple ipa files', (done: MochaDone) => {
+    it('production - multiple ipa files', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionMultipleIpaFiles.js');
@@ -638,7 +651,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('production - zero ipa files', (done: MochaDone) => {
+    it('production - zero ipa files', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionZeroIpaFiles.js');
@@ -652,7 +665,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('production - fastlane arguments', (done: MochaDone) => {
+    it('production - fastlane arguments', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionFastlaneArguments.js');
@@ -666,7 +679,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('production - macOS app', (done: MochaDone) => {
+    it('production - macOS app', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionMacApp.js');
@@ -681,7 +694,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('production - tvOS app', (done: MochaDone) => {
+    it('production - tvOS app', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionTVApp.js');
