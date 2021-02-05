@@ -130,7 +130,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('api key using service endpoint', (done: MochaDone) => {
+    it('api key using service endpoint', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ApiKeyEndPoint.js');
@@ -164,7 +164,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('custom GEM_CACHE env var', (done: MochaDone) => {
+    it('custom GEM_CACHE env var', (done: Mocha.Done) => {
         this.timeout(1000);
 
         //L0GemCacheEnvVar.ts sets the GEM_CACHE env var and expects it to be used when fastlane is updated.
@@ -192,7 +192,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - api key', (done: MochaDone) => {
+    it('testflight - api key', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightApiKey.js');
@@ -226,7 +226,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('testflight - username+password - no fastlane install', (done: MochaDone) => {
+    it('testflight - username+password - no fastlane install', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0TestFlightNoFastlaneInstall.js');
@@ -451,7 +451,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('production - api key', (done: MochaDone) => {
+    it('production - api key', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionApiKey.js');
@@ -485,7 +485,7 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
-    it('production - no bundle id', (done: MochaDone) => {
+    it('production - no bundle id', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ProductionNoBundleId.js');

@@ -117,7 +117,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('service endpoint with api key', (done: MochaDone) => {
+    it('service endpoint with api key', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ApiKeyEndPoint.js');
@@ -151,7 +151,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('api key with deliver', (done: MochaDone) => {
+    it('api key with deliver', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0ApiKeyDeliver.js');
@@ -185,7 +185,7 @@ describe('app-store-promote L0 Suite', function () {
         done();
     });
 
-    it('app specific password', (done: MochaDone) => {
+    it('app specific password', (done: Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0AppSpecificPassword.js');
