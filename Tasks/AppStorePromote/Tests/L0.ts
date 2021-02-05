@@ -123,7 +123,7 @@ describe('app-store-promote L0 Suite', function () {
         let tp = path.join(__dirname, 'L0ApiKeyEndPoint.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
         const buildPath = 'test_build_path';
-        const keyFilePath = `${buildPath}/api_keyD383SF739.json`;
+        const keyFilePath = path.join(buildPath, 'api_keyD383SF739.json');
 
         if (!fs.existsSync(buildPath)) {
             fs.mkdirSync(buildPath);
@@ -157,7 +157,7 @@ describe('app-store-promote L0 Suite', function () {
         let tp = path.join(__dirname, 'L0ApiKeyDeliver.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
         const buildPath = 'test_build_path';
-        const keyFilePath = `${buildPath}/api_keyD383SF739.json`;
+        const keyFilePath = path.join(buildPath, 'api_keyD383SF739.json');
 
         if (!fs.existsSync(buildPath)) {
             fs.mkdirSync(buildPath);
