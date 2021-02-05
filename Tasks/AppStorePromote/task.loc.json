@@ -68,12 +68,12 @@
       "visibleRule": "authType = ApiKey"
     },
     {
-      "name": "apiKeyContent",
+      "name": "apitoken",
       "type": "string",
-      "label": "ms-resource:loc.input.label.apiKeyContent",
+      "label": "ms-resource:loc.input.label.apitoken",
       "defaultValue": "",
       "required": true,
-      "helpMarkDown": "ms-resource:loc.input.help.apiKeyContent",
+      "helpMarkDown": "ms-resource:loc.input.help.apitoken",
       "visibleRule": "authType = ApiKey"
     },
     {

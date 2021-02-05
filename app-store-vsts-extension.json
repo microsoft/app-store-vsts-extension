@@ -187,7 +187,7 @@
                                 }
                             },
                             {
-                                "id": "apiKeyContent",
+                                "id": "apitoken",
                                 "name": "Key Content (base64-encoded Private Key)",
                                 "description": "Base64-encoded content of the App Store Connect API P8 private key file",
                                 "inputMode": "textarea",

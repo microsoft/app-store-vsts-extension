@@ -111,7 +111,7 @@ async function run() {
                 apiKey = {
                     key_id: serviceEndpoint.parameters['apiKeyId'],
                     issuer_id: serviceEndpoint.parameters['apiKeyIssuerId'],
-                    key: serviceEndpoint.parameters['apiKeyContent'],
+                    key: serviceEndpoint.parameters['apitoken'],
                     in_house: serviceEndpoint.parameters['apiKeyInHouse'] === 'true',
                     is_key_content_base64: true
                 };
@@ -141,7 +141,7 @@ async function run() {
             apiKey = {
                 key_id: tl.getInput('apiKeyId', true),
                 issuer_id: tl.getInput('apiKeyIssuerId', true),
-                key: tl.getInput('apiKeyContent', true),
+                key: tl.getInput('apitoken', true),
                 in_house: tl.getBoolInput('apiKeyInHouse', false),
                 is_key_content_base64: true
             };
