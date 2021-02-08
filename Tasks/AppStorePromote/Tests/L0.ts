@@ -130,23 +130,32 @@ describe('app-store-promote L0 Suite', function () {
         }
 
         tr.run();
+
+        // Check api_key file first, so we can read it and clean up before other assertions
+        assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
+
+        let apiKey: any = undefined;
+
+        try {
+            let rawdata = fs.readFileSync(keyFilePath, 'utf8');
+            apiKey = JSON.parse(rawdata);
+        } catch (e) {
+            assert.fail(e);
+        } finally {
+            // Remove apikey file now that we've read its content
+            fs.unlinkSync(keyFilePath);
+            fs.rmdirSync(buildPath);
+        }
+
         assert(tr.ran(`fastlane deliver submit_build --precheck_include_in_app_purchases false --api_key_path ${keyFilePath} -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --force`), 'fastlane deliver with api key should have been run.');
         assert(tr.invokedToolCount === 1, 'should have run only fastlane deliver.');
         assert(tr.succeeded, 'task should have succeeded');
-
-        assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
-
-        let rawdata = fs.readFileSync(keyFilePath, 'utf8');
-        let apiKey = JSON.parse(rawdata);
 
         assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
         assert(apiKey.issuer_id === '6053b7fe-68a8-4acb-89be-165aa6465141', 'issuer_id should be correct');
         assert(apiKey.key === 'LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR1RBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJIa25saGRsWWRMdQotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0t', 'key should be correct');
         assert(apiKey.in_house === false, 'in_house should be correct');
         assert(apiKey.is_key_content_base64 === true, 'is_key_content_base64 should be correct');
-
-        fs.unlinkSync(keyFilePath);
-        fs.rmdirSync(buildPath);
 
         done();
     });
@@ -164,23 +173,32 @@ describe('app-store-promote L0 Suite', function () {
         }
 
         tr.run();
+
+        // Check api_key file first, so we can read it and clean up before other assertions
+        assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
+
+        let apiKey: any = undefined;
+
+        try {
+            let rawdata = fs.readFileSync(keyFilePath, 'utf8');
+            apiKey = JSON.parse(rawdata);
+        } catch (e) {
+            assert.fail(e);
+        } finally {
+            // Remove apikey file now that we've read its content
+            fs.unlinkSync(keyFilePath);
+            fs.rmdirSync(buildPath);
+        }
+
         assert(tr.ran(`fastlane deliver submit_build --precheck_include_in_app_purchases false --api_key_path ${keyFilePath} -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force`), 'fastlane deliver with api key should have been run.');
         assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.succeeded, 'task should have succeeded');
-
-        assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
-
-        let rawdata = fs.readFileSync(keyFilePath, 'utf8');
-        let apiKey = JSON.parse(rawdata);
 
         assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
         assert(apiKey.issuer_id === '6053b7fe-68a8-4acb-89be-165aa6465141', 'issuer_id should be correct');
         assert(apiKey.key === 'LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR1RBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJIa25saGRsWWRMdQotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0tLS0tLUVORCBQUklWQVRFIEtFWS0tLS0t', 'key should be correct');
         assert(apiKey.in_house === false, 'in_house should be correct');
         assert(apiKey.is_key_content_base64 === true, 'is_key_content_base64 should be correct');
-
-        fs.unlinkSync(keyFilePath);
-        fs.rmdirSync(buildPath);
 
         done();
     });
