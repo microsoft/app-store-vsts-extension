@@ -209,6 +209,9 @@ async function run() {
             }
             let apiKeyJsonData = JSON.stringify(apiKey);
             fs.writeFileSync(apiKeyFileName, apiKeyJsonData);
+
+            // Prechecking in-app purchases is not supported with API key authorization
+            console.log(tl.loc('PrecheckInAppPurchasesDisabled'));
             deliverCommand.arg(['deliver', 'submit_build', '--precheck_include_in_app_purchases', 'false', '--api_key_path', apiKeyFileName, '-a', appIdentifier]);
         } else {
             deliverCommand.arg(['deliver', 'submit_build', '-u', credentials.username, '-a', appIdentifier]);

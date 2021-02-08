@@ -237,6 +237,7 @@
         "DarwinOnly": "The Apple App Store Promote task can only run on a Mac computer.",
         "UninstallFastlaneFailed": "There were errors when trying to uninstall fastlane. Review the error and if required add a script to your pipeline to cleanly uninstall fastlane prior to running this task. Uninstall error: %s",
         "SuccessfullySubmitted": "Build successfully submitted for review.",
-        "FastlaneSessionEmpty": "'Fastlane Session' is not set in the service connection configured for two-step verification."
+        "FastlaneSessionEmpty": "'Fastlane Session' is not set in the service connection configured for two-step verification.",
+        "PrecheckInAppPurchasesDisabled": "Precheck will not check In-app purchases because Fastlane doesn't support it with the App Store Connect API Key."
     }
 }
