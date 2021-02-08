@@ -50,7 +50,7 @@ let myAnswers: string = `{
             "code": 0,
             "stdout": "1 gem installed"
         },
-        "fastlane deliver submit_build --api_key_path test_build_path/api_keyD383SF739.json -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force": {
+        "fastlane deliver submit_build --precheck_include_in_app_purchases false --api_key_path test_build_path/api_keyD383SF739.json -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force": {
             "code": 0,
             "stdout": "consider it delivered!"
         }

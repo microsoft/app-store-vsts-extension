@@ -130,7 +130,7 @@ describe('app-store-promote L0 Suite', function () {
         }
 
         tr.run();
-        assert(tr.ran(`fastlane deliver submit_build --api_key_path ${keyFilePath} -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --force`), 'fastlane deliver with api key should have been run.');
+        assert(tr.ran(`fastlane deliver submit_build --precheck_include_in_app_purchases false --api_key_path ${keyFilePath} -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --force`), 'fastlane deliver with api key should have been run.');
         assert(tr.invokedToolCount === 1, 'should have run only fastlane deliver.');
         assert(tr.succeeded, 'task should have succeeded');
 
@@ -164,7 +164,7 @@ describe('app-store-promote L0 Suite', function () {
         }
 
         tr.run();
-        assert(tr.ran(`fastlane deliver submit_build --api_key_path ${keyFilePath} -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force`), 'fastlane deliver with api key should have been run.');
+        assert(tr.ran(`fastlane deliver submit_build --precheck_include_in_app_purchases false --api_key_path ${keyFilePath} -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force`), 'fastlane deliver with api key should have been run.');
         assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane deliver.');
         assert(tr.succeeded, 'task should have succeeded');
 
