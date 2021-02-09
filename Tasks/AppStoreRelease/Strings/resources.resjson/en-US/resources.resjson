@@ -82,5 +82,6 @@
   "loc.messages.NotValidAppType": "An incorrect ApplicationType was chosen. Valid values iOS, macOS or tvOS. Value set: %s",
   "loc.messages.IpaPathNotSpecified": "You need to specify ipaPath - since skipBinaryUpload = false",
   "loc.messages.SessionAndAppIdNotSet": "Your fastlane session is incorrect and app specific id is not set. Please set correct fastlane session or app specific id",
-  "loc.messages.ReleaseNotesRequiresFastlaneSession": "You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work"
+  "loc.messages.ReleaseNotesRequiresFastlaneSession": "You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work",
+  "loc.messages.PrecheckInAppPurchasesDisabled": "Precheck will not check In-app purchases because Fastlane doesn't support it with the App Store Connect API Key."
 }

@@ -499,7 +499,7 @@ describe('app-store-release L0 Suite', function () {
             fs.rmdirSync(buildPath);
         }
 
-        assert(tr.ran(`fastlane deliver --force --api_key_path ${keyFilePath} -a com.microsoft.test.appId -i mypackage.ipa -j ios --skip_metadata true --skip_screenshots true`), 'fastlane deliver with api key should have been run.');
+        assert(tr.ran(`fastlane deliver --force --precheck_include_in_app_purchases false --api_key_path ${keyFilePath} -a com.microsoft.test.appId -i mypackage.ipa -j ios --skip_metadata true --skip_screenshots true`), 'fastlane deliver with api key should have been run.');
         assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane pilot.');
         assert(tr.succeeded, 'task should have succeeded');
 

@@ -316,7 +316,9 @@ async function run() {
             // See https://github.com/fastlane/fastlane/blob/master/deliver/lib/deliver/options.rb for more information on these arguments
             let deliverCommand: ToolRunner = tl.tool('fastlane');
             if (isUsingApiKey) {
-                deliverCommand.arg(['deliver', '--force', '--api_key_path', apiKeyFileName, '-a', bundleIdentifier]);
+                // Prechecking in-app purchases is not supported with API key authorization
+                console.log(tl.loc('PrecheckInAppPurchasesDisabled'));
+                deliverCommand.arg(['deliver', '--force', '--precheck_include_in_app_purchases', 'false', '--api_key_path', apiKeyFileName, '-a', bundleIdentifier]);
             } else {
                 deliverCommand.arg(['deliver', '--force', '-u', credentials.username, '-a', bundleIdentifier]);
             }
