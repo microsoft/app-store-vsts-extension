@@ -210,14 +210,14 @@
                                 },
                                 "values": {
                                     "inputId": "apiKeyInHouseValues",
-                                    "defaultValue": "false",
+                                    "defaultValue": "apiKeyInHouse_false",
                                     "possibleValues": [
                                         {
-                                            "value": "true",
+                                            "value": "apiKeyInHouse_true",
                                             "displayValue": "Yes"
                                         },
                                         {
-                                            "value": "false",
+                                            "value": "apiKeyInHouse_false",
                                             "displayValue": "No"
                                         }
                                     ]

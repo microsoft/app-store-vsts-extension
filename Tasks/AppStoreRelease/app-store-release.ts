@@ -112,7 +112,7 @@ async function run() {
                     key_id: serviceEndpoint.parameters['apiKeyId'],
                     issuer_id: serviceEndpoint.parameters['apiKeyIssuerId'],
                     key: serviceEndpoint.parameters['apitoken'],
-                    in_house: serviceEndpoint.parameters['apiKeyInHouse'] === 'true',
+                    in_house: serviceEndpoint.parameters['apiKeyInHouse'] === 'apiKeyInHouse_true',
                     is_key_content_base64: true
                 };
             } else {
