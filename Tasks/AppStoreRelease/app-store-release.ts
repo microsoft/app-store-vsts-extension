@@ -80,7 +80,7 @@ function findIpa(ipaPath: string): string {
 async function run() {
     const appSpecificPasswordEnvVar: string = 'FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD';
     const fastlaneSessionEnvVar: string = 'FASTLANE_SESSION';
-    let apiKeyFileName: string = undefined;
+    let apiKeyFilePath: string;
     let isTwoFactorAuthEnabled: boolean = false;
     let isUsingApiKey: boolean = false;
     try {
@@ -94,10 +94,10 @@ async function run() {
         // Get input variables
         let authType: string = tl.getInput('authType', true);
         let credentials: UserCredentials = new UserCredentials();
-        let apiKey: ApiKey = undefined;
+        let apiKey: ApiKey;
 
-        const createApiKeyFileName = (apiKeyId: string) => {
-            const tempPath = tl.getVariable('Agent.BuildDirectory') || tl.getVariable('Agent.TempDirectory');
+        const createapiKeyFilePath = (apiKeyId: string) => {
+            const tempPath =  tl.getVariable('Agent.TempDirectory') || tl.getVariable('Agent.BuildDirectory');
             return path.join(tempPath, `api_key${apiKeyId}.json`);
         };
 
@@ -107,7 +107,7 @@ async function run() {
             if (serviceEndpoint.scheme === 'Token') {
                 // Using App Store Connect API Key
                 isUsingApiKey = true;
-                apiKeyFileName = createApiKeyFileName(serviceEndpoint.parameters['apiKeyId']);
+                apiKeyFilePath = createapiKeyFilePath(serviceEndpoint.parameters['apiKeyId']);
                 apiKey = {
                     key_id: serviceEndpoint.parameters['apiKeyId'],
                     issuer_id: serviceEndpoint.parameters['apiKeyIssuerId'],
@@ -137,7 +137,7 @@ async function run() {
             }
         } else if (authType === 'ApiKey') {
             isUsingApiKey = true;
-            apiKeyFileName = createApiKeyFileName(tl.getInput('apiKeyId', true));
+            apiKeyFilePath = createapiKeyFilePath(tl.getInput('apiKeyId', true));
             apiKey = {
                 key_id: tl.getInput('apiKeyId', true),
                 issuer_id: tl.getInput('apiKeyIssuerId', true),
@@ -257,11 +257,11 @@ async function run() {
         let fastlaneArguments: string = tl.getInput('fastlaneArguments');
 
         if (isUsingApiKey) {
-            if (fs.existsSync(apiKeyFileName)) {
-                fs.unlinkSync(apiKeyFileName);
+            if (fs.existsSync(apiKeyFilePath)) {
+                fs.unlinkSync(apiKeyFilePath);
             }
             let apiKeyJsonData = JSON.stringify(apiKey);
-            fs.writeFileSync(apiKeyFileName, apiKeyJsonData);
+            fs.writeFileSync(apiKeyFilePath, apiKeyJsonData);
         }
 
         //gem update fastlane -i ~/.gem-cache
@@ -271,7 +271,7 @@ async function run() {
             let pilotCommand: ToolRunner = tl.tool('fastlane');
             let bundleIdentifier: string = tl.getInput('appIdentifier', false);
             if (isUsingApiKey) {
-                pilotCommand.arg(['pilot', 'upload', '--api_key_path', apiKeyFileName, '-i', filePath]);
+                pilotCommand.arg(['pilot', 'upload', '--api_key_path', apiKeyFilePath, '-i', filePath]);
             } else {
                 pilotCommand.arg(['pilot', 'upload', '-u', credentials.username, '-i', filePath]);
             }
@@ -318,7 +318,7 @@ async function run() {
             if (isUsingApiKey) {
                 // Prechecking in-app purchases is not supported with API key authorization
                 console.log(tl.loc('PrecheckInAppPurchasesDisabled'));
-                deliverCommand.arg(['deliver', '--force', '--precheck_include_in_app_purchases', 'false', '--api_key_path', apiKeyFileName, '-a', bundleIdentifier]);
+                deliverCommand.arg(['deliver', '--force', '--precheck_include_in_app_purchases', 'false', '--api_key_path', apiKeyFilePath, '-a', bundleIdentifier]);
             } else {
                 deliverCommand.arg(['deliver', '--force', '-u', credentials.username, '-a', bundleIdentifier]);
             }
@@ -388,10 +388,10 @@ async function run() {
             process.env[fastlaneSessionEnvVar] = '';
             process.env[appSpecificPasswordEnvVar] = '';
         }
-        if (isUsingApiKey && apiKeyFileName && process.env['DEBUG_API_KEY_FILE'] !== 'true') {
+        if (isUsingApiKey && apiKeyFilePath && process.env['DEBUG_API_KEY_FILE'] !== 'true') {
             tl.debug('Clearing API Key file');
-            if (fs.existsSync(apiKeyFileName)) {
-                fs.unlinkSync(apiKeyFileName);
+            if (fs.existsSync(apiKeyFilePath)) {
+                fs.unlinkSync(apiKeyFilePath);
             }
         }
     }

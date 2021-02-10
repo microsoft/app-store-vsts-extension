@@ -22,7 +22,7 @@ tmr.setInput('shouldAutoRelease', 'true');
 tmr.setInput('installFastlane', 'true');
 tmr.setInput('fastlaneToolsVersion', 'LatestVersion');
 
-process.env['AGENT_BUILDDIRECTORY'] = 'test_build_path';
+process.env['AGENT_TEMPDIRECTORY'] = 'test_temp_path';
 // Keeps the API key file from being deleted, so we can inspect it in our test
 process.env['DEBUG_API_KEY_FILE'] = 'true';
 process.env['MOCK_NORMALIZE_SLASHES'] = 'true';
@@ -50,7 +50,7 @@ let myAnswers: string = `{
             "code": 0,
             "stdout": "1 gem installed"
         },
-        "fastlane deliver submit_build --precheck_include_in_app_purchases false --api_key_path test_build_path/api_keyD383SF739.json -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force": {
+        "fastlane deliver submit_build --precheck_include_in_app_purchases false --api_key_path test_temp_path/api_keyD383SF739.json -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force": {
             "code": 0,
             "stdout": "consider it delivered!"
         }

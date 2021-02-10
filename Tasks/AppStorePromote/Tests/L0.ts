@@ -22,6 +22,20 @@ describe('app-store-promote L0 Suite', function () {
     /* tslint:enable:no-empty */
     this.timeout(parseInt(process.env.TASK_TEST_TIMEOUT) || 20000);
 
+    // Deletes the given directory after removing explicitly listed
+    // files that it might contain. Will fail if it contains additional files. 
+    const deleteDirectory = (dir: string, fileNames: string[]) => {
+        fileNames.forEach((fileName) => {
+            const filePath = path.join(dir, fileName);
+
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+            }
+        });
+
+        fs.rmdirSync(dir);
+    };
+
     it('enforce darwin', (done: Mocha.Done) => {
         this.timeout(1000);
 
@@ -122,11 +136,12 @@ describe('app-store-promote L0 Suite', function () {
 
         let tp = path.join(__dirname, 'L0ApiKeyEndPoint.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
-        const buildPath = 'test_build_path';
-        const keyFilePath = path.join(buildPath, 'api_keyD383SF739.json');
+        const tempPath = 'test_temp_path';
+        const keyFileName = 'api_keyD383SF739.json';
+        const keyFilePath = path.join(tempPath, keyFileName);
 
-        if (!fs.existsSync(buildPath)) {
-            fs.mkdirSync(buildPath);
+        if (!fs.existsSync(tempPath)) {
+            fs.mkdirSync(tempPath);
         }
 
         tr.run();
@@ -142,9 +157,7 @@ describe('app-store-promote L0 Suite', function () {
         } catch (e) {
             assert.fail(e);
         } finally {
-            // Remove apikey file now that we've read its content
-            fs.unlinkSync(keyFilePath);
-            fs.rmdirSync(buildPath);
+            deleteDirectory(tempPath, [keyFileName, '.taskkey']);
         }
 
         assert(tr.ran(`fastlane deliver submit_build --precheck_include_in_app_purchases false --api_key_path ${keyFilePath} -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --force`), 'fastlane deliver with api key should have been run.');
@@ -165,11 +178,12 @@ describe('app-store-promote L0 Suite', function () {
 
         let tp = path.join(__dirname, 'L0ApiKeyDeliver.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
-        const buildPath = 'test_build_path';
-        const keyFilePath = path.join(buildPath, 'api_keyD383SF739.json');
+        const tempPath = 'test_temp_path';
+        const keyFileName = 'api_keyD383SF739.json';
+        const keyFilePath = path.join(tempPath, keyFileName);
 
-        if (!fs.existsSync(buildPath)) {
-            fs.mkdirSync(buildPath);
+        if (!fs.existsSync(tempPath)) {
+            fs.mkdirSync(tempPath);
         }
 
         tr.run();
@@ -185,9 +199,7 @@ describe('app-store-promote L0 Suite', function () {
         } catch (e) {
             assert.fail(e);
         } finally {
-            // Remove apikey file now that we've read its content
-            fs.unlinkSync(keyFilePath);
-            fs.rmdirSync(buildPath);
+            deleteDirectory(tempPath, [keyFileName, '.taskkey']);
         }
 
         assert(tr.ran(`fastlane deliver submit_build --precheck_include_in_app_purchases false --api_key_path ${keyFilePath} -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force`), 'fastlane deliver with api key should have been run.');
