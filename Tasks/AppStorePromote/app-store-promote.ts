@@ -4,6 +4,7 @@
 *--------------------------------------------------------------------------------------------*/
 'use strict';
 
+import fs = require('fs');
 import os = require('os');
 import path = require('path');
 import tl = require('azure-pipelines-task-lib/task');
@@ -21,10 +22,39 @@ export class UserCredentials {
     /* tslint:enable:no-empty */
 }
 
+/**
+ * Information for the App Store Connect API key used by fastlane
+ * See https://docs.fastlane.tools/app-store-connect-api/#using-fastlane-api-key-json-file
+ */
+export interface ApiKey {
+    /**
+     * Key ID (for example 'D383SF740')
+     */
+    key_id: string;
+    /**
+     * Issuer ID (for example '6053b7fe-68a8-4acb-89be-165aa6465141')
+     */
+    issuer_id: string;
+    /**
+     * The base64-encoded private key contents of the p8 file from Apple.
+     */
+    key: string;
+    /**
+     * Optional, set to true to use Enterprise account
+     */
+    in_house?: boolean;
+    /**
+     * Indicates whether the key content is base64 encoded
+     */
+    is_key_content_base64: boolean;
+}
+
 async function run() {
     const appSpecificPasswordEnvVar: string = 'FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD';
     const fastlaneSessionEnvVar: string = 'FASTLANE_SESSION';
+    let apiKeyFilePath: string;
     let isTwoFactorAuthEnabled: boolean = false;
+    let isUsingApiKey: boolean = false;
     try {
         tl.setResourcePath(path.join(__dirname, 'task.json'));
 
@@ -38,19 +68,39 @@ async function run() {
         // Get input variables
         let authType: string = tl.getInput('authType', false);
         let credentials: UserCredentials = new UserCredentials();
+        let apiKey: ApiKey;
+
+        const createapiKeyFilePath = (apiKeyId: string) => {
+            const tempPath = tl.getVariable('Agent.TempDirectory') || tl.getVariable('Agent.BuildDirectory');
+            return path.join(tempPath, `api_key${apiKeyId}.json`);
+        };
+
         if (authType === 'ServiceEndpoint') {
             let serviceEndpoint: tl.EndpointAuthorization = tl.getEndpointAuthorization(tl.getInput('serviceEndpoint', true), false);
-            credentials.username = serviceEndpoint.parameters['username'];
-            credentials.password = serviceEndpoint.parameters['password'];
-            credentials.appSpecificPassword = serviceEndpoint.parameters['appSpecificPassword'];
-            if (credentials.appSpecificPassword) {
-                isTwoFactorAuthEnabled = true;
-                let fastlaneSession: string = serviceEndpoint.parameters['fastlaneSession'];
-                if (!fastlaneSession) {
-                    throw Error(tl.loc('FastlaneSessionEmpty'));
-                }
-                credentials.fastlaneSession = fastlaneSession;
 
+            if (serviceEndpoint.scheme === 'Token') {
+                // Using App Store Connect API Key
+                isUsingApiKey = true;
+                apiKeyFilePath = createapiKeyFilePath(serviceEndpoint.parameters['apiKeyId']);
+                apiKey = {
+                    key_id: serviceEndpoint.parameters['apiKeyId'],
+                    issuer_id: serviceEndpoint.parameters['apiKeyIssuerId'],
+                    key: serviceEndpoint.parameters['apitoken'],
+                    in_house: serviceEndpoint.parameters['apiKeyInHouse'] === 'apiKeyInHouse_true',
+                    is_key_content_base64: true
+                };
+            } else {
+                credentials.username = serviceEndpoint.parameters['username'];
+                credentials.password = serviceEndpoint.parameters['password'];
+                credentials.appSpecificPassword = serviceEndpoint.parameters['appSpecificPassword'];
+                if (credentials.appSpecificPassword) {
+                    isTwoFactorAuthEnabled = true;
+                    let fastlaneSession: string = serviceEndpoint.parameters['fastlaneSession'];
+                    if (!fastlaneSession) {
+                        throw Error(tl.loc('FastlaneSessionEmpty'));
+                    }
+                    credentials.fastlaneSession = fastlaneSession;
+                }
             }
         } else if (authType === 'UserAndPass') {
             credentials.username = tl.getInput('username', true);
@@ -60,6 +110,16 @@ async function run() {
                 credentials.appSpecificPassword = tl.getInput('appSpecificPassword', true);
                 credentials.fastlaneSession = tl.getInput('fastlaneSession', true);
             }
+        } else if (authType === 'ApiKey') {
+            isUsingApiKey = true;
+            apiKeyFilePath = createapiKeyFilePath(tl.getInput('apiKeyId', true));
+            apiKey = {
+                key_id: tl.getInput('apiKeyId', true),
+                issuer_id: tl.getInput('apiKeyIssuerId', true),
+                key: tl.getInput('apitoken', true),
+                in_house: tl.getBoolInput('apiKeyInHouse', false),
+                is_key_content_base64: true
+            };
         }
 
         let appIdentifier: string = tl.getInput('appIdentifier', true);
@@ -143,7 +203,19 @@ async function run() {
         //Run the deliver command 
         // See https://github.com/fastlane/fastlane/blob/master/deliver/lib/deliver/options.rb for more information on these arguments
         let deliverCommand: ToolRunner = tl.tool('fastlane');
-        deliverCommand.arg(['deliver', 'submit_build', '-u', credentials.username, '-a', appIdentifier]);
+        if (isUsingApiKey) {
+            if (fs.existsSync(apiKeyFilePath)) {
+                fs.unlinkSync(apiKeyFilePath);
+            }
+            let apiKeyJsonData = JSON.stringify(apiKey);
+            fs.writeFileSync(apiKeyFilePath, apiKeyJsonData);
+
+            // Prechecking in-app purchases is not supported with API key authorization
+            console.log(tl.loc('PrecheckInAppPurchasesDisabled'));
+            deliverCommand.arg(['deliver', 'submit_build', '--precheck_include_in_app_purchases', 'false', '--api_key_path', apiKeyFilePath, '-a', appIdentifier]);
+        } else {
+            deliverCommand.arg(['deliver', 'submit_build', '-u', credentials.username, '-a', appIdentifier]);
+        }
         if (chooseBuild.toLowerCase() === 'specify') {
             deliverCommand.arg(['-n', buildNumber]);
         }
@@ -168,6 +240,12 @@ async function run() {
             tl.debug('Clearing two-factor authentication environment variables');
             process.env[fastlaneSessionEnvVar] = '';
             process.env[appSpecificPasswordEnvVar] = '';
+        }
+        if (isUsingApiKey && apiKeyFilePath && process.env['DEBUG_API_KEY_FILE'] !== 'true') {
+            tl.debug('Clearing API Key file');
+            if (fs.existsSync(apiKeyFilePath)) {
+                fs.unlinkSync(apiKeyFilePath);
+            }
         }
     }
 }

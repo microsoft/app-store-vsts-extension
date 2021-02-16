@@ -35,6 +35,7 @@
       "defaultValue": "ServiceEndpoint",
       "helpMarkDown": "",
       "options": {
+        "ApiKey": "App Store Connect API Key",
         "ServiceEndpoint": "Service Connection",
         "UserAndPass": "Username and Password"
       }
@@ -47,6 +48,42 @@
       "required": true,
       "helpMarkDown": "ms-resource:loc.input.help.serviceEndpoint",
       "visibleRule": "authType = ServiceEndpoint"
+    },
+    {
+      "name": "apiKeyId",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.apiKeyId",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "ms-resource:loc.input.help.apiKeyId",
+      "visibleRule": "authType = ApiKey"
+    },
+    {
+      "name": "apiKeyIssuerId",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.apiKeyIssuerId",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "ms-resource:loc.input.help.apiKeyIssuerId",
+      "visibleRule": "authType = ApiKey"
+    },
+    {
+      "name": "apitoken",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.apitoken",
+      "defaultValue": "",
+      "required": true,
+      "helpMarkDown": "ms-resource:loc.input.help.apitoken",
+      "visibleRule": "authType = ApiKey"
+    },
+    {
+      "name": "apiKeyInHouse",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.apiKeyInHouse",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.apiKeyInHouse",
+      "visibleRule": "authType = ApiKey"
     },
     {
       "name": "username",
@@ -202,6 +239,7 @@
     "DarwinOnly": "ms-resource:loc.messages.DarwinOnly",
     "UninstallFastlaneFailed": "ms-resource:loc.messages.UninstallFastlaneFailed",
     "SuccessfullySubmitted": "ms-resource:loc.messages.SuccessfullySubmitted",
-    "FastlaneSessionEmpty": "ms-resource:loc.messages.FastlaneSessionEmpty"
+    "FastlaneSessionEmpty": "ms-resource:loc.messages.FastlaneSessionEmpty",
+    "PrecheckInAppPurchasesDisabled": "ms-resource:loc.messages.PrecheckInAppPurchasesDisabled"
   }
 }

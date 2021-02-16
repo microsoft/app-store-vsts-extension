@@ -7,6 +7,7 @@
 // npm install mocha --save-dev
 // typings install dt~mocha --save --global
 
+import * as fs from 'fs';
 import * as path from 'path';
 import * as assert from 'assert';
 import * as ttm from 'azure-pipelines-task-lib/mock-test';
@@ -20,6 +21,20 @@ describe('app-store-release L0 Suite', function () {
     });
     /* tslint:enable:no-empty */
     this.timeout(parseInt(process.env.TASK_TEST_TIMEOUT) || 20000);
+
+    // Deletes the given directory after removing explicitly listed
+    // files that it might contain. Will fail if it contains additional files. 
+    const deleteDirectory = (dir: string, fileNames: string[]) => {
+        fileNames.forEach((fileName) => {
+            const filePath = path.join(dir, fileName);
+
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+            }
+        });
+
+        fs.rmdirSync(dir);
+    };
 
     it('enforce darwin', (done: Mocha.Done) => {
         this.timeout(1000);
@@ -129,6 +144,48 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
+    it('api key using service endpoint', (done: Mocha.Done) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0ApiKeyEndPoint.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        const tempPath = 'test_temp_path';
+        const keyFileName = 'api_keyD383SF739.json';
+        const keyFilePath = path.join(tempPath, keyFileName);
+
+        if (!fs.existsSync(tempPath)) {
+            fs.mkdirSync(tempPath);
+        }
+
+        tr.run();
+
+        // Check api_key file first, so we can read it and clean up before other assertions
+        assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
+
+        let apiKey: any = undefined;
+
+        try {
+            let rawdata = fs.readFileSync(keyFilePath, 'utf8');
+            apiKey = JSON.parse(rawdata);
+        } catch (e) {
+            assert.fail(e);
+        } finally {
+            deleteDirectory(tempPath, [keyFileName, '.taskkey']);
+        }
+
+        assert(tr.ran(`fastlane pilot upload --api_key_path ${keyFilePath} -i mypackage.ipa`), 'fastlane pilot upload with api key should have been run.');
+        assert(tr.invokedToolCount === 1, 'should have run only fastlane pilot.');
+        assert(tr.succeeded, 'task should have succeeded');
+
+        assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
+        assert(apiKey.issuer_id === '6053b7fe-68a8-4acb-89be-165aa6465141', 'issuer_id should be correct');
+        assert(apiKey.key === 'LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR1RBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJIa25saGRsWWRMdQotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0t', 'key should be correct');
+        assert(apiKey.in_house === false, 'in_house should be correct');
+        assert(apiKey.is_key_content_base64 === true, 'is_key_content_base64 should be correct');
+
+        done();
+    });
+
     it('custom GEM_CACHE env var', (done: Mocha.Done) => {
         this.timeout(1000);
 
@@ -153,6 +210,48 @@ describe('app-store-release L0 Suite', function () {
         tr.run();
         assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane pilot.');
         assert(tr.succeeded, 'task should have succeeded');
+
+        done();
+    });
+
+    it('testflight - api key', (done: Mocha.Done) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0TestFlightApiKey.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        const tempPath = 'test_temp_path';
+        const keyFileName = 'api_keyD383SF739.json';
+        const keyFilePath = path.join(tempPath, keyFileName);
+
+        if (!fs.existsSync(tempPath)) {
+            fs.mkdirSync(tempPath);
+        }
+
+        tr.run();
+
+        // Check api_key file first, so we can read it and clean up before other assertions
+        assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
+
+        let apiKey: any = undefined;
+
+        try {
+            let rawdata = fs.readFileSync(keyFilePath, 'utf8');
+            apiKey = JSON.parse(rawdata);
+        } catch (e) {
+            assert.fail(e);
+        } finally {
+            deleteDirectory(tempPath, [keyFileName, '.taskkey']);
+        }
+
+        assert(tr.ran(`fastlane pilot upload --api_key_path ${keyFilePath} -i mypackage.ipa`), 'fastlane pilot upload with api key should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane pilot.');
+        assert(tr.succeeded, 'task should have succeeded');
+
+        assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
+        assert(apiKey.issuer_id === '6053b7fe-68a8-4acb-89be-165aa6465141', 'issuer_id should be correct');
+        assert(apiKey.key === 'LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR1RBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJIa25saGRsWWRMdQotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0t', 'key should be correct');
+        assert(apiKey.in_house === false, 'in_house should be correct');
+        assert(apiKey.is_key_content_base64 === true, 'is_key_content_base64 should be correct');
 
         done();
     });
@@ -378,6 +477,48 @@ describe('app-store-release L0 Suite', function () {
         assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane pilot.');
         //assert(tr.stderr.length === 0, 'should not have written to stderr');
         assert(tr.succeeded, 'task should have succeeded');
+
+        done();
+    });
+
+    it('production - api key', (done: Mocha.Done) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0ProductionApiKey.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        const tempPath = 'test_temp_path';
+        const keyFileName = 'api_keyD383SF739.json';
+        const keyFilePath = path.join(tempPath, keyFileName);
+
+        if (!fs.existsSync(tempPath)) {
+            fs.mkdirSync(tempPath);
+        }
+
+        tr.run();
+
+        // Check api_key file first, so we can read it and clean up before other assertions
+        assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
+
+        let apiKey: any = undefined;
+
+        try {
+            let rawdata = fs.readFileSync(keyFilePath, 'utf8');
+            apiKey = JSON.parse(rawdata);
+        } catch (e) {
+            assert.fail(e);
+        } finally {
+            deleteDirectory(tempPath, [keyFileName, '.taskkey']);
+        }
+
+        assert(tr.ran(`fastlane deliver --force --precheck_include_in_app_purchases false --api_key_path ${keyFilePath} -a com.microsoft.test.appId -i mypackage.ipa -j ios --skip_metadata true --skip_screenshots true`), 'fastlane deliver with api key should have been run.');
+        assert(tr.invokedToolCount === 3, 'should have run gem install, gem update and fastlane pilot.');
+        assert(tr.succeeded, 'task should have succeeded');
+
+        assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
+        assert(apiKey.issuer_id === '6053b7fe-68a8-4acb-89be-165aa6465141', 'issuer_id should be correct');
+        assert(apiKey.key === 'LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR1RBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJIa25saGRsWWRMdQotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0t', 'key should be correct');
+        assert(apiKey.in_house === false, 'in_house should be correct');
+        assert(apiKey.is_key_content_base64 === true, 'is_key_content_base64 should be correct');
 
         done();
     });

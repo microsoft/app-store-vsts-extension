@@ -7,6 +7,14 @@
   "loc.input.label.authType": "Authentication Method",
   "loc.input.label.serviceEndpoint": "Service Connection",
   "loc.input.help.serviceEndpoint": "The TFS/Azure DevOps service connection that specifies the identity used to publish the app.",
+  "loc.input.label.apiKeyId": "App Store Connect API Key ID",
+  "loc.input.help.apiKeyId": "The key_id of the account used to publish to the Apple App Store.",
+  "loc.input.label.apiKeyIssuerId": "App Store Connect API Issuer ID",
+  "loc.input.help.apiKeyIssuerId": "The issuer_id of the account used to publish to the Apple App Store.",
+  "loc.input.label.apitoken": "App Store Connect API Key Content (base64-encoded)",
+  "loc.input.help.apitoken": "The base64-encoded content of the P8 file of the account used to publish to the Apple App Store.",
+  "loc.input.label.apiKeyInHouse": "App Store Connect API In House (Enterprise)",
+  "loc.input.help.apiKeyInHouse": "Whether the account used to publish to the Apple App Store is an Enterprise account or not.",
   "loc.input.label.username": "Email",
   "loc.input.help.username": "The email of the account used to publish to the Apple App Store.",
   "loc.input.label.password": "Password",
@@ -39,5 +47,6 @@
   "loc.messages.DarwinOnly": "The Apple App Store Promote task can only run on a Mac computer.",
   "loc.messages.UninstallFastlaneFailed": "There were errors when trying to uninstall fastlane. Review the error and if required add a script to your pipeline to cleanly uninstall fastlane prior to running this task. Uninstall error: %s",
   "loc.messages.SuccessfullySubmitted": "Build successfully submitted for review.",
-  "loc.messages.FastlaneSessionEmpty": "'Fastlane Session' is not set in the service connection configured for two-step verification."
+  "loc.messages.FastlaneSessionEmpty": "'Fastlane Session' is not set in the service connection configured for two-step verification.",
+  "loc.messages.PrecheckInAppPurchasesDisabled": "Precheck will not check In-app purchases because Fastlane doesn't support it with the App Store Connect API Key."
 }

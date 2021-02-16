@@ -38,6 +38,7 @@
             "defaultValue": "ServiceEndpoint",
             "helpMarkDown": "",
             "options": {
+                "ApiKey": "App Store Connect API Key",
                 "ServiceEndpoint": "Service Connection",
                 "UserAndPass": "Username and Password"
             }
@@ -50,6 +51,42 @@
             "required": true,
             "helpMarkDown": "The TFS/Azure DevOps service connection that specifies the identity used to publish the app.",
             "visibleRule": "authType = ServiceEndpoint"
+        },
+        {
+            "name": "apiKeyId",
+            "type": "string",
+            "label": "App Store Connect API Key ID",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The key_id of the account used to publish to the Apple App Store.",
+            "visibleRule": "authType = ApiKey"
+        },
+        {
+            "name": "apiKeyIssuerId",
+            "type": "string",
+            "label": "App Store Connect API Issuer ID",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The issuer_id of the account used to publish to the Apple App Store.",
+            "visibleRule": "authType = ApiKey"
+        },
+        {
+            "name": "apitoken",
+            "type": "string",
+            "label": "App Store Connect API Key Content (base64-encoded)",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The base64-encoded content of the P8 file of the account used to publish to the Apple App Store.",
+            "visibleRule": "authType = ApiKey"
+        },
+        {
+            "name": "apiKeyInHouse",
+            "type": "boolean",
+            "label": "App Store Connect API In House (Enterprise)",
+            "defaultValue": false,
+            "required": false,
+            "helpMarkDown": "Whether the account used to publish to the Apple App Store is an Enterprise account or not.",
+            "visibleRule": "authType = ApiKey"
         },
         {
             "name": "username",
@@ -345,6 +382,7 @@
         "NotValidAppType": "An incorrect ApplicationType was chosen. Valid values iOS, macOS or tvOS. Value set: %s",
         "IpaPathNotSpecified": "You need to specify ipaPath - since skipBinaryUpload = false",
         "SessionAndAppIdNotSet": "Your fastlane session is incorrect and app specific id is not set. Please set correct fastlane session or app specific id",
-        "ReleaseNotesRequiresFastlaneSession": "You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work"
+        "ReleaseNotesRequiresFastlaneSession": "You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work",
+        "PrecheckInAppPurchasesDisabled": "Precheck will not check In-app purchases because Fastlane doesn't support it with the App Store Connect API Key."
     }
 }
