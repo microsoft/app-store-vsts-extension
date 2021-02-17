@@ -7,7 +7,7 @@ This extension contains a set of deployment tasks which allow you to automate th
 ## Prerequisites
 
 * In order to automate the release of app updates to the App Store, you need to have manually released at least one version of the app beforehand.
-* The tasks install and use [fastlane](https://github.com/fastlane/fastlane) tools. fastlane requires Ruby 2.0.0 or above and recommends having the latest Xcode command line tools installed on the MacOS computer. 
+* The tasks install and use [fastlane](https://github.com/fastlane/fastlane) tools. fastlane requires Ruby 2.0.0 or above and recommends having the latest Xcode command line tools installed on the MacOS computer.
 
 ## Quick Start
 
@@ -47,14 +47,14 @@ In addition to specifying your publisher credentials directly within each build 
 
 Apple authentication is region specific, and Microsoft-hosted agents may not be in the same region as your developer machine. Instead, we recommend that you create a separate Apple ID with a strong password and restricted access.  See [this](https://docs.fastlane.tools/best-practices/continuous-integration/#separate-apple-id-for-ci) link for more details.
 
-To use two-factor authentication, you need to setup the `Fastlane Session` variable on the Apple App Store service connection. 
+To use two-factor authentication, you need to setup the `Fastlane Session` variable on the Apple App Store service connection.
 
 1. Create the fastlane session token by following these [instructions](https://docs.fastlane.tools/best-practices/continuous-integration/#use-of-application-specific-passwords-and-spaceauth).
 
 2. Set this value on the Apple App Store service connection.
 
 #### Use of application specific apple id
-If you want to upload apps to TestFlight without trigerring two-factor authentication, you need to setup the App specific apple Id. This value should be taken from Apple ID property in the App Information section in App Store Connect (number). 
+If you want to upload apps to TestFlight without trigerring two-factor authentication, you need to setup the App specific apple Id. This value should be taken from Apple ID property in the App Information section in App Store Connect (number).
 The following conditions are required:
 1. Application specific apple id should be provided (number)
 2. shouldSkipWaitingForProcessing: true
@@ -152,7 +152,7 @@ Example of using task without triggering 2FA (for account with 2FA enabled):
     appIdentifier: '$(fastLane.auth.bundleID)'
     appType: 'iOS'
     ipaPath: '**/*.ipa'
-    releaseTrack: 'TestFlight' 
+    releaseTrack: 'TestFlight'
     shouldSkipWaitingForProcessing: true
     appSpecificId: '1234567890'
 ```
