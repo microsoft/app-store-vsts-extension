@@ -53,6 +53,15 @@ To use two-factor authentication, you need to setup the `Fastlane Session` varia
 
 2. Set this value on the Apple App Store service connection.
 
+#### Use of application specific apple id
+If you want to upload apps to TestFlight without trigerring two-factor authentication, you need to setup the App specific apple Id. This value should be taken from Apple ID property in the App Information section in App Store Connect (number). 
+The following conditions are required:
+1. Application specific apple id should be provided (number)
+2. shouldSkipWaitingForProcessing: true
+3. isTwoFactorAuth: true (for service connection - you don't need to specify it if app specific password is specified)
+4. releaseNotes shouldn't be specified
+
+
 ## Task Reference
 
 In addition to the custom service connection, this extension also contributes the following build and release tasks:
@@ -81,17 +90,19 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 1. **What to Test?** *(File path)* - Path to the file containing notes on what to test for this release.
 
-2. **Skip Build Processing Wait** *(Checkbox)* - Skip waiting for App Store to finish the build processing.
+2. **App Specific Apple Id** *(String)* - App specific apple Id allows you to upload applications to a TestFlight track without triggering 2FA. This value should be taken from Apple ID property in the App Information section in App Store Connect.
 
-3. **Skip Submission** *(Checkbox)* - Upload a beta app without distributing to testers.
+3. **Skip Build Processing Wait** *(Checkbox)* - Skip waiting for App Store to finish the build processing.
 
-4. **Distribute to External Testers** *(Checkbox)* - Select to distribute the build to external testers (cannot be used with 'Skip Build Processing Wait' and 'Skip Submission').  Using this option requires setting release notes in 'What to Test?'.
+4. **Skip Submission** *(Checkbox)* - Upload a beta app without distributing to testers.
 
-5. **Groups** *(String)* - Optionally specify the group(s) of external testers this build should be distributed to. To specify multiple groups, separate group names by commas e.g. 'External Beta Testers,TestVendors'. If not specified the default 'External Testers' is used.
+5. **Distribute to External Testers** *(Checkbox)* - Select to distribute the build to external testers (cannot be used with 'Skip Build Processing Wait' and 'Skip Submission').  Using this option requires setting release notes in 'What to Test?'.
+
+6. **Groups** *(String)* - Optionally specify the group(s) of external testers this build should be distributed to. To specify multiple groups, separate group names by commas e.g. 'External Beta Testers,TestVendors'. If not specified the default 'External Testers' is used.
 
 ##### Release Options for Production track
 
-1. **Skip Binary Upload** *(Checkbox)* - Skip binary upload and only update metadata and screenshots.
+1. **Skip Binary Upload** *(Checkbox)* - Skip binary upload and only update metadata and screenshots. Please note that with enabling this option you also need to pass --description or --pkg as additional fastlane parameters.
 
 2. **Upload Metadata** *(Checkbox)* - Upload app metadata to the App Store (e.g. title, description, changelog).
 
