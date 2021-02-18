@@ -90,15 +90,17 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 1. **Authentication method** - What type of credentials will be used to authenticate with the App Store. Credentials can be provided directly (using `App Store Connect Api Key` or `Username and Password` options) or configured via a service connection that can be referenced from the task (via the `Service Connection` authentication method).
 
-2. **App Store Connect API Key ID, Issuer ID and Key Content (base64-encoded)** - Available only if authentication method is `App Store Connect Api Key`. The API key data used to authenticate with the App Store. Key content has to be base64-encoded.
+2. **App Store Connect API Key ID, Issuer ID and Key Content (base64-encoded)** *(String, required if authentication method is `App Store Connect Api Key`)* - The API key data used to authenticate with the App Store. Key content has to be base64-encoded.
 
-3. **Service connection** - Available only if authentication method is `Service Connection`. The creation of the service connection is explained in [this section](#configuring-your-app-store-publisher-credentials).
+3. **App Store Connect API Key In House** *(Checkbox, required if authentication method is `App Store Connect Api Key`)* - Whether the account used to publish to the Apple App Store is an Enterprise account or not.
 
-4. **Email and Password** - Available only if authentication method is `Username and Password`. Specify your Apple ID Developer account email and password here.
+4. **Service connection** - Available only if authentication method is `Service Connection`. The creation of the service connection is explained in [this section](#configuring-your-app-store-publisher-credentials).
 
-5. **Bundle ID** *(String)* - Unique app identifier (e.g. com.myapp.etc).  The **Bundle ID** is only required if "Track" is *Production*.
+5. **Email and Password** *(String, required if authentication method is `Username and Password`)* - Specify your Apple ID Developer account email and password here.
 
-6. **Binary Path** *(File path, Required)* - Path to the IPA file you want to publish to the specified track.  A glob pattern can be used but it must resolve to exactly one IPA file.
+6. **Bundle ID** *(String)* - Unique app identifier (e.g. com.myapp.etc).  The **Bundle ID** is only required if "Track" is *Production*.
+
+7. **Binary Path** *(File path, Required)* - Path to the IPA file you want to publish to the specified track.  A glob pattern can be used but it must resolve to exactly one IPA file.
 
 #### Release Options
 
@@ -183,19 +185,21 @@ Allows you to promote an app previously updated to iTunes Connect to the App Sto
 
 1. **Authentication method** - What type of credentials will be used to authenticate with the App Store. Credentials can be provided directly (using `App Store Connect Api Key` or `Username and Password` options) or configured via a service connection that can be referenced from the task (via the `Service Connection` authentication method).
 
-2. **App Store Connect API Key ID, Issuer ID and Key Content (base64-encoded)** - Available only if authentication method is `App Store Connect Api Key`. The API key data used to authenticate with the App Store. Key content has to be base64-encoded.
+2. **App Store Connect API Key ID, Issuer ID and Key Content (base64-encoded)** *(String, required if authentication method is `App Store Connect Api Key`)* - The API key data used to authenticate with the App Store. Key content has to be base64-encoded.
 
-3. **Service connection** - Available only if authentication method is `Service Connection`. The creation of the service connection is explained in [this section](#configuring-your-app-store-publisher-credentials).
+3. **App Store Connect API Key In House** *(Checkbox, required if authentication method is `App Store Connect Api Key`)* - Whether the account used to publish to the Apple App Store is an Enterprise account or not.
 
-4. **Email and Password** - Available only if authentication method is `Username and Password`. Specify your Apple ID Developer account email and password here.
+4. **Service connection** - Available only if authentication method is `Service Connection`. The creation of the service connection is explained in [this section](#configuring-your-app-store-publisher-credentials).
 
-5. **Bundle ID** *(String, required)* - The unique identifier for the app to be promoted.
+5. **Email and Password** *(String, required if authentication method is `Username and Password`)* - Specify your Apple ID Developer account email and password here.
 
-6. **Choose Build** - `Latest` or `Specify build number`. By default the latest build will be submitted for review.
+6. **Bundle ID** *(String, required)* - The unique identifier for the app to be promoted.
 
-7. **Build Number** - Required if `Specify build number` option is selected in **Choose Build** above. The build number in iTunes Connect that you wish to submit for review.
+7. **Choose Build** - `Latest` or `Specify build number`. By default the latest build will be submitted for review.
 
-8. **Release Automatically** *(Checkbox)* - Check to automatically release the app once the approval process is completed.
+8. **Build Number** - Required if `Specify build number` option is selected in **Choose Build** above. The build number in iTunes Connect that you wish to submit for review.
+
+9. **Release Automatically** *(Checkbox)* - Check to automatically release the app once the approval process is completed.
 
 #### Advanced Options
 
