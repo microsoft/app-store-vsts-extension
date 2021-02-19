@@ -15,7 +15,7 @@ This extension contains a set of deployment tasks which allow you to automate th
 ## Prerequisites
 
 * In order to automate the release of app updates to the App Store, you need to have manually released at least one version of the app beforehand.
-* The tasks install and use [fastlane](https://github.com/fastlane/fastlane) tools. fastlane requires Ruby 2.0.0 or above and recommends having the latest Xcode command line tools installed on the MacOS computer. 
+* The tasks install and use [fastlane](https://github.com/fastlane/fastlane) tools. fastlane requires Ruby 2.0.0 or above and recommends having the latest Xcode command line tools installed on the MacOS computer.
 
 ## Quick Start
 
@@ -47,22 +47,26 @@ In addition to specifying your publisher credentials directly within each build 
 
 4. Click on **New service connection** and select **Apple App Store**.
 
-5. Give the new connection a name and enter the credentials for your Apple developer account.
+5. Choose either **Basic authentication** if you want to use your App Store email, password, app-specific password and fastlane session or **Token based authentication** in case you want to use Apple Api key.
 
-6. Select this connection using the name you chose in the previous step whenever you add either the **App Store Release** or **App Store Promote** tasks to a build or release pipeline.
+6. Give the new connection a name and enter the credentials.
+
+7. Select this connection using the name you chose in the previous step whenever you add either the **App Store Release** or **App Store Promote** tasks to a build or release pipeline.
 
 ### Two-Factor Authentication
 
+You can skip this step if you use **Token based authentication**
+
 Apple authentication is region specific, and Microsoft-hosted agents may not be in the same region as your developer machine. Instead, we recommend that you create a separate Apple ID with a strong password and restricted access.  See [this](https://docs.fastlane.tools/best-practices/continuous-integration/#separate-apple-id-for-ci) link for more details.
 
-To use two-factor authentication, you need to setup the `Fastlane Session` variable on the Apple App Store service connection. 
+To use two-factor authentication, you need to setup the `Fastlane Session` variable on the Apple App Store service connection.
 
 1. Create the fastlane session token by following these [instructions](https://docs.fastlane.tools/best-practices/continuous-integration/#use-of-application-specific-passwords-and-spaceauth).
 
 2. Set this value on the Apple App Store service connection.
 
 #### Use of application specific apple id
-If you want to upload apps to TestFlight without trigerring two-factor authentication, you need to setup the App specific apple Id. This value should be taken from Apple ID property in the App Information section in App Store Connect (number). 
+If you want to upload apps to TestFlight without triggering two-factor authentication, you need to set up the App specific apple Id. This value should be taken from Apple ID property in the App Information section in App Store Connect (number).
 The following conditions are required:
 1. Application specific apple id should be provided (number)
 2. shouldSkipWaitingForProcessing: true
@@ -84,11 +88,19 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 ![Release task](/images/release-task-with-advanced.png)
 
-1. **Username and Password** or **Service Connection** - The credentials used to authenticate with the App Store. Credentials can be provided directly or configured via a service connection that can be referenced from the task (via the `Service Connection` authentication method).
+1. **Authentication method** - What type of credentials will be used to authenticate with the App Store. Credentials can be provided directly (using `App Store Connect Api Key` or `Username and Password` options) or configured via a service connection that can be referenced from the task (via the `Service Connection` authentication method).
 
-2. **Bundle ID** *(String)* - Unique app identifier (e.g. com.myapp.etc).  The **Bundle ID** is only required if "Track" is *Production*.
+2. **App Store Connect API Key ID, Issuer ID and Key Content (base64-encoded)** *(String, required if authentication method is `App Store Connect Api Key`)* - The API key data used to authenticate with the App Store. Key content has to be base64-encoded.
 
-3. **Binary Path** *(File path, Required)* - Path to the IPA file you want to publish to the specified track.  A glob pattern can be used but it must resolve to exactly one IPA file.
+3. **App Store Connect API Key In House** *(Checkbox, required if authentication method is `App Store Connect Api Key`)* - Whether the account used to publish to the Apple App Store is an Enterprise account or not.
+
+4. **Service connection** - Available only if authentication method is `Service Connection`. The creation of the service connection is explained in [this section](#configuring-your-app-store-publisher-credentials).
+
+5. **Email and Password** *(String, required if authentication method is `Username and Password`)* - Specify your Apple ID Developer account email and password here.
+
+6. **Bundle ID** *(String)* - Unique app identifier (e.g. com.myapp.etc).  The **Bundle ID** is only required if "Track" is *Production*.
+
+7. **Binary Path** *(File path, Required)* - Path to the IPA file you want to publish to the specified track.  A glob pattern can be used but it must resolve to exactly one IPA file.
 
 #### Release Options
 
@@ -160,7 +172,7 @@ Example of using task without triggering 2FA (for account with 2FA enabled):
     appIdentifier: '$(fastLane.auth.bundleID)'
     appType: 'iOS'
     ipaPath: '**/*.ipa'
-    releaseTrack: 'TestFlight' 
+    releaseTrack: 'TestFlight'
     shouldSkipWaitingForProcessing: true
     appSpecificId: '1234567890'
 ```
@@ -171,15 +183,23 @@ Allows you to promote an app previously updated to iTunes Connect to the App Sto
 
 ![Promote task](/images/promote-task-with-advanced.png)
 
-1. **Username and Password** or **Service Connection** - The credentials used to authenticate with the App Store. Credentials can be provided directly or configured via a service connection that can be referenced from the task (via the `Service Connection` authentication method).
+1. **Authentication method** - What type of credentials will be used to authenticate with the App Store. Credentials can be provided directly (using `App Store Connect Api Key` or `Username and Password` options) or configured via a service connection that can be referenced from the task (via the `Service Connection` authentication method).
 
-2. **Bundle ID** *(String, required)* - The unique identifier for the app to be promoted.
+2. **App Store Connect API Key ID, Issuer ID and Key Content (base64-encoded)** *(String, required if authentication method is `App Store Connect Api Key`)* - The API key data used to authenticate with the App Store. Key content has to be base64-encoded.
 
-3. **Choose Build** - `Latest` or `Specify build number`. By default the latest build will be submitted for review.
+3. **App Store Connect API Key In House** *(Checkbox, required if authentication method is `App Store Connect Api Key`)* - Whether the account used to publish to the Apple App Store is an Enterprise account or not.
 
-4. **Build Number** - Required if `Specify build number` option is selected in **Choose Build** above. The build number in iTunes Connect that you wish to submit for review.
+4. **Service connection** - Available only if authentication method is `Service Connection`. The creation of the service connection is explained in [this section](#configuring-your-app-store-publisher-credentials).
 
-5. **Release Automatically** *(Checkbox)* - Check to automatically release the app once the approval process is completed.
+5. **Email and Password** *(String, required if authentication method is `Username and Password`)* - Specify your Apple ID Developer account email and password here.
+
+6. **Bundle ID** *(String, required)* - The unique identifier for the app to be promoted.
+
+7. **Choose Build** - `Latest` or `Specify build number`. By default the latest build will be submitted for review.
+
+8. **Build Number** - Required if `Specify build number` option is selected in **Choose Build** above. The build number in iTunes Connect that you wish to submit for review.
+
+9. **Release Automatically** *(Checkbox)* - Check to automatically release the app once the approval process is completed.
 
 #### Advanced Options
 
