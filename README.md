@@ -66,7 +66,7 @@ To use two-factor authentication, you need to setup the `Fastlane Session` varia
 2. Set this value on the Apple App Store service connection.
 
 #### Use of application specific apple id
-If you want to upload apps to TestFlight without trigerring two-factor authentication, you need to setup the App specific apple Id. This value should be taken from Apple ID property in the App Information section in App Store Connect (number).
+If you want to upload apps to TestFlight without triggering two-factor authentication, you need to set up the App specific apple Id. This value should be taken from Apple ID property in the App Information section in App Store Connect (number).
 The following conditions are required:
 1. Application specific apple id should be provided (number)
 2. shouldSkipWaitingForProcessing: true
