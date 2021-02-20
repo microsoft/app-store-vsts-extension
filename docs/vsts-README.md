@@ -1,7 +1,6 @@
 ![Build Status](https://mseng.visualstudio.com/_apis/public/build/definitions/b924d696-3eae-4116-8443-9a18392d8544/4518/badge)
 
 # Azure DevOps Extension for the Apple App Store
-# Azure DevOps Extension for the Apple App Store
 
 This extension contains a set of deployment tasks which allow you to automate the release and promotion of app updates to Apple's App Store from your CI environment. This can reduce the effort needed to keep your beta and production deployments up-to-date, since you can simply push changes to the configured source control branches, and let your automated build take care of the rest.
 
