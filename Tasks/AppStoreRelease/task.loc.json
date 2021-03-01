@@ -372,6 +372,14 @@
       "argumentFormat": ""
     }
   },
+  "restrictions": {
+    "commands": {
+      "mode": "restricted"
+    },
+    "settableVariables": {
+      "allowed": []
+    }
+  },
   "messages": {
     "DarwinOnly": "ms-resource:loc.messages.DarwinOnly",
     "UninstallFastlaneFailed": "ms-resource:loc.messages.UninstallFastlaneFailed",

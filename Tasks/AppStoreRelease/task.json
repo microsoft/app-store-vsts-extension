@@ -370,6 +370,14 @@
             "argumentFormat": ""
         }
     },
+    "restrictions": {
+        "commands": {
+            "mode": "restricted"
+        },
+        "settableVariables": {
+            "allowed": []
+        }
+    },
     "messages": {
         "DarwinOnly": "The Apple App Store Release task can only run on a Mac computer.",
         "UninstallFastlaneFailed": "There were errors when trying to uninstall fastlane. Review the error and if required add a script to your pipeline to cleanly uninstall fastlane prior to running this task. Uninstall error: %s",
