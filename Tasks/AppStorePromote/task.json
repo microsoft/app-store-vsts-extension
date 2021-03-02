@@ -16,7 +16,7 @@
         "Minor": "184",
         "Patch": "0"
     },
-    "minimumAgentVersion": "2.181.1",
+    "minimumAgentVersion": "2.182.1",
     "instanceNameFormat": "Submit to the App Store for review",
     "groups": [
         {
