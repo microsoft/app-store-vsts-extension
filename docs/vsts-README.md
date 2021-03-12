@@ -33,9 +33,9 @@ In addition to specifying your publisher credentials directly within each build 
 
 1. Setup an Apple developer account (https://developer.apple.com/).
 
-2. Go into your Azure DevOps or TFS project and click on the gear icon in the upper right corner.
+2. Go into your Azure DevOps or TFS project and click on the gear icon in the lower left corner.
 
-3. Click on the **Services** tab.
+3. Click on the **Service Connections** tab.
 
 4. Click on **New service connection** and select **Apple App Store**.
 
