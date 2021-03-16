@@ -21,7 +21,7 @@ describe('ipa-resign L0 Suite', function () {
     /* tslint:enable:no-empty */
     this.timeout(parseInt(process.env.TASK_TEST_TIMEOUT) || 20000);
 
-    it('enforce darwin', (done:MochaDone) => {
+    it('enforce darwin', (done:Mocha.Done) => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0EnforceDarwin.js');
