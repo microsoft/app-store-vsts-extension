@@ -15,10 +15,10 @@
   ],
   "version": {
     "Major": "1",
-    "Minor": "183",
+    "Minor": "186",
     "Patch": "0"
   },
-  "minimumAgentVersion": "1.95.3",
+  "minimumAgentVersion": "2.182.1",
   "instanceNameFormat": "ms-resource:loc.instanceNameFormat",
   "groups": [
     {
@@ -370,6 +370,14 @@
     "Node10": {
       "target": "app-store-release.js",
       "argumentFormat": ""
+    }
+  },
+  "restrictions": {
+    "commands": {
+      "mode": "restricted"
+    },
+    "settableVariables": {
+      "allowed": []
     }
   },
   "messages": {
