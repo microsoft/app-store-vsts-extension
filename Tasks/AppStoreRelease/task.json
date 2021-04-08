@@ -14,9 +14,9 @@
     "version": {
         "Major": "1",
         "Minor": "186",
-        "Patch": "0"
+        "Patch": "1"
     },
-    "minimumAgentVersion": "2.182.1",
+    "minimumAgentVersion": "2.170.1",
     "instanceNameFormat": "Publish to the App Store $(releaseTrack) track",
     "groups": [
         {
