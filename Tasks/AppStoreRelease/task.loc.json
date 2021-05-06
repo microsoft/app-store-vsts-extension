@@ -15,7 +15,7 @@
   ],
   "version": {
     "Major": "1",
-    "Minor": "186",
+    "Minor": "187",
     "Patch": "0"
   },
   "minimumAgentVersion": "2.182.1",
@@ -249,6 +249,26 @@
       "visibleRule": "releaseTrack = Production"
     },
     {
+      "name": "distributeOnly",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.distributeOnly",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.distributeOnly",
+      "groupName": "releaseOptions",
+      "visibleRule": "releaseTrack = TestFlight"
+    },
+    {
+      "name": "buildNumber",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.buildNumber",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.buildNumber",
+      "groupName": "releaseOptions",
+      "visibleRule": "distributeOnly = true"
+    },
+    {
       "name": "releaseNotes",
       "type": "filePath",
       "label": "ms-resource:loc.input.label.releaseNotes",
@@ -256,7 +276,7 @@
       "required": false,
       "helpMarkDown": "ms-resource:loc.input.help.releaseNotes",
       "groupName": "releaseOptions",
-      "visibleRule": "releaseTrack = TestFlight"
+      "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
     },
     {
       "name": "shouldSkipWaitingForProcessing",
@@ -266,7 +286,7 @@
       "defaultValue": false,
       "helpMarkDown": "ms-resource:loc.input.help.shouldSkipWaitingForProcessing",
       "groupName": "releaseOptions",
-      "visibleRule": "releaseTrack = TestFlight"
+      "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
     },
     {
       "name": "shouldSkipSubmission",
@@ -276,7 +296,7 @@
       "defaultValue": false,
       "helpMarkDown": "ms-resource:loc.input.help.shouldSkipSubmission",
       "groupName": "releaseOptions",
-      "visibleRule": "releaseTrack = TestFlight"
+      "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
     },
     {
       "name": "distributedToExternalTesters",
@@ -286,7 +306,7 @@
       "defaultValue": false,
       "helpMarkDown": "ms-resource:loc.input.help.distributedToExternalTesters",
       "groupName": "releaseOptions",
-      "visibleRule": "releaseTrack = TestFlight"
+      "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
     },
     {
       "name": "externalTestersGroups",
@@ -296,7 +316,7 @@
       "defaultValue": "",
       "helpMarkDown": "ms-resource:loc.input.help.externalTestersGroups",
       "groupName": "releaseOptions",
-      "visibleRule": "distributedToExternalTesters = true"
+      "visibleRule": "distributedToExternalTesters = true || distributeOnly = true"
     },
     {
       "name": "appSpecificId",

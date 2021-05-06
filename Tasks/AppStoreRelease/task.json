@@ -13,7 +13,7 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "186",
+        "Minor": "187",
         "Patch": "0"
     },
     "minimumAgentVersion": "2.182.1",
@@ -247,6 +247,26 @@
             "visibleRule": "releaseTrack = Production"
         },
         {
+            "name": "distributeOnly",
+            "type": "boolean",
+            "label": "Distribute a previously uploaded binary",
+            "defaultValue": false,
+            "required": false,
+            "helpMarkDown": "Distribute a previously uploaded binary to Apple TestFlight.",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = TestFlight"
+        },
+        {
+            "name": "buildNumber",
+            "type": "string",
+            "label": "Build Number",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "The build number of the application build to distribute. If the build number is not specified, the most recent build is distributed.",
+            "groupName": "releaseOptions",
+            "visibleRule": "distributeOnly = true"
+        },
+        {
             "name": "releaseNotes",
             "type": "filePath",
             "label": "What to Test?",
@@ -254,7 +274,7 @@
             "required": false,
             "helpMarkDown": "Path to the file containing notes on what to test for this release.",
             "groupName": "releaseOptions",
-            "visibleRule": "releaseTrack = TestFlight"
+            "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
         },
         {
             "name": "shouldSkipWaitingForProcessing",
@@ -264,7 +284,7 @@
             "defaultValue": false,
             "helpMarkDown": "Select to skip waiting for the Apple App Store to finish processing the build.",
             "groupName": "releaseOptions",
-            "visibleRule": "releaseTrack = TestFlight"
+            "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
         },
         {
             "name": "shouldSkipSubmission",
@@ -274,7 +294,7 @@
             "defaultValue": false,
             "helpMarkDown": "Select to upload the IPA but not distribute it to testers.",
             "groupName": "releaseOptions",
-            "visibleRule": "releaseTrack = TestFlight"
+            "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
         },
         {
             "name": "distributedToExternalTesters",
@@ -284,7 +304,7 @@
             "defaultValue": false,
             "helpMarkDown": "Select to distribute the build to external testers (cannot be used with 'Skip Build Processing Wait' and 'Skip Submission').  Using this option requires setting release notes in 'What to Test?'",
             "groupName": "releaseOptions",
-            "visibleRule": "releaseTrack = TestFlight"
+            "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
         },
         {
             "name": "externalTestersGroups",
@@ -294,7 +314,7 @@
             "defaultValue": "",
             "helpMarkDown": "Optionally specify the group(s) of external testers this build should be distributed to. To specify multiple groups, separate group names by commas e.g. 'External Beta Testers,TestVendors'. If not specified the default 'External Testers' is used.",
             "groupName": "releaseOptions",
-            "visibleRule": "distributedToExternalTesters = true"
+            "visibleRule": "distributedToExternalTesters = true || distributeOnly = true"
         },
         {
             "name": "appSpecificId",

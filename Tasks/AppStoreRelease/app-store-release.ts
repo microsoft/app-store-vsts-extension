@@ -161,6 +161,8 @@ async function run() {
         let shouldSkipSubmission: boolean = tl.getBoolInput('shouldSkipSubmission', false);
         let teamId: string = tl.getInput('teamId', false);
         let teamName: string = tl.getInput('teamName', false);
+        let distributeOnly: boolean = tl.getBoolInput('distributeOnly', false);
+        let buildNumber: boolean = tl.getBoolInput('buildNumber', false);
         const appSpecificId: string = tl.getInput('appSpecificId', false);
 
         let applicationType: string = tl.getInput('appType', true);
@@ -206,7 +208,7 @@ async function run() {
         // Add bin of new gem home so we don't have to resolve it later
         process.env['PATH'] = process.env['PATH'] + ':' + gemCache + path.sep + 'bin';
 
-        if (!skipBinaryUpload) {
+        if (!skipBinaryUpload && !distributeOnly) {
             if (!filePath) {
                 throw new Error(tl.loc('IpaPathNotSpecified'));
             }
@@ -270,39 +272,50 @@ async function run() {
             // See https://github.com/fastlane/fastlane/blob/master/pilot/lib/pilot/options.rb for more information on these arguments
             let pilotCommand: ToolRunner = tl.tool('fastlane');
             let bundleIdentifier: string = tl.getInput('appIdentifier', false);
-            if (isUsingApiKey) {
-                pilotCommand.arg(['pilot', 'upload', '--api_key_path', apiKeyFilePath, '-i', filePath]);
-            } else {
-                pilotCommand.arg(['pilot', 'upload', '-u', credentials.username, '-i', filePath]);
-            }
-            let usingReleaseNotes: boolean = isValidFilePath(releaseNotes);
-            if (usingReleaseNotes) {
-                if (!credentials.fastlaneSession) {
-                    tl.warning(tl.loc('ReleaseNotesRequiresFastlaneSession'));
-                }
+            let externalTestersGroups: string = tl.getInput('externalTestersGroups');
 
-                pilotCommand.arg(['--changelog', fs.readFileSync(releaseNotes).toString()]);
-            }
-            pilotCommand.argIf(teamId, ['-q', teamId]);
-            pilotCommand.argIf(teamName, ['-r', teamName]);
-            pilotCommand.argIf(bundleIdentifier, ['-a', bundleIdentifier]);
-            pilotCommand.argIf(shouldSkipSubmission, ['--skip_submission', 'true']);
-            pilotCommand.argIf(shouldSkipWaitingForProcessing, ['--skip_waiting_for_build_processing', 'true']);
-            pilotCommand.argIf(appSpecificId, ['-p', appSpecificId]);
-
-            let distributedToExternalTesters: boolean = tl.getBoolInput('distributedToExternalTesters', false);
-            if (distributedToExternalTesters) {
-                tl.debug('Distributing to external testers');
-                if (!usingReleaseNotes) {
-                    throw new Error(tl.loc('ReleaseNotesRequiredForExternalTesting'));
-                }
-                pilotCommand.arg(['--distribute_external', 'true']);
-                if (shouldSkipSubmission || shouldSkipWaitingForProcessing) {
-                    tl.warning(tl.loc('ExternalTestersCannotSkipWarning'));
-                }
-
-                let externalTestersGroups: string = tl.getInput('externalTestersGroups');
+            if (distributeOnly) {
+                pilotCommand.arg(['pilot', 'distribute']);
+                pilotCommand.argIf(buildNumber, ['--build_number', buildNumber]);
+                pilotCommand.argIf(bundleIdentifier, ['-a', bundleIdentifier]);
                 pilotCommand.argIf(externalTestersGroups, ['--groups', externalTestersGroups]);
+            } else {
+                pilotCommand.arg(['pilot', 'upload']);
+                let usingReleaseNotes: boolean = isValidFilePath(releaseNotes);
+                if (usingReleaseNotes) {
+                    if (!credentials.fastlaneSession) {
+                        tl.warning(tl.loc('ReleaseNotesRequiresFastlaneSession'));
+                    }
+
+                    pilotCommand.arg(['--changelog', fs.readFileSync(releaseNotes).toString()]);
+                }
+                pilotCommand.argIf(teamId, ['-q', teamId]);
+                pilotCommand.argIf(teamName, ['-r', teamName]);
+                pilotCommand.argIf(bundleIdentifier, ['-a', bundleIdentifier]);
+                pilotCommand.argIf(shouldSkipSubmission, ['--skip_submission', 'true']);
+                pilotCommand.argIf(shouldSkipWaitingForProcessing, ['--skip_waiting_for_build_processing', 'true']);
+                pilotCommand.argIf(appSpecificId, ['-p', appSpecificId]);
+                pilotCommand.arg(['-i', filePath]);
+
+                let distributedToExternalTesters: boolean = tl.getBoolInput('distributedToExternalTesters', false);
+                if (distributedToExternalTesters) {
+                    tl.debug('Distributing to external testers');
+                    if (!usingReleaseNotes) {
+                        throw new Error(tl.loc('ReleaseNotesRequiredForExternalTesting'));
+                    }
+                    pilotCommand.arg(['--distribute_external', 'true']);
+                    if (shouldSkipSubmission || shouldSkipWaitingForProcessing) {
+                        tl.warning(tl.loc('ExternalTestersCannotSkipWarning'));
+                    }
+
+                    pilotCommand.argIf(externalTestersGroups, ['--groups', externalTestersGroups]);
+                }
+            }
+
+            if (isUsingApiKey) {
+                pilotCommand.arg(['--api_key_path', apiKeyFilePath]);
+            } else {
+                pilotCommand.arg(['-u', credentials.username]);
             }
 
             if (fastlaneArguments) {
