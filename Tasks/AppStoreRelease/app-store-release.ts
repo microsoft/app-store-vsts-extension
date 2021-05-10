@@ -162,7 +162,7 @@ async function run() {
         let teamId: string = tl.getInput('teamId', false);
         let teamName: string = tl.getInput('teamName', false);
         let distributeOnly: boolean = tl.getBoolInput('distributeOnly', false);
-        let buildNumber: boolean = tl.getBoolInput('buildNumber', false);
+        let appBuildNumber: string = tl.getInput('appBuildNumber', false);
         const appSpecificId: string = tl.getInput('appSpecificId', false);
 
         let applicationType: string = tl.getInput('appType', true);
@@ -275,12 +275,20 @@ async function run() {
             let externalTestersGroups: string = tl.getInput('externalTestersGroups');
 
             if (distributeOnly) {
-                pilotCommand.arg(['pilot', 'distribute']);
-                pilotCommand.argIf(buildNumber, ['--build_number', buildNumber]);
+                if (isUsingApiKey) {
+                    pilotCommand.arg(['pilot', 'distribute', '--api_key_path', apiKeyFilePath]);
+                } else {
+                    pilotCommand.arg(['pilot', 'distribute', '-u', credentials.username]);
+                }
+                pilotCommand.argIf(appBuildNumber, ['--build_number', appBuildNumber]);
                 pilotCommand.argIf(bundleIdentifier, ['-a', bundleIdentifier]);
                 pilotCommand.argIf(externalTestersGroups, ['--groups', externalTestersGroups]);
             } else {
-                pilotCommand.arg(['pilot', 'upload']);
+                if (isUsingApiKey) {
+                    pilotCommand.arg(['pilot', 'upload', '--api_key_path', apiKeyFilePath, '-i', filePath]);
+                } else {
+                    pilotCommand.arg(['pilot', 'upload', '-u', credentials.username, '-i', filePath]);
+                }
                 let usingReleaseNotes: boolean = isValidFilePath(releaseNotes);
                 if (usingReleaseNotes) {
                     if (!credentials.fastlaneSession) {
@@ -295,7 +303,6 @@ async function run() {
                 pilotCommand.argIf(shouldSkipSubmission, ['--skip_submission', 'true']);
                 pilotCommand.argIf(shouldSkipWaitingForProcessing, ['--skip_waiting_for_build_processing', 'true']);
                 pilotCommand.argIf(appSpecificId, ['-p', appSpecificId]);
-                pilotCommand.arg(['-i', filePath]);
 
                 let distributedToExternalTesters: boolean = tl.getBoolInput('distributedToExternalTesters', false);
                 if (distributedToExternalTesters) {
@@ -310,12 +317,6 @@ async function run() {
 
                     pilotCommand.argIf(externalTestersGroups, ['--groups', externalTestersGroups]);
                 }
-            }
-
-            if (isUsingApiKey) {
-                pilotCommand.arg(['--api_key_path', apiKeyFilePath]);
-            } else {
-                pilotCommand.arg(['-u', credentials.username]);
             }
 
             if (fastlaneArguments) {

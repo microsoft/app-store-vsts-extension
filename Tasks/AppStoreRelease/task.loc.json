@@ -16,7 +16,7 @@
   "version": {
     "Major": "1",
     "Minor": "187",
-    "Patch": "0"
+    "Patch": "1"
   },
   "minimumAgentVersion": "2.182.1",
   "instanceNameFormat": "ms-resource:loc.instanceNameFormat",
@@ -259,12 +259,12 @@
       "visibleRule": "releaseTrack = TestFlight"
     },
     {
-      "name": "buildNumber",
+      "name": "appBuildNumber",
       "type": "string",
-      "label": "ms-resource:loc.input.label.buildNumber",
+      "label": "ms-resource:loc.input.label.appBuildNumber",
       "defaultValue": "",
       "required": false,
-      "helpMarkDown": "ms-resource:loc.input.help.buildNumber",
+      "helpMarkDown": "ms-resource:loc.input.help.appBuildNumber",
       "groupName": "releaseOptions",
       "visibleRule": "distributeOnly = true"
     },
