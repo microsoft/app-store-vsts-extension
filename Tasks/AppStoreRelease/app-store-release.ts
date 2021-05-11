@@ -369,7 +369,11 @@ async function run() {
             deliverCommand.argIf(teamId, ['-k', teamId]);
             deliverCommand.argIf(teamName, ['--team_name', teamName]);
             deliverCommand.argIf(shouldSubmitForReview, ['--submit_for_review', 'true']);
-            deliverCommand.argIf(shouldAutoRelease, ['--automatic_release', 'true']);
+            if (shouldAutoRelease) {
+                deliverCommand.arg(['--automatic_release', 'true']);
+            } else {
+                deliverCommand.arg(['--automatic_release', 'false']);
+            }
 
             if (fastlaneArguments) {
                 deliverCommand.line(fastlaneArguments);
