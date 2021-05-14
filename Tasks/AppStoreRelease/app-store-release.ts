@@ -273,22 +273,20 @@ async function run() {
             let pilotCommand: ToolRunner = tl.tool('fastlane');
             let bundleIdentifier: string = tl.getInput('appIdentifier', false);
             let externalTestersGroups: string = tl.getInput('externalTestersGroups');
-
+            let authArgs: string[];
+            if (isUsingApiKey) {
+                authArgs = ['--api_key_path', apiKeyFilePath];
+            } else {
+                authArgs = ['-u', credentials.username];
+            }            
             if (distributeOnly) {
-                if (isUsingApiKey) {
-                    pilotCommand.arg(['pilot', 'distribute', '--api_key_path', apiKeyFilePath]);
-                } else {
-                    pilotCommand.arg(['pilot', 'distribute', '-u', credentials.username]);
-                }
+                pilotCommand.arg(['pilot', 'distribute', ...authArgs]);
                 pilotCommand.argIf(appBuildNumber, ['--build_number', appBuildNumber]);
                 pilotCommand.argIf(bundleIdentifier, ['-a', bundleIdentifier]);
                 pilotCommand.argIf(externalTestersGroups, ['--groups', externalTestersGroups]);
             } else {
-                if (isUsingApiKey) {
-                    pilotCommand.arg(['pilot', 'upload', '--api_key_path', apiKeyFilePath, '-i', filePath]);
-                } else {
-                    pilotCommand.arg(['pilot', 'upload', '-u', credentials.username, '-i', filePath]);
-                }
+                pilotCommand.arg(['pilot', 'upload', ...authArgs]);
+                pilotCommand.arg(['-i', filePath]);
                 let usingReleaseNotes: boolean = isValidFilePath(releaseNotes);
                 if (usingReleaseNotes) {
                     if (!credentials.fastlaneSession) {
