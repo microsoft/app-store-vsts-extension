@@ -136,25 +136,14 @@
             "visibleRule": "isTwoFactorAuth = true"
         },
         {
-            "name": "appIdentifier",
-            "type": "string",
-            "label": "Bundle ID",
-            "defaultValue": "",
+            "name": "distributeOnly",
+            "type": "boolean",
+            "label": "Distribute a previously uploaded binary to External Testers",
+            "defaultValue": false,
             "required": false,
-            "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc). Required if the track is Production."
-        },
-        {
-            "name": "appType",
-            "type": "pickList",
-            "label": "Application Type",
-            "helpMarkDown": "The type of application you wish to submit",
-            "required": true,
-            "defaultValue": "iOS",
-            "options": {
-                "iOS": "iOS",
-                "tvOS": "tvOS",
-                "macOS": "macOS"
-            }
+            "helpMarkDown": "Distribute a previously uploaded binary to Apple TestFlight. Add groups to the build. All testers in these groups will have access to this build.",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = TestFlight"
         },
         {
             "name": "releaseTrack",
@@ -169,6 +158,40 @@
             "groupName": "releaseOptions"
         },
         {
+            "name": "appIdentifier",
+            "type": "string",
+            "label": "Bundle ID",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc). Required if the track is Production or 'Distribute a previously uploaded binary' is selected",
+            "groupName": "releaseOptions"
+        },
+        {
+            "name": "appType",
+            "type": "pickList",
+            "label": "Application Type",
+            "helpMarkDown": "The type of application you wish to submit",
+            "required": true,
+            "defaultValue": "iOS",
+            "options": {
+                "iOS": "iOS",
+                "tvOS": "tvOS",
+                "macOS": "macOS"
+            },
+            "groupName": "releaseOptions",
+            "visibleRule": "distributeOnly = false || releaseTrack = Production"
+        },
+        {
+            "name": "ipaPath",
+            "type": "filePath",
+            "label": "Binary Path",
+            "defaultValue": "**/*.ipa",
+            "required": false,
+            "helpMarkDown": "Path to the binary to publish (i.e. IPA or PKG). A glob pattern can be used but it must resolve to exactly one IPA or PKG file.",
+            "groupName": "releaseOptions",
+            "visibleRule": "distributeOnly = false || releaseTrack = Production"
+        },
+        {
             "name": "skipBinaryUpload",
             "type": "boolean",
             "label": "Skip Binary Upload",
@@ -177,14 +200,6 @@
             "helpMarkDown": "Select to skip binary upload and only update metadata and screenshots. Please note that with enabling this option you also need to pass --description or --pkg as additional fastlane parameters.",
             "groupName": "releaseOptions",
             "visibleRule": "releaseTrack = Production"
-        },
-        {
-            "name": "ipaPath",
-            "type": "filePath",
-            "label": "Binary Path",
-            "defaultValue": "**/*.ipa",
-            "required": false,
-            "helpMarkDown": "Path to the binary to publish (i.e. IPA or PKG). A glob pattern can be used but it must resolve to exactly one IPA or PKG file."
         },
         {
             "name": "uploadMetadata",
@@ -245,16 +260,6 @@
             "helpMarkDown": "Select to automatically release the app once it is approved.",
             "groupName": "releaseOptions",
             "visibleRule": "releaseTrack = Production"
-        },
-        {
-            "name": "distributeOnly",
-            "type": "boolean",
-            "label": "Distribute a previously uploaded binary",
-            "defaultValue": false,
-            "required": false,
-            "helpMarkDown": "Distribute a previously uploaded binary to Apple TestFlight.",
-            "groupName": "releaseOptions",
-            "visibleRule": "releaseTrack = TestFlight"
         },
         {
             "name": "appBuildNumber",
@@ -324,7 +329,7 @@
             "required": false,
             "helpMarkDown": "App Specific Apple Id: this value should be taken from Apple ID property in the App Information section in App Store Connect",
             "groupName": "releaseOptions",
-            "visibleRule": "releaseTrack = TestFlight"
+            "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
         },
         {
             "name": "teamId",
