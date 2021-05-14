@@ -278,7 +278,7 @@ async function run() {
                 authArgs = ['--api_key_path', apiKeyFilePath];
             } else {
                 authArgs = ['-u', credentials.username];
-            }            
+            }
             if (distributeOnly) {
                 pilotCommand.arg(['pilot', 'distribute', ...authArgs]);
                 pilotCommand.argIf(appBuildNumber, ['--build_number', appBuildNumber]);
