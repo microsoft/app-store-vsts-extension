@@ -98,15 +98,20 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 5. **Email and Password** *(String, required if authentication method is `Username and Password`)* - Specify your Apple ID Developer account email and password here.
 
-6. **Bundle ID** *(String)* - Unique app identifier (e.g. com.myapp.etc).  The **Bundle ID** is only required if "Track" is *Production*.
-
-7. **Binary Path** *(File path, Required)* - Path to the IPA file you want to publish to the specified track.  A glob pattern can be used but it must resolve to exactly one IPA file.
-
 #### Release Options
 
 **Track** *(String, Required)* - Release track to publish the binary to (e.g. `TestFlight`  or `Production` ).
+##### Common Release Options
+
+1. **Bundle ID** *(String)* - Unique app identifier (e.g. com.myapp.etc).  The **Bundle ID** is only required if "Track" is *Production*.
+
+2. **Application Type** *(iOS, tvOS, macOS)* - The type of application you wish to submit.
+
+3. **Binary Path** *(File path, Required)* - Path to the IPA file you want to publish to the specified track.  A glob pattern can be used but it must resolve to exactly one IPA file.
 
 ##### Release Options for TestFlight track
+
+**Distribute a previously uploaded binary to External Testers** *(Checkbox)* - (Disabled by default) Distribute a previously uploaded binary to Apple TestFlight. Select this if you want to distribute a version of a build that already exists in App Store Connect. Otherwise, your IPA file specified in *Binary Path* input will be uploaded.
 
 1. **What to Test?** *(File path)* - Path to the file containing notes on what to test for this release.
 
@@ -118,7 +123,13 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 5. **Distribute to External Testers** *(Checkbox)* - Select to distribute the build to external testers (cannot be used with 'Skip Build Processing Wait' and 'Skip Submission').  Using this option requires setting release notes in 'What to Test?'.
 
-6. **Groups** *(String)* - Optionally specify the group(s) of external testers this build should be distributed to. To specify multiple groups, separate group names by commas e.g. 'External Beta Testers,TestVendors'. If not specified the default 'External Testers' is used.
+6. **Groups** *(String)* - Optionally specify the group(s) of external testers this build should be distributed to. All testers in these groups will have access to this build. To specify multiple groups, separate group names by commas e.g. 'External Beta Testers,TestVendors'. If not specified the default 'External Testers' is used.
+
+###### If *Distribute a previously uploaded binary to External Testers* is selected
+
+1. **Build Number** *(String)* - The build number of the application build to distribute. If the build number is not specified, the most recent build is distributed.
+
+2. **Groups** *(String)* - Optionally specify the group(s) of external testers this build should be distributed to. All testers in these groups will have access to this build. To specify multiple groups, separate group names by commas e.g. 'External Beta Testers,TestVendors'. If not specified the default 'External Testers' is used.
 
 ##### Release Options for Production track
 
