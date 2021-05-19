@@ -103,7 +103,7 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 **Track** *(String, Required)* - Release track to publish the binary to (e.g. `TestFlight`  or `Production` ).
 ##### Common Release Options
 
-1. **Bundle ID** *(String)* - Unique app identifier (e.g. com.myapp.etc).  The **Bundle ID** is only required if "Track" is *Production*.
+1. **Bundle ID** *(String)* - Unique app identifier (e.g. com.myapp.etc).  The **Bundle ID** is only required if "Track" is *Production* or "Distribute a previously uploaded binary" is selected.
 
 2. **Application Type** *(iOS, tvOS, macOS)* - The type of application you wish to submit.
 
@@ -125,7 +125,7 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 
 6. **Groups** *(String)* - Optionally specify the group(s) of external testers this build should be distributed to. All testers in these groups will have access to this build. To specify multiple groups, separate group names by commas e.g. 'External Beta Testers,TestVendors'. If not specified the default 'External Testers' is used.
 
-###### If *Distribute a previously uploaded binary to External Testers* is selected
+###### If *"Distribute a previously uploaded binary to External Testers"* is selected
 
 1. **Build Number** *(String)* - The build number of the application build to distribute. If the build number is not specified, the most recent build is distributed.
 
