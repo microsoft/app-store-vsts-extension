@@ -15,8 +15,8 @@
   ],
   "version": {
     "Major": "1",
-    "Minor": "187",
-    "Patch": "1"
+    "Minor": "188",
+    "Patch": "0"
   },
   "minimumAgentVersion": "2.182.1",
   "instanceNameFormat": "ms-resource:loc.instanceNameFormat",
@@ -138,16 +138,6 @@
       "visibleRule": "isTwoFactorAuth = true"
     },
     {
-      "name": "distributeOnly",
-      "type": "boolean",
-      "label": "ms-resource:loc.input.label.distributeOnly",
-      "defaultValue": false,
-      "required": false,
-      "helpMarkDown": "ms-resource:loc.input.help.distributeOnly",
-      "groupName": "releaseOptions",
-      "visibleRule": "releaseTrack = TestFlight"
-    },
-    {
       "name": "releaseTrack",
       "type": "pickList",
       "label": "ms-resource:loc.input.label.releaseTrack",
@@ -158,6 +148,16 @@
         "TestFlight": "TestFlight"
       },
       "groupName": "releaseOptions"
+    },
+    {
+      "name": "distributeOnly",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.distributeOnly",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.distributeOnly",
+      "groupName": "releaseOptions",
+      "visibleRule": "releaseTrack = TestFlight"
     },
     {
       "name": "appIdentifier",

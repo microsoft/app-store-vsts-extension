@@ -13,8 +13,8 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "187",
-        "Patch": "1"
+        "Minor": "188",
+        "Patch": "0"
     },
     "minimumAgentVersion": "2.182.1",
     "instanceNameFormat": "Publish to the App Store $(releaseTrack) track",
@@ -136,16 +136,6 @@
             "visibleRule": "isTwoFactorAuth = true"
         },
         {
-            "name": "distributeOnly",
-            "type": "boolean",
-            "label": "Distribute a previously uploaded binary to External Testers",
-            "defaultValue": false,
-            "required": false,
-            "helpMarkDown": "Distribute a previously uploaded binary to Apple TestFlight. Add groups to the build. All testers in these groups will have access to this build.",
-            "groupName": "releaseOptions",
-            "visibleRule": "releaseTrack = TestFlight"
-        },
-        {
             "name": "releaseTrack",
             "type": "pickList",
             "label": "Track",
@@ -156,6 +146,16 @@
                 "TestFlight": "TestFlight"
             },
             "groupName": "releaseOptions"
+        },
+        {
+            "name": "distributeOnly",
+            "type": "boolean",
+            "label": "Distribute a previously uploaded binary to External Testers",
+            "defaultValue": false,
+            "required": false,
+            "helpMarkDown": "Distribute a previously uploaded binary to Apple TestFlight. Add groups to the build. All testers in these groups will have access to this build.",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = TestFlight"
         },
         {
             "name": "appIdentifier",
@@ -317,7 +317,7 @@
             "label": "Groups",
             "required": false,
             "defaultValue": "",
-            "helpMarkDown": "Optionally specify the group(s) of external testers this build should be distributed to. To specify multiple groups, separate group names by commas e.g. 'External Beta Testers,TestVendors'. If not specified the default 'External Testers' is used.",
+            "helpMarkDown": "Optionally specify the group(s) of external testers this build should be distributed to. All testers in these groups will have access to this build. To specify multiple groups, separate group names by commas e.g. 'External Beta Testers,TestVendors'. If not specified the default 'External Testers' is used.",
             "groupName": "releaseOptions",
             "visibleRule": "distributedToExternalTesters = true || distributeOnly = true"
         },
