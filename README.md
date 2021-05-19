@@ -101,7 +101,7 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 #### Release Options
 
 **Track** *(String, Required)* - Release track to publish the binary to (e.g. `TestFlight`  or `Production` ).
-##### Common Release Options
+##### Common Release Options (Available for TestFlight and Production track)
 
 1. **Bundle ID** *(String)* - Unique app identifier (e.g. com.myapp.etc).  The **Bundle ID** is only required if "Track" is *Production* or "Distribute a previously uploaded binary" is selected.
 
