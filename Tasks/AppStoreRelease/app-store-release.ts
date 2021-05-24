@@ -271,7 +271,6 @@ async function run() {
             // Run pilot (via fastlane) to upload to testflight
             // See https://github.com/fastlane/fastlane/blob/master/pilot/lib/pilot/options.rb for more information on these arguments
             let pilotCommand: ToolRunner = tl.tool('fastlane');
-            let bundleIdentifier: string = tl.getInput('appIdentifier', false);
             let externalTestersGroups: string = tl.getInput('externalTestersGroups');
             let authArgs: string[];
             if (isUsingApiKey) {
@@ -280,11 +279,13 @@ async function run() {
                 authArgs = ['-u', credentials.username];
             }
             if (distributeOnly) {
+                let bundleIdentifier: string = tl.getInput('appIdentifier', true);
                 pilotCommand.arg(['pilot', 'distribute', ...authArgs]);
                 pilotCommand.argIf(appBuildNumber, ['--build_number', appBuildNumber]);
                 pilotCommand.argIf(bundleIdentifier, ['-a', bundleIdentifier]);
                 pilotCommand.argIf(externalTestersGroups, ['--groups', externalTestersGroups]);
             } else {
+                let bundleIdentifier: string = tl.getInput('appIdentifier', false);
                 pilotCommand.arg(['pilot', 'upload', ...authArgs]);
                 pilotCommand.arg(['-i', filePath]);
                 let usingReleaseNotes: boolean = isValidFilePath(releaseNotes);
