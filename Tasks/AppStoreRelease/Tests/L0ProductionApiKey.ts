@@ -57,7 +57,7 @@ let myAnswers: string = `{
             "code": 0,
             "stdout": "1 gem installed"
         },
-        "fastlane deliver --force --precheck_include_in_app_purchases false --api_key_path test_temp_path/api_keyD383SF739.json -a com.microsoft.test.appId -i mypackage.ipa -j ios --skip_metadata true --skip_screenshots true": {
+        "fastlane deliver --force --precheck_include_in_app_purchases false --api_key_path test_temp_path/api_keyD383SF739.json -a com.microsoft.test.appId -i mypackage.ipa -j ios --skip_metadata true --skip_screenshots true --automatic_release false": {
             "code": 0,
             "stdout": "consider it delivered!"
         }
