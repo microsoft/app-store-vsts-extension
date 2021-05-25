@@ -54,7 +54,7 @@ let myAnswers: string = `{
             "code": 0,
             "stdout": "1 gem installed"
         },
-        "fastlane deliver --force -u creds-username -a com.microsoft.test.appId --skip_binary_upload true -j ios --skip_metadata true --skip_screenshots true":
+        "fastlane deliver --force -u creds-username -a com.microsoft.test.appId --skip_binary_upload true -j ios --skip_metadata true --skip_screenshots true --automatic_release false":
         {
             "code": 0,
             "stdout": "consider it delivered!"
