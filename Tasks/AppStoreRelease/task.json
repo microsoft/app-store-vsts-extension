@@ -1,0 +1,421 @@
+{
+    "id": "2e371150-da5e-11e5-83da-0943b1acc572",
+    "name": "AppStoreRelease",
+    "friendlyName": "Apple App Store Release",
+    "description": "Release an app to TestFlight or the Apple App Store",
+    "helpMarkDown": "[More Information](https://marketplace.visualstudio.com/items?itemName=ms-vsclient.app-store)",
+    "author": "Microsoft Corporation",
+    "category": "Deploy",
+    "visibility": [
+        "Build",
+        "Release"
+    ],
+    "demands": [ "xcode" ],
+    "version": {
+        "Major": "1",
+        "Minor": "188",
+        "Patch": "0"
+    },
+    "minimumAgentVersion": "2.182.1",
+    "instanceNameFormat": "Publish to the App Store $(releaseTrack) track",
+    "groups": [
+        {
+            "name": "releaseOptions",
+            "displayName": "Release Options",
+            "isExpanded": true
+        },
+        {
+            "name": "advanced",
+            "displayName": "Advanced",
+            "isExpanded": false
+        }
+    ],
+    "inputs": [
+        {
+            "name": "authType",
+            "type": "pickList",
+            "label": "Authentication Method",
+            "defaultValue": "ServiceEndpoint",
+            "helpMarkDown": "",
+            "options": {
+                "ApiKey": "App Store Connect API Key",
+                "ServiceEndpoint": "Service Connection",
+                "UserAndPass": "Username and Password"
+            }
+        },
+        {
+            "name": "serviceEndpoint",
+            "type": "connectedService:apple-app-store",
+            "label": "Service Connection",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The TFS/Azure DevOps service connection that specifies the identity used to publish the app.",
+            "visibleRule": "authType = ServiceEndpoint"
+        },
+        {
+            "name": "apiKeyId",
+            "type": "string",
+            "label": "App Store Connect API Key ID",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The key_id of the account used to publish to the Apple App Store.",
+            "visibleRule": "authType = ApiKey"
+        },
+        {
+            "name": "apiKeyIssuerId",
+            "type": "string",
+            "label": "App Store Connect API Issuer ID",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The issuer_id of the account used to publish to the Apple App Store.",
+            "visibleRule": "authType = ApiKey"
+        },
+        {
+            "name": "apitoken",
+            "type": "string",
+            "label": "App Store Connect API Key Content (base64-encoded)",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The base64-encoded content of the P8 file of the account used to publish to the Apple App Store.",
+            "visibleRule": "authType = ApiKey"
+        },
+        {
+            "name": "apiKeyInHouse",
+            "type": "boolean",
+            "label": "App Store Connect API In House (Enterprise)",
+            "defaultValue": false,
+            "required": false,
+            "helpMarkDown": "Whether the account used to publish to the Apple App Store is an Enterprise account or not.",
+            "visibleRule": "authType = ApiKey"
+        },
+        {
+            "name": "username",
+            "type": "string",
+            "label": "Email",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The email of the account used to publish to the Apple App Store.",
+            "visibleRule": "authType = UserAndPass"
+        },
+        {
+            "name": "password",
+            "type": "string",
+            "label": "Password",
+            "defaultValue": "",
+            "isConfidential": true,
+            "required": true,
+            "helpMarkDown": "The password of the account used to publish to the Apple App Store.",
+            "visibleRule": "authType = UserAndPass"
+        },
+        {
+            "name": "isTwoFactorAuth",
+            "type": "boolean",
+            "label": "Use Two-step Verification (Two-factor Authentication)",
+            "defaultValue": false,
+            "required": false,
+            "helpMarkDown": "Select if the Apple account above has two-step verification enabled. (See: https://appleid.apple.com/account/manage -> Security)",
+            "visibleRule": "authType = UserAndPass"
+        },
+        {
+            "name": "appSpecificPassword",
+            "type": "string",
+            "label": "App-specific Password",
+            "defaultValue": "",
+            "isConfidential": true,
+            "required": true,
+            "helpMarkDown": "The supplementary Apple-supplied password used with two-step verification enabled (See: https://appleid.apple.com/account/manage -> Security -> App-specific Passwords). Use a new variable with its lock enabled on the Variables tab to encrypt this value.",
+            "visibleRule": "isTwoFactorAuth = true"
+        },
+        {
+            "name": "fastlaneSession",
+            "type": "string",
+            "label": "Fastlane Session for Two-step Verification",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Used with two-step verification.  Create by running: 'fastlane spaceauth -u [email]'",
+            "visibleRule": "isTwoFactorAuth = true"
+        },
+        {
+            "name": "releaseTrack",
+            "type": "pickList",
+            "label": "Track",
+            "defaultValue": "TestFlight",
+            "helpMarkDown": "",
+            "options": {
+                "Production": "Production",
+                "TestFlight": "TestFlight"
+            },
+            "groupName": "releaseOptions"
+        },
+        {
+            "name": "distributeOnly",
+            "type": "boolean",
+            "label": "Distribute a previously uploaded binary to External Testers",
+            "defaultValue": false,
+            "required": false,
+            "helpMarkDown": "Distribute a previously uploaded binary to Apple TestFlight. Add groups to the build. All testers in these groups will have access to this build.",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = TestFlight"
+        },
+        {
+            "name": "appIdentifier",
+            "type": "string",
+            "label": "Bundle ID",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc). Required if the track is Production or 'Distribute a previously uploaded binary' is selected",
+            "groupName": "releaseOptions"
+        },
+        {
+            "name": "appType",
+            "type": "pickList",
+            "label": "Application Type",
+            "helpMarkDown": "The type of application you wish to submit",
+            "required": true,
+            "defaultValue": "iOS",
+            "options": {
+                "iOS": "iOS",
+                "tvOS": "tvOS",
+                "macOS": "macOS"
+            },
+            "groupName": "releaseOptions",
+            "visibleRule": "distributeOnly = false || releaseTrack = Production"
+        },
+        {
+            "name": "ipaPath",
+            "type": "filePath",
+            "label": "Binary Path",
+            "defaultValue": "**/*.ipa",
+            "required": false,
+            "helpMarkDown": "Path to the binary to publish (i.e. IPA or PKG). A glob pattern can be used but it must resolve to exactly one IPA or PKG file.",
+            "groupName": "releaseOptions",
+            "visibleRule": "distributeOnly = false || releaseTrack = Production"
+        },
+        {
+            "name": "skipBinaryUpload",
+            "type": "boolean",
+            "label": "Skip Binary Upload",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Select to skip binary upload and only update metadata and screenshots. Please note that with enabling this option you also need to pass --description or --pkg as additional fastlane parameters.",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = Production"
+        },
+        {
+            "name": "uploadMetadata",
+            "type": "boolean",
+            "label": "Upload Metadata",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Select to upload app metadata to the Apple App Store (e.g. title, description, changelog).",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = Production"
+        },
+        {
+            "name": "metadataPath",
+            "type": "filePath",
+            "label": "Metadata Path",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Path to the metadata to publish.",
+            "groupName": "releaseOptions",
+            "visibleRule": "uploadMetadata = true"
+        },
+        {
+            "name": "uploadScreenshots",
+            "type": "boolean",
+            "label": "Upload Screenshots",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Select to upload screenshots of the app to the Apple App Store.",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = Production"
+        },
+        {
+            "name": "screenshotsPath",
+            "type": "filePath",
+            "label": "Screenshots Path",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Path to the screenshots to publish.",
+            "groupName": "releaseOptions",
+            "visibleRule": "uploadScreenshots = true"
+        },
+        {
+            "name": "shouldSubmitForReview",
+            "type": "boolean",
+            "label": "Submit for Review",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Select to automatically submit the new app version for review after the upload is completed.",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = Production"
+        },
+        {
+            "name": "shouldAutoRelease",
+            "type": "boolean",
+            "label": "Release Automatically",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Select to automatically release the app once it is approved.",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = Production"
+        },
+        {
+            "name": "appBuildNumber",
+            "type": "string",
+            "label": "Build Number",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "The build number of the application build to distribute. If the build number is not specified, the most recent build is distributed.",
+            "groupName": "releaseOptions",
+            "visibleRule": "distributeOnly = true"
+        },
+        {
+            "name": "releaseNotes",
+            "type": "filePath",
+            "label": "What to Test?",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "Path to the file containing notes on what to test for this release.",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
+        },
+        {
+            "name": "shouldSkipWaitingForProcessing",
+            "type": "boolean",
+            "label": "Skip Build Processing Wait",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Select to skip waiting for the Apple App Store to finish processing the build.",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
+        },
+        {
+            "name": "shouldSkipSubmission",
+            "type": "boolean",
+            "label": "Skip Submission",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Select to upload the IPA but not distribute it to testers.",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
+        },
+        {
+            "name": "distributedToExternalTesters",
+            "type": "boolean",
+            "label": "Distribute to External Testers",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Select to distribute the build to external testers (cannot be used with 'Skip Build Processing Wait' and 'Skip Submission').  Using this option requires setting release notes in 'What to Test?'",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
+        },
+        {
+            "name": "externalTestersGroups",
+            "type": "string",
+            "label": "Groups",
+            "required": false,
+            "defaultValue": "",
+            "helpMarkDown": "Optionally specify the group(s) of external testers this build should be distributed to. All testers in these groups will have access to this build. To specify multiple groups, separate group names by commas e.g. 'External Beta Testers,TestVendors'. If not specified the default 'External Testers' is used.",
+            "groupName": "releaseOptions",
+            "visibleRule": "distributedToExternalTesters = true || distributeOnly = true"
+        },
+        {
+            "name": "appSpecificId",
+            "type": "string",
+            "label": "App Specific Apple Id",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "App Specific Apple Id: this value should be taken from Apple ID property in the App Information section in App Store Connect",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
+        },
+        {
+            "name": "teamId",
+            "type": "string",
+            "label": "Team ID",
+            "required": false,
+            "groupName": "advanced",
+            "helpMarkDown": "The ID of your team if you are in multiple teams."
+        },
+        {
+            "name": "teamName",
+            "type": "string",
+            "label": "Team Name",
+            "required": false,
+            "groupName": "advanced",
+            "helpMarkDown": "The name of your team if you are in multiple teams."
+        },
+        {
+            "name": "installFastlane",
+            "type": "boolean",
+            "label": "Install fastlane",
+            "required": false,
+            "defaultValue": true,
+            "groupName": "advanced",
+            "helpMarkDown": "Select to install a version of the fastlane tools.  Uncheck if your build machine already has the version of fastlane to use."
+        },
+        {
+            "name": "fastlaneToolsVersion",
+            "type": "pickList",
+            "label": "fastlane Version",
+            "defaultValue": "LatestVersion",
+            "options": {
+                "LatestVersion": "Latest Version",
+                "SpecificVersion": "Specific Version"
+            },
+            "groupName": "advanced",
+            "helpMarkDown": "Choose to install either the lastest version of fastlane or a specific version.",
+            "visibleRule": "installFastlane = true"
+        },
+        {
+            "name": "fastlaneToolsSpecificVersion",
+            "type": "string",
+            "label": "fastlane Specific Version",
+            "defaultValue": "",
+            "required": true,
+            "groupName": "advanced",
+            "helpMarkDown": "Provide the version of fastlane to install (e.g., 2.15.1).  If a specific version of fastlane is installed, all previously installed versions will be uninstalled beforehand.",
+            "visibleRule": "fastlaneToolsVersion = SpecificVersion"
+        },
+        {
+            "name": "fastlaneArguments",
+            "type": "string",
+            "label": "Additional fastlane arguments",
+            "defaultValue": "",
+            "required": false,
+            "groupName": "advanced",
+            "helpMarkDown": "Any additional arguments to pass to the fastlane command."
+        }
+    ],
+    "execution": {
+        "Node10": {
+            "target": "app-store-release.js",
+            "argumentFormat": ""
+        }
+    },
+    "restrictions": {
+        "commands": {
+            "mode": "restricted"
+        },
+        "settableVariables": {
+            "allowed": []
+        }
+    },
+    "messages": {
+        "DarwinOnly": "The Apple App Store Release task can only run on a Mac computer.",
+        "UninstallFastlaneFailed": "There were errors when trying to uninstall fastlane. Review the error and if required add a script to your pipeline to cleanly uninstall fastlane prior to running this task. Uninstall error: %s",
+        "SuccessfullyPublished": "Successfully published to %s",
+        "NoIpaFilesFound": "No IPA file found using pattern: %s",
+        "MultipleIpaFilesFound": "More than one IPA file found using pattern: %s",
+        "FastlaneSessionEmpty": "'Fastlane Session' is not set in the service connection configured for two-step verification.",
+        "ReleaseNotesRequiredForExternalTesting": "'What to Test?' is required when using 'Distribute to External Testers'.",
+        "ExternalTestersCannotSkipWarning": "'Skip Build Processing Wait' and 'Skip Submission' is not supported with 'Distribute to External Testers'. Please check your build configuration.",
+        "NotValidAppType": "An incorrect ApplicationType was chosen. Valid values iOS, macOS or tvOS. Value set: %s",
+        "IpaPathNotSpecified": "You need to specify ipaPath - since skipBinaryUpload = false",
+        "SessionAndAppIdNotSet": "Your fastlane session is incorrect and app specific id is not set. Please set correct fastlane session or app specific id",
+        "ReleaseNotesRequiresFastlaneSession": "You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work",
+        "PrecheckInAppPurchasesDisabled": "Precheck will not check In-app purchases because Fastlane doesn't support it with the App Store Connect API Key."
+    }
+}
