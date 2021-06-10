@@ -138,27 +138,6 @@
       "visibleRule": "isTwoFactorAuth = true"
     },
     {
-      "name": "appIdentifier",
-      "type": "string",
-      "label": "ms-resource:loc.input.label.appIdentifier",
-      "defaultValue": "",
-      "required": false,
-      "helpMarkDown": "ms-resource:loc.input.help.appIdentifier"
-    },
-    {
-      "name": "appType",
-      "type": "pickList",
-      "label": "ms-resource:loc.input.label.appType",
-      "helpMarkDown": "ms-resource:loc.input.help.appType",
-      "required": true,
-      "defaultValue": "iOS",
-      "options": {
-        "iOS": "iOS",
-        "tvOS": "tvOS",
-        "macOS": "macOS"
-      }
-    },
-    {
       "name": "releaseTrack",
       "type": "pickList",
       "label": "ms-resource:loc.input.label.releaseTrack",
@@ -171,6 +150,50 @@
       "groupName": "releaseOptions"
     },
     {
+      "name": "distributeOnly",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.distributeOnly",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.distributeOnly",
+      "groupName": "releaseOptions",
+      "visibleRule": "releaseTrack = TestFlight"
+    },
+    {
+      "name": "appIdentifier",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.appIdentifier",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.appIdentifier",
+      "groupName": "releaseOptions"
+    },
+    {
+      "name": "appType",
+      "type": "pickList",
+      "label": "ms-resource:loc.input.label.appType",
+      "helpMarkDown": "ms-resource:loc.input.help.appType",
+      "required": true,
+      "defaultValue": "iOS",
+      "options": {
+        "iOS": "iOS",
+        "tvOS": "tvOS",
+        "macOS": "macOS"
+      },
+      "groupName": "releaseOptions",
+      "visibleRule": "distributeOnly = false || releaseTrack = Production"
+    },
+    {
+      "name": "ipaPath",
+      "type": "filePath",
+      "label": "ms-resource:loc.input.label.ipaPath",
+      "defaultValue": "**/*.ipa",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.ipaPath",
+      "groupName": "releaseOptions",
+      "visibleRule": "distributeOnly = false || releaseTrack = Production"
+    },
+    {
       "name": "skipBinaryUpload",
       "type": "boolean",
       "label": "ms-resource:loc.input.label.skipBinaryUpload",
@@ -179,14 +202,6 @@
       "helpMarkDown": "ms-resource:loc.input.help.skipBinaryUpload",
       "groupName": "releaseOptions",
       "visibleRule": "releaseTrack = Production"
-    },
-    {
-      "name": "ipaPath",
-      "type": "filePath",
-      "label": "ms-resource:loc.input.label.ipaPath",
-      "defaultValue": "**/*.ipa",
-      "required": false,
-      "helpMarkDown": "ms-resource:loc.input.help.ipaPath"
     },
     {
       "name": "uploadMetadata",
@@ -249,6 +264,16 @@
       "visibleRule": "releaseTrack = Production"
     },
     {
+      "name": "appBuildNumber",
+      "type": "string",
+      "label": "ms-resource:loc.input.label.appBuildNumber",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.appBuildNumber",
+      "groupName": "releaseOptions",
+      "visibleRule": "distributeOnly = true"
+    },
+    {
       "name": "releaseNotes",
       "type": "filePath",
       "label": "ms-resource:loc.input.label.releaseNotes",
@@ -256,7 +281,7 @@
       "required": false,
       "helpMarkDown": "ms-resource:loc.input.help.releaseNotes",
       "groupName": "releaseOptions",
-      "visibleRule": "releaseTrack = TestFlight"
+      "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
     },
     {
       "name": "shouldSkipWaitingForProcessing",
@@ -266,7 +291,7 @@
       "defaultValue": false,
       "helpMarkDown": "ms-resource:loc.input.help.shouldSkipWaitingForProcessing",
       "groupName": "releaseOptions",
-      "visibleRule": "releaseTrack = TestFlight"
+      "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
     },
     {
       "name": "shouldSkipSubmission",
@@ -276,7 +301,7 @@
       "defaultValue": false,
       "helpMarkDown": "ms-resource:loc.input.help.shouldSkipSubmission",
       "groupName": "releaseOptions",
-      "visibleRule": "releaseTrack = TestFlight"
+      "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
     },
     {
       "name": "distributedToExternalTesters",
@@ -286,7 +311,7 @@
       "defaultValue": false,
       "helpMarkDown": "ms-resource:loc.input.help.distributedToExternalTesters",
       "groupName": "releaseOptions",
-      "visibleRule": "releaseTrack = TestFlight"
+      "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
     },
     {
       "name": "externalTestersGroups",
@@ -296,7 +321,7 @@
       "defaultValue": "",
       "helpMarkDown": "ms-resource:loc.input.help.externalTestersGroups",
       "groupName": "releaseOptions",
-      "visibleRule": "distributedToExternalTesters = true"
+      "visibleRule": "distributedToExternalTesters = true || distributeOnly = true"
     },
     {
       "name": "appSpecificId",
@@ -306,7 +331,7 @@
       "required": false,
       "helpMarkDown": "ms-resource:loc.input.help.appSpecificId",
       "groupName": "releaseOptions",
-      "visibleRule": "releaseTrack = TestFlight"
+      "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
     },
     {
       "name": "teamId",

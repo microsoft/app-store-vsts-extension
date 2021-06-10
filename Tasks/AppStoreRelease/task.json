@@ -136,27 +136,6 @@
             "visibleRule": "isTwoFactorAuth = true"
         },
         {
-            "name": "appIdentifier",
-            "type": "string",
-            "label": "Bundle ID",
-            "defaultValue": "",
-            "required": false,
-            "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc). Required if the track is Production."
-        },
-        {
-            "name": "appType",
-            "type": "pickList",
-            "label": "Application Type",
-            "helpMarkDown": "The type of application you wish to submit",
-            "required": true,
-            "defaultValue": "iOS",
-            "options": {
-                "iOS": "iOS",
-                "tvOS": "tvOS",
-                "macOS": "macOS"
-            }
-        },
-        {
             "name": "releaseTrack",
             "type": "pickList",
             "label": "Track",
@@ -169,6 +148,50 @@
             "groupName": "releaseOptions"
         },
         {
+            "name": "distributeOnly",
+            "type": "boolean",
+            "label": "Distribute a previously uploaded binary to External Testers",
+            "defaultValue": false,
+            "required": false,
+            "helpMarkDown": "Distribute a previously uploaded binary to Apple TestFlight. Add groups to the build. All testers in these groups will have access to this build.",
+            "groupName": "releaseOptions",
+            "visibleRule": "releaseTrack = TestFlight"
+        },
+        {
+            "name": "appIdentifier",
+            "type": "string",
+            "label": "Bundle ID",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc). Required if the track is Production or 'Distribute a previously uploaded binary' is selected",
+            "groupName": "releaseOptions"
+        },
+        {
+            "name": "appType",
+            "type": "pickList",
+            "label": "Application Type",
+            "helpMarkDown": "The type of application you wish to submit",
+            "required": true,
+            "defaultValue": "iOS",
+            "options": {
+                "iOS": "iOS",
+                "tvOS": "tvOS",
+                "macOS": "macOS"
+            },
+            "groupName": "releaseOptions",
+            "visibleRule": "distributeOnly = false || releaseTrack = Production"
+        },
+        {
+            "name": "ipaPath",
+            "type": "filePath",
+            "label": "Binary Path",
+            "defaultValue": "**/*.ipa",
+            "required": false,
+            "helpMarkDown": "Path to the binary to publish (i.e. IPA or PKG). A glob pattern can be used but it must resolve to exactly one IPA or PKG file.",
+            "groupName": "releaseOptions",
+            "visibleRule": "distributeOnly = false || releaseTrack = Production"
+        },
+        {
             "name": "skipBinaryUpload",
             "type": "boolean",
             "label": "Skip Binary Upload",
@@ -177,14 +200,6 @@
             "helpMarkDown": "Select to skip binary upload and only update metadata and screenshots. Please note that with enabling this option you also need to pass --description or --pkg as additional fastlane parameters.",
             "groupName": "releaseOptions",
             "visibleRule": "releaseTrack = Production"
-        },
-        {
-            "name": "ipaPath",
-            "type": "filePath",
-            "label": "Binary Path",
-            "defaultValue": "**/*.ipa",
-            "required": false,
-            "helpMarkDown": "Path to the binary to publish (i.e. IPA or PKG). A glob pattern can be used but it must resolve to exactly one IPA or PKG file."
         },
         {
             "name": "uploadMetadata",
@@ -247,6 +262,16 @@
             "visibleRule": "releaseTrack = Production"
         },
         {
+            "name": "appBuildNumber",
+            "type": "string",
+            "label": "Build Number",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "The build number of the application build to distribute. If the build number is not specified, the most recent build is distributed.",
+            "groupName": "releaseOptions",
+            "visibleRule": "distributeOnly = true"
+        },
+        {
             "name": "releaseNotes",
             "type": "filePath",
             "label": "What to Test?",
@@ -254,7 +279,7 @@
             "required": false,
             "helpMarkDown": "Path to the file containing notes on what to test for this release.",
             "groupName": "releaseOptions",
-            "visibleRule": "releaseTrack = TestFlight"
+            "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
         },
         {
             "name": "shouldSkipWaitingForProcessing",
@@ -264,7 +289,7 @@
             "defaultValue": false,
             "helpMarkDown": "Select to skip waiting for the Apple App Store to finish processing the build.",
             "groupName": "releaseOptions",
-            "visibleRule": "releaseTrack = TestFlight"
+            "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
         },
         {
             "name": "shouldSkipSubmission",
@@ -274,7 +299,7 @@
             "defaultValue": false,
             "helpMarkDown": "Select to upload the IPA but not distribute it to testers.",
             "groupName": "releaseOptions",
-            "visibleRule": "releaseTrack = TestFlight"
+            "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
         },
         {
             "name": "distributedToExternalTesters",
@@ -284,7 +309,7 @@
             "defaultValue": false,
             "helpMarkDown": "Select to distribute the build to external testers (cannot be used with 'Skip Build Processing Wait' and 'Skip Submission').  Using this option requires setting release notes in 'What to Test?'",
             "groupName": "releaseOptions",
-            "visibleRule": "releaseTrack = TestFlight"
+            "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
         },
         {
             "name": "externalTestersGroups",
@@ -292,9 +317,9 @@
             "label": "Groups",
             "required": false,
             "defaultValue": "",
-            "helpMarkDown": "Optionally specify the group(s) of external testers this build should be distributed to. To specify multiple groups, separate group names by commas e.g. 'External Beta Testers,TestVendors'. If not specified the default 'External Testers' is used.",
+            "helpMarkDown": "Optionally specify the group(s) of external testers this build should be distributed to. All testers in these groups will have access to this build. To specify multiple groups, separate group names by commas e.g. 'External Beta Testers,TestVendors'. If not specified the default 'External Testers' is used.",
             "groupName": "releaseOptions",
-            "visibleRule": "distributedToExternalTesters = true"
+            "visibleRule": "distributedToExternalTesters = true || distributeOnly = true"
         },
         {
             "name": "appSpecificId",
@@ -304,7 +329,7 @@
             "required": false,
             "helpMarkDown": "App Specific Apple Id: this value should be taken from Apple ID property in the App Information section in App Store Connect",
             "groupName": "releaseOptions",
-            "visibleRule": "releaseTrack = TestFlight"
+            "visibleRule": "releaseTrack = TestFlight && distributeOnly = false"
         },
         {
             "name": "teamId",
