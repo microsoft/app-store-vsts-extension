@@ -318,6 +318,24 @@ async function run() {
                 }
             }
 
+            //Sets -m depending if app submission is for (ios) iOS, (appletvos) tvOS or (osx) MacOS https://github.com/fastlane/fastlane/blob/326bc64483479107699376280b00aa5f5eef40f8/pilot/lib/pilot/options.rb#L46
+            switch (applicationType.toLocaleLowerCase()) {
+                case 'macos':
+                    pilotCommand.arg(['-m', 'osx']); //Fastlane wants arg as OSX
+                    break;
+
+                case 'ios':
+                    pilotCommand.arg(['-m', 'ios']);
+                    break;
+
+                case 'tvos':
+                    pilotCommand.arg(['-m', 'appletvos']);
+                    break;
+
+                default:
+                    throw new Error(tl.loc('NotValidAppType', applicationType));
+            }
+
             if (fastlaneArguments) {
                 pilotCommand.line(fastlaneArguments);
             }
