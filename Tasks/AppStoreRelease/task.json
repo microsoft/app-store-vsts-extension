@@ -416,6 +416,7 @@
         "IpaPathNotSpecified": "You need to specify ipaPath - since skipBinaryUpload = false",
         "SessionAndAppIdNotSet": "Your fastlane session is incorrect and app specific id is not set. Please set correct fastlane session or app specific id",
         "ReleaseNotesRequiresFastlaneSession": "You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work",
-        "PrecheckInAppPurchasesDisabled": "Precheck will not check In-app purchases because Fastlane doesn't support it with the App Store Connect API Key."
+        "PrecheckInAppPurchasesDisabled": "Precheck will not check In-app purchases because Fastlane doesn't support it with the App Store Connect API Key.",
+        "FastlaneTooOld": "Testflight upload for macOS apps requires fastlane 2.193.1 or newer."
     }
 }

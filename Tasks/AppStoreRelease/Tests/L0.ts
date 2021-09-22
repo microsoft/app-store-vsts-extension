@@ -551,6 +551,20 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
+    it('testflight - fastlane too old', (done: Mocha.Done) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0TestFlightFastlaneTooOld.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.invokedToolCount === 0, 'should not have run any tools.');
+        assert(tr.stdout.indexOf('Error: loc_mock_FastlaneTooOld') !== -1, 'Task should have written to stdout');
+        assert(tr.failed, 'task should have failed');
+
+        done();
+    });
+
     it('production - api key', (done: Mocha.Done) => {
         this.timeout(1000);
 

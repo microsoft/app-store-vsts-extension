@@ -418,6 +418,7 @@
     "IpaPathNotSpecified": "ms-resource:loc.messages.IpaPathNotSpecified",
     "SessionAndAppIdNotSet": "ms-resource:loc.messages.SessionAndAppIdNotSet",
     "ReleaseNotesRequiresFastlaneSession": "ms-resource:loc.messages.ReleaseNotesRequiresFastlaneSession",
-    "PrecheckInAppPurchasesDisabled": "ms-resource:loc.messages.PrecheckInAppPurchasesDisabled"
+    "PrecheckInAppPurchasesDisabled": "ms-resource:loc.messages.PrecheckInAppPurchasesDisabled",
+    "FastlaneTooOld": "ms-resource:loc.messages.FastlaneTooOld"
   }
 }

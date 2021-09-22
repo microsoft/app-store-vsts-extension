@@ -172,6 +172,11 @@ async function run() {
         let fastlaneVersionToInstall: string;  //defaults to 'LatestVersion'
         if (fastlaneVersionChoice === 'SpecificVersion') {
             fastlaneVersionToInstall = tl.getInput('fastlaneToolsSpecificVersion', true);
+            if (applicationType.toLocaleLowerCase() === 'macos' &&
+                releaseTrack === 'TestFlight' &&
+                fastlaneVersionToInstall.localeCompare('2.193.0', undefined, { numeric: true }) <= 0 ) {
+                throw new Error(tl.loc('FastlaneTooOld'));
+            }
         }
 
         // Set up environment
@@ -287,7 +292,11 @@ async function run() {
             } else {
                 let bundleIdentifier: string = tl.getInput('appIdentifier', false);
                 pilotCommand.arg(['pilot', 'upload', ...authArgs]);
-                pilotCommand.arg(['-i', filePath]);
+                if (applicationType.toLocaleLowerCase() === 'macos') {
+                    pilotCommand.arg(['-P', filePath]);
+                } else {
+                    pilotCommand.arg(['-i', filePath]);
+                }
                 let usingReleaseNotes: boolean = isValidFilePath(releaseNotes);
                 if (usingReleaseNotes) {
                     if (!credentials.fastlaneSession) {
