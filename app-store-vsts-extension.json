@@ -15,7 +15,7 @@
         "Xcode",
         "Apple",
         "App Store",
-        "iTunes Connect",
+        "App Store Connect",
         "iPad",
         "iPhone",
         "tvOS",
@@ -109,7 +109,7 @@
             "properties": {
                 "name": "apple-app-store",
                 "displayName": "Apple App Store",
-                "url": "https://itunesconnect.apple.com/",
+                "url": "https://appstoreconnect.apple.com/",
                 "inputDescriptors": [],
                 "authenticationSchemes": [
                     {
