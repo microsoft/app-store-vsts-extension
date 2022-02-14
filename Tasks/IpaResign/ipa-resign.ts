@@ -187,7 +187,7 @@ async function run() {
             tl.debug('Skipped fastlane installation.');
         }
 
-        // Run the sigh command 
+        // Run the sigh command
         // See https://github.com/fastlane/fastlane/tree/master/sigh for more information on these arguments
         let sighCommand: ToolRunner = tl.tool('fastlane');
         sighCommand.arg(['sigh']);

@@ -200,7 +200,7 @@ async function run() {
             tl.debug('Skipped fastlane installation.');
         }
 
-        //Run the deliver command 
+        // Run the deliver command
         // See https://github.com/fastlane/fastlane/blob/master/deliver/lib/deliver/options.rb for more information on these arguments
         let deliverCommand: ToolRunner = tl.tool('fastlane');
         if (isUsingApiKey) {
