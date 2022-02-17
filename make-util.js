@@ -1136,41 +1136,4 @@ var getTaskNodeVersion = function(buildPath, taskName) {
 }
 exports.getTaskNodeVersion = getTaskNodeVersion;
 
-var toOverrideString = function(object) {
-    return JSON.stringify(object).replace(/"/g, '\\"');
-}
-
-exports.toOverrideString = toOverrideString;
-
-var createExtension = function(manifest) {
-    ensureTool('tsc', '--version', 'Version 3.2.2');
-    ensureTool('mocha', '--version', '5.2.0');
-
-    console.log('Installing task dependencies...');
-
-    var rootPath = process.cwd(); 
-    var tasksPath = path.join(rootPath, 'Tasks');
-    var tasks = fs.readdirSync(tasksPath);
-    console.log(tasks.length + ' tasks found.')
-    tasks.forEach(function(task) {
-        console.log('Processing task ' + task);
-        cd(path.join(tasksPath,task));
-
-        console.log('Installing PRODUCTION npm dependencies for task (' + task + ')...');
-
-        run('npm install --only=prod');
-    });
-
-    cd(rootPath);
-    
-    rm('-Rf', path.join(__dirname, '_build/Tasks/**/Tests'));
-    rm('-Rf', path.join(__dirname, '_build/Tasks/**/*.js.map'));
-
-    console.log('Creating vsix...');
-
-    run(`node ./node_modules/tfx-cli/_build/app.js extension create --manifest-globs app-store-vsts-extension.json --override ` + toOverrideString(manifest));
-}
-
-exports.createExtension = createExtension;
-
 //------------------------------------------------------------------------------
