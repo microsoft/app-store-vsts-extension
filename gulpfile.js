@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var gutil = require('gulp-util');
+var PluginError = require('plugin-error');
 var child_process = require('child_process');
 var process = require('process');
 var exec  = require('child_process').exec;
@@ -18,7 +18,7 @@ function make (target, cb) {
     } catch (err) {
         var msg = err.output ? err.output.toString() : err.message;
         console.error(msg);
-        cb(new gutil.PluginError(msg));
+        cb(new PluginError(msg));
         return false;
     }
 
