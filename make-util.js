@@ -1163,8 +1163,8 @@ var createExtension = function(manifest) {
 
     cd(rootPath);
     
-    rm('-Rf', path.join(__dirname, '_build/Tasks/**/Tests'));
-    rm('-Rf', path.join(__dirname, '_build/Tasks/**/*.js.map'));
+    matchRemove('**/Tests', path.join(__dirname, '_build/Tasks/'));
+    matchRemove('**/*.js.map', path.join(__dirname, '_build/Tasks/'));
 
     console.log('Creating vsix...');
 

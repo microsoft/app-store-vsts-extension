@@ -329,20 +329,3 @@ target.packagetest = function() {
 
     createExtension(devManifestOverride);
 }
-
-target.testwithresults = function () {
-    var reporter = 'list';
-    var reporterLocation = '';
-    if (options.reporter == "junit") {
-        reporter = 'mocha-junit-reporter';
-        reporterLocation = '_results/test-results.xml';
-    }
-    
-    console.log('Running tests and publishing test results...');
-    var cmdline = 'test --testResults true --testReporter ' + reporter;
-    if (reporterLocation) {
-        cmdline += ' --testReportLocation ' + reporterLocation;
-    }
-    make(cmdline);
-};
-
