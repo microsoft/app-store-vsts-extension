@@ -71,7 +71,7 @@ let myAnswers: string = `{
             "code": 0,
             "stdout": "1 gem installed"
         },
-        "fastlane pilot upload -u creds-username -i mypackage.ipa --changelog Release notes for beta release. -a com.microsoft.test.appId --distribute_external true --groups Group1,Group 2": {        
+        "fastlane pilot upload -u creds-username -i mypackage.ipa --changelog Release notes for beta release. -a com.microsoft.test.appId --distribute_external true --groups Group1,Group 2": {
             "code": 0,
             "stdout": "consider it uploaded!"
         }
