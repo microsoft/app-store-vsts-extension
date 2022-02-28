@@ -23,7 +23,7 @@ describe('app-store-promote L0 Suite', function () {
     this.timeout(parseInt(process.env.TASK_TEST_TIMEOUT) || 20000);
 
     // Deletes the given directory after removing explicitly listed
-    // files that it might contain. Will fail if it contains additional files. 
+    // files that it might contain. Will fail if it contains additional files.
     const deleteDirectory = (dir: string, fileNames: string[]) => {
         fileNames.forEach((fileName) => {
             const filePath = path.join(dir, fileName);

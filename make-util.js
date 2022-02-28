@@ -323,14 +323,14 @@ var ensureTool = function (name, versionArgs, validate) {
     }
 
     if (versionArgs) {
-        var result = exec(name + ' ' + versionArgs);
+        var result = exec(name + ' ' + versionArgs).stdout;
         if (typeof validate == 'string') {
-            if (result.output.trim() != validate) {
+            if (result.trim() != validate) {
                 fail('expected version: ' + validate);
             }
         }
         else {
-            validate(result.output.trim());
+            validate(result.trim());
         }
     }
 
