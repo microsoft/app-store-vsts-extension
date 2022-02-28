@@ -24,7 +24,6 @@
     "mocha": "5.2.0",
     "mocha-junit-reporter": "^2.0.2",
     "node-uuid": "1.4.6",
-    "plugin-error": "^1.0.1",
     "q": "1.4.1",
     "semver": "4.3.3",
     "shelljs": "^0.8.5",
