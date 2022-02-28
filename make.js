@@ -52,6 +52,7 @@ var createResjson = util.createResjson;
 var createTaskLocJson = util.createTaskLocJson;
 var validateTask = util.validateTask;
 var getTaskNodeVersion = util.getTaskNodeVersion;
+var createExtension = util.createExtension;
 
 // global paths
 var buildPath = path.join(__dirname, '_build', 'Tasks');
@@ -305,3 +306,43 @@ target.test = function() {
         }
     }
 }
+
+target.packageprod = function() {
+    banner('Creating PRODUCTION vsix...');
+
+    var prodManifestOverride = {
+        public: true
+    };
+
+    createExtension(prodManifestOverride);
+}
+
+target.packagetest = function() {
+    banner('Creating TEST vsix...');
+
+    var devManifestOverride = {
+        public: false,
+        name: "App Store Deploy-Dev",
+        id: "app-store-vsts-extension-dev",
+        publisher: "ms-mobiledevops-test"
+    };
+
+    createExtension(devManifestOverride);
+}
+
+target.testwithresults = function () {
+    var reporter = 'list';
+    var reporterLocation = '';
+    if (options.reporter == "junit") {
+        reporter = 'mocha-junit-reporter';
+        reporterLocation = '_results/test-results.xml';
+    }
+    
+    console.log('Running tests and publishing test results...');
+    var cmdline = 'test --testResults true --testReporter ' + reporter;
+    if (reporterLocation) {
+        cmdline += ' --testReportLocation ' + reporterLocation;
+    }
+    make(cmdline);
+};
+
