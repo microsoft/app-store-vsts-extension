@@ -52,6 +52,7 @@ var createResjson = util.createResjson;
 var createTaskLocJson = util.createTaskLocJson;
 var validateTask = util.validateTask;
 var getTaskNodeVersion = util.getTaskNodeVersion;
+var createExtension = util.createExtension;
 
 // global paths
 var buildPath = path.join(__dirname, '_build', 'Tasks');
@@ -304,4 +305,27 @@ target.test = function() {
             console.warn("No common library tests found");
         }
     }
+}
+
+target.packageprod = function() {
+    banner('Creating PRODUCTION vsix...');
+
+    var prodManifestOverride = {
+        public: true
+    };
+
+    createExtension(prodManifestOverride);
+}
+
+target.packagetest = function() {
+    banner('Creating TEST vsix...');
+
+    var devManifestOverride = {
+        public: false,
+        name: "App Store Deploy-Dev",
+        id: "app-store-vsts-extension-dev",
+        publisher: "ms-mobiledevops-test"
+    };
+
+    createExtension(devManifestOverride);
 }

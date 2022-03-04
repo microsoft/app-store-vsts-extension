@@ -1136,4 +1136,24 @@ var getTaskNodeVersion = function(buildPath, taskName) {
 }
 exports.getTaskNodeVersion = getTaskNodeVersion;
 
+var toOverrideString = function(object) {
+    return JSON.stringify(object).replace(/"/g, '\\"');
+}
+
+exports.toOverrideString = toOverrideString;
+
+var createExtension = function(manifest) {
+    ensureTool('tsc', '--version', 'Version 3.2.2');
+    ensureTool('mocha', '--version', '5.2.0');
+    
+    matchRemove('**/Tests', path.join(__dirname, '_build/Tasks/'));
+    matchRemove('**/*.js.map', path.join(__dirname, '_build/Tasks/'));
+
+    console.log('Creating vsix...');
+
+    run(`node ./node_modules/tfx-cli/_build/app.js extension create --manifest-globs app-store-vsts-extension.json --override ` + toOverrideString(manifest));
+}
+
+exports.createExtension = createExtension;
+
 //------------------------------------------------------------------------------
