@@ -27,7 +27,7 @@
     "semver": "4.3.3",
     "shelljs": "^0.8.5",
     "sync-request": "4.1.0",
-    "tfx-cli": "^0.11.0",
+    "tfx-cli": "^0.12.0",
     "tslint": "^5.20.1",
     "typescript": "3.2.2",
     "validator": "13.7.0",
