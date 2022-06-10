@@ -1144,7 +1144,7 @@ exports.toOverrideString = toOverrideString;
 
 var createExtension = function(manifest) {
     ensureTool('tsc', '--version', 'Version 3.2.2');
-    ensureTool('mocha', '--version', '5.2.0');
+    ensureTool('mocha', '--version', '9.2.2');
     
     matchRemove('**/Tests', path.join(__dirname, '_build/Tasks/'));
     matchRemove('**/*.js.map', path.join(__dirname, '_build/Tasks/'));
