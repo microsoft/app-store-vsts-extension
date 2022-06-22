@@ -22,10 +22,10 @@ steps:
 - script: node make.js test
   displayName: 'Run Tests'
 
-- script: node make.js packageprod
+- script: node make.js packagetest
   displayName: 'Build test package'
 
-- script: node make.js packagetest
+- script: node make.js packageprod
   displayName: 'Build prod package'
 
 - task: CopyFiles@2
