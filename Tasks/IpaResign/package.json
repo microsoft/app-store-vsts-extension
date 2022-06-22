@@ -4,7 +4,7 @@
   "description": "Azure Pipelines task to resign an ipa file",
   "main": "ipa-resign.js",
   "dependencies": {
-    "azure-pipelines-task-lib": "3.2.0",
+    "azure-pipelines-task-lib": "^3.2.0",
     "@types/node": "^10.17.0",
     "@types/mocha": "^5.2.7"
   },
