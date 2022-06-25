@@ -40,3 +40,7 @@ steps:
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
     ArtifactName: ExtensionVsixFiles
+
+- task: ComponentGovernanceComponentDetection@0
+  inputs:
+    sourceScanPath: ..
