@@ -62,10 +62,16 @@ var packagePath = path.join(__dirname, '_package');
 var testTasksPath = path.join(__dirname, '_test', 'Tasks');
 var testPath = path.join(__dirname, '_test', 'Tests');
 
-// node min version
-var minNodeVer = '4.0.0';
-if (semver.lt(process.versions.node, minNodeVer)) {
-    fail('requires node >= ' + minNodeVer + '.  installed: ' + process.versions.node);
+// core dev-dependencies constants
+const constants = require('./dev-dependencies-constants');
+
+const MOCHA_TARGET_VERSION = constants.MOCHA_TARGET_VERSION;
+const TSC_MIN_VERSION = constants.TSC_MIN_VERSION;
+const NODE_MIN_VERSION = constants.NODE_MIN_VERSION;
+const NPM_MIN_VERSION = constants.NPM_MIN_VERSION;
+
+if (semver.lt(process.versions.node,  NODE_MIN_VERSION)) {
+    fail(`requires node >= ${NODE_MIN_VERSION}. installed: ${process.versions.node}`);
 }
 
 // Node 14 is supported by the build system, but not currently by the agent. Block it for now
@@ -108,10 +114,10 @@ target.clean = function () {
 target.build = function() {
     target.clean();
 
-    ensureTool('tsc', '--version', 'Version 3.2.2');
+    ensureTool('tsc', '--version', `Version ${TSC_MIN_VERSION}`);
     ensureTool('npm', '--version', function (output) {
-        if (semver.lt(output, '3.0.0')) {
-            fail('expected 3.0.0 or higher');
+        if (semver.lt(output, NPM_MIN_VERSION)) {
+            fail(`expected ${NPM_MIN_VERSION} or higher`);
         }
     });
 
@@ -248,8 +254,8 @@ target.build = function() {
 // node make.js test --task ShellScript --suite L0
 //
 target.test = function() {
-    ensureTool('tsc', '--version', 'Version 3.2.2');
-    ensureTool('mocha', '--version', '5.2.0');
+    ensureTool('tsc', '--version', `Version ${TSC_MIN_VERSION}`);
+    ensureTool('mocha', '--version', MOCHA_TARGET_VERSION);
 
     // run the tests
     var suiteType = options.suite || 'L0';
