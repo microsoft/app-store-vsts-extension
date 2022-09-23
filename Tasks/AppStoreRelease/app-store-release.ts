@@ -8,6 +8,7 @@ import fs = require('fs');
 import os = require('os');
 import path = require('path');
 import tl = require('azure-pipelines-task-lib/task');
+import semver = require('semver');
 
 import { ToolRunner } from 'azure-pipelines-task-lib/toolrunner';
 
@@ -174,7 +175,7 @@ async function run() {
             fastlaneVersionToInstall = tl.getInput('fastlaneToolsSpecificVersion', true);
             if (applicationType.toLocaleLowerCase() === 'macos' &&
                 releaseTrack === 'TestFlight' &&
-                fastlaneVersionToInstall.localeCompare('2.193.0', undefined, { numeric: true }) <= 0 ) {
+                semver.lte(fastlaneVersionToInstall, '2.193.0')) {
                 throw new Error(tl.loc('FastlaneTooOld'));
             }
         }

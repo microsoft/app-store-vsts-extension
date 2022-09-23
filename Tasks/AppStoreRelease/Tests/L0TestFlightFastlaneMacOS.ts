@@ -19,7 +19,7 @@ tmr.setInput('releaseTrack', 'TestFlight');
 tmr.setInput('appType', 'macos');
 tmr.setInput('ipaPath', '**/*.pkg');
 tmr.setInput('fastlaneToolsVersion', 'SpecificVersion');
-tmr.setInput('fastlaneToolsSpecificVersion', '2.193.0');
+tmr.setInput('fastlaneToolsSpecificVersion', '2.193.1');
 
 process.env['HOME'] = '/usr/bin';
 
