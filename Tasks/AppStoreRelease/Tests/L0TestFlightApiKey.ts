@@ -15,7 +15,7 @@ let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 tmr.setInput('authType', 'ApiKey');
 tmr.setInput('apiKeyId', 'D383SF739');
 tmr.setInput('apiKeyIssuerId', '6053b7fe-68a8-4acb-89be-165aa6465141');
-tmr.setInput('apitoken', 'LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR1RBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJIa25saGRsWWRMdQotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0t');
+tmr.setInput('apitoken', 'dummy_string');
 tmr.setInput('releaseTrack', 'TestFlight');
 tmr.setInput('appType', 'iOS');
 tmr.setInput('ipaPath', 'mypackage.ipa');
