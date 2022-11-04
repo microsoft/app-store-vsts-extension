@@ -12,7 +12,7 @@ import os = require('os');
 let taskPath = path.join(__dirname, '..', 'app-store-release.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
-process.env['ENDPOINT_AUTH_MyServiceEndpoint'] = '{ "parameters": {"apiKeyId": "D383SF739", "apiKeyIssuerId": "6053b7fe-68a8-4acb-89be-165aa6465141", "apitoken": "LS0tLS1CRUdJTiBQUklWQVRFIEtFWS0tLS0tCk1JR1RBZ0VBTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEJIa25saGRsWWRMdQotLS0tLUVORCBQUklWQVRFIEtFWS0tLS0t" }, "scheme": "Token" }';
+process.env['ENDPOINT_AUTH_MyServiceEndpoint'] = '{ "parameters": {"apiKeyId": "D383SF739", "apiKeyIssuerId": "6053b7fe-68a8-4acb-89be-165aa6465141", "apitoken": "dummy_string" }, "scheme": "Token" }';
 
 tmr.setInput('authType', 'ServiceEndpoint');
 tmr.setInput('serviceEndpoint', 'MyServiceEndpoint');
