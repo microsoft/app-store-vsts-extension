@@ -13,7 +13,7 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "207",
+        "Minor": "214",
         "Patch": "0"
     },
     "minimumAgentVersion": "2.182.1",
@@ -415,7 +415,7 @@
         "NotValidAppType": "An incorrect ApplicationType was chosen. Valid values iOS, macOS or tvOS. Value set: %s",
         "IpaPathNotSpecified": "You need to specify ipaPath - since skipBinaryUpload = false",
         "SessionAndAppIdNotSet": "Your fastlane session is incorrect and app specific id is not set. Please set correct fastlane session or app specific id",
-        "ReleaseNotesRequiresFastlaneSession": "You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work",
+        "ReleaseNotesRequiresApiKeyOrFS": "You specified releaseNotes - so you need to provide API Key or fastlane session, app specific password only won't work",
         "PrecheckInAppPurchasesDisabled": "Precheck will not check In-app purchases because Fastlane doesn't support it with the App Store Connect API Key."
     }
 }
