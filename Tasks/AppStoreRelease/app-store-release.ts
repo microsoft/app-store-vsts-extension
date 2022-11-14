@@ -290,8 +290,8 @@ async function run() {
                 pilotCommand.arg(['-i', filePath]);
                 let usingReleaseNotes: boolean = isValidFilePath(releaseNotes);
                 if (usingReleaseNotes) {
-                    if (!credentials.fastlaneSession) {
-                        tl.warning(tl.loc('ReleaseNotesRequiresFastlaneSession'));
+                    if (!credentials.fastlaneSession && !isUsingApiKey) {
+                        tl.warning(tl.loc('ReleaseNotesRequiresApiKeyOrFS'));
                     }
 
                     pilotCommand.arg(['--changelog', fs.readFileSync(releaseNotes).toString()]);
