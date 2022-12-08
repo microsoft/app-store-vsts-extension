@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "app-store",
     "name": "Apple App Store",
-    "version": "1.178.3",
+    "version": "1.207.0",
     "publisher": "ms-vsclient",
     "description": "Provides tasks for publishing to Apple's App Store from a TFS/Azure DevOps build or release pipeline",
     "categories": [
@@ -157,6 +157,70 @@
                                 "validation": {
                                     "isRequired": false,
                                     "dataType": "string"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "ms.vss-endpoint.endpoint-auth-scheme-token",
+                        "inputDescriptors": [
+                            {
+                                "id": "apiKeyId",
+                                "name": "Key ID",
+                                "description": "App Store Connect API Key ID",
+                                "inputMode": "textbox",
+                                "isConfidential": false,
+                                "validation": {
+                                    "isRequired": true,
+                                    "dataType": "string"
+                                }
+                            },
+                            {
+                                "id": "apiKeyIssuerId",
+                                "name": "Issuer ID",
+                                "description": "App Store Connect API Issuer ID",
+                                "inputMode": "textbox",
+                                "isConfidential": false,
+                                "validation": {
+                                    "isRequired": true,
+                                    "dataType": "string"
+                                }
+                            },
+                            {
+                                "id": "apitoken",
+                                "name": "Key Content (base64-encoded Private Key)",
+                                "description": "Base64-encoded content of the App Store Connect API P8 private key file",
+                                "inputMode": "textarea",
+                                "isConfidential": true,
+                                "validation": {
+                                    "isRequired": true,
+                                    "dataType": "string"
+                                }
+                            },
+                            {
+                                "id": "apiKeyInHouse",
+                                "name": "In House (Enterprise)",
+                                "description": "App Store Connect API Use In House (Enterprise) Account",
+                                "inputMode": "combo",
+                                "isConfidential": false,
+                                "validation": {
+                                    "isRequired": false,
+                                    "dataType": "string",
+                                    "maxLength": 30
+                                },
+                                "values": {
+                                    "inputId": "apiKeyInHouseValues",
+                                    "defaultValue": "apiKeyInHouse_false",
+                                    "possibleValues": [
+                                        {
+                                            "value": "apiKeyInHouse_true",
+                                            "displayValue": "Yes"
+                                        },
+                                        {
+                                            "value": "apiKeyInHouse_false",
+                                            "displayValue": "No"
+                                        }
+                                    ]
                                 }
                             }
                         ]

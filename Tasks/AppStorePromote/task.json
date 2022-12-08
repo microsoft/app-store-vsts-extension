@@ -1,0 +1,251 @@
+{
+    "id": "CBBF7F14-C386-4C1F-80A3-FE500E2BD976",
+    "name": "AppStorePromote",
+    "friendlyName": "Apple App Store Promote",
+    "description": "Release a build from iTunes Connect to the Apple App Store",
+    "helpMarkDown": "[More Information](https://marketplace.visualstudio.com/items?itemName=ms-vsclient.app-store)",
+    "author": "Microsoft Corporation",
+    "category": "Deploy",
+    "visibility": [
+        "Build",
+        "Release"
+    ],
+    "demands": [ "xcode" ],
+    "version": {
+        "Major": "1",
+        "Minor": "207",
+        "Patch": "0"
+    },
+    "minimumAgentVersion": "2.182.1",
+    "instanceNameFormat": "Submit to the App Store for review",
+    "groups": [
+        {
+            "name": "advanced",
+            "displayName": "Advanced",
+            "isExpanded": false
+        }
+    ],
+    "inputs": [
+        {
+            "name": "authType",
+            "type": "pickList",
+            "label": "Authentication Method",
+            "defaultValue": "ServiceEndpoint",
+            "helpMarkDown": "",
+            "options": {
+                "ApiKey": "App Store Connect API Key",
+                "ServiceEndpoint": "Service Connection",
+                "UserAndPass": "Username and Password"
+            }
+        },
+        {
+            "name": "serviceEndpoint",
+            "type": "connectedService:apple-app-store",
+            "label": "Service Connection",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The TFS/Azure DevOps service connection that specifies the identity used to publish the app.",
+            "visibleRule": "authType = ServiceEndpoint"
+        },
+        {
+            "name": "apiKeyId",
+            "type": "string",
+            "label": "App Store Connect API Key ID",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The key_id of the account used to publish to the Apple App Store.",
+            "visibleRule": "authType = ApiKey"
+        },
+        {
+            "name": "apiKeyIssuerId",
+            "type": "string",
+            "label": "App Store Connect API Issuer ID",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The issuer_id of the account used to publish to the Apple App Store.",
+            "visibleRule": "authType = ApiKey"
+        },
+        {
+            "name": "apitoken",
+            "type": "string",
+            "label": "App Store Connect API Key Content (base64-encoded)",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The base64-encoded content of the P8 file of the account used to publish to the Apple App Store.",
+            "visibleRule": "authType = ApiKey"
+        },
+        {
+            "name": "apiKeyInHouse",
+            "type": "boolean",
+            "label": "App Store Connect API In House (Enterprise)",
+            "defaultValue": false,
+            "required": false,
+            "helpMarkDown": "Whether the account used to publish to the Apple App Store is an Enterprise account or not.",
+            "visibleRule": "authType = ApiKey"
+        },
+        {
+            "name": "username",
+            "type": "string",
+            "label": "Email",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The email of the account used to publish to the Apple App Store.",
+            "visibleRule": "authType = UserAndPass"
+        },
+        {
+            "name": "password",
+            "type": "string",
+            "label": "Password",
+            "defaultValue": "",
+            "isConfidential": true,
+            "required": true,
+            "helpMarkDown": "The password of the account used to publish to the Apple App Store.",
+            "visibleRule": "authType = UserAndPass"
+        },
+        {
+            "name": "isTwoFactorAuth",
+            "type": "boolean",
+            "label": "Use Two-step Verification (Two-factor Authentication)",
+            "defaultValue": false,
+            "required": false,
+            "helpMarkDown": "Select if the Apple account above has two-step verification enabled. (See: https://appleid.apple.com/account/manage -> Security)",
+            "visibleRule": "authType = UserAndPass"
+        },
+        {
+            "name": "appSpecificPassword",
+            "type": "string",
+            "label": "App-specific Password",
+            "defaultValue": "",
+            "isConfidential": true,
+            "required": true,
+            "helpMarkDown": "The supplementary Apple-supplied password used with two-step verification enabled (See: https://appleid.apple.com/account/manage -> Security -> App-specific passwords). Use a new variable with its lock enabled on the Variables tab to encrypt this value.",
+            "visibleRule": "isTwoFactorAuth = true"
+        },
+        {
+            "name": "fastlaneSession",
+            "type": "string",
+            "label": "Fastlane Session for Two-step Verification",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Used with two-step verification.  Create by running: 'fastlane spaceauth -u [email]'",
+            "visibleRule": "isTwoFactorAuth = true"
+        },
+        {
+            "name": "appIdentifier",
+            "type": "string",
+            "label": "Bundle ID",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The unique app identifier (e.g. com.myapp.etc)."
+        },
+        {
+            "name": "chooseBuild",
+            "type": "pickList",
+            "label": "Choose Build",
+            "defaultValue": "Latest",
+            "helpMarkDown": "",
+            "options": {
+                "Latest": "Latest",
+                "Specify": "Specify build number"
+            },
+            "properties":  {
+                "EditableOptions": "True"
+            }
+        },
+        {
+            "name": "buildNumber",
+            "type": "string",
+            "label": "Build Number",
+            "defaultValue": "",
+            "required": true,
+            "visibleRule": "chooseBuild = Specify",
+            "helpMarkDown": "The build number in iTunes Connect to submit for review."
+        },
+        {
+            "name": "shouldAutoRelease",
+            "type": "boolean",
+            "label": "Release Automatically",
+            "required": false,
+            "defaultValue": false,
+            "helpMarkDown": "Select to automatically release the app once it is approved."
+        },
+        {
+            "name": "teamId",
+            "type": "string",
+            "label": "Team ID",
+            "required": false,
+            "groupName": "advanced",
+            "helpMarkDown": "The ID of your team if you are in multiple teams."
+        },
+        {
+            "name": "teamName",
+            "type": "string",
+            "label": "Team Name",
+            "required": false,
+            "groupName": "advanced",
+            "helpMarkDown": "The name of your team if you are in multiple teams."
+        },
+        {
+            "name": "installFastlane",
+            "type": "boolean",
+            "label": "Install fastlane",
+            "required": false,
+            "defaultValue": true,
+            "groupName": "advanced",
+            "helpMarkDown": "Select to install a version of the fastlane tools.  Uncheck if your build machine already has the version of fastlane to use."
+        },
+        {
+            "name": "fastlaneToolsVersion",
+            "type": "pickList",
+            "label": "fastlane Version",
+            "defaultValue": "LatestVersion",
+            "options": {
+                "LatestVersion": "Latest Version",
+                "SpecificVersion": "Specific Version"
+            },
+            "groupName": "advanced",
+            "helpMarkDown": "Choose to install either the lastest version of fastlane or a specific version.",
+            "visibleRule": "installFastlane = true"
+        },
+        {
+            "name": "fastlaneToolsSpecificVersion",
+            "type": "string",
+            "label": "fastlane Specific Version",
+            "defaultValue": "",
+            "required": true,
+            "groupName": "advanced",
+            "helpMarkDown": "Provide the version of fastlane to install (e.g., 2.15.1).  If a specific version of fastlane is installed, all previously installed versions will be uninstalled beforehand.",
+            "visibleRule": "fastlaneToolsVersion = SpecificVersion"
+        },
+        {
+            "name": "fastlaneArguments",
+            "type": "string",
+            "label": "Additional fastlane arguments",
+            "defaultValue": "",
+            "required": false,
+            "groupName": "advanced",
+            "helpMarkDown": "Any additional arguments to pass to the fastlane command."
+        }
+    ],
+    "execution": {
+        "Node10": {
+            "target": "app-store-promote.js",
+            "argumentFormat": ""
+        }
+    },
+    "restrictions": {
+        "commands": {
+            "mode": "restricted"
+        },
+        "settableVariables": {
+            "allowed": []
+        }
+    },
+    "messages": {
+        "DarwinOnly": "The Apple App Store Promote task can only run on a Mac computer.",
+        "UninstallFastlaneFailed": "There were errors when trying to uninstall fastlane. Review the error and if required add a script to your pipeline to cleanly uninstall fastlane prior to running this task. Uninstall error: %s",
+        "SuccessfullySubmitted": "Build successfully submitted for review.",
+        "FastlaneSessionEmpty": "'Fastlane Session' is not set in the service connection configured for two-step verification.",
+        "PrecheckInAppPurchasesDisabled": "Precheck will not check In-app purchases because Fastlane doesn't support it with the App Store Connect API Key."
+    }
+}

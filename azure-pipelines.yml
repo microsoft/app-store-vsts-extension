@@ -1,5 +1,4 @@
-# Node.js with gulp
-# Build a Node.js project using the gulp task runner.
+# Build a Node.js project.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
@@ -7,37 +6,30 @@ trigger:
 - master
 
 pool:
-  vmImage: 'macOS-10.13'
+  vmImage: 'macos-11'
 
 steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '10.21.x'
+
 - task: Npm@0
   displayName: 'npm install'
 
-- task: Gulp@0
-  displayName: 'gulp build'
-  inputs:
-    targets: build
+- script: node make.js build
+  displayName: 'Build'
 
-- task: Gulp@0
-  displayName: 'gulp testwithresults'
-  inputs:
-    targets: testwithresults
-    arguments: '--reporter=junit'
-    publishJUnitResults: true
-    testResultsFiles: '**/test-*.xml'
+- script: node make.js test
+  displayName: 'Run Tests'
 
-- task: Gulp@0
-  displayName: 'gulp packageprod'
-  inputs:
-    targets: packageprod
+- script: node make.js packageprod
+  displayName: 'Build test package'
 
-- task: Gulp@0
-  displayName: 'gulp packagetest'
-  inputs:
-    targets: packagetest
+- script: node make.js packagetest
+  displayName: 'Build prod package'
 
 - task: CopyFiles@2
-  displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+  displayName: 'Copy extensions to: $(build.artifactstagingdirectory)'
   inputs:
     SourceFolder: '$(build.sourcesdirectory)'
     Contents: '*.vsix'

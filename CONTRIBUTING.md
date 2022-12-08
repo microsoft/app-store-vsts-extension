@@ -9,35 +9,25 @@ Interested in contributing to this project? There are plenty of ways to contribu
 * Submit a code fix for a bug (see `Submitting Pull Requests` below)
 * Participate in [discussions](https://github.com/Microsoft/app-store-vsts-extension/issues)
 
-## Set up Node, npm and gulp
+## Set up Node and npm
 
 ### Node and npm
 **Windows and Mac OSX**: Download and install node from [nodejs.org](http://nodejs.org/)
 
 **Linux**: Install [using package manager](https://nodejs.org/en/download/package-manager/)
 
-From a terminal ensure at least node 5.4.1 and npm 3:
+From a terminal ensure at least node 10.0.0 and npm 5.6.0:
 ```bash
 $ node -v && npm -v
-v6.9.1
-3.10.8
-```
-
-### Gulp
-Install gulp
-```bash
-[sudo] npm install gulp -g
-```
-From the root of the repo, install all of the build dependencies:
-```bash
-[sudo] npm install
+v10.24.1
+6.14.12
 ```
 
 ## Build
 To build the extension, run the following from the root of the repo:
 
 ```bash
-gulp
+node make.js build
 ```
 This command will create the _build folder at the root of the repository.
 
@@ -47,7 +37,7 @@ If you open the root of the repository in Visual Studio Code, you can build with
 Tests should be run with changes.  Before you run tests, make sure you have built the extension.  Run the following from the root of the repo:
 
 ```bash
-gulp test
+node make.js test
 ```
 To run the tests within Visual Studio Code, select the Debug viewlet, change the debug profile to "Launch L0 Tests", set a breakpoint directly in the
 L0.js file (e.g., _build/Tasks/AppStoreRelease/Tests/L0.js) and press `F5`.  At this time, you cannot debug the task itself during tests as a second
@@ -72,12 +62,12 @@ The package command will package the extension into a Visual Studio extension in
 
 From the root of the repo:
 ```bash
-gulp packagetest
+node make.js packagetest
 ```
 The VSIX package will be created in the root of the repository.
 
 ## Code Styles
-1. gulp build will run `tslint` and flag any errors.  Please ensure that the code stays clean.
+1. node make.js build will run `tslint` and flag any errors.  Please ensure that the code stays clean.
 2. All source files must have the following lines at the top:
 ```
  /*---------------------------------------------------------------------------------------------
@@ -95,4 +85,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 ## Submitting Pull Requests
 We welcome pull requests!  Fork this repo and send us your contributions.  Go [here](https://help.github.com/articles/using-pull-requests/) to get familiar with GitHub pull requests.
 
-Before submitting your request, ensure that both `gulp` and `gulp test` succeed.
+Before submitting your request, ensure that both `node make.js build` and `node make.js test` succeed.

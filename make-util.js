@@ -19,6 +19,15 @@ var makeOptions = require('./make-options.json');
 // list of .NET culture names
 var cultureNames = [ 'cs', 'de', 'es', 'fr', 'it', 'ja', 'ko', 'pl', 'pt-BR', 'ru', 'tr', 'zh-Hans', 'zh-Hant' ];
 
+// core dev-dependencies constants
+const constants = require('./dev-dependencies-constants');
+
+const MOCHA_TARGET_VERSION = constants.MOCHA_TARGET_VERSION;
+const TSC_MIN_VERSION = constants.TSC_MIN_VERSION;
+const TSC_CURRENT_VERSION = constants.TSC_CURRENT_VERSION;
+
+const allowedTypescriptVersions = [TSC_MIN_VERSION, TSC_CURRENT_VERSION];
+
 //------------------------------------------------------------------------------
 // shell functions
 //------------------------------------------------------------------------------
@@ -139,10 +148,45 @@ exports.lintNodeTask = lintNodeTask;
 var buildNodeTask = function (taskPath, outDir) {
     var originalDir = pwd();
     cd(taskPath);
-    if (test('-f', rp('package.json'))) {
+    var packageJsonPath = rp('package.json');
+    var overrideTscPath;
+    if (test('-f', packageJsonPath)) {
+        // verify no dev dependencies
+        // we allow a TS dev-dependency to indicate a task should use a different TS version
+        var packageJson = JSON.parse(fs.readFileSync(packageJsonPath).toString());
+        var devDeps = packageJson.devDependencies ? Object.keys(packageJson.devDependencies).length : 0;
+        if (devDeps == 1 && packageJson.devDependencies["typescript"]) {
+            var version = packageJson.devDependencies["typescript"];
+            if (!allowedTypescriptVersions.includes(version)) {
+                fail(`The package.json specifies a different TS version (${version}) that the allowed versions: ${allowedTypescriptVersions}. Offending package.json: ${packageJsonPath}`);
+            }
+            overrideTscPath = path.join(taskPath, "node_modules", "typescript");
+            console.log(`Detected Typescript version: ${version}`);
+        } else if (devDeps >= 1) {
+            fail('The package.json should not contain dev dependencies other than typescript. Move the dev dependencies into a package.json file under the Tests sub-folder. Offending package.json: ' + packageJsonPath);
+        }
+
         run('npm install');
     }
-    run('tsc --outDir ' + outDir + ' --rootDir ' + taskPath);
+
+    // Use the tsc version supplied by the task if it is available, otherwise use the global default.
+    if (overrideTscPath) {
+        var tscExec = path.join(overrideTscPath, "bin", "tsc");
+        run("node " + tscExec + ' --outDir "' + outDir + '" --rootDir "' + taskPath + '"');
+        // Don't include typescript in node_modules
+
+        //remove tsc and tsserver symbolic links
+        if (os.platform !== 'win32') {
+            rm('-f', path.join(taskPath, 'node_modules', '.bin', 'tsc'));
+            rm('-f', path.join(taskPath, 'node_modules', '.bin', 'tsserver'));
+        }
+
+        //remove typescript from node_modules
+        rm("-rf", overrideTscPath);
+    } else {
+        run('tsc --outDir "' + outDir + '" --rootDir "' + taskPath + '"');
+    }
+
     cd(originalDir);
 }
 exports.buildNodeTask = buildNodeTask;
@@ -286,14 +330,14 @@ var ensureTool = function (name, versionArgs, validate) {
     }
 
     if (versionArgs) {
-        var result = exec(name + ' ' + versionArgs);
+        var result = exec(name + ' ' + versionArgs).stdout;
         if (typeof validate == 'string') {
-            if (result.output.trim() != validate) {
+            if (result.trim() != validate) {
                 fail('expected version: ' + validate);
             }
         }
         else {
-            validate(result.output.trim());
+            validate(result.trim());
         }
     }
 
@@ -338,8 +382,21 @@ var downloadArchive = function (url, omitExtensionCheck) {
         throw new Error('Parameter "url" must be set.');
     }
 
-    if (!omitExtensionCheck && !url.match(/\.zip$/)) {
-        throw new Error('Expected .zip');
+    var isZip;
+    var isTargz;
+    if (omitExtensionCheck) {
+        isZip = true;
+    }
+    else {
+        if (url.match(/\.zip$/)) {
+            isZip = true;
+        }
+        else if (url.match(/\.tar\.gz$/) && (process.platform == 'darwin' || process.platform == 'linux')) {
+            isTargz = true;
+        }
+        else {
+            throw new Error('Unexpected archive extension');
+        }
     }
 
     // skip if already downloaded and extracted
@@ -358,8 +415,27 @@ var downloadArchive = function (url, omitExtensionCheck) {
 
         // extract
         mkdir('-p', targetPath);
-        var zip = new admZip(archivePath);
-        zip.extractAllTo(targetPath);
+        if (isZip) {
+            if (process.platform == 'win32') {
+                let escapedFile = archivePath.replace(/'/g, "''").replace(/"|\n|\r/g, ''); // double-up single quotes, remove double quotes and newlines
+                let escapedDest = targetPath.replace(/'/g, "''").replace(/"|\n|\r/g, '');
+
+                let command = `$ErrorActionPreference = 'Stop' ; try { Add-Type -AssemblyName System.IO.Compression.FileSystem } catch { } ; [System.IO.Compression.ZipFile]::ExtractToDirectory('${escapedFile}', '${escapedDest}')`;
+                run(`powershell -Command "${command}"`);
+            } else {
+                run(`unzip ${archivePath} -d ${targetPath}`);
+            }
+        }
+        else if (isTargz) {
+            var originalCwd = process.cwd();
+            cd(targetPath);
+            try {
+                run(`tar -xzf "${archivePath}"`);
+            }
+            finally {
+                cd(originalCwd);
+            }
+        }
 
         // write the completed marker
         fs.writeFileSync(marker, '');
@@ -981,4 +1057,110 @@ var storeNonAggregatedZip = function (zipPath, release, commit) {
     fs.writeFileSync(destMarker, '');
 }
 exports.storeNonAggregatedZip = storeNonAggregatedZip;
+
+var installNode = function (nodeVersion) {
+    switch (nodeVersion || '') {
+        case '14':
+            nodeVersion = 'v14.10.1';
+            break;
+        case '10':
+            nodeVersion = 'v10.21.0';
+            break;
+        case '6':
+        case '':
+            nodeVersion = 'v6.10.3';
+            break;
+        case '5':
+            nodeVersion = 'v5.10.1';
+            break;
+        default:
+            fail(`Unexpected node version '${nodeVersion}'. Expected 5 or 6.`);
+    }
+
+    if (nodeVersion === run('node -v')) {
+        console.log('skipping node install for tests since correct version is running');
+        return;
+    }
+
+    // determine the platform
+    var platform = os.platform();
+    if (platform != 'darwin' && platform != 'linux' && platform != 'win32') {
+        throw new Error('Unexpected platform: ' + platform);
+    }
+
+    var nodeUrl = 'https://nodejs.org/dist';
+    switch (platform) {
+        case 'darwin':
+            var nodeArchivePath = downloadArchive(nodeUrl + '/' + nodeVersion + '/node-' + nodeVersion + '-darwin-x64.tar.gz');
+            addPath(path.join(nodeArchivePath, 'node-' + nodeVersion + '-darwin-x64', 'bin'));
+            break;
+        case 'linux':
+            var nodeArchivePath = downloadArchive(nodeUrl + '/' + nodeVersion + '/node-' + nodeVersion + '-linux-x64.tar.gz');
+            addPath(path.join(nodeArchivePath, 'node-' + nodeVersion + '-linux-x64', 'bin'));
+            break;
+        case 'win32':
+            var nodeDirectory = path.join(downloadPath, `node-${nodeVersion}`);
+            var marker = nodeDirectory + '.completed';
+            if (!test('-f', marker)) {
+                var nodeExePath = downloadFile(nodeUrl + '/' + nodeVersion + '/win-x64/node.exe');
+                var nodeLibPath = downloadFile(nodeUrl + '/' + nodeVersion + '/win-x64/node.lib');
+                rm('-Rf', nodeDirectory);
+                mkdir('-p', nodeDirectory);
+                cp(nodeExePath, path.join(nodeDirectory, 'node.exe'));
+                cp(nodeLibPath, path.join(nodeDirectory, 'node.lib'));
+                fs.writeFileSync(marker, '');
+            }
+
+            addPath(nodeDirectory);
+            break;
+    }
+}
+exports.installNode = installNode;
+
+var getTaskNodeVersion = function(buildPath, taskName) {
+    var taskJsonPath = path.join(buildPath, taskName, "task.json");
+    if (!fs.existsSync(taskJsonPath)) {
+        console.warn('Unable to find task.json, defaulting to use Node 14');
+        return 14;
+    }
+    var taskJsonContents = fs.readFileSync(taskJsonPath, { encoding: 'utf-8' });
+    var taskJson = JSON.parse(taskJsonContents);
+    var execution = taskJson['execution'] || taskJson['prejobexecution'];
+    for (var key of Object.keys(execution)) {
+        if (key.toLowerCase() == 'node14') {
+            // Prefer node 14 and return immediately.
+            return 14;
+        } else if (key.toLowerCase() == 'node10') {
+            // Prefer node 10 and return immediately.
+            return 10;
+        } else if (key.toLowerCase() == 'node') {
+            return 6;
+        }
+    }
+
+    console.warn('Unable to determine execution type from task.json, defaulting to use Node 10');
+    return 10;
+}
+exports.getTaskNodeVersion = getTaskNodeVersion;
+
+var toOverrideString = function(object) {
+    return JSON.stringify(object).replace(/"/g, '\\"');
+}
+
+exports.toOverrideString = toOverrideString;
+
+var createExtension = function(manifest) {
+    ensureTool('tsc', '--version', `Version ${TSC_MIN_VERSION}`);
+    ensureTool('mocha', '--version', MOCHA_TARGET_VERSION);
+    
+    matchRemove('**/Tests', path.join(__dirname, '_build/Tasks/'));
+    matchRemove('**/*.js.map', path.join(__dirname, '_build/Tasks/'));
+
+    console.log('Creating vsix...');
+
+    run(`node ./node_modules/tfx-cli/_build/app.js extension create --manifest-globs app-store-vsts-extension.json --override ` + toOverrideString(manifest));
+}
+
+exports.createExtension = createExtension;
+
 //------------------------------------------------------------------------------
