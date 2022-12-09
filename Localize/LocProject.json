@@ -3,22 +3,22 @@
     {
       "LocItems": [
         {
-          "Languages": "de-de;en-US;es-es;fr-fr;it-IT;ja-jp;ko-KR;ru-RU;zh-CN;zh-TW",
-          "SourceFile": "Tasks\\app-store-promote\\Strings\\resources.resjson\\en-US\\resources.resjson",
+          "Languages": "de-DE;es-ES;fr-FR;it-IT;ja-JP;ko-KR;ru-RU;zh-CN;zh-TW",
+          "SourceFile": "Tasks\\AppStorePromote\\Strings\\resources.resjson\\en-US\\resources.resjson",
           "CopyOption": "LangIDOnPath",
-          "OutputPath": "Tasks\\app-store-promote\\Strings\\resources.resjson"
+          "OutputPath": "Tasks\\AppStorePromote\\Strings\\resources.resjson"
         },
         {
-          "Languages": "de-de;en-US;es-es;fr-fr;it-IT;ja-jp;ko-KR;ru-RU;zh-CN;zh-TW",
-          "SourceFile": "Tasks\\app-store-release\\Strings\\resources.resjson\\en-US\\resources.resjson",
+          "Languages": "de-DE;es-ES;fr-FR;it-IT;ja-JP;ko-KR;ru-RU;zh-CN;zh-TW",
+          "SourceFile": "Tasks\\AppStoreRelease\\Strings\\resources.resjson\\en-US\\resources.resjson",
           "CopyOption": "LangIDOnPath",
-          "OutputPath": "Tasks\\app-store-release\\Strings\\resources.resjson"
+          "OutputPath": "Tasks\\AppStoreRelease\\Strings\\resources.resjson"
         },
         {
-          "Languages": "de-de;en-US;es-es;fr-fr;it-IT;ja-jp;ko-KR;ru-RU;zh-CN;zh-TW",
-          "SourceFile": "Tasks\\ipa-resign\\Strings\\resources.resjson\\en-US\\resources.resjson",
+          "Languages": "de-DE;es-ES;fr-FR;it-IT;ja-JP;ko-KR;ru-RU;zh-CN;zh-TW",
+          "SourceFile": "Tasks\\IpaResign\\Strings\\resources.resjson\\en-US\\resources.resjson",
           "CopyOption": "LangIDOnPath",
-          "OutputPath": "Tasks\\ipa-resign\\Strings\\resources.resjson"
+          "OutputPath": "Tasks\\IpaResign\\Strings\\resources.resjson"
         }
       ]
     }
