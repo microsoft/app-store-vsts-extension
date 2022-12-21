@@ -43,6 +43,7 @@ stages:
     - powershell: |
         git config --global user.email "$(github_email)"
         git config --global user.name "$(username)"
+        git fetch --all
         git checkout -b Localization origin/Localization
         git merge origin/master
         git push origin Localization
