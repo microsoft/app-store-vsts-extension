@@ -8,6 +8,7 @@ import fs = require('fs');
 import os = require('os');
 import path = require('path');
 import tl = require('azure-pipelines-task-lib/task');
+import semver = require('semver');
 
 import { ToolRunner } from 'azure-pipelines-task-lib/toolrunner';
 
@@ -172,6 +173,11 @@ async function run() {
         let fastlaneVersionToInstall: string;  //defaults to 'LatestVersion'
         if (fastlaneVersionChoice === 'SpecificVersion') {
             fastlaneVersionToInstall = tl.getInput('fastlaneToolsSpecificVersion', true);
+            if (applicationType.toLocaleLowerCase() === 'macos' &&
+                releaseTrack === 'TestFlight' &&
+                semver.lte(fastlaneVersionToInstall, '2.193.0')) {
+                throw new Error(tl.loc('FastlaneTooOld'));
+            }
         }
 
         // Set up environment
@@ -287,7 +293,11 @@ async function run() {
             } else {
                 let bundleIdentifier: string = tl.getInput('appIdentifier', false);
                 pilotCommand.arg(['pilot', 'upload', ...authArgs]);
-                pilotCommand.arg(['-i', filePath]);
+                if (applicationType.toLocaleLowerCase() === 'macos') {
+                    pilotCommand.arg(['-P', filePath]);
+                } else {
+                    pilotCommand.arg(['-i', filePath]);
+                }
                 let usingReleaseNotes: boolean = isValidFilePath(releaseNotes);
                 if (usingReleaseNotes) {
                     if (!credentials.fastlaneSession && !isUsingApiKey) {
