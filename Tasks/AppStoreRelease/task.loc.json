@@ -15,7 +15,7 @@
   ],
   "version": {
     "Major": "1",
-    "Minor": "214",
+    "Minor": "217",
     "Patch": "0"
   },
   "minimumAgentVersion": "2.182.1",
@@ -417,7 +417,8 @@
     "NotValidAppType": "ms-resource:loc.messages.NotValidAppType",
     "IpaPathNotSpecified": "ms-resource:loc.messages.IpaPathNotSpecified",
     "SessionAndAppIdNotSet": "ms-resource:loc.messages.SessionAndAppIdNotSet",
-    "ReleaseNotesRequiresApiKeyOrFS": "ms-resource:loc.messages.ReleaseNotesRequiresApiKeyOrFS",
-    "PrecheckInAppPurchasesDisabled": "ms-resource:loc.messages.PrecheckInAppPurchasesDisabled"
+    "ReleaseNotesRequiresFastlaneSession": "ms-resource:loc.messages.ReleaseNotesRequiresFastlaneSession",
+    "PrecheckInAppPurchasesDisabled": "ms-resource:loc.messages.PrecheckInAppPurchasesDisabled",
+    "FastlaneTooOld": "ms-resource:loc.messages.FastlaneTooOld"
   }
 }
