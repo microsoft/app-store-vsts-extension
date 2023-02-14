@@ -313,7 +313,7 @@ target.test = function() {
     }
 }
 
-target.packageprod = function() {
+target.create = function() {
     banner('Creating PRODUCTION vsix...');
 
     var prodManifestOverride = {
@@ -323,7 +323,7 @@ target.packageprod = function() {
     createExtension(prodManifestOverride);
 }
 
-target.packagetest = function() {
+target.createtest = function() {
     banner('Creating TEST vsix...');
 
     var devManifestOverride = {
