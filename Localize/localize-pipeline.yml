@@ -90,7 +90,7 @@ stages:
     
     - task: PowerShell@2
       inputs:
-        filePath: 'ci/open-pullrequest.ps1'
+        filePath: 'ci/localization-updates/open-pullrequest.ps1'
         arguments: "-SourceBranch $(updateBranch)"
         failOnStderr: true
       env:
