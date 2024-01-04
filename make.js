@@ -8,7 +8,8 @@ var mopts = {
         'version',
         'testResults',
         'testReporter',
-        'testReportLocation'
+        'testReportLocation',
+        'node'
     ]
 };
 var options = minimist(process.argv, mopts);
@@ -262,7 +263,7 @@ target.test = function() {
     function runTaskTests(taskName) {
         banner('Testing: ' + taskName);
         // find the tests
-        var nodeVersion = options.node || getTaskNodeVersion(buildPath, taskName) + "";
+        var nodeVersions = options.node ? new Array(options.node) : [...getTaskNodeVersion(buildPath, taskName)];
         var pattern1 = path.join(buildPath, taskName, 'Tests', suiteType + '.js');
         var pattern2 = path.join(buildPath, 'Common', taskName, 'Tests', suiteType + '.js');
 
@@ -280,10 +281,19 @@ target.test = function() {
             return;
         }
 
-        // setup the version of node to run the tests
-        util.installNode(nodeVersion);
+        nodeVersions.forEach(function (nodeVersion) {
+            try {
+                nodeVersion = String(nodeVersion);
+                banner('Run Mocha Suits for node ' + nodeVersion);
+                // setup the version of node to run the tests
+                util.installNode(nodeVersion);
 
-        run('mocha ' + testsSpec.join(' ') /*+ ' --reporter mocha-junit-reporter --reporter-options mochaFile=../testresults/test-results.xml'*/, /*inheritStreams:*/true);
+                run('mocha ' + testsSpec.join(' ') /*+ ' --reporter mocha-junit-reporter --reporter-options mochaFile=../testresults/test-results.xml'*/, /*inheritStreams:*/true);
+            }  catch (e) {
+                console.error(e);
+                process.exit(1);
+            }
+        });
     }
 
     if (options.task) {
