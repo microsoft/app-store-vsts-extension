@@ -1059,22 +1059,22 @@ var storeNonAggregatedZip = function (zipPath, release, commit) {
 exports.storeNonAggregatedZip = storeNonAggregatedZip;
 
 var installNode = function (nodeVersion) {
-    switch (nodeVersion || '') {
-        case '14':
-            nodeVersion = 'v14.10.1';
-            break;
-        case '10':
-            nodeVersion = 'v10.21.0';
-            break;
-        case '6':
-        case '':
-            nodeVersion = 'v6.10.3';
-            break;
-        case '5':
-            nodeVersion = 'v5.10.1';
-            break;
-        default:
-            fail(`Unexpected node version '${nodeVersion}'. Expected 5 or 6.`);
+    const versions = {
+        20: 'v20.3.1',
+        16: 'v16.17.1',
+        14: 'v14.10.1',
+        10: 'v10.24.1',
+        6: 'v6.10.3',
+        5: 'v5.10.1',
+    };
+
+    if (!nodeVersion) {
+        nodeVersion = versions[6];
+    } else {
+        if (!versions[nodeVersion]) {
+            fail(`Unexpected node version '${nodeVersion}'. Supported versions: ${Object.keys(versions).join(', ')}`);
+        };
+        nodeVersion = versions[nodeVersion];
     }
 
     if (nodeVersion === run('node -v')) {
@@ -1118,28 +1118,31 @@ var installNode = function (nodeVersion) {
 exports.installNode = installNode;
 
 var getTaskNodeVersion = function(buildPath, taskName) {
+    const nodes = [];
     var taskJsonPath = path.join(buildPath, taskName, "task.json");
     if (!fs.existsSync(taskJsonPath)) {
         console.warn('Unable to find task.json, defaulting to use Node 14');
-        return 14;
+        nodes.push(14);
+        return nodes;
     }
     var taskJsonContents = fs.readFileSync(taskJsonPath, { encoding: 'utf-8' });
     var taskJson = JSON.parse(taskJsonContents);
     var execution = taskJson['execution'] || taskJson['prejobexecution'];
     for (var key of Object.keys(execution)) {
-        if (key.toLowerCase() == 'node14') {
-            // Prefer node 14 and return immediately.
-            return 14;
-        } else if (key.toLowerCase() == 'node10') {
-            // Prefer node 10 and return immediately.
-            return 10;
-        } else if (key.toLowerCase() == 'node') {
-            return 6;
-        }
+        const executor = key.toLocaleLowerCase();
+        if (!executor.startsWith('node')) continue;
+
+        const version = executor.replace('node', '');
+        nodes.push(parseInt(version) || 6);
+    }
+
+    if (nodes.length) {
+        return nodes;
     }
 
     console.warn('Unable to determine execution type from task.json, defaulting to use Node 10');
-    return 10;
+    nodes.push(10);
+    return nodes;
 }
 exports.getTaskNodeVersion = getTaskNodeVersion;
 
