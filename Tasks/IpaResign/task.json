@@ -12,7 +12,7 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "220",
+        "Minor": "233",
         "Patch": "0"
     },
     "minimumAgentVersion": "2.182.1",
@@ -203,6 +203,10 @@
     ],
     "execution": {
         "Node10": {
+            "target": "ipa-resign.js",
+            "argumentFormat": ""
+        },
+        "Node16": {
             "target": "ipa-resign.js",
             "argumentFormat": ""
         }
