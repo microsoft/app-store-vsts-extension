@@ -5,7 +5,7 @@
   "main": "ipa-resign.js",
   "dependencies": {
     "azure-pipelines-task-lib": "^4.2.0",
-    "@types/node": "^10.17.0",
+    "@types/node": "^16.11.39",
     "@types/mocha": "^5.2.7"
   },
   "devDependencies": {
