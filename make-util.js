@@ -9,7 +9,7 @@ var process = require('process');
 var ncp = require('child_process');
 var semver = require('semver');
 var shell = require('shelljs');
-var syncRequest = require('sync-request');
+const Downloader = require("nodejs-file-downloader");
 
 // global paths
 var downloadPath = path.join(__dirname, '_download');
@@ -17,7 +17,7 @@ var downloadPath = path.join(__dirname, '_download');
 var makeOptions = require('./make-options.json');
 
 // list of .NET culture names
-var cultureNames = [ 'cs', 'de', 'es', 'fr', 'it', 'ja', 'ko', 'pl', 'pt-BR', 'ru', 'tr', 'zh-Hans', 'zh-Hant' ];
+var cultureNames = ['cs', 'de', 'es', 'fr', 'it', 'ja', 'ko', 'pl', 'pt-BR', 'ru', 'tr', 'zh-Hans', 'zh-Hant'];
 
 // core dev-dependencies constants
 const constants = require('./dev-dependencies-constants');
@@ -191,16 +191,15 @@ var buildNodeTask = function (taskPath, outDir) {
 }
 exports.buildNodeTask = buildNodeTask;
 
-var buildPs3Task = function (taskPath, outDir) {
+var buildPs3Task = async function (taskPath, outDir) {
     var packageUrl = 'https://www.powershellgallery.com/api/v2/package/VstsTaskSdk/0.7.1';
-    var packageSource = downloadArchive(packageUrl, /*omitExtensionCheck*/true);
+    var packageSource = await downloadArchiveAsync(packageUrl, /*omitExtensionCheck*/true);
     var packageDest = path.join(outDir, 'ps_modules/VstsTaskSdk');
     matchCopy('+(*.ps1|*.psd1|*.psm1|lib.json|Strings)', packageSource, packageDest, { noRecurse: true });
 }
 exports.buildPs3Task = buildPs3Task;
 
-var copyTaskResources = function (taskMake, srcPath, destPath) {
-    assert(taskMake, 'taskMake');
+var copyTaskResources = function (srcPath, destPath) {
     assert(srcPath, 'srcPath');
     assert(destPath, 'destPath');
 
@@ -209,16 +208,6 @@ var copyTaskResources = function (taskMake, srcPath, destPath) {
     toCopy.forEach(function (item) {
         matchCopy(item, srcPath, destPath, { noRecurse: true });
     });
-
-    // copy the locally defined set of resources
-    if (taskMake.hasOwnProperty('cp')) {
-        copyGroups(taskMake.cp, srcPath, destPath);
-    }
-
-    // remove the locally defined set of resources
-    if (taskMake.hasOwnProperty('rm')) {
-        removeGroups(taskMake.rm, destPath);
-    }
 }
 exports.copyTaskResources = copyTaskResources;
 
@@ -345,38 +334,45 @@ var ensureTool = function (name, versionArgs, validate) {
 }
 exports.ensureTool = ensureTool;
 
-var downloadFile = function (url) {
+var downloadFileAsync = async function (url) {
     // validate parameters
     if (!url) {
         throw new Error('Parameter "url" must be set.');
     }
 
     // skip if already downloaded
-    var scrubbedUrl = url.replace(/[/\:?]/g, '_');
-    var targetPath = path.join(downloadPath, 'file', scrubbedUrl);
-    var marker = targetPath + '.completed';
-    if (!test('-f', marker)) {
-        console.log('Downloading file: ' + url);
-
-        // delete any previous partial attempt
-        if (test('-f', targetPath)) {
-            rm('-f', targetPath);
-        }
-
-        // download the file
-        mkdir('-p', path.join(downloadPath, 'file'));
-        var result = syncRequest('GET', url);
-        fs.writeFileSync(targetPath, result.getBody());
-
-        // write the completed marker
-        fs.writeFileSync(marker, '');
+    const scrubbedUrl = url.replace(/[/\:?]/g, '_');
+    const targetPath = path.join(downloadPath, 'file', scrubbedUrl);
+    const marker = targetPath + '.completed';
+    if (test('-f', marker)) {
+        console.log('File already exists: ' + targetPath);
+        return targetPath;
     }
 
-    return targetPath;
-}
-exports.downloadFile = downloadFile;
+    console.log('Downloading file: ' + url);
+    // delete any previous partial attempt
+    if (test('-f', targetPath)) {
+        rm('-f', targetPath);
+    }
 
-var downloadArchive = function (url, omitExtensionCheck) {
+    // download the file
+    mkdir('-p', path.join(downloadPath, 'file'));
+
+    const downloader = new Downloader({
+        url: url,
+        directory: path.join(downloadPath, 'file'),
+        fileName: scrubbedUrl
+    });
+
+
+    const { filePath } = await downloader.download(); // Downloader.download() resolves with some useful properties.
+    fs.writeFileSync(marker, '');
+
+    return filePath;
+}
+exports.downloadFileAsync = downloadFileAsync;
+
+var downloadArchiveAsync = async function (url, omitExtensionCheck) {
     // validate parameters
     if (!url) {
         throw new Error('Parameter "url" must be set.');
@@ -405,7 +401,7 @@ var downloadArchive = function (url, omitExtensionCheck) {
     var marker = targetPath + '.completed';
     if (!test('-f', marker)) {
         // download the archive
-        var archivePath = downloadFile(url);
+        var archivePath = await downloadFileAsync(url);
         console.log('Extracting archive: ' + url);
 
         // delete any previously attempted extraction directory
@@ -443,7 +439,7 @@ var downloadArchive = function (url, omitExtensionCheck) {
 
     return targetPath;
 }
-exports.downloadArchive = downloadArchive;
+exports.downloadArchiveAsync = downloadArchiveAsync;
 
 var copyGroup = function (group, sourceRoot, destRoot) {
     // example structure to copy a single file:
@@ -512,15 +508,6 @@ var copyGroup = function (group, sourceRoot, destRoot) {
     }
 }
 
-var copyGroups = function (groups, sourceRoot, destRoot) {
-    assert(groups, 'groups');
-    assert(groups.length, 'groups.length');
-    groups.forEach(function (group) {
-        copyGroup(group, sourceRoot, destRoot);
-    })
-}
-exports.copyGroups = copyGroups;
-
 var removeGroup = function (group, pathRoot) {
     // example structure to remove an array of files/folders:
     // {
@@ -555,15 +542,6 @@ var removeGroup = function (group, pathRoot) {
     rm(group.options, rootedItems);
 }
 
-var removeGroups = function (groups, pathRoot) {
-    assert(groups, 'groups');
-    assert(groups.length, 'groups.length');
-    groups.forEach(function (group) {
-        removeGroup(group, pathRoot);
-    })
-}
-exports.removeGroups = removeGroups;
-
 var addPath = function (directory) {
     var separator;
     if (os.platform() == 'win32') {
@@ -582,50 +560,6 @@ var addPath = function (directory) {
     }
 }
 exports.addPath = addPath;
-
-var getExternals = function (externals, destRoot) {
-    assert(externals, 'externals');
-    assert(destRoot, 'destRoot');
-
-    // .zip files
-    if (externals.hasOwnProperty('archivePackages')) {
-        var archivePackages = externals.archivePackages;
-        archivePackages.forEach(function (archive) {
-            assert(archive.url, 'archive.url');
-            assert(archive.dest, 'archive.dest');
-
-            // download and extract the archive package
-            var archiveSource = downloadArchive(archive.url);
-
-            // copy the files
-            var archiveDest = path.join(destRoot, archive.dest);
-            mkdir('-p', archiveDest);
-            cp('-R', path.join(archiveSource, '*'), archiveDest)
-        });
-    }
-
-    // external NuGet V2 packages
-    if (externals.hasOwnProperty('nugetv2')) {
-        var nugetPackages = externals.nugetv2;
-        nugetPackages.forEach(function (package) {
-            // validate the structure of the data
-            assert(package.name, 'package.name');
-            assert(package.version, 'package.version');
-            assert(package.repository, 'package.repository');
-            assert(package.cp, 'package.cp');
-            assert(package.cp, 'package.cp.length');
-
-            // download and extract the NuGet V2 package
-            var url = package.repository.replace(/\/$/, '') + '/package/' + package.name + '/' + package.version;
-            var packageSource = downloadArchive(url, /*omitExtensionCheck*/true);
-
-            // copy specific files
-            copyGroups(package.cp, packageSource, destRoot);
-        });
-    }
-}
-exports.getExternals = getExternals;
-
 //------------------------------------------------------------------------------
 // task.json functions
 //------------------------------------------------------------------------------
@@ -1058,9 +992,9 @@ var storeNonAggregatedZip = function (zipPath, release, commit) {
 }
 exports.storeNonAggregatedZip = storeNonAggregatedZip;
 
-var installNode = function (nodeVersion) {
+var installNode = async function (nodeVersion) {
     const versions = {
-        20: 'v20.3.1',
+        20: 'v20.11.0',
         16: 'v16.17.1',
         14: 'v14.10.1',
         10: 'v10.24.1',
@@ -1091,19 +1025,19 @@ var installNode = function (nodeVersion) {
     var nodeUrl = 'https://nodejs.org/dist';
     switch (platform) {
         case 'darwin':
-            var nodeArchivePath = downloadArchive(nodeUrl + '/' + nodeVersion + '/node-' + nodeVersion + '-darwin-x64.tar.gz');
+            var nodeArchivePath = await downloadArchiveAsync(nodeUrl + '/' + nodeVersion + '/node-' + nodeVersion + '-darwin-x64.tar.gz');
             addPath(path.join(nodeArchivePath, 'node-' + nodeVersion + '-darwin-x64', 'bin'));
             break;
         case 'linux':
-            var nodeArchivePath = downloadArchive(nodeUrl + '/' + nodeVersion + '/node-' + nodeVersion + '-linux-x64.tar.gz');
+            var nodeArchivePath = await downloadArchiveAsync(nodeUrl + '/' + nodeVersion + '/node-' + nodeVersion + '-linux-x64.tar.gz');
             addPath(path.join(nodeArchivePath, 'node-' + nodeVersion + '-linux-x64', 'bin'));
             break;
         case 'win32':
             var nodeDirectory = path.join(downloadPath, `node-${nodeVersion}`);
             var marker = nodeDirectory + '.completed';
             if (!test('-f', marker)) {
-                var nodeExePath = downloadFile(nodeUrl + '/' + nodeVersion + '/win-x64/node.exe');
-                var nodeLibPath = downloadFile(nodeUrl + '/' + nodeVersion + '/win-x64/node.lib');
+                var nodeExePath = await downloadFileAsync(nodeUrl + '/' + nodeVersion + '/win-x64/node.exe');
+                var nodeLibPath = await downloadFileAsync(nodeUrl + '/' + nodeVersion + '/win-x64/node.lib');
                 rm('-Rf', nodeDirectory);
                 mkdir('-p', nodeDirectory);
                 cp(nodeExePath, path.join(nodeDirectory, 'node.exe'));
@@ -1141,7 +1075,7 @@ var getTaskNodeVersion = function(buildPath, taskName) {
     }
 
     console.warn('Unable to determine execution type from task.json, defaulting to use Node 10');
-    nodes.push(10);
+    nodes.push(20);
     return nodes;
 }
 exports.getTaskNodeVersion = getTaskNodeVersion;

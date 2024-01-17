@@ -21,23 +21,18 @@ process.argv = options._;
 // modules
 var make = require('shelljs/make');
 var fs = require('fs');
-var os = require('os');
 var path = require('path');
 var semver = require('semver');
 var util = require('./make-util');
 
 // util functions
-var cd = util.cd;
-var cp = util.cp;
 var mkdir = util.mkdir;
 var rm = util.rm;
 var test = util.test;
 var run = util.run;
 var banner = util.banner;
-var rp = util.rp;
 var fail = util.fail;
 var ensureExists = util.ensureExists;
-var pathExists = util.pathExists;
 var buildNodeTask = util.buildNodeTask;
 var lintNodeTask = util.lintNodeTask;
 var buildPs3Task = util.buildPs3Task;
@@ -45,10 +40,7 @@ var addPath = util.addPath;
 var copyTaskResources = util.copyTaskResources;
 var matchFind = util.matchFind;
 var matchCopy = util.matchCopy;
-var matchRemove = util.matchRemove;
 var ensureTool = util.ensureTool;
-var assert = util.assert;
-var getExternals = util.getExternals;
 var createResjson = util.createResjson;
 var createTaskLocJson = util.createTaskLocJson;
 var validateTask = util.validateTask;
@@ -57,11 +49,7 @@ var createExtension = util.createExtension;
 
 // global paths
 var buildPath = path.join(__dirname, '_build', 'Tasks');
-var buildTestsPath = path.join(__dirname, '_build', 'Tests');
 var commonPath = path.join(__dirname, '_build', 'Tasks', 'Common');
-var packagePath = path.join(__dirname, '_package');
-var testTasksPath = path.join(__dirname, '_test', 'Tasks');
-var testPath = path.join(__dirname, '_test', 'Tests');
 
 // core dev-dependencies constants
 const constants = require('./dev-dependencies-constants');
@@ -76,7 +64,7 @@ if (semver.lt(process.versions.node,  NODE_MIN_VERSION)) {
 }
 
 // Node 14 is supported by the build system, but not currently by the agent. Block it for now
-var supportedNodeTargets = ["Node", "Node10"/*, "Node14"*/];
+var supportedNodeTargets = ["Node", "Node10", "Node16", "Node20_1"];
 
 // add node modules .bin to the path so we can dictate version of tsc etc...
 var binPath = path.join(__dirname, 'node_modules', '.bin');
@@ -112,7 +100,7 @@ target.clean = function () {
 // ex: node make.js build
 // ex: node make.js build --task ShellScript
 //
-target.build = function() {
+target.build = async function() {
     target.clean();
 
     ensureTool('tsc', '--version', `Version ${TSC_MIN_VERSION}`);
@@ -122,7 +110,8 @@ target.build = function() {
         }
     });
 
-    taskList.forEach(function(taskName) {
+    for (let i = 0; i < taskList.length; i++) {
+        const taskName = taskList[i];
         banner('Building: ' + taskName);
         var taskPath = path.join(__dirname, 'Tasks', taskName);
         ensureExists(taskPath);
@@ -153,81 +142,6 @@ target.build = function() {
 
         mkdir('-p', outDir);
 
-        // get externals
-        var taskMakePath = path.join(taskPath, 'make.json');
-        var taskMake = test('-f', taskMakePath) ? require(taskMakePath) : {};
-        if (taskMake.hasOwnProperty('externals')) {
-            console.log('Getting task externals');
-            getExternals(taskMake.externals, outDir);
-        }
-
-        //--------------------------------
-        // Common: build, copy, install 
-        //--------------------------------
-        if (taskMake.hasOwnProperty('common')) {
-            var common = taskMake['common'];
-
-            common.forEach(function(mod) {
-                var modPath = path.join(taskPath, mod['module']);
-                var modName = path.basename(modPath);
-                var modOutDir = path.join(commonPath, modName);
-
-                if (!test('-d', modOutDir)) {
-                    banner('Building module ' + modPath, true);
-
-                    mkdir('-p', modOutDir);
-
-                    // create loc files
-                    var modJsonPath = path.join(modPath, 'module.json');
-                    if (test('-f', modJsonPath)) {
-                        createResjson(require(modJsonPath), modPath);
-                    }
-
-                    // npm install and compile
-                    if ((mod.type === 'node' && mod.compile == true) || test('-f', path.join(modPath, 'tsconfig.json'))) {
-                        buildNodeTask(modPath, modOutDir);
-                    }
-
-                    // copy default resources and any additional resources defined in the module's make.json
-                    console.log();
-                    console.log('> copying module resources');
-                    var modMakePath = path.join(modPath, 'make.json');
-                    var modMake = test('-f', modMakePath) ? require(modMakePath) : {};
-                    copyTaskResources(modMake, modPath, modOutDir);
-
-                    // get externals
-                    if (modMake.hasOwnProperty('externals')) {
-                        console.log('Getting module externals');
-                        getExternals(modMake.externals, modOutDir);
-                    }
-                }
-
-                // npm install the common module to the task dir
-                if (mod.type === 'node' && mod.compile == true) {
-                    mkdir('-p', path.join(taskPath, 'node_modules'));
-                    rm('-Rf', path.join(taskPath, 'node_modules', modName));
-                    var originalDir = pwd();
-                    cd(taskPath);
-                    run('npm install ' + modOutDir);
-                    cd(originalDir);
-                }
-                // copy module resources to the task output dir
-                else if (mod.type === 'ps') {
-                    console.log();
-                    console.log('> copying module resources to task');
-                    var dest;
-                    if (mod.hasOwnProperty('dest')) {
-                        dest = path.join(outDir, mod.dest, modName);
-                    }
-                    else {
-                        dest = path.join(outDir, 'ps_modules', modName);
-                    }
-
-                    matchCopy('!Tests', modOutDir, dest, { noRecurse: true });
-                }
-            });
-        }
-
         // build Node task
         if (shouldBuildNode) {
             buildNodeTask(taskPath, outDir);
@@ -236,14 +150,13 @@ target.build = function() {
 
         // build PowerShell3 task
         if (shouldBuildPs3) {
-            buildPs3Task(taskPath, outDir);
+            await buildPs3Task(taskPath, outDir);
         }
 
-        // copy default resources and any additional resources defined in the task's make.json
         console.log();
         console.log('> copying task resources');
-        copyTaskResources(taskMake, taskPath, outDir);
-    });
+        copyTaskResources(taskPath, outDir);
+    }
 
     banner('Build successful', true);
 }
@@ -254,13 +167,13 @@ target.build = function() {
 // node make.js test
 // node make.js test --task ShellScript --suite L0
 //
-target.test = function() {
+target.test = async function() {
     ensureTool('tsc', '--version', `Version ${TSC_MIN_VERSION}`);
     ensureTool('mocha', '--version', MOCHA_TARGET_VERSION);
 
     // run the tests
     var suiteType = options.suite || 'L0';
-    function runTaskTests(taskName) {
+    async function runTaskTests(taskName) {
         banner('Testing: ' + taskName);
         // find the tests
         var nodeVersions = options.node ? new Array(options.node) : [...getTaskNodeVersion(buildPath, taskName)];
@@ -281,31 +194,33 @@ target.test = function() {
             return;
         }
 
-        nodeVersions.forEach(function (nodeVersion) {
+        for (let i = 0; i < nodeVersions.length; i++) {
+            let nodeVersion = nodeVersions[i];
             try {
                 nodeVersion = String(nodeVersion);
                 banner('Run Mocha Suits for node ' + nodeVersion);
                 // setup the version of node to run the tests
-                util.installNode(nodeVersion);
+                await util.installNode(nodeVersion);
 
                 run('mocha ' + testsSpec.join(' ') /*+ ' --reporter mocha-junit-reporter --reporter-options mochaFile=../testresults/test-results.xml'*/, /*inheritStreams:*/true);
             }  catch (e) {
                 console.error(e);
                 process.exit(1);
             }
-        });
+        }
     }
 
     if (options.task) {
-        runTaskTests(options.task);
+        await runTaskTests(options.task);
     } else {
         // Run tests for each task that exists
-        taskList.forEach(function(taskName) {
+        for (let i = 0; i < taskList.length; i++) {
+            const taskName = taskList[i];
             var taskPath = path.join(buildPath, taskName);
             if (fs.existsSync(taskPath)) {
-                runTaskTests(taskName);
+                await runTaskTests(taskName);
             }
-        });
+        }
 
         banner('Running common library tests');
         var commonLibPattern = path.join(buildPath, 'Common', '*', 'Tests', suiteType + '.js');
@@ -315,7 +230,7 @@ target.test = function() {
         }
         if (specs.length > 0) {
             // setup the version of node to run the tests
-            util.installNode(options.node);
+            await util.installNode(options.node);
             run('mocha ' + specs.join(' ') /*+ ' --reporter mocha-junit-reporter --reporter-options mochaFile=../testresults/test-results.xml'*/, /*inheritStreams:*/true);
         } else {
             console.warn("No common library tests found");
