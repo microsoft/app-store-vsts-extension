@@ -55,7 +55,7 @@ var commonPath = path.join(__dirname, '_build', 'Tasks', 'Common');
 const constants = require('./dev-dependencies-constants');
 
 const MOCHA_TARGET_VERSION = constants.MOCHA_TARGET_VERSION;
-const TSC_MIN_VERSION = constants.TSC_MIN_VERSION;
+const TSC_CURRENT_VERSION = constants.TSC_CURRENT_VERSION;
 const NODE_MIN_VERSION = constants.NODE_MIN_VERSION;
 const NPM_MIN_VERSION = constants.NPM_MIN_VERSION;
 
@@ -103,7 +103,7 @@ target.clean = function () {
 target.build = async function() {
     target.clean();
 
-    ensureTool('tsc', '--version', `Version ${TSC_MIN_VERSION}`);
+    ensureTool('tsc', '--version', `Version ${TSC_CURRENT_VERSION}`);
     ensureTool('npm', '--version', function (output) {
         if (semver.lt(output, NPM_MIN_VERSION)) {
             fail(`expected ${NPM_MIN_VERSION} or higher`);
@@ -168,7 +168,7 @@ target.build = async function() {
 // node make.js test --task ShellScript --suite L0
 //
 target.test = async function() {
-    ensureTool('tsc', '--version', `Version ${TSC_MIN_VERSION}`);
+    ensureTool('tsc', '--version', `Version ${TSC_CURRENT_VERSION}`);
     ensureTool('mocha', '--version', MOCHA_TARGET_VERSION);
 
     // run the tests

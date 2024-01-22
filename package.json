@@ -29,7 +29,7 @@
     "nodejs-file-downloader": "^4.11.1",
     "tfx-cli": "^0.11.0",
     "tslint": "^5.20.1",
-    "typescript": "3.2.2",
+    "typescript": "5.1.6",
     "validator": "13.7.0",
     "yargs": "7.1.2 "
   }
