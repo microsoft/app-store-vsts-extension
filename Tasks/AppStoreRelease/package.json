@@ -4,12 +4,12 @@
   "description": "Azure Pipelines task to publish your apps to the Apple App Store",
   "main": "app-store-release.js",
   "dependencies": {
-    "@types/node": "^16.11.39",
+    "@types/node": "^20.11.0",
     "@types/mocha": "^5.2.7",
     "azure-pipelines-task-lib": "^4.2.0"
   },
   "devDependencies": {
-    "typescript": "4.0.2"
+    "typescript": "5.1.6"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

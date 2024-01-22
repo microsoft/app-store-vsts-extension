@@ -13,8 +13,8 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "233",
-        "Patch": "1"
+        "Minor": "234",
+        "Patch": "0"
     },
     "minimumAgentVersion": "2.182.1",
     "instanceNameFormat": "Submit to the App Store for review",
@@ -235,6 +235,10 @@
         "Node16": {
             "target": "app-store-promote.js",
             "argumentFormat": ""
+        },
+        "Node20_1": {
+            "target": "app-store-promote.js",
+            "argumentFormat": ""
         }
     },
     "restrictions": {
@@ -251,5 +255,9 @@
         "SuccessfullySubmitted": "Build successfully submitted for review.",
         "FastlaneSessionEmpty": "'Fastlane Session' is not set in the service connection configured for two-step verification.",
         "PrecheckInAppPurchasesDisabled": "Precheck will not check In-app purchases because Fastlane doesn't support it with the App Store Connect API Key."
+    },
+    "_buildConfigMapping": {
+        "Default": "1.233.0",
+        "Node20-228": "1.234.0"
     }
 }

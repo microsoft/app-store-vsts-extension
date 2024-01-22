@@ -13,8 +13,8 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "233",
-        "Patch": "1"
+        "Minor": "234",
+        "Patch": "0"
     },
     "minimumAgentVersion": "2.182.1",
     "instanceNameFormat": "Publish to the App Store $(releaseTrack) track",
@@ -397,6 +397,10 @@
         "Node16": {
             "target": "app-store-release.js",
             "argumentFormat": ""
+        },
+        "Node20_1": {
+            "target": "app-store-release.js",
+            "argumentFormat": ""
         }
     },
     "restrictions": {
@@ -422,5 +426,9 @@
         "ReleaseNotesRequiresFastlaneSession": "You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work",
         "PrecheckInAppPurchasesDisabled": "Precheck will not check In-app purchases because Fastlane doesn't support it with the App Store Connect API Key.",
         "FastlaneTooOld": "Testflight upload for macOS apps requires fastlane 2.193.1 or newer."
+    },
+    "_buildConfigMapping": {
+        "Default": "1.233.0",
+        "Node20-228": "1.234.0"
     }
 }
