@@ -12,8 +12,8 @@
     "demands": [ "xcode" ],
     "version": {
         "Major": "1",
-        "Minor": "233",
-        "Patch": "1"
+        "Minor": "234",
+        "Patch": "0"
     },
     "minimumAgentVersion": "2.182.1",
     "instanceNameFormat": "Resign ipa file",
@@ -209,6 +209,10 @@
         "Node16": {
             "target": "ipa-resign.js",
             "argumentFormat": ""
+        },
+        "Node20_1": {
+            "target": "ipa-resign.js",
+            "argumentFormat": ""
         }
     },
     "restrictions": {
@@ -229,5 +233,9 @@
         "MultipleFilesFound": "Multiple matching files were found with search pattern: %s. The pattern must match exactly one file.",
         "P12FilePathNotAPath": "Path provided for P12 file is not a path: %s",
         "ProvisionFilePathNotAPath": "Path provided for provisioning profile is not a path: %s"
+    },
+    "_buildConfigMapping": {
+        "Default": "1.233.0",
+        "Node20-228": "1.234.0"
     }
 }

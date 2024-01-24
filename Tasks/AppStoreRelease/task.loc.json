@@ -15,8 +15,8 @@
   ],
   "version": {
     "Major": "1",
-    "Minor": "233",
-    "Patch": "1"
+    "Minor": "234",
+    "Patch": "0"
   },
   "minimumAgentVersion": "2.182.1",
   "instanceNameFormat": "ms-resource:loc.instanceNameFormat",
@@ -399,6 +399,10 @@
     "Node16": {
       "target": "app-store-release.js",
       "argumentFormat": ""
+    },
+    "Node20_1": {
+      "target": "app-store-release.js",
+      "argumentFormat": ""
     }
   },
   "restrictions": {
@@ -424,5 +428,9 @@
     "ReleaseNotesRequiresFastlaneSession": "ms-resource:loc.messages.ReleaseNotesRequiresFastlaneSession",
     "PrecheckInAppPurchasesDisabled": "ms-resource:loc.messages.PrecheckInAppPurchasesDisabled",
     "FastlaneTooOld": "ms-resource:loc.messages.FastlaneTooOld"
+  },
+  "_buildConfigMapping": {
+    "Default": "1.233.0",
+    "Node20-228": "1.234.0"
   }
 }
