@@ -14,7 +14,7 @@
   ],
   "version": {
     "Major": "1",
-    "Minor": "207",
+    "Minor": "234",
     "Patch": "0"
   },
   "minimumAgentVersion": "2.182.1",
@@ -207,6 +207,14 @@
     "Node10": {
       "target": "ipa-resign.js",
       "argumentFormat": ""
+    },
+    "Node16": {
+      "target": "ipa-resign.js",
+      "argumentFormat": ""
+    },
+    "Node20_1": {
+      "target": "ipa-resign.js",
+      "argumentFormat": ""
     }
   },
   "restrictions": {
@@ -227,6 +235,10 @@
     "MultipleFilesFound": "ms-resource:loc.messages.MultipleFilesFound",
     "P12FilePathNotAPath": "ms-resource:loc.messages.P12FilePathNotAPath",
     "ProvisionFilePathNotAPath": "ms-resource:loc.messages.ProvisionFilePathNotAPath"
+  },
+  "_buildConfigMapping": {
+    "Default": "1.233.0",
+    "Node20-228": "1.234.0"
   },
   "helpMarkDown": "ms-resource:loc.helpMarkDown"
 }

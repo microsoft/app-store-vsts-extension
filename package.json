@@ -1,6 +1,6 @@
 {
   "name": "app-store-vsts-extension",
-  "version": "1.207.0",
+  "version": "1.233.0",
   "description": "A set of TFS/Azure Pipelines tasks for publishing apps to the Apple App Store.",
   "main": "make.js",
   "repository": {
@@ -15,7 +15,7 @@
   "homepage": "https://github.com/Microsoft/app-store-vsts-extension",
   "devDependencies": {
     "@types/mocha": "^5.2.7",
-    "@types/node": "^10.17.0",
+    "@types/node": "^20.11.0",
     "@types/q": "^1.0.7",
     "adm-zip": "^0.4.13",
     "del": "^3.0.0",
@@ -26,10 +26,10 @@
     "q": "1.4.1",
     "semver": "4.3.3",
     "shelljs": "^0.8.5",
-    "sync-request": "4.1.0",
+    "nodejs-file-downloader": "^4.11.1",
     "tfx-cli": "^0.11.0",
     "tslint": "^5.20.1",
-    "typescript": "3.2.2",
+    "typescript": "5.1.6",
     "validator": "13.7.0",
     "yargs": "7.1.2 "
   }

@@ -6,12 +6,12 @@ trigger:
 - master
 
 pool:
-  vmImage: 'macos-11'
+  vmImage: 'ubuntu-latest'
 
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '10.21.x'
+    versionSpec: '20.11.x'
 
 - task: Npm@0
   displayName: 'npm install'
@@ -22,10 +22,10 @@ steps:
 - script: node make.js test
   displayName: 'Run Tests'
 
-- script: node make.js packageprod
+- script: node make.js createtest
   displayName: 'Build test package'
 
-- script: node make.js packagetest
+- script: node make.js create
   displayName: 'Build prod package'
 
 - task: CopyFiles@2

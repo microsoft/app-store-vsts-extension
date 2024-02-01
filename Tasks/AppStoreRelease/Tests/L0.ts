@@ -551,6 +551,31 @@ describe('app-store-release L0 Suite', function () {
         done();
     });
 
+    it('testflight - fastlane macOS', (done: Mocha.Done) => {
+      this.timeout(1000);
+
+      let tp = path.join(__dirname, 'L0TestFlightFastlaneMacOS.js');
+      let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+      tr.run();
+      assert(tr.ran(`fastlane pilot upload -u creds-username -P mypackage.pkg`), 'fastlane pilot upload with pkg file should have been run.');
+
+      done();
+    });
+
+    it('testflight - fastlane too old', (done: Mocha.Done) => {
+        this.timeout(1000);
+
+        let tp = path.join(__dirname, 'L0TestFlightFastlaneTooOld.js');
+        let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+
+        tr.run();
+        assert(tr.invokedToolCount === 0, 'should not have run any tools.');
+        assert(tr.failed, 'task should have failed');
+
+        done();
+    });
+
     it('production - api key', (done: Mocha.Done) => {
         this.timeout(1000);
 
