@@ -78,14 +78,15 @@
   "loc.messages.DarwinOnly": "Задача выпуска Apple App Store может выполняться только на компьютере Mac.",
   "loc.messages.UninstallFastlaneFailed": "При попытке удалить fastlane произошли ошибки. Просмотрите ошибку и при необходимости добавьте сценарий в конвейер для чистой очистки fastlane перед запуском этой задачи. Ошибка при удалении: %s",
   "loc.messages.SuccessfullyPublished": "Успешно опубликовано в %s",
-  "loc.messages.NoIpaFilesFound": "Не найден файл IPA с использованием шаблона: %s",
-  "loc.messages.MultipleIpaFilesFound": "Найдено более одного файла IPA с использованием шаблона: %s",
+  "loc.messages.NoIpaFilesFound": "No IPA/PKG file found using pattern: %s",
+  "loc.messages.MultipleIpaFilesFound": "More than one IPA/PKG file found using pattern: %s",
   "loc.messages.FastlaneSessionEmpty": "«Сеанс Fastlane» не установлен в сервисном подключении, настроенном для двухэтапной проверки.",
   "loc.messages.ReleaseNotesRequiredForExternalTesting": "«Что тестировать?» требуется при использовании «Распространить на внешних тестировщиков».",
   "loc.messages.ExternalTestersCannotSkipWarning": "«Пропустить ожидание обработки сборки» и «Пропустить отправку» не поддерживаются при «Распространении среди внешних тестировщиков». Пожалуйста, проверьте конфигурацию сборки.",
   "loc.messages.NotValidAppType": "Был выбран неправильный тип приложения. Допустимые значения iOS, macOS или tvOS. Набор значений: %s",
   "loc.messages.IpaPathNotSpecified": "Вам нужно указать ipaPath - так как skipBinaryUpload = false",
   "loc.messages.SessionAndAppIdNotSet": "Ваш сеанс fastlane неверен, и идентификатор приложения не установлен. Укажите правильный сеанс fastlane или идентификатор приложения.",
-  "loc.messages.ReleaseNotesRequiresApiKeyOrFS": "Вы указали releaseNotes, поэтому вам нужно предоставить ключ API или сеанс fastlane, только пароль для конкретного приложения не будет работать.",
-  "loc.messages.PrecheckInAppPurchasesDisabled": "Precheck не будет проверять покупки в приложении, поскольку Fastlane не поддерживает его с ключом API App Store Connect."
+  "loc.messages.ReleaseNotesRequiresFastlaneSession": "You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work",
+  "loc.messages.PrecheckInAppPurchasesDisabled": "Precheck не будет проверять покупки в приложении, поскольку Fastlane не поддерживает его с ключом API App Store Connect.",
+  "loc.messages.FastlaneTooOld": "Testflight upload for macOS apps requires fastlane 2.193.1 or newer."
 }

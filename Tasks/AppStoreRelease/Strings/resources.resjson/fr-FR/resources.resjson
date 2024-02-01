@@ -78,14 +78,15 @@
   "loc.messages.DarwinOnly": "La tâche Apple App Store Release ne peut s'exécuter que sur un ordinateur Mac.",
   "loc.messages.UninstallFastlaneFailed": "Des erreurs se sont produites lors de la tentative de désinstallation de Fastlane. Examinez l'erreur et, si nécessaire, ajoutez un script à votre pipeline pour désinstaller proprement Fastlane avant d'exécuter cette tâche. Erreur de désinstallation : %s",
   "loc.messages.SuccessfullyPublished": "Publication réussie sur %s",
-  "loc.messages.NoIpaFilesFound": "Aucun fichier IPA trouvé en utilisant le modèle : %s",
-  "loc.messages.MultipleIpaFilesFound": "Plusieurs fichiers IPA trouvés à l'aide du modèle : %s",
+  "loc.messages.NoIpaFilesFound": "No IPA/PKG file found using pattern: %s",
+  "loc.messages.MultipleIpaFilesFound": "More than one IPA/PKG file found using pattern: %s",
   "loc.messages.FastlaneSessionEmpty": "'Fastlane Session' n'est pas défini dans la connexion de service configurée pour la vérification en deux étapes.",
   "loc.messages.ReleaseNotesRequiredForExternalTesting": "'Que tester?' est requis lors de l'utilisation de 'Distribuer aux testeurs externes'.",
   "loc.messages.ExternalTestersCannotSkipWarning": "'Skip Build Processing Wait' et 'Skip Submission' ne sont pas pris en charge avec 'Distribute to External Testers'. Veuillez vérifier votre configuration de construction.",
   "loc.messages.NotValidAppType": "Un ApplicationType incorrect a été choisi. Valeurs valides iOS, macOS ou tvOS. Valeur définie : %s",
   "loc.messages.IpaPathNotSpecified": "Vous devez spécifier ipaPath – puisque skipBinaryUpload = false",
   "loc.messages.SessionAndAppIdNotSet": "Votre session fastlane est incorrecte et l'identifiant spécifique à l'application n'est pas défini. Veuillez définir une session Fastlane correcte ou un identifiant spécifique à l'application",
-  "loc.messages.ReleaseNotesRequiresApiKeyOrFS": "Vous avez spécifié releaseNotes – vous devez donc fournir une clé API ou une session fastlane, seul le mot de passe spécifique à l'application ne fonctionnera pas",
-  "loc.messages.PrecheckInAppPurchasesDisabled": "La prévérification ne vérifiera pas les achats intégrés car Fastlane ne les prend pas en charge avec la clé API App Store Connect."
+  "loc.messages.ReleaseNotesRequiresFastlaneSession": "You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work",
+  "loc.messages.PrecheckInAppPurchasesDisabled": "La prévérification ne vérifiera pas les achats intégrés car Fastlane ne les prend pas en charge avec la clé API App Store Connect.",
+  "loc.messages.FastlaneTooOld": "Testflight upload for macOS apps requires fastlane 2.193.1 or newer."
 }
