@@ -721,6 +721,15 @@
         </Str>
         <Disp Icon="Str" />
       </Item>
+      <Item ItemId=";loc.messages.FastlaneTooOld" ItemType="0" PsrId="306" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Testflight upload for macOS apps requires fastlane 2.193.1 or newer.]]></Val>
+          <Tgt Cat="Text" Stat="Loc" Orig="New">
+            <Val><![CDATA[macOS 앱용 Testflight 업로드에는 fastlane 2.193.1 이상이 필요합니다.]]></Val>
+          </Tgt>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
       <Item ItemId=";loc.messages.IpaPathNotSpecified" ItemType="0" PsrId="306" Leaf="true">
         <Str Cat="Text">
           <Val><![CDATA[You need to specify ipaPath - since skipBinaryUpload = false]]></Val>
@@ -732,19 +741,25 @@
       </Item>
       <Item ItemId=";loc.messages.MultipleIpaFilesFound" ItemType="0" PsrId="306" Leaf="true">
         <Str Cat="Text">
-          <Val><![CDATA[More than one IPA file found using pattern: %s]]></Val>
+          <Val><![CDATA[More than one IPA/PKG file found using pattern: %s]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[다음 패턴을 사용하는 IPA 파일이 두 개 이상 발견됨: %s]]></Val>
+            <Val><![CDATA[다음 패턴을 사용하는 IPA/PKG 파일이 두 개 이상 발견됨: %s]]></Val>
           </Tgt>
+          <Prev Cat="Text">
+            <Val><![CDATA[More than one IPA file found using pattern: %s]]></Val>
+          </Prev>
         </Str>
         <Disp Icon="Str" />
       </Item>
       <Item ItemId=";loc.messages.NoIpaFilesFound" ItemType="0" PsrId="306" Leaf="true">
         <Str Cat="Text">
-          <Val><![CDATA[No IPA file found using pattern: %s]]></Val>
+          <Val><![CDATA[No IPA/PKG file found using pattern: %s]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[다음 패턴을 사용하는 IPA 파일이 없습니다: %s]]></Val>
+            <Val><![CDATA[다음 패턴을 사용하는 IPA/PKG 파일이 없음: %s]]></Val>
           </Tgt>
+          <Prev Cat="Text">
+            <Val><![CDATA[No IPA file found using pattern: %s]]></Val>
+          </Prev>
         </Str>
         <Disp Icon="Str" />
       </Item>
@@ -775,11 +790,11 @@
         </Str>
         <Disp Icon="Str" />
       </Item>
-      <Item ItemId=";loc.messages.ReleaseNotesRequiresApiKeyOrFS" ItemType="0" PsrId="306" Leaf="true">
+      <Item ItemId=";loc.messages.ReleaseNotesRequiresFastlaneSession" ItemType="0" PsrId="306" Leaf="true">
         <Str Cat="Text">
-          <Val><![CDATA[You specified releaseNotes - so you need to provide API Key or fastlane session, app specific password only won't work]]></Val>
+          <Val><![CDATA[You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[releaseNotes를 지정했습니다. 따라서 API 키 또는 fastlane 세션을 제공해야 합니다. 앱 전용 암호만 작동하지 않습니다.]]></Val>
+            <Val><![CDATA[releaseNotes를 지정했습니다. 따라서 fastlane 세션을 제공해야 합니다. 앱 전용 암호만 작동하지 않습니다.]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
