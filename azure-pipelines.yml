@@ -24,7 +24,7 @@ extends:
     pool:
       name: 1ES-ABTT-Shared-Pool
       image: abtt-ubuntu-2204
-      os: linu
+      os: linux
     customBuildTags:
     - ES365AIMigrationTooling
     stages:
