@@ -1,42 +1,65 @@
-# Build a Node.js project.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
-
+# This Yaml Document has been converted by ESAI Yaml Pipeline Conversion Tool.
+# This pipeline will be extended to the OneESPT template
 trigger:
 - master
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    featureFlags:
+      autoBaseline: false
+    sdl:
+      baseline:
+        baselineSet: default
+        baselineFile: $(Build.SourcesDirectory)/.gdn/.gdnbaselines
+      sourceAnalysisPool:
+        name: 1ES-ABTT-Shared-Pool
+        image: abtt-windows-2022
+        os: windows
+    pool:
+      name: 1ES-ABTT-Shared-Pool
+      image: abtt-ubuntu-2204
+      os: linux
+    customBuildTags:
+    - ES365AIMigrationTooling
+    stages:
+    - stage: stage
+      jobs:
+      - job: job
+        templateContext:
+          outputs:
+          - output: pipelineArtifact
+            displayName: 'Publish Artifact: ExtensionVsixFiles'
+            targetPath: '$(build.artifactstagingdirectory)'
+            artifactName: ExtensionVsixFiles
+        steps:
+        - task: NodeTool@0
+          inputs:
+            versionSpec: '20.11.x'
 
-pool:
-  vmImage: 'ubuntu-latest'
+        - task: Npm@0
+          displayName: 'npm install'
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '20.11.x'
+        - script: node make.js build
+          displayName: 'Build'
 
-- task: Npm@0
-  displayName: 'npm install'
+        - script: node make.js test
+          displayName: 'Run Tests'
 
-- script: node make.js build
-  displayName: 'Build'
+        - script: node make.js createtest
+          displayName: 'Build test package'
 
-- script: node make.js test
-  displayName: 'Run Tests'
+        - script: node make.js create
+          displayName: 'Build prod package'
 
-- script: node make.js createtest
-  displayName: 'Build test package'
-
-- script: node make.js create
-  displayName: 'Build prod package'
-
-- task: CopyFiles@2
-  displayName: 'Copy extensions to: $(build.artifactstagingdirectory)'
-  inputs:
-    SourceFolder: '$(build.sourcesdirectory)'
-    Contents: '*.vsix'
-    TargetFolder: '$(build.artifactstagingdirectory)'
-
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: ExtensionVsixFiles'
-  inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
-    ArtifactName: ExtensionVsixFiles
+        - task: CopyFiles@2
+          displayName: 'Copy extensions to: $(build.artifactstagingdirectory)'
+          inputs:
+            SourceFolder: '$(build.sourcesdirectory)'
+            Contents: '*.vsix'
+            TargetFolder: '$(build.artifactstagingdirectory)'
