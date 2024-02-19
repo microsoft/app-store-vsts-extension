@@ -721,6 +721,15 @@
         </Str>
         <Disp Icon="Str" />
       </Item>
+      <Item ItemId=";loc.messages.FastlaneTooOld" ItemType="0" PsrId="306" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Testflight upload for macOS apps requires fastlane 2.193.1 or newer.]]></Val>
+          <Tgt Cat="Text" Stat="Loc" Orig="New">
+            <Val><![CDATA[Le chargement de Testflight pour les applications macOS nécessite Fastlane 2.193.1 ou une version ultérieure.]]></Val>
+          </Tgt>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
       <Item ItemId=";loc.messages.IpaPathNotSpecified" ItemType="0" PsrId="306" Leaf="true">
         <Str Cat="Text">
           <Val><![CDATA[You need to specify ipaPath - since skipBinaryUpload = false]]></Val>
@@ -732,19 +741,25 @@
       </Item>
       <Item ItemId=";loc.messages.MultipleIpaFilesFound" ItemType="0" PsrId="306" Leaf="true">
         <Str Cat="Text">
-          <Val><![CDATA[More than one IPA file found using pattern: %s]]></Val>
+          <Val><![CDATA[More than one IPA/PKG file found using pattern: %s]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Plusieurs fichiers IPA trouvés à l'aide du modèle : %s]]></Val>
+            <Val><![CDATA[Plusieurs fichiers IPA/PKG ont été trouvés à l’aide du modèle : %s]]></Val>
           </Tgt>
+          <Prev Cat="Text">
+            <Val><![CDATA[More than one IPA file found using pattern: %s]]></Val>
+          </Prev>
         </Str>
         <Disp Icon="Str" />
       </Item>
       <Item ItemId=";loc.messages.NoIpaFilesFound" ItemType="0" PsrId="306" Leaf="true">
         <Str Cat="Text">
-          <Val><![CDATA[No IPA file found using pattern: %s]]></Val>
+          <Val><![CDATA[No IPA/PKG file found using pattern: %s]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Aucun fichier IPA trouvé en utilisant le modèle : %s]]></Val>
+            <Val><![CDATA[Aucun fichier IPA/PKG n’a été trouvé à l’aide du modèle : %s]]></Val>
           </Tgt>
+          <Prev Cat="Text">
+            <Val><![CDATA[No IPA file found using pattern: %s]]></Val>
+          </Prev>
         </Str>
         <Disp Icon="Str" />
       </Item>
@@ -775,11 +790,11 @@
         </Str>
         <Disp Icon="Str" />
       </Item>
-      <Item ItemId=";loc.messages.ReleaseNotesRequiresApiKeyOrFS" ItemType="0" PsrId="306" Leaf="true">
+      <Item ItemId=";loc.messages.ReleaseNotesRequiresFastlaneSession" ItemType="0" PsrId="306" Leaf="true">
         <Str Cat="Text">
-          <Val><![CDATA[You specified releaseNotes - so you need to provide API Key or fastlane session, app specific password only won't work]]></Val>
+          <Val><![CDATA[You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Vous avez spécifié releaseNotes – vous devez donc fournir une clé API ou une session fastlane, seul le mot de passe spécifique à l'application ne fonctionnera pas]]></Val>
+            <Val><![CDATA[Vous avez spécifié releaseNotes et vous devez donc fournir une session Fastlane. Le mot de passe spécifique à l’application ne fonctionnera pas.]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
