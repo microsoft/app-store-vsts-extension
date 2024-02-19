@@ -78,14 +78,15 @@
   "loc.messages.DarwinOnly": "Apple App Store 发布任务只能在 Mac 计算机上运行。",
   "loc.messages.UninstallFastlaneFailed": "尝试卸载 fastlane 时出错。请查看错误，如果需要，请将脚本添加到管道，以便在运行此任务之前完全卸载 fastlane。卸载错误: %s",
   "loc.messages.SuccessfullyPublished": "已成功发布到 %s",
-  "loc.messages.NoIpaFilesFound": "未找到使用模式 %s 的 IPA 文件",
-  "loc.messages.MultipleIpaFilesFound": "使用模式 %s 找到了多个 IPA 文件",
+  "loc.messages.NoIpaFilesFound": "No IPA/PKG file found using pattern: %s",
+  "loc.messages.MultipleIpaFilesFound": "More than one IPA/PKG file found using pattern: %s",
   "loc.messages.FastlaneSessionEmpty": "在为双重验证配置的服务连接中未设置“fastlane 会话”。",
   "loc.messages.ReleaseNotesRequiredForExternalTesting": "使用“分发到外部测试人员”时，必须填写“要测试什么?”。",
   "loc.messages.ExternalTestersCannotSkipWarning": "“分发到外部测试人员”不支持“跳过生成处理等待”和“跳过提交”。请检查生成配置。",
   "loc.messages.NotValidAppType": "选择了错误的 ApplicationType。有效值为 iOS、macOS 或 tvOS。值集: %s",
   "loc.messages.IpaPathNotSpecified": "需要指定 ipaPath - 因为 skipBinaryUpload = false",
   "loc.messages.SessionAndAppIdNotSet": "Fastlane 会话不正确，并且未设置特定于应用的 ID。请设置正确的 fastlane 会话或特定于应用的 ID",
-  "loc.messages.ReleaseNotesRequiresApiKeyOrFS": "你指定了 releaseNotes - 因此需要提供 API 密钥或 fastlane 会话，仅应用特定的密码将不起作用",
-  "loc.messages.PrecheckInAppPurchasesDisabled": "预检查不会检查应用内购买，因为 Fastlane 不支持使用 App Store Connect API 密钥检查它。"
+  "loc.messages.ReleaseNotesRequiresFastlaneSession": "You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work",
+  "loc.messages.PrecheckInAppPurchasesDisabled": "预检查不会检查应用内购买，因为 Fastlane 不支持使用 App Store Connect API 密钥检查它。",
+  "loc.messages.FastlaneTooOld": "Testflight upload for macOS apps requires fastlane 2.193.1 or newer."
 }

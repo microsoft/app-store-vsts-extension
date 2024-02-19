@@ -78,14 +78,15 @@
   "loc.messages.DarwinOnly": "Apple App Store Release タスクは、Mac コンピューターでのみ実行できます。",
   "loc.messages.UninstallFastlaneFailed": "fastlane をアンインストールしようとしたときにエラーが発生しました。エラーを確認し、必要に応じてスクリプトをパイプラインに追加して、このタスクを実行する前に fastlane をクリーン アンインストールします。アンインストール エラー: %s",
   "loc.messages.SuccessfullyPublished": "%s に正常に公開されました",
-  "loc.messages.NoIpaFilesFound": "パターン %s を使用する IPA ファイルが見つかりませんでした",
-  "loc.messages.MultipleIpaFilesFound": "次のパターンを使用して複数の IPA ファイルが見つかりました: %s",
+  "loc.messages.NoIpaFilesFound": "No IPA/PKG file found using pattern: %s",
+  "loc.messages.MultipleIpaFilesFound": "More than one IPA/PKG file found using pattern: %s",
   "loc.messages.FastlaneSessionEmpty": "2 段階認証用に構成されたサービス接続で 'Fastlane セッション' が設定されていません。",
   "loc.messages.ReleaseNotesRequiredForExternalTesting": "'Distribute to External Testers (外部テスト担当者に配布)' を使用する場合は、'What to Tests? (テスト対象)' が必要です。",
   "loc.messages.ExternalTestersCannotSkipWarning": "'Skip Build Processing Wait (ビルド処理待機のスキップ)' と 'Skip Submission (提出のスキップ)' は、'Distribute to External Testers (外部のテスト台頭者への配布)' ではサポートされていません。ビルド構成を確認してください。",
   "loc.messages.NotValidAppType": "正しくない ApplicationType が選択されました。有効な値は、iOS、macOS、または tvOS です。値セット: %s",
   "loc.messages.IpaPathNotSpecified": "skipBinaryUpload = false であるため、ipaPath を指定する必要があります",
   "loc.messages.SessionAndAppIdNotSet": "fastlane セッションが正しくないため、アプリ固有の ID が設定されていません。正しい fastlane セッションまたはアプリ固有の ID を設定してください",
-  "loc.messages.ReleaseNotesRequiresApiKeyOrFS": "releaseNotes を指定しました- API キーまたは fastlane セッションを指定する必要があるため、アプリ固有のパスワードのみが機能しません",
-  "loc.messages.PrecheckInAppPurchasesDisabled": "Fastlane では App Store Connect API キーでサポートされていないため、事前チェックではアプリ内購入はチェックされません。"
+  "loc.messages.ReleaseNotesRequiresFastlaneSession": "You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work",
+  "loc.messages.PrecheckInAppPurchasesDisabled": "Fastlane では App Store Connect API キーでサポートされていないため、事前チェックではアプリ内購入はチェックされません。",
+  "loc.messages.FastlaneTooOld": "Testflight upload for macOS apps requires fastlane 2.193.1 or newer."
 }

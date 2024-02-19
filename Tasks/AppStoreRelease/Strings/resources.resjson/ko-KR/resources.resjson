@@ -78,14 +78,15 @@
   "loc.messages.DarwinOnly": "Apple App Store 릴리스 작업은 Mac 컴퓨터에서만 실행할 수 있습니다.",
   "loc.messages.UninstallFastlaneFailed": "fastlane을 제거하려고 할 때 오류가 발생했습니다. 오류를 검토하고 필요한 경우 파이프라인에 스크립트를 추가하여 이 작업을 실행하기 전에 fastlane을 완전히 제거합니다. 제거 오류: %s",
   "loc.messages.SuccessfullyPublished": "%s에 게시되었습니다.",
-  "loc.messages.NoIpaFilesFound": "다음 패턴을 사용하는 IPA 파일이 없습니다: %s",
-  "loc.messages.MultipleIpaFilesFound": "다음 패턴을 사용하는 IPA 파일이 두 개 이상 발견됨: %s",
+  "loc.messages.NoIpaFilesFound": "No IPA/PKG file found using pattern: %s",
+  "loc.messages.MultipleIpaFilesFound": "More than one IPA/PKG file found using pattern: %s",
   "loc.messages.FastlaneSessionEmpty": "2단계 인증을 위해 구성된 서비스 연결에 'Fastlane Session'이 설정되어 있지 않습니다.",
   "loc.messages.ReleaseNotesRequiredForExternalTesting": "'테스트할 항목'은 '외부 테스터에 배포'를 사용할 때 필요합니다.",
   "loc.messages.ExternalTestersCannotSkipWarning": "'빌드 처리 대기 건너뛰기' 및 '제출 건너뛰기'는 '외부 테스터에게 배포'에서 지원되지 않습니다. 빌드 구성을 확인하세요.",
   "loc.messages.NotValidAppType": "잘못된 ApplicationType이 선택되었습니다. 유효한 값은 iOS, macOS 또는 tvOS입니다. 값 세트: %s",
   "loc.messages.IpaPathNotSpecified": "skipBinaryUpload = false이므로 ipaPath를 지정해야 합니다.",
   "loc.messages.SessionAndAppIdNotSet": "fastlane 세션이 올바르지 않고 앱별 ID가 설정되지 않았습니다. 올바른 fastlane 세션 또는 앱 특정 ID를 설정하세요.",
-  "loc.messages.ReleaseNotesRequiresApiKeyOrFS": "releaseNotes를 지정했습니다. 따라서 API 키 또는 fastlane 세션을 제공해야 합니다. 앱 전용 암호만 작동하지 않습니다.",
-  "loc.messages.PrecheckInAppPurchasesDisabled": "Fastlane이 App Store Connect API 키로 지원하지 않기 때문에 Precheck는 인앱 구매를 확인하지 않습니다."
+  "loc.messages.ReleaseNotesRequiresFastlaneSession": "You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work",
+  "loc.messages.PrecheckInAppPurchasesDisabled": "Fastlane이 App Store Connect API 키로 지원하지 않기 때문에 Precheck는 인앱 구매를 확인하지 않습니다.",
+  "loc.messages.FastlaneTooOld": "Testflight upload for macOS apps requires fastlane 2.193.1 or newer."
 }
