@@ -721,6 +721,15 @@
         </Str>
         <Disp Icon="Str" />
       </Item>
+      <Item ItemId=";loc.messages.FastlaneTooOld" ItemType="0" PsrId="306" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Testflight upload for macOS apps requires fastlane 2.193.1 or newer.]]></Val>
+          <Tgt Cat="Text" Stat="Loc" Orig="New">
+            <Val><![CDATA[macOS 应用的 Testflight 上传需要 fastlane 2.193.1 或更高版本。]]></Val>
+          </Tgt>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
       <Item ItemId=";loc.messages.IpaPathNotSpecified" ItemType="0" PsrId="306" Leaf="true">
         <Str Cat="Text">
           <Val><![CDATA[You need to specify ipaPath - since skipBinaryUpload = false]]></Val>
@@ -732,19 +741,25 @@
       </Item>
       <Item ItemId=";loc.messages.MultipleIpaFilesFound" ItemType="0" PsrId="306" Leaf="true">
         <Str Cat="Text">
-          <Val><![CDATA[More than one IPA file found using pattern: %s]]></Val>
+          <Val><![CDATA[More than one IPA/PKG file found using pattern: %s]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[使用模式 %s 找到了多个 IPA 文件]]></Val>
+            <Val><![CDATA[通过模式 %s 找到了多个 IPA/PKG 文件]]></Val>
           </Tgt>
+          <Prev Cat="Text">
+            <Val><![CDATA[More than one IPA file found using pattern: %s]]></Val>
+          </Prev>
         </Str>
         <Disp Icon="Str" />
       </Item>
       <Item ItemId=";loc.messages.NoIpaFilesFound" ItemType="0" PsrId="306" Leaf="true">
         <Str Cat="Text">
-          <Val><![CDATA[No IPA file found using pattern: %s]]></Val>
+          <Val><![CDATA[No IPA/PKG file found using pattern: %s]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[未找到使用模式 %s 的 IPA 文件]]></Val>
+            <Val><![CDATA[未通过模式 %s 找到 IPA/PKG 文件]]></Val>
           </Tgt>
+          <Prev Cat="Text">
+            <Val><![CDATA[No IPA file found using pattern: %s]]></Val>
+          </Prev>
         </Str>
         <Disp Icon="Str" />
       </Item>
@@ -775,11 +790,11 @@
         </Str>
         <Disp Icon="Str" />
       </Item>
-      <Item ItemId=";loc.messages.ReleaseNotesRequiresApiKeyOrFS" ItemType="0" PsrId="306" Leaf="true">
+      <Item ItemId=";loc.messages.ReleaseNotesRequiresFastlaneSession" ItemType="0" PsrId="306" Leaf="true">
         <Str Cat="Text">
-          <Val><![CDATA[You specified releaseNotes - so you need to provide API Key or fastlane session, app specific password only won't work]]></Val>
+          <Val><![CDATA[You specified releaseNotes - so you need to provide fastlane session, app specific password only won't work]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[你指定了 releaseNotes - 因此需要提供 API 密钥或 fastlane 会话，仅应用特定的密码将不起作用]]></Val>
+            <Val><![CDATA[你指定了 releaseNotes - 因此需要提供 fastlane 会话，仅有应用专用的密码将无法运作]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
