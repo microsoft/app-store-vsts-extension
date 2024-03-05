@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "app-store",
     "name": "Apple App Store",
-    "version": "1.234.0",
+    "version": "1.236.0",
     "publisher": "ms-vsclient",
     "description": "Provides tasks for publishing to Apple's App Store from a TFS/Azure DevOps build or release pipeline",
     "categories": [
