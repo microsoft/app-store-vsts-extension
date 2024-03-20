@@ -78,14 +78,15 @@
   "loc.messages.DarwinOnly": "Apple App Store 發行工作只可在 Mac 電腦上執行。",
   "loc.messages.UninstallFastlaneFailed": "嘗試解除安裝 fastlane 時發生錯誤。請檢閱錯誤，並視需要將指令碼新增至管線，以在執行此工作之前先明確解除安裝 fastlane。解除安裝錯誤: %s",
   "loc.messages.SuccessfullyPublished": "已成功發佈至 %s",
-  "loc.messages.NoIpaFilesFound": "找不到使用以下模式的 IPA 檔案: %s",
-  "loc.messages.MultipleIpaFilesFound": "找到使用以下模式的一個以上 IPA 檔案: %s",
+  "loc.messages.NoIpaFilesFound": "找不到使用以下模式的 IPA/PKG 檔案: %s",
+  "loc.messages.MultipleIpaFilesFound": "找到一個以上使用以下模式的 IPA/PKG 檔案: %s",
   "loc.messages.FastlaneSessionEmpty": "為雙步驟驗證設定的服務連線中未設定 [Fastlane 工作階段]。",
   "loc.messages.ReleaseNotesRequiredForExternalTesting": "使用 [散發給外部測試人員] 時需要 [要測試的內容?]。",
   "loc.messages.ExternalTestersCannotSkipWarning": "[散發給外部測試人員] 不支援 [跳過組建處理等候] 和 [跳過提交]。請檢查您的組建設定。",
   "loc.messages.NotValidAppType": "選擇的 ApplicationType 不正確。有效值 iOS、macOS 或 tvOS。值設定: %s",
   "loc.messages.IpaPathNotSpecified": "您必須指定 ipaPath - 因為 skipBinaryUpload = false",
   "loc.messages.SessionAndAppIdNotSet": "您的 fastlane 工作階段不正確，且未設定應用程式專用識別碼。請設定正確的 fastlane 工作階段或應用程式專用識別碼",
-  "loc.messages.ReleaseNotesRequiresApiKeyOrFS": "您已指定 releaseNotes，因此必須提供 API 金鑰或 fastlane 工作階段，僅限應用程式專用密碼將無法使用",
-  "loc.messages.PrecheckInAppPurchasesDisabled": "因為 Fastlane 不支援使用 App Store Connect API 金鑰，所以前置檢查不會檢查應用程式內建購買功能。"
+  "loc.messages.ReleaseNotesRequiresFastlaneSession": "您已指定 releaseNotes，因此必須提供 fastlane 工作階段，無法使用僅限應用程式特定密碼",
+  "loc.messages.PrecheckInAppPurchasesDisabled": "因為 Fastlane 不支援使用 App Store Connect API 金鑰，所以前置檢查不會檢查應用程式內建購買功能。",
+  "loc.messages.FastlaneTooOld": "macOS 應用程式的 Testflight 上傳需要 fastlane 2.193.1 或更新版本。"
 }

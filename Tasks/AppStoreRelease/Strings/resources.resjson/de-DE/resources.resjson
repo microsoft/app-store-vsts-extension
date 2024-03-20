@@ -78,14 +78,15 @@
   "loc.messages.DarwinOnly": "Die Apple App Store Release-Aufgabe kann nur auf einem Mac-Computer ausgeführt werden.",
   "loc.messages.UninstallFastlaneFailed": "Fehler beim Versuch, Fastlane zu deinstallieren. Überprüfen Sie den Fehler, und fügen Sie Ihrer Pipeline bei Bedarf ein Skript hinzu, um Fastlane vor dem Ausführen dieser Aufgabe ordnungsgemäß zu deinstallieren. Deinstallationsfehler: %s",
   "loc.messages.SuccessfullyPublished": "Erfolgreich veröffentlicht in %s",
-  "loc.messages.NoIpaFilesFound": "Es wurde keine IPA-Datei mit dem Muster „%s“ gefunden.",
-  "loc.messages.MultipleIpaFilesFound": "Es wurden mehrere IPA-Dateien mit dem Muster „%s“ gefunden.",
+  "loc.messages.NoIpaFilesFound": "Es wurde keine IPA/PKG-Datei mit dem Muster „%s“ gefunden.",
+  "loc.messages.MultipleIpaFilesFound": "Es wurden mehrere IPA/PKG-Dateien mit dem Muster „%s“ gefunden.",
   "loc.messages.FastlaneSessionEmpty": "„Fastlane Session“ ist in der Dienstverbindung, die für die zweistufige Überprüfung konfiguriert ist, nicht festgelegt.",
   "loc.messages.ReleaseNotesRequiredForExternalTesting": "„Was soll getestet werden?“ ist erforderlich, wenn Sie „An externe Tester verteilen“ verwenden.",
   "loc.messages.ExternalTestersCannotSkipWarning": "Die Optionen „Wartevorgang für Buildverarbeitung überspringen“ und „Übermittlung überspringen“ werden mit „An externe Tester verteilen“ nicht unterstützt. Überprüfen Sie Ihre Buildkonfiguration.",
   "loc.messages.NotValidAppType": "Ein falscher ApplicationType wurde ausgewählt. Gültige Werte sind „iOS“, „macOS“ oder „tvOS“. Wertsatz: %s.",
   "loc.messages.IpaPathNotSpecified": "Sie müssen ipaPath angeben, da „skipBinaryUpload = false“ ist.",
   "loc.messages.SessionAndAppIdNotSet": "Ihre Fastlane-Sitzung ist falsch, und die App-spezifische ID ist nicht festgelegt. Legen Sie die richtige Fastlane-Sitzung oder App-spezifische ID fest.",
-  "loc.messages.ReleaseNotesRequiresApiKeyOrFS": "Sie haben releaseNotes angegeben. Daher müssen Sie einen API-Schlüssel oder eine Fastlane-Sitzung bereitstellen, nur ein App-spezifisches Kennwort reicht nicht aus.",
-  "loc.messages.PrecheckInAppPurchasesDisabled": "Bei der Vorabprüfung werden In-App-Käufe nicht überprüft, da Fastlane sie mit dem App Store Connect-API-Schlüssel nicht unterstützt."
+  "loc.messages.ReleaseNotesRequiresFastlaneSession": "Sie haben releaseNotes angegeben. Daher müssen Sie eine Fastlane-Sitzung bereitstellen, nur ein App-spezifisches Kennwort reicht nicht aus.",
+  "loc.messages.PrecheckInAppPurchasesDisabled": "Bei der Vorabprüfung werden In-App-Käufe nicht überprüft, da Fastlane sie mit dem App Store Connect-API-Schlüssel nicht unterstützt.",
+  "loc.messages.FastlaneTooOld": "Der TestFlight-Upload für macOS-Apps erfordert Fastlane 2.193.1 oder höher."
 }
