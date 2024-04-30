@@ -182,7 +182,7 @@ async function run() {
         if (installFastlane) {
             tl.debug('Installing fastlane...');
             let gemRunner: ToolRunner = tl.tool(tl.which('gem', true));
-            gemRunner.arg(['install', 'fastlane']);
+            gemRunner.arg(['install', '--no-document', 'fastlane']);
             if (fastlaneVersionToInstall) {
                 tl.debug(`Installing specific version of fastlane: ${fastlaneVersionToInstall}`);
                 gemRunner.arg(['-v', fastlaneVersionToInstall]);
