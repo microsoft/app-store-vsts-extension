@@ -42,7 +42,7 @@ let myAnswers: string = `{
             "code": 0,
             "stdout": "Successfully uninstalled fastlane-2.15.1"
         },
-        "/usr/bin/gem install fastlane -v 2.15.1": {
+        "/usr/bin/gem install --no-document fastlane -v 2.15.1": {
             "code": 0,
             "stdout": "1 gem installed"
         },
