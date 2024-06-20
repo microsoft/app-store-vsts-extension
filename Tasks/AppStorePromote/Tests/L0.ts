@@ -83,7 +83,7 @@ describe('app-store-promote L0 Suite', function () {
 
         tr.run();
         assert(tr.ran('/usr/bin/gem uninstall fastlane -a -I'), 'gem uninstall fastlane should have been run.');
-        assert(tr.ran('/usr/bin/gem install fastlane -v 2.15.1'), 'gem install fastlane with a specific version should have been run.');
+        assert(tr.ran('/usr/bin/gem install --no-document fastlane -v 2.15.1'), 'gem install fastlane with a specific version should have been run.');
         assert(tr.invokedToolCount === 3, 'should have run gem uninstall, gem install and fastlane deliver.');
         assert(tr.succeeded, 'task should have succeeded');
 
