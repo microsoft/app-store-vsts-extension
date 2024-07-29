@@ -46,7 +46,7 @@ let myAnswers: string = `{
         ]
     },
     "exec": {
-        "/usr/bin/gem install fastlane": {
+        "/usr/bin/gem install --no-document fastlane": {
             "code": 0,
             "stdout": "1 gem installed"
         },

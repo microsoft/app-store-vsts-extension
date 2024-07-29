@@ -1,4 +1,4 @@
- /*---------------------------------------------------------------------------------------------
+/*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
@@ -44,7 +44,7 @@ let myAnswers: string = `{
         ]
     },
     "exec": {
-        "/usr/bin/gem install fastlane": {
+        "/usr/bin/gem install --no-document fastlane": {
             "code": 0,
             "stdout": "1 gem installed"
         },
@@ -64,7 +64,7 @@ tmr.setAnswers(<ma.TaskLibAnswers>json);
 
 // This is how you can mock NPM packages...
 os.platform = () => {
-    return 'darwin';
+  return 'darwin';
 };
 tmr.registerMock('os', os);
 
