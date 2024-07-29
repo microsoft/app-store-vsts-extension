@@ -1,4 +1,4 @@
- /*---------------------------------------------------------------------------------------------
+/*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
@@ -30,17 +30,17 @@ process.env['HOME'] = '/usr/bin';
 let gemCache: string = '/usr/bin/.gem-cache';
 
 tmr.registerMock('fs', {
-    statSync: () => {
-        let stat = new stats;
-        stat.isFile = () => {
-            return true;
-        };
-        return stat;
-    },
-    readFileSync: () => {
-        return Buffer.from('Release notes for beta release.');
-    },
-    writeFileSync: fs.writeFileSync
+  statSync: () => {
+    let stat = new stats();
+    stat.isFile = () => {
+      return true;
+    };
+    return stat;
+  },
+  readFileSync: () => {
+    return Buffer.from('Release notes for beta release.');
+  },
+  writeFileSync: fs.writeFileSync
 });
 
 //construct a string that is JSON, call JSON.parse(string), send that to ma.TaskLibAnswers
@@ -63,7 +63,7 @@ let myAnswers: string = `{
         ]
     },
     "exec": {
-        "/usr/bin/gem install fastlane": {
+        "/usr/bin/gem install --no-document fastlane": {
             "code": 0,
             "stdout": "1 gem installed"
         },
@@ -83,7 +83,7 @@ tmr.setAnswers(<ma.TaskLibAnswers>json);
 
 // This is how you can mock NPM packages...
 os.platform = () => {
-    return 'darwin';
+  return 'darwin';
 };
 tmr.registerMock('os', os);
 

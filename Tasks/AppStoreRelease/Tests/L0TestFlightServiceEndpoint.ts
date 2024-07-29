@@ -1,4 +1,4 @@
- /*---------------------------------------------------------------------------------------------
+/*---------------------------------------------------------------------------------------------
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
@@ -13,7 +13,8 @@ let taskPath = path.join(__dirname, '..', 'app-store-release.js');
 let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
 // replace with mock of setVariable when task-lib has the support
-process.env['ENDPOINT_AUTH_MyServiceEndpoint'] = '{ "parameters": {"username": "creds-username", "password": "creds-password"}, "scheme": "whatever" }';
+process.env['ENDPOINT_AUTH_MyServiceEndpoint'] =
+  '{ "parameters": {"username": "creds-username", "password": "creds-password"}, "scheme": "whatever" }';
 
 tmr.setInput('authType', 'ServiceEndpoint');
 tmr.setInput('serviceEndpoint', 'MyServiceEndpoint');
@@ -46,7 +47,7 @@ let myAnswers: string = `{
         ]
     },
     "exec": {
-        "/usr/bin/gem install fastlane": {
+        "/usr/bin/gem install --no-document fastlane": {
             "code": 0,
             "stdout": "1 gem installed"
         },
@@ -66,7 +67,7 @@ tmr.setAnswers(<ma.TaskLibAnswers>json);
 
 // This is how you can mock NPM packages...
 os.platform = () => {
-    return 'darwin';
+  return 'darwin';
 };
 tmr.registerMock('os', os);
 
