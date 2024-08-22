@@ -156,28 +156,28 @@ describe('app-store-promote L0 Suite', function () {
 
     await tr.runAsync();
 
-    // Check api_key file first, so we can read it and clean up before other assertions
-    assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
+      // Check api_key file first, so we can read it and clean up before other assertions
+      assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
 
-    let apiKey: any = undefined;
+      let apiKey: any = undefined;
 
-    try {
-      let rawdata = fs.readFileSync(keyFilePath, 'utf8');
-      apiKey = JSON.parse(rawdata);
-    } catch (e) {
-      assert.fail(e);
-    } finally {
-      deleteDirectory(tempPath, [keyFileName, '.taskkey']);
-    }
+      try {
+        let rawdata = fs.readFileSync(keyFilePath, 'utf8');
+        apiKey = JSON.parse(rawdata);
+      } catch (e) {
+        assert.fail(e);
+      } finally {
+        deleteDirectory(tempPath, [keyFileName, '.taskkey']);
+      }
 
-    assert(
-      tr.ran(
-        `fastlane deliver submit_build --precheck_include_in_app_purchases false --api_key_path ${keyFilePath} -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --force`
-      ),
-      'fastlane deliver with api key should have been run.'
-    );
-    assert(tr.invokedToolCount === 1, 'should have run only fastlane deliver.');
-    assert(tr.succeeded, 'task should have succeeded');
+      assert(
+        tr.ran(
+          `fastlane deliver submit_build --precheck_include_in_app_purchases false --api_key_path ${keyFilePath} -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --force`
+        ),
+        'fastlane deliver with api key should have been run.'
+      );
+      assert(tr.invokedToolCount === 1, 'should have run only fastlane deliver.');
+      assert(tr.succeeded, 'task should have succeeded');
 
     assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
     assert(
@@ -204,31 +204,31 @@ describe('app-store-promote L0 Suite', function () {
 
     await tr.runAsync();
 
-    // Check api_key file first, so we can read it and clean up before other assertions
-    assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
+      // Check api_key file first, so we can read it and clean up before other assertions
+      assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
 
-    let apiKey: any = undefined;
+      let apiKey: any = undefined;
 
-    try {
-      let rawdata = fs.readFileSync(keyFilePath, 'utf8');
-      apiKey = JSON.parse(rawdata);
-    } catch (e) {
-      assert.fail(e);
-    } finally {
-      deleteDirectory(tempPath, [keyFileName, '.taskkey']);
-    }
+      try {
+        let rawdata = fs.readFileSync(keyFilePath, 'utf8');
+        apiKey = JSON.parse(rawdata);
+      } catch (e) {
+        assert.fail(e);
+      } finally {
+        deleteDirectory(tempPath, [keyFileName, '.taskkey']);
+      }
 
-    assert(
-      tr.ran(
-        `fastlane deliver submit_build --precheck_include_in_app_purchases false --api_key_path ${keyFilePath} -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force`
-      ),
-      'fastlane deliver with api key should have been run.'
-    );
-    assert(
-      tr.invokedToolCount === 3,
-      'should have run gem install, gem update and fastlane deliver.'
-    );
-    assert(tr.succeeded, 'task should have succeeded');
+      assert(
+        tr.ran(
+          `fastlane deliver submit_build --precheck_include_in_app_purchases false --api_key_path ${keyFilePath} -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force`
+        ),
+        'fastlane deliver with api key should have been run.'
+      );
+      assert(
+        tr.invokedToolCount === 3,
+        'should have run gem install, gem update and fastlane deliver.'
+      );
+      assert(tr.succeeded, 'task should have succeeded');
 
     assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
     assert(

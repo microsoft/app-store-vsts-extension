@@ -166,26 +166,26 @@ describe('app-store-release L0 Suite', function () {
 
     await tr.runAsync();
 
-    // Check api_key file first, so we can read it and clean up before other assertions
-    assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
+      // Check api_key file first, so we can read it and clean up before other assertions
+      assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
 
-    let apiKey: any = undefined;
+      let apiKey: any = undefined;
 
-    try {
-      let rawdata = fs.readFileSync(keyFilePath, 'utf8');
-      apiKey = JSON.parse(rawdata);
-    } catch (e) {
-      assert.fail(e);
-    } finally {
-      deleteDirectory(tempPath, [keyFileName, '.taskkey']);
-    }
+      try {
+        let rawdata = fs.readFileSync(keyFilePath, 'utf8');
+        apiKey = JSON.parse(rawdata);
+      } catch (e) {
+        assert.fail(e);
+      } finally {
+        deleteDirectory(tempPath, [keyFileName, '.taskkey']);
+      }
 
-    assert(
-      tr.ran(`fastlane pilot upload --api_key_path ${keyFilePath} -i mypackage.ipa`),
-      'fastlane pilot upload with api key should have been run.'
-    );
-    assert(tr.invokedToolCount === 1, 'should have run only fastlane pilot.');
-    assert(tr.succeeded, 'task should have succeeded');
+      assert(
+        tr.ran(`fastlane pilot upload --api_key_path ${keyFilePath} -i mypackage.ipa`),
+        'fastlane pilot upload with api key should have been run.'
+      );
+      assert(tr.invokedToolCount === 1, 'should have run only fastlane pilot.');
+      assert(tr.succeeded, 'task should have succeeded');
 
     assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
     assert(
@@ -277,29 +277,29 @@ describe('app-store-release L0 Suite', function () {
 
     await tr.runAsync();
 
-    // Check api_key file first, so we can read it and clean up before other assertions
-    assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
+      // Check api_key file first, so we can read it and clean up before other assertions
+      assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
 
-    let apiKey: any = undefined;
+      let apiKey: any = undefined;
 
-    try {
-      let rawdata = fs.readFileSync(keyFilePath, 'utf8');
-      apiKey = JSON.parse(rawdata);
-    } catch (e) {
-      assert.fail(e);
-    } finally {
-      deleteDirectory(tempPath, [keyFileName, '.taskkey']);
-    }
+      try {
+        let rawdata = fs.readFileSync(keyFilePath, 'utf8');
+        apiKey = JSON.parse(rawdata);
+      } catch (e) {
+        assert.fail(e);
+      } finally {
+        deleteDirectory(tempPath, [keyFileName, '.taskkey']);
+      }
 
-    assert(
-      tr.ran(`fastlane pilot upload --api_key_path ${keyFilePath} -i mypackage.ipa`),
-      'fastlane pilot upload with api key should have been run.'
-    );
-    assert(
-      tr.invokedToolCount === 3,
-      'should have run gem install, gem update and fastlane pilot.'
-    );
-    assert(tr.succeeded, 'task should have succeeded');
+      assert(
+        tr.ran(`fastlane pilot upload --api_key_path ${keyFilePath} -i mypackage.ipa`),
+        'fastlane pilot upload with api key should have been run.'
+      );
+      assert(
+        tr.invokedToolCount === 3,
+        'should have run gem install, gem update and fastlane pilot.'
+      );
+      assert(tr.succeeded, 'task should have succeeded');
 
     assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
     assert(
@@ -326,31 +326,31 @@ describe('app-store-release L0 Suite', function () {
 
     await tr.runAsync();
 
-    // Check api_key file first, so we can read it and clean up before other assertions
-    assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
+      // Check api_key file first, so we can read it and clean up before other assertions
+      assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
 
-    let apiKey: any = undefined;
+      let apiKey: any = undefined;
 
-    try {
-      let rawdata = fs.readFileSync(keyFilePath, 'utf8');
-      apiKey = JSON.parse(rawdata);
-    } catch (e) {
-      assert.fail(e);
-    } finally {
-      deleteDirectory(tempPath, [keyFileName, '.taskkey']);
-    }
+      try {
+        let rawdata = fs.readFileSync(keyFilePath, 'utf8');
+        apiKey = JSON.parse(rawdata);
+      } catch (e) {
+        assert.fail(e);
+      } finally {
+        deleteDirectory(tempPath, [keyFileName, '.taskkey']);
+      }
 
-    assert(
-      tr.ran(
-        `fastlane pilot distribute --api_key_path ${keyFilePath} -a com.microsoft.test.appId --groups Beta`
-      ),
-      'fastlane pilot distribute with api key should have been run.'
-    );
-    assert(
-      tr.invokedToolCount === 3,
-      'should have run gem install, gem update and fastlane pilot.'
-    );
-    assert(tr.succeeded, 'task should have succeeded');
+      assert(
+        tr.ran(
+          `fastlane pilot distribute --api_key_path ${keyFilePath} -a com.microsoft.test.appId --groups Beta`
+        ),
+        'fastlane pilot distribute with api key should have been run.'
+      );
+      assert(
+        tr.invokedToolCount === 3,
+        'should have run gem install, gem update and fastlane pilot.'
+      );
+      assert(tr.succeeded, 'task should have succeeded');
 
     assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
     assert(
@@ -669,31 +669,31 @@ describe('app-store-release L0 Suite', function () {
 
     await tr.runAsync();
 
-    // Check api_key file first, so we can read it and clean up before other assertions
-    assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
+      // Check api_key file first, so we can read it and clean up before other assertions
+      assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
 
-    let apiKey: any = undefined;
+      let apiKey: any = undefined;
 
-    try {
-      let rawdata = fs.readFileSync(keyFilePath, 'utf8');
-      apiKey = JSON.parse(rawdata);
-    } catch (e) {
-      assert.fail(e);
-    } finally {
-      deleteDirectory(tempPath, [keyFileName, '.taskkey']);
-    }
+      try {
+        let rawdata = fs.readFileSync(keyFilePath, 'utf8');
+        apiKey = JSON.parse(rawdata);
+      } catch (e) {
+        assert.fail(e);
+      } finally {
+        deleteDirectory(tempPath, [keyFileName, '.taskkey']);
+      }
 
-    assert(
-      tr.ran(
-        `fastlane deliver --force --precheck_include_in_app_purchases false --api_key_path ${keyFilePath} -a com.microsoft.test.appId -i mypackage.ipa -j ios --skip_metadata true --skip_screenshots true --automatic_release false`
-      ),
-      'fastlane deliver with api key should have been run.'
-    );
-    assert(
-      tr.invokedToolCount === 3,
-      'should have run gem install, gem update and fastlane pilot.'
-    );
-    assert(tr.succeeded, 'task should have succeeded');
+      assert(
+        tr.ran(
+          `fastlane deliver --force --precheck_include_in_app_purchases false --api_key_path ${keyFilePath} -a com.microsoft.test.appId -i mypackage.ipa -j ios --skip_metadata true --skip_screenshots true --automatic_release false`
+        ),
+        'fastlane deliver with api key should have been run.'
+      );
+      assert(
+        tr.invokedToolCount === 3,
+        'should have run gem install, gem update and fastlane pilot.'
+      );
+      assert(tr.succeeded, 'task should have succeeded');
 
     assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
     assert(
