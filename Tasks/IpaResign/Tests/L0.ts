@@ -21,24 +21,22 @@ describe('ipa-resign L0 Suite', function () {
     /* tslint:enable:no-empty */
     this.timeout(parseInt(process.env.TASK_TEST_TIMEOUT) || 20000);
 
-    it('enforce darwin', (done:Mocha.Done) => {
+    it('enforce darwin', async () => {
         this.timeout(1000);
 
         let tp = path.join(__dirname, 'L0EnforceDarwin.js');
         let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
 
         try {
-            tr.run();
+            await tr.runAsync();
 
             assert.equal(true, tr.createdErrorIssue('Error: loc_mock_DarwinOnly'), 'Expected error message was not found');
             assert(tr.failed, 'Task should have failed');
-
-            done();
         } catch (err) {
             console.log(tr.stdout);
             console.log(tr.stderr);
             console.log(err);
-            done(err);
+            throw err;
         }
     });
 });

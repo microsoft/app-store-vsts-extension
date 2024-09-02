@@ -15,7 +15,7 @@
   ],
   "version": {
     "Major": "1",
-    "Minor": "234",
+    "Minor": "245",
     "Patch": "0"
   },
   "minimumAgentVersion": "2.182.1",
@@ -257,9 +257,5 @@
     "SuccessfullySubmitted": "ms-resource:loc.messages.SuccessfullySubmitted",
     "FastlaneSessionEmpty": "ms-resource:loc.messages.FastlaneSessionEmpty",
     "PrecheckInAppPurchasesDisabled": "ms-resource:loc.messages.PrecheckInAppPurchasesDisabled"
-  },
-  "_buildConfigMapping": {
-    "Default": "1.233.0",
-    "Node20-228": "1.234.0"
   }
 }
