@@ -14,7 +14,7 @@
   ],
   "version": {
     "Major": "1",
-    "Minor": "234",
+    "Minor": "245",
     "Patch": "0"
   },
   "minimumAgentVersion": "2.182.1",
@@ -235,10 +235,6 @@
     "MultipleFilesFound": "ms-resource:loc.messages.MultipleFilesFound",
     "P12FilePathNotAPath": "ms-resource:loc.messages.P12FilePathNotAPath",
     "ProvisionFilePathNotAPath": "ms-resource:loc.messages.ProvisionFilePathNotAPath"
-  },
-  "_buildConfigMapping": {
-    "Default": "1.233.0",
-    "Node20-228": "1.234.0"
   },
   "helpMarkDown": "ms-resource:loc.helpMarkDown"
 }

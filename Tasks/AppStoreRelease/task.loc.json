@@ -15,7 +15,7 @@
   ],
   "version": {
     "Major": "1",
-    "Minor": "236",
+    "Minor": "245",
     "Patch": "0"
   },
   "minimumAgentVersion": "2.182.1",
@@ -428,9 +428,5 @@
     "ReleaseNotesRequiresFastlaneSession": "ms-resource:loc.messages.ReleaseNotesRequiresFastlaneSession",
     "PrecheckInAppPurchasesDisabled": "ms-resource:loc.messages.PrecheckInAppPurchasesDisabled",
     "FastlaneTooOld": "ms-resource:loc.messages.FastlaneTooOld"
-  },
-  "_buildConfigMapping": {
-    "Default": "1.233.0",
-    "Node20-228": "1.234.0"
   }
 }

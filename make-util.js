@@ -24,6 +24,7 @@ const constants = require('./dev-dependencies-constants');
 
 const MOCHA_TARGET_VERSION = constants.MOCHA_TARGET_VERSION;
 const TSC_CURRENT_VERSION = constants.TSC_CURRENT_VERSION;
+const MOCHA_NODE_VERSION = constants.MOCHA_NODE_VERSION;
 
 const allowedTypescriptVersions = [TSC_CURRENT_VERSION];
 
@@ -993,7 +994,7 @@ exports.storeNonAggregatedZip = storeNonAggregatedZip;
 
 var installNode = async function (nodeVersion) {
     const versions = {
-        20: 'v20.11.0',
+        20: 'v20.17.0',
         16: 'v16.17.1',
         14: 'v14.10.1',
         10: 'v10.24.1',
@@ -1051,11 +1052,11 @@ var installNode = async function (nodeVersion) {
 exports.installNode = installNode;
 
 var getTaskNodeVersion = function(buildPath, taskName) {
-    const nodes = [];
+    let nodes = [];
     var taskJsonPath = path.join(buildPath, taskName, "task.json");
     if (!fs.existsSync(taskJsonPath)) {
-        console.warn('Unable to find task.json, defaulting to use Node 14');
-        nodes.push(14);
+        console.warn('Unable to find task.json, defaulting to use Node 20');
+        nodes.push(20);
         return nodes;
     }
     var taskJsonContents = fs.readFileSync(taskJsonPath, { encoding: 'utf-8' });
@@ -1069,11 +1070,12 @@ var getTaskNodeVersion = function(buildPath, taskName) {
         nodes.push(parseInt(version) || 6);
     }
 
+    nodes = nodes.filter( version => version > MOCHA_NODE_VERSION);
     if (nodes.length) {
         return nodes;
     }
 
-    console.warn('Unable to determine execution type from task.json, defaulting to use Node 10');
+    console.warn('Unable to determine execution type from task.json, defaulting to use Node 20');
     nodes.push(20);
     return nodes;
 }

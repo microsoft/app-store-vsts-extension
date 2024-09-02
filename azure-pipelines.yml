@@ -40,7 +40,7 @@ extends:
         steps:
         - task: NodeTool@0
           inputs:
-            versionSpec: '20.11.x'
+            versionSpec: '20.x'
 
         - task: Npm@0
           displayName: 'npm install'
