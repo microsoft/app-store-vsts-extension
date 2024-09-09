@@ -42,6 +42,10 @@ extends:
           inputs:
             versionSpec: '20.x'
 
+        - task: NpmAuthenticate@0
+          inputs:
+            workingFile: .npmrc
+
         - task: Npm@0
           displayName: 'npm install'
 
