@@ -40,7 +40,11 @@ extends:
         steps:
         - task: NodeTool@0
           inputs:
-            versionSpec: '20.11.x'
+            versionSpec: '20.x'
+
+        - task: NpmAuthenticate@0
+          inputs:
+            workingFile: .npmrc
 
         - task: Npm@0
           displayName: 'npm install'

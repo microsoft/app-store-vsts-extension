@@ -168,8 +168,11 @@ target.build = async function() {
 // node make.js test --task ShellScript --suite L0
 //
 target.test = async function() {
+    process.env['SYSTEM_DEBUG'] = 'true';
+
     ensureTool('tsc', '--version', `Version ${TSC_CURRENT_VERSION}`);
     ensureTool('mocha', '--version', MOCHA_TARGET_VERSION);
+    process.env['SYSTEM_DEBUG'] = 'true';
 
     // run the tests
     var suiteType = options.suite || 'L0';
