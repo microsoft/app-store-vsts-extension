@@ -1,7 +1,7 @@
- /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------
+*  Copyright (c) Microsoft Corporation. All rights reserved.
+*  Licensed under the MIT License. See License.txt in the project root for license information.
+*--------------------------------------------------------------------------------------------*/
 'use strict';
 
 import ma = require('azure-pipelines-task-lib/mock-answer');
@@ -44,7 +44,7 @@ let myAnswers: string = `{
         ]
     },
     "exec": {
-        "fastlane pilot upload --api_key_path test_temp_path/api_keyD383SF739.json -i mypackage.ipa": {
+        "fastlane pilot upload --api_key_path test_temp_path/api_keyD383SF739.json -i mypackage.ipa -j ios": {
             "code": 0,
             "stdout": "consider it uploaded!"
         }

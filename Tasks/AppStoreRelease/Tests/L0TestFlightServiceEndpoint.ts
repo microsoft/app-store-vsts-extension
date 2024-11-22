@@ -14,7 +14,7 @@ let tmr: tmrm.TaskMockRunner = new tmrm.TaskMockRunner(taskPath);
 
 // replace with mock of setVariable when task-lib has the support
 process.env['ENDPOINT_AUTH_MyServiceEndpoint'] =
-  '{ "parameters": {"username": "creds-username", "password": "creds-password"}, "scheme": "whatever" }';
+    '{ "parameters": {"username": "creds-username", "password": "creds-password"}, "scheme": "whatever" }';
 
 tmr.setInput('authType', 'ServiceEndpoint');
 tmr.setInput('serviceEndpoint', 'MyServiceEndpoint');
@@ -55,7 +55,7 @@ let myAnswers: string = `{
             "code": 0,
             "stdout": "1 gem installed"
         },
-        "fastlane pilot upload -u creds-username -i mypackage.ipa": {
+        "fastlane pilot upload -u creds-username -i mypackage.ipa -j ios": {
             "code": 0,
             "stdout": "consider it uploaded!"
         }
@@ -67,7 +67,7 @@ tmr.setAnswers(<ma.TaskLibAnswers>json);
 
 // This is how you can mock NPM packages...
 os.platform = () => {
-  return 'darwin';
+    return 'darwin';
 };
 tmr.registerMock('os', os);
 

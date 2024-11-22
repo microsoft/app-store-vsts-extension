@@ -10,7 +10,9 @@
         "Build",
         "Release"
     ],
-    "demands": [ "xcode" ],
+    "demands": [
+        "xcode"
+    ],
     "version": {
         "Major": "1",
         "Minor": "245",
@@ -178,8 +180,7 @@
                 "tvOS": "tvOS",
                 "macOS": "macOS"
             },
-            "groupName": "releaseOptions",
-            "visibleRule": "distributeOnly = false || releaseTrack = Production"
+            "groupName": "releaseOptions"
         },
         {
             "name": "ipaPath",

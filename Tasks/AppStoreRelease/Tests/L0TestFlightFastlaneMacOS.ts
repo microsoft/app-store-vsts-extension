@@ -1,7 +1,7 @@
- /*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+/*---------------------------------------------------------------------------------------------
+*  Copyright (c) Microsoft Corporation. All rights reserved.
+*  Licensed under the MIT License. See License.txt in the project root for license information.
+*--------------------------------------------------------------------------------------------*/
 'use strict';
 
 import ma = require('azure-pipelines-task-lib/mock-answer');
@@ -27,30 +27,30 @@ process.env['HOME'] = '/usr/bin';
 //tmr.setInput('ipaPath', '<path>');
 
 // provide answers for task mock
-let a: ma.TaskLibAnswers = <ma.TaskLibAnswers> {
+let a: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
     'which': {
         'ruby': '/usr/bin/ruby',
         'gem': '/usr/bin/gem',
         'deliver': '/usr/bin/deliver',
         'pilot': '/usr/bin/pilot'
     },
-    'checkPath' : {
+    'checkPath': {
         '/usr/bin/ruby': true,
         '/usr/bin/gem': true,
         '/usr/bin/deliver': true,
         '/usr/bin/pilot': true
     },
     'findMatch': {
-      '**/*.pkg': [
-          'mypackage.pkg'
-      ]
+        '**/*.pkg': [
+            'mypackage.pkg'
+        ]
     },
     'exec': {
         '/usr/bin/gem install pilot': {
             'code': 0,
             'stdout': '10 gems installed'
         },
-        'pilot upload -u creds-username -P mypackage.pkg': {
+        'pilot upload -u creds-username -P mypackage.pkg -j osx': {
             'code': 0,
             'stdout': 'consider it uploaded!'
         }
