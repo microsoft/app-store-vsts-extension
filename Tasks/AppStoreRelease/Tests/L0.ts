@@ -7,16 +7,16 @@
 // npm install mocha --save-dev
 // typings install dt~mocha --save --global
 
-import * as fs from 'fs';
-import * as path from 'path';
 import * as assert from 'assert';
 import * as ttm from 'azure-pipelines-task-lib/mock-test';
+import * as fs from 'fs';
+import * as path from 'path';
 
 describe('app-store-release L0 Suite', function () {
   /* tslint:disable:no-empty */
-  before(() => {});
+  before(() => { });
 
-  after(() => {});
+  after(() => { });
   /* tslint:enable:no-empty */
   this.timeout(parseInt(process.env.TASK_TEST_TIMEOUT) || 20000);
 
@@ -181,7 +181,7 @@ describe('app-store-release L0 Suite', function () {
     }
 
     assert(
-      tr.ran(`fastlane pilot upload --api_key_path ${keyFilePath} -i mypackage.ipa`),
+      tr.ran(`fastlane pilot upload --api_key_path ${keyFilePath} -i mypackage.ipa -j ios`),
       'fastlane pilot upload with api key should have been run.'
     );
     assert(tr.invokedToolCount === 1, 'should have run only fastlane pilot.');
@@ -255,7 +255,7 @@ describe('app-store-release L0 Suite', function () {
     );
     assert(
       tr.ran(
-        'fastlane pilot distribute -u creds-username --build_number 100 -a com.microsoft.test.appId --groups Beta'
+        'fastlane pilot distribute -u creds-username --build_number 100 -a com.microsoft.test.appId -j ios --groups Beta'
       ),
       'fastlane pilot distribute with build_number should have been run.'
     );
@@ -292,7 +292,7 @@ describe('app-store-release L0 Suite', function () {
     }
 
     assert(
-      tr.ran(`fastlane pilot upload --api_key_path ${keyFilePath} -i mypackage.ipa`),
+      tr.ran(`fastlane pilot upload --api_key_path ${keyFilePath} -i mypackage.ipa -j ios`),
       'fastlane pilot upload with api key should have been run.'
     );
     assert(
@@ -342,7 +342,7 @@ describe('app-store-release L0 Suite', function () {
 
     assert(
       tr.ran(
-        `fastlane pilot distribute --api_key_path ${keyFilePath} -a com.microsoft.test.appId --groups Beta`
+        `fastlane pilot distribute --api_key_path ${keyFilePath} -a com.microsoft.test.appId -j ios --groups Beta`
       ),
       'fastlane pilot distribute with api key should have been run.'
     );
@@ -446,7 +446,7 @@ describe('app-store-release L0 Suite', function () {
     await tr.runAsync();
     assert(
       tr.ran(
-        'fastlane pilot upload -u creds-username -i mypackage.ipa -q teamId -a com.microsoft.test.appId'
+        'fastlane pilot upload -u creds-username -i mypackage.ipa -j ios -q teamId -a com.microsoft.test.appId'
       ),
       'fastlane pilot upload with teamId should have been run.'
     );
@@ -466,7 +466,7 @@ describe('app-store-release L0 Suite', function () {
 
     await tr.runAsync();
     assert(
-      tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa -r teamName'),
+      tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa -j ios -r teamName'),
       'fastlane pilot upload with teamName should have been run.'
     );
     assert(
@@ -485,7 +485,7 @@ describe('app-store-release L0 Suite', function () {
 
     await tr.runAsync();
     assert(
-      tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa -q teamId -r teamName'),
+      tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa -j ios -q teamId -r teamName'),
       'fastlane pilot upload with teamId and teamName should have been run.'
     );
     assert(
@@ -504,7 +504,7 @@ describe('app-store-release L0 Suite', function () {
 
     await tr.runAsync();
     assert(
-      tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa --skip_submission true'),
+      tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa -j ios --skip_submission true'),
       'fastlane pilot upload with skip_submission should have been run.'
     );
     assert(
@@ -524,7 +524,7 @@ describe('app-store-release L0 Suite', function () {
     await tr.runAsync();
     assert(
       tr.ran(
-        'fastlane pilot upload -u creds-username -i mypackage.ipa --skip_waiting_for_build_processing true'
+        'fastlane pilot upload -u creds-username -i mypackage.ipa -j ios --skip_waiting_for_build_processing true'
       ),
       'fastlane pilot upload with skip_waiting_for_build_processing should have been run.'
     );
@@ -570,7 +570,7 @@ describe('app-store-release L0 Suite', function () {
 
     await tr.runAsync();
     assert(
-      tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa'),
+      tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa -j ios'),
       'fastlane pilot upload with one ip file should have been run.'
     );
     assert(
@@ -619,7 +619,7 @@ describe('app-store-release L0 Suite', function () {
 
     await tr.runAsync();
     assert(
-      tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa -args someadditioanlargs'),
+      tr.ran('fastlane pilot upload -u creds-username -i mypackage.ipa -j ios -args someadditioanlargs'),
       'fastlane pilot upload with one ip file should have been run.'
     );
     assert(
@@ -638,7 +638,7 @@ describe('app-store-release L0 Suite', function () {
 
     await tr.runAsync();
     assert(
-      tr.ran(`fastlane pilot upload -u creds-username -P mypackage.pkg`),
+      tr.ran(`fastlane pilot upload -u creds-username -P mypackage.pkg -j osx`),
       'fastlane pilot upload with pkg file should have been run.'
     );
   });

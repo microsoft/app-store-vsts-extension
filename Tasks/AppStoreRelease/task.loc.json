@@ -180,8 +180,7 @@
         "tvOS": "tvOS",
         "macOS": "macOS"
       },
-      "groupName": "releaseOptions",
-      "visibleRule": "distributeOnly = false || releaseTrack = Production"
+      "groupName": "releaseOptions"
     },
     {
       "name": "ipaPath",

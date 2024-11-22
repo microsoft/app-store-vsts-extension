@@ -53,7 +53,7 @@ let myAnswers: string = `{
             "code": 0,
             "stdout": "1 gem installed"
         },
-        "fastlane pilot upload -u creds-username -i mypackage.ipa --skip_waiting_for_build_processing true": {
+        "fastlane pilot upload -u creds-username -i mypackage.ipa -j ios --skip_waiting_for_build_processing true": {
             "code": 0,
             "stdout": "consider it uploaded!"
         }
@@ -65,7 +65,7 @@ tmr.setAnswers(<ma.TaskLibAnswers>json);
 
 // This is how you can mock NPM packages...
 os.platform = () => {
-  return 'darwin';
+    return 'darwin';
 };
 tmr.registerMock('os', os);
 

@@ -98,7 +98,7 @@ async function run() {
         let apiKey: ApiKey;
 
         const createapiKeyFilePath = (apiKeyId: string) => {
-            const tempPath =  tl.getVariable('Agent.TempDirectory') || tl.getVariable('Agent.BuildDirectory');
+            const tempPath = tl.getVariable('Agent.TempDirectory') || tl.getVariable('Agent.BuildDirectory');
             return path.join(tempPath, `api_key${apiKeyId}.json`);
         };
 
@@ -284,19 +284,44 @@ async function run() {
             } else {
                 authArgs = ['-u', credentials.username];
             }
+
             if (distributeOnly) {
                 let bundleIdentifier: string = tl.getInput('appIdentifier', true);
                 pilotCommand.arg(['pilot', 'distribute', ...authArgs]);
                 pilotCommand.argIf(appBuildNumber, ['--build_number', appBuildNumber]);
                 pilotCommand.argIf(bundleIdentifier, ['-a', bundleIdentifier]);
+                switch (applicationType.toLocaleLowerCase()) {
+                    case 'macos':
+                        pilotCommand.arg(['-j', 'osx']);
+                        break;
+                    case 'ios':
+                        pilotCommand.arg(['-j', 'ios']);
+                        break;
+                    case 'tvos':
+                        pilotCommand.arg(['-j', 'appletvos']);
+                        break;
+                    default:
+                        throw new Error(tl.loc('NotValidAppType', applicationType));
+                }
                 pilotCommand.argIf(externalTestersGroups, ['--groups', externalTestersGroups]);
             } else {
                 let bundleIdentifier: string = tl.getInput('appIdentifier', false);
                 pilotCommand.arg(['pilot', 'upload', ...authArgs]);
-                if (applicationType.toLocaleLowerCase() === 'macos') {
-                    pilotCommand.arg(['-P', filePath]);
-                } else {
-                    pilotCommand.arg(['-i', filePath]);
+                switch (applicationType.toLocaleLowerCase()) {
+                    case 'macos':
+                        pilotCommand.arg(['-P', filePath]);
+                        pilotCommand.arg(['-j', 'osx']);
+                        break;
+                    case 'ios':
+                        pilotCommand.arg(['-i', filePath]);
+                        pilotCommand.arg(['-j', 'ios']);
+                        break;
+                    case 'tvos':
+                        pilotCommand.arg(['-i', filePath]);
+                        pilotCommand.arg(['-j', 'appletvos']);
+                        break;
+                    default:
+                        throw new Error(tl.loc('NotValidAppType', applicationType));
                 }
                 let usingReleaseNotes: boolean = isValidFilePath(releaseNotes);
                 if (usingReleaseNotes) {
