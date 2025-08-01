@@ -38,6 +38,9 @@
         },
         "thirdpartynotice": {
             "path": "ThirdPartyNotices.txt"
+        },
+        "license": {
+            "path": "LICENSE"
         }
     },
     "links": {
