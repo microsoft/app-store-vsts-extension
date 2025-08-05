@@ -1,7 +1,5 @@
-# PR validation pipeline
-# This pipeline runs on pull requests to validate changes
-
-trigger: none
+trigger:
+- master
 
 pr:
 - master
