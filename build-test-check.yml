@@ -1,0 +1,67 @@
+trigger:
+- master
+
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    featureFlags:
+      autoBaseline: false
+    sdl:
+      baseline:
+        baselineSet: default
+        baselineFile: $(Build.SourcesDirectory)/.gdn/.gdnbaselines
+      sourceAnalysisPool:
+        name: 1ESPtTfsAgentBuildPoolSDL
+    pool:
+      name: 1ESPtTfsAgentBuildPool1
+    customBuildTags:
+    - ES365AIMigrationTooling
+    - 1ES-AzureExtensions
+    - SecureExtensionOnboarding
+    
+    stages:
+    - stage: BuildAndTest
+      jobs:
+      - job: BuildAndTestJob
+        templateContext:
+          outputs:
+          - output: pipelineArtifact
+            displayName: 'Publish Artifact: vsix-unsigned'
+            targetPath: '$(build.artifactstagingdirectory)'
+            artifactName: vsix-unsigned
+        steps:
+        - task: NodeTool@0
+          inputs:
+            versionSpec: '20.x'
+
+        - task: NpmAuthenticate@0
+          inputs:
+            workingFile: .npmrc
+
+        - task: Npm@0
+          displayName: 'npm install'
+
+        - script: node make.js build
+          displayName: 'Build'
+
+        - script: node make.js test
+          displayName: 'Run Tests'
+
+        - script: node make.js createtest
+          displayName: 'Build test package'
+
+        - script: node make.js create
+          displayName: 'Build prod package'
+
+        - task: CopyFiles@2
+          displayName: 'Copy extensions to: $(build.artifactstagingdirectory)'
+          inputs:
+            SourceFolder: '$(build.sourcesdirectory)'
+            Contents: '*.vsix'
+            TargetFolder: '$(build.artifactstagingdirectory)'
