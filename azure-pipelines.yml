@@ -1,7 +1,23 @@
 # This Yaml Document has been converted by ESAI Yaml Pipeline Conversion Tool.
 # This pipeline will be extended to the OneESPT template
-trigger:
-- master
+trigger: none
+# - master
+
+parameters:
+  - name: forceCodeSign
+    type: boolean
+    default: false
+  - name: simulateCodeSigningError # Simulate a code signing error to ensure PublishArtifacts is skipped when CodeSigning fails
+    type: boolean
+    default: false
+
+variables:
+- name: CodeQL.Enabled
+  value: true
+- group: EPS.ESRPSigningProdAME # Mseng -> Library -> EsrpSigningProd
+- name: IsMainBranchBuild
+  value: eq(variables['Build.SourceBranchName'], 'master')
+
 resources:
   repositories:
   - repository: 1ESPipelineTemplates
@@ -18,52 +34,137 @@ extends:
         baselineSet: default
         baselineFile: $(Build.SourcesDirectory)/.gdn/.gdnbaselines
       sourceAnalysisPool:
-        name: 1ES-ABTT-Shared-Pool
-        image: abtt-windows-2022
-        os: windows
+        name: 1ESPtTfsAgentBuildPoolSDL
     pool:
-      name: 1ES-ABTT-Shared-Pool
-      image: abtt-ubuntu-2204
-      os: linux
+      name: 1ESPtTfsAgentBuildPool1
     customBuildTags:
     - ES365AIMigrationTooling
+    - 1ES-AzureExtensions
+    - SecureExtensionOnboarding
+    
     stages:
-    - stage: stage
+    - template: templates/build-and-test.yml
+
+    - stage: CodeSigning
+      condition: or(eq(variables['IsMainBranchBuild'], 'true'), ${{ eq(parameters.forceCodeSign, 'true') }}, ${{ eq(parameters.simulateCodeSigningError, 'true') }})
+      dependsOn: BuildAndTest
       jobs:
-      - job: job
+      - job: CodeSigningJob
+        displayName: ESRP CodeSigning
         templateContext:
           outputs:
           - output: pipelineArtifact
-            displayName: 'Publish Artifact: ExtensionVsixFiles'
-            targetPath: '$(build.artifactstagingdirectory)'
-            artifactName: ExtensionVsixFiles
+            displayName: 'Publish Artifact: vsix'
+            targetPath: '$(System.ArtifactsDirectory)'
+            artifactName: vsix
         steps:
-        - task: NodeTool@0
-          inputs:
-            versionSpec: '20.x'
-
-        - task: NpmAuthenticate@0
-          inputs:
-            workingFile: .npmrc
-
-        - task: Npm@0
-          displayName: 'npm install'
-
-        - script: node make.js build
-          displayName: 'Build'
-
-        - script: node make.js test
-          displayName: 'Run Tests'
-
-        - script: node make.js createtest
-          displayName: 'Build test package'
-
-        - script: node make.js create
-          displayName: 'Build prod package'
-
+        - download: current
+          artifact: vsix-unsigned
+          displayName: Download Artifact
+        - script: |
+            echo "Simulated error in CodeSigning step."
+            exit 1
+          displayName: Simulate CodeSigning Error
+          condition: ${{ eq(parameters.simulateCodeSigningError, 'true') }}
         - task: CopyFiles@2
-          displayName: 'Copy extensions to: $(build.artifactstagingdirectory)'
+          displayName: 'Copy Files to: $(System.DefaultWorkingDirectory)'
           inputs:
-            SourceFolder: '$(build.sourcesdirectory)'
+            SourceFolder: '$(Pipeline.Workspace)\vsix-unsigned'
             Contents: '*.vsix'
-            TargetFolder: '$(build.artifactstagingdirectory)'
+            TargetFolder: $(System.DefaultWorkingDirectory)
+        - task: EsrpCodeSigning@5
+          displayName: ESRP CodeSigning
+          inputs:
+            ConnectedServiceName: '$(Control.EsrpServiceConnectionName)'
+            AppRegistrationClientId: '$(Control.AppRegistrationClientId)'
+            AppRegistrationTenantId: '$(Control.AppRegistrationTenantId)'
+            AuthAKVName: '$(Control.AuthAKVName)'
+            AuthCertName: '$(Control.AuthCertName)'
+            AuthSignCertName: '$(Control.AuthSignCertName)'
+            FolderPath: $(System.DefaultWorkingDirectory)
+            Pattern: '*.vsix'
+            signConfigType: inlineSignParams
+            inlineOperation: |-
+              [ 
+                {
+                  "KeyCode": "CP-500813",
+                  "OperationCode": "AdoExtensionSign",
+                  "ToolName": "sign",
+                  "ToolVersion": "1.0",
+                  "Parameters": {}
+                },
+                {
+                  "KeyCode": "CP-500813",
+                  "OperationCode": "AdoExtensionVerify",
+                  "ToolName": "sign",
+                  "ToolVersion": "1.0",
+                  "Parameters": {}
+                }
+              ]
+            SessionTimeout: 30
+        - task: CopyFiles@2
+          name: CopyFiles_5
+          displayName: 'Copy Files to: $(System.ArtifactsDirectory)'
+          inputs:
+            Contents: '*.vsix'
+            TargetFolder: $(System.ArtifactsDirectory)
+
+    - stage: TestPublishToMarketplace
+      trigger: manual
+      jobs:
+      - job: PublishMarketplateJob
+        displayName: Test - Publish to private Marketplace
+        steps:
+          - download: current
+            artifact: vsix
+            displayName: Download Signed Artifact
+
+          - task: UseNode@1
+            displayName: 'Install Node.js'
+            inputs:
+              version: '20.19.4'
+
+          - task: TfxInstaller@5
+            inputs:
+              version: 'v0.21.1'
+
+          - task: 1ES.PublishAzureDevOpsExtension@1
+            displayName: 'Publish the dev private extension to ms-vsclient'
+            inputs:
+              connectTo: 'AzureRM'
+              connectedServiceNameAzureRM: '1es-extensions-publication-secure-service-connection'
+              fileType: 'vsix'
+              vsixFile: '$(Pipeline.Workspace)/vsix/ms-vsclient.app-store-vsts-extension-dev-*.vsix'
+              targetPath: '$(Pipeline.Workspace)/vsix'
+              validateExtension: false
+              useV5: true
+
+    - stage: ProdPublishToMarketplace
+      trigger: manual
+      jobs:
+      - job: PublishMarketplateJob
+        displayName: Prod - Publish to Marketplace
+        steps:
+          - download: current
+            artifact: vsix
+            displayName: Download Signed Artifact
+
+          - task: UseNode@1
+            displayName: 'Install Node.js'
+            inputs:
+              version: '20.19.4'
+
+          - task: TfxInstaller@5
+            inputs:
+              version: 'v0.21.1'
+
+          - task: 1ES.PublishAzureDevOpsExtension@1
+            displayName: 'Publish the production extension to ms-vsclient'
+            inputs:
+              connectTo: 'AzureRM'
+              connectedServiceNameAzureRM: '1es-extensions-publication-secure-service-connection'
+              fileType: 'vsix'
+              vsixFile: '$(Pipeline.Workspace)/vsix/ms-vsclient.app-store-[0-9]*.vsix'
+              targetPath: '$(Pipeline.Workspace)/vsix'
+              validateExtension: false
+              useV5: true
