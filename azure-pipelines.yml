@@ -77,7 +77,7 @@ extends:
         - task: EsrpCodeSigning@5
           displayName: ESRP CodeSigning
           inputs:
-            ConnectedServiceName: '$(Control.EsrpServiceConnectionName)'
+            ConnectedServiceName: '$(Control.EsrpServiceConnectionName.GH)'
             AppRegistrationClientId: '$(Control.AppRegistrationClientId)'
             AppRegistrationTenantId: '$(Control.AppRegistrationTenantId)'
             AuthAKVName: '$(Control.AuthAKVName)'
