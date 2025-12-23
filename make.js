@@ -258,7 +258,7 @@ target.createtest = function() {
         public: false,
         name: "App Store Deploy-Dev",
         id: "app-store-vsts-extension-dev",
-        publisher: "ms-mobiledevops-test"
+        publisher: "ms-vsclient"
     };
 
     createExtension(devManifestOverride);

@@ -2,11 +2,11 @@
     "manifestVersion": 1,
     "id": "app-store",
     "name": "Apple App Store",
-    "version": "1.245.0",
+    "version": "1.246.0",
     "publisher": "ms-vsclient",
     "description": "Provides tasks for publishing to Apple's App Store from a TFS/Azure DevOps build or release pipeline",
     "categories": [
-        "Build and release"
+        "Azure Pipelines"
     ],
     "tags": [
         "deploy",
@@ -30,7 +30,7 @@
         "default": "apple_default.png"
     },
     "visibility": [
-        "Build and release"
+        "Azure Pipelines"
     ],
     "content":{
         "details": {
@@ -38,6 +38,9 @@
         },
         "thirdpartynotice": {
             "path": "ThirdPartyNotices.txt"
+        },
+        "license": {
+            "path": "LICENSE"
         }
     },
     "links": {
