@@ -91,6 +91,9 @@ Allows you to release updates to your iOS TestFlight beta app or production app 
 1. **Authentication method** - What type of credentials will be used to authenticate with the App Store. Credentials can be provided directly (using `App Store Connect Api Key` or `Username and Password` options) or configured via a service connection that can be referenced from the task (via the `Service Connection` authentication method).
 
 2. **App Store Connect API Key ID, Issuer ID and Key Content (base64-encoded)** *(String, required if authentication method is `App Store Connect Api Key`)* - The API key data used to authenticate with the App Store. Key content has to be base64-encoded.
+   - **Key ID**: Required for all API keys (both Team Keys and Individual Keys)
+   - **Issuer ID**: Required for Team Keys. For Individual Keys, leave empty or enter `individualkey`
+   - **Key Content**: Required for all API keys (base64-encoded P8 file)
 
 3. **App Store Connect API Key In House** *(Checkbox, required if authentication method is `App Store Connect Api Key`)* - Whether the account used to publish to the Apple App Store is an Enterprise account or not.
 
@@ -197,6 +200,9 @@ Allows you to promote an app previously updated to iTunes Connect to the App Sto
 1. **Authentication method** - What type of credentials will be used to authenticate with the App Store. Credentials can be provided directly (using `App Store Connect Api Key` or `Username and Password` options) or configured via a service connection that can be referenced from the task (via the `Service Connection` authentication method).
 
 2. **App Store Connect API Key ID, Issuer ID and Key Content (base64-encoded)** *(String, required if authentication method is `App Store Connect Api Key`)* - The API key data used to authenticate with the App Store. Key content has to be base64-encoded.
+   - **Key ID**: Required for all API keys (both Team Keys and Individual Keys)
+   - **Issuer ID**: Required for Team Keys. For Individual Keys, leave empty or enter `individualkey`
+   - **Key Content**: Required for all API keys (base64-encoded P8 file)
 
 3. **App Store Connect API Key In House** *(Checkbox, required if authentication method is `App Store Connect Api Key`)* - Whether the account used to publish to the Apple App Store is an Enterprise account or not.
 

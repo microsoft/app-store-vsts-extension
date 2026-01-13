@@ -117,10 +117,13 @@ async function run() {
                     is_key_content_base64: true
                 };
                 // Issuer ID is optional for Individual Keys
-                // Treat empty string or "individualkey" as null (Individual Key indicator)
+                // Treat empty string or "individualkey" as Individual Key indicator
                 const issuerId = serviceEndpoint.parameters['apiKeyIssuerId'];
-                if (issuerId && issuerId.trim() !== '' && issuerId.trim().toLowerCase() !== 'individualkey') {
-                    apiKey.issuer_id = issuerId;
+                if (issuerId) {
+                    const trimmedIssuerId = issuerId.trim();
+                    if (trimmedIssuerId !== '' && trimmedIssuerId.toLowerCase() !== 'individualkey') {
+                        apiKey.issuer_id = issuerId;
+                    }
                 }
             } else {
                 credentials.username = serviceEndpoint.parameters['username'];
@@ -153,9 +156,12 @@ async function run() {
                 is_key_content_base64: true
             };
             // Issuer ID is optional for Individual Keys
-            // Treat empty string or "individualkey" as null (Individual Key indicator)
-            if (apiKeyIssuerId && apiKeyIssuerId.trim() !== '' && apiKeyIssuerId.trim().toLowerCase() !== 'individualkey') {
-                apiKey.issuer_id = apiKeyIssuerId;
+            // Treat empty string or "individualkey" as Individual Key indicator
+            if (apiKeyIssuerId) {
+                const trimmedIssuerId = apiKeyIssuerId.trim();
+                if (trimmedIssuerId !== '' && trimmedIssuerId.toLowerCase() !== 'individualkey') {
+                    apiKey.issuer_id = apiKeyIssuerId;
+                }
             }
         }
 
