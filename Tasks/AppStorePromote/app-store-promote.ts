@@ -33,8 +33,9 @@ export interface ApiKey {
     key_id: string;
     /**
      * Issuer ID (for example '6053b7fe-68a8-4acb-89be-165aa6465141')
+     * Optional for Individual Keys, required for Team Keys
      */
-    issuer_id: string;
+    issuer_id?: string;
     /**
      * The base64-encoded private key contents of the p8 file from Apple.
      */
@@ -84,11 +85,16 @@ async function run() {
                 apiKeyFilePath = createapiKeyFilePath(serviceEndpoint.parameters['apiKeyId']);
                 apiKey = {
                     key_id: serviceEndpoint.parameters['apiKeyId'],
-                    issuer_id: serviceEndpoint.parameters['apiKeyIssuerId'],
                     key: serviceEndpoint.parameters['apitoken'],
                     in_house: serviceEndpoint.parameters['apiKeyInHouse'] === 'apiKeyInHouse_true',
                     is_key_content_base64: true
                 };
+                // Issuer ID is optional for Individual Keys
+                // Treat empty string or "individualkey" as null (Individual Key indicator)
+                const issuerId = serviceEndpoint.parameters['apiKeyIssuerId'];
+                if (issuerId && issuerId.trim() !== '' && issuerId.trim().toLowerCase() !== 'individualkey') {
+                    apiKey.issuer_id = issuerId;
+                }
             } else {
                 credentials.username = serviceEndpoint.parameters['username'];
                 credentials.password = serviceEndpoint.parameters['password'];
@@ -113,13 +119,18 @@ async function run() {
         } else if (authType === 'ApiKey') {
             isUsingApiKey = true;
             apiKeyFilePath = createapiKeyFilePath(tl.getInput('apiKeyId', true));
+            const apiKeyIssuerId = tl.getInput('apiKeyIssuerId', false);
             apiKey = {
                 key_id: tl.getInput('apiKeyId', true),
-                issuer_id: tl.getInput('apiKeyIssuerId', true),
                 key: tl.getInput('apitoken', true),
                 in_house: tl.getBoolInput('apiKeyInHouse', false),
                 is_key_content_base64: true
             };
+            // Issuer ID is optional for Individual Keys
+            // Treat empty string or "individualkey" as null (Individual Key indicator)
+            if (apiKeyIssuerId && apiKeyIssuerId.trim() !== '' && apiKeyIssuerId.trim().toLowerCase() !== 'individualkey') {
+                apiKey.issuer_id = apiKeyIssuerId;
+            }
         }
 
         let appIdentifier: string = tl.getInput('appIdentifier', true);
