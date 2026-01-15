@@ -1,9 +1,9 @@
 {
     "manifestVersion": 1,
-    "id": "app-store",
-    "name": "Apple App Store",
+    "id": "app-store-org",
+    "name": "Apple App Store - Org",
     "version": "1.246.0",
-    "publisher": "ms-vsclient",
+    "publisher": "surajitshil",
     "description": "Provides tasks for publishing to Apple's App Store from a TFS/Azure DevOps build or release pipeline",
     "categories": [
         "Azure Pipelines"
@@ -63,12 +63,6 @@
             "path": "_build/Tasks/AppStorePromote"
         },
         {
-            "path": "_build/Tasks/AppStoreRelease"
-        },
-        {
-            "path": "_build/Tasks/IpaResign"
-        },
-        {
             "path": "images",
             "addressable": true
         }
@@ -84,22 +78,6 @@
             "targets": [ "ms.vss-distributed-task.tasks" ],
             "properties": {
                 "name": "_build/Tasks/AppStorePromote"
-            }
-        },
-        {
-            "id": "app-store-release",
-            "type": "ms.vss-distributed-task.task",
-            "targets": [ "ms.vss-distributed-task.tasks" ],
-            "properties": {
-                "name": "_build/Tasks/AppStoreRelease"
-            }
-        },
-        {
-            "id": "ipa-resign",
-            "type": "ms.vss-distributed-task.task",
-            "targets": [ "ms.vss-distributed-task.tasks" ],
-            "properties": {
-                "name": "_build/Tasks/IpaResign"
             }
         },
         {

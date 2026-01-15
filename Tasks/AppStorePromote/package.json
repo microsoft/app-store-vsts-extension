@@ -4,12 +4,12 @@
   "description": "Azure Pipelines task to promote a build in the Apple App Store",
   "main": "app-store-promote.js",
   "dependencies": {
-    "azure-pipelines-task-lib": "^4.17.0",
-    "@types/node": "^20.11.0",
+    "azure-pipelines-task-lib": "^5.2.4",
+    "@types/node": "^24.10.0",
     "@types/mocha": "^5.2.7"
   },
   "devDependencies": {
-    "typescript": "5.1.6"
+    "typescript": "5.7.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

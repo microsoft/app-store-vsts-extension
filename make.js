@@ -64,7 +64,7 @@ if (semver.lt(process.versions.node,  NODE_MIN_VERSION)) {
 }
 
 // Node 14 is supported by the build system, but not currently by the agent. Block it for now
-var supportedNodeTargets = ["Node", "Node10", "Node16", "Node20_1"];
+var supportedNodeTargets = ["Node", "Node10", "Node16", "Node20_1", "Node24"];
 
 // add node modules .bin to the path so we can dictate version of tsc etc...
 var binPath = path.join(__dirname, 'node_modules', '.bin');

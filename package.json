@@ -29,7 +29,7 @@
     "shelljs": "^0.8.5",
     "tfx-cli": "^0.17.0",
     "tslint": "^5.20.1",
-    "typescript": "5.1.6",
+    "typescript": "5.7.2",
     "validator": "13.7.0",
     "yargs": "7.1.2 "
   }

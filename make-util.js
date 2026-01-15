@@ -994,6 +994,7 @@ exports.storeNonAggregatedZip = storeNonAggregatedZip;
 
 var installNode = async function (nodeVersion) {
     const versions = {
+        24: 'v24.10.0',
         20: 'v20.17.0',
         16: 'v16.17.1',
         14: 'v14.10.1',
