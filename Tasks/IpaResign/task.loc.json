@@ -14,7 +14,7 @@
   ],
   "version": {
     "Major": "1",
-    "Minor": "245",
+    "Minor": "269",
     "Patch": "0"
   },
   "minimumAgentVersion": "2.182.1",
@@ -213,6 +213,10 @@
       "argumentFormat": ""
     },
     "Node20_1": {
+      "target": "ipa-resign.js",
+      "argumentFormat": ""
+    },
+    "Node24": {
       "target": "ipa-resign.js",
       "argumentFormat": ""
     }
