@@ -111,12 +111,44 @@ extends:
             Contents: '*.vsix'
             TargetFolder: $(System.ArtifactsDirectory)
 
+    - stage: ValidateTfxInstallerCFS
+      displayName: Validate TfxInstaller CFS routing
+      trigger: manual
+      jobs:
+      - job: ValidateTfxInstallerCFSJob
+        displayName: Install tfx-cli without publishing
+        steps:
+          - checkout: self
+
+          - task: UseNode@1
+            displayName: 'Install Node.js'
+            inputs:
+              version: '20.19.4'
+
+          - task: NpmAuthenticate@0
+            displayName: Authenticate npm feed
+            inputs:
+              workingFile: .npmrc
+
+          - task: TfxInstaller@5
+            displayName: Install tfx-cli through CFS
+            inputs:
+              version: 'v0.21.1'
+            env:
+              NPM_CONFIG_REGISTRY: https://pkgs.dev.azure.com/mseng/PipelineTools/_packaging/PipelineTools_PublicPackages/npm/registry/
+              NPM_CONFIG_USERCONFIG: $(Build.SourcesDirectory)/.npmrc
+
+          - script: tfx --version
+            displayName: Verify tfx-cli installation
+
     - stage: TestPublishToMarketplace
       trigger: manual
       jobs:
       - job: PublishMarketplateJob
         displayName: Test - Publish to private Marketplace
         steps:
+          - checkout: self
+
           - download: current
             artifact: vsix
             displayName: Download Signed Artifact
@@ -126,9 +158,17 @@ extends:
             inputs:
               version: '20.19.4'
 
+          - task: NpmAuthenticate@0
+            displayName: Authenticate npm feed
+            inputs:
+              workingFile: .npmrc
+
           - task: TfxInstaller@5
             inputs:
               version: 'v0.21.1'
+            env:
+              NPM_CONFIG_REGISTRY: https://pkgs.dev.azure.com/mseng/PipelineTools/_packaging/PipelineTools_PublicPackages/npm/registry/
+              NPM_CONFIG_USERCONFIG: $(Build.SourcesDirectory)/.npmrc
 
           - task: 1ES.PublishAzureDevOpsExtension@1
             displayName: 'Publish the dev private extension to ms-vsclient'
@@ -147,6 +187,8 @@ extends:
       - job: PublishMarketplateJob
         displayName: Prod - Publish to Marketplace
         steps:
+          - checkout: self
+
           - download: current
             artifact: vsix
             displayName: Download Signed Artifact
@@ -156,9 +198,17 @@ extends:
             inputs:
               version: '20.19.4'
 
+          - task: NpmAuthenticate@0
+            displayName: Authenticate npm feed
+            inputs:
+              workingFile: .npmrc
+
           - task: TfxInstaller@5
             inputs:
               version: 'v0.21.1'
+            env:
+              NPM_CONFIG_REGISTRY: https://pkgs.dev.azure.com/mseng/PipelineTools/_packaging/PipelineTools_PublicPackages/npm/registry/
+              NPM_CONFIG_USERCONFIG: $(Build.SourcesDirectory)/.npmrc
 
           - task: 1ES.PublishAzureDevOpsExtension@1
             displayName: 'Publish the production extension to ms-vsclient'
