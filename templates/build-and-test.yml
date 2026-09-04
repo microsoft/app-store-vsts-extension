@@ -12,7 +12,7 @@ stages:
     - task: UseNode@1
       displayName: 'Install Node.js'
       inputs:
-        version: '20.19.4'
+        version: '20.x'
 
     - task: NpmAuthenticate@0
       inputs:
