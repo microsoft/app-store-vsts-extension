@@ -135,7 +135,7 @@ extends:
           - task: TfxInstaller@5
             displayName: Install tfx-cli through CFS
             inputs:
-              version: 'v0.21.1'
+              version: 'v0.24.2'
             env:
               NPM_CONFIG_REGISTRY: https://pkgs.dev.azure.com/mseng/PipelineTools/_packaging/PipelineTools_PublicPackages/npm/registry/
               NPM_CONFIG_USERCONFIG: $(Build.SourcesDirectory)/.npmrc
@@ -167,7 +167,7 @@ extends:
 
           - task: TfxInstaller@5
             inputs:
-              version: 'v0.21.1'
+              version: 'v0.24.2'
             env:
               NPM_CONFIG_REGISTRY: https://pkgs.dev.azure.com/mseng/PipelineTools/_packaging/PipelineTools_PublicPackages/npm/registry/
               NPM_CONFIG_USERCONFIG: $(Build.SourcesDirectory)/.npmrc
@@ -207,7 +207,7 @@ extends:
 
           - task: TfxInstaller@5
             inputs:
-              version: 'v0.21.1'
+              version: 'v0.24.2'
             env:
               NPM_CONFIG_REGISTRY: https://pkgs.dev.azure.com/mseng/PipelineTools/_packaging/PipelineTools_PublicPackages/npm/registry/
               NPM_CONFIG_USERCONFIG: $(Build.SourcesDirectory)/.npmrc
