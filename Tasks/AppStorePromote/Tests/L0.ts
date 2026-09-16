@@ -240,6 +240,105 @@ describe('app-store-promote L0 Suite', function () {
     assert(apiKey.is_key_content_base64 === true, 'is_key_content_base64 should be correct');
   });
 
+  it('individual api key with deliver (no issuer_id)', async () => {
+    this.timeout(1000);
+
+    let tp = path.join(__dirname, 'L0IndividualApiKeyDeliver.js');
+    let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+    const tempPath = 'test_temp_path';
+    const keyFileName = 'api_keyD383SF739.json';
+    const keyFilePath = path.join(tempPath, keyFileName);
+
+    if (!fs.existsSync(tempPath)) {
+      fs.mkdirSync(tempPath);
+    }
+
+    await tr.runAsync();
+
+    // Check api_key file first, so we can read it and clean up before other assertions
+    assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
+
+    let apiKey: any = undefined;
+
+    try {
+      let rawdata = fs.readFileSync(keyFilePath, 'utf8');
+      apiKey = JSON.parse(rawdata);
+    } catch (e) {
+      assert.fail(e);
+    } finally {
+      deleteDirectory(tempPath, [keyFileName, '.taskkey']);
+    }
+
+    assert(
+      tr.ran(
+        `fastlane deliver submit_build --precheck_include_in_app_purchases false --api_key_path ${keyFilePath} -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force`
+      ),
+      'fastlane deliver with api key should have been run.'
+    );
+    assert(
+      tr.invokedToolCount === 3,
+      'should have run gem install, gem update and fastlane deliver.'
+    );
+    assert(tr.succeeded, 'task should have succeeded');
+
+    assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
+    assert(
+      apiKey.issuer_id === undefined,
+      'issuer_id should be undefined for Individual Keys'
+    );
+    assert(apiKey.key === 'dummy_string', 'key should be correct');
+    assert(apiKey.in_house === false, 'in_house should be correct');
+    assert(apiKey.is_key_content_base64 === true, 'is_key_content_base64 should be correct');
+  });
+
+  it('individual api key using service endpoint (no issuer_id)', async () => {
+    this.timeout(1000);
+
+    let tp = path.join(__dirname, 'L0IndividualApiKeyEndPoint.js');
+    let tr: ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+    const tempPath = 'test_temp_path';
+    const keyFileName = 'api_keyD383SF739.json';
+    const keyFilePath = path.join(tempPath, keyFileName);
+
+    if (!fs.existsSync(tempPath)) {
+      fs.mkdirSync(tempPath);
+    }
+
+    await tr.runAsync();
+
+    // Check api_key file first, so we can read it and clean up before other assertions
+    assert(fs.existsSync(keyFilePath), 'api_key.json file should have been created');
+
+    let apiKey: any = undefined;
+
+    try {
+      let rawdata = fs.readFileSync(keyFilePath, 'utf8');
+      apiKey = JSON.parse(rawdata);
+    } catch (e) {
+      assert.fail(e);
+    } finally {
+      deleteDirectory(tempPath, [keyFileName, '.taskkey']);
+    }
+
+    assert(
+      tr.ran(
+        `fastlane deliver submit_build --precheck_include_in_app_purchases false --api_key_path ${keyFilePath} -a com.microsoft.test.appId --skip_binary_upload true --skip_metadata true --skip_screenshots true --automatic_release --force`
+      ),
+      'fastlane deliver with api key should have been run.'
+    );
+    assert(tr.invokedToolCount === 1, 'should have run only fastlane deliver.');
+    assert(tr.succeeded, 'task should have succeeded');
+
+    assert(apiKey.key_id === 'D383SF739', 'key_id should be correct');
+    assert(
+      apiKey.issuer_id === undefined,
+      'issuer_id should be undefined for Individual Keys'
+    );
+    assert(apiKey.key === 'dummy_string', 'key should be correct');
+    assert(apiKey.in_house === false, 'in_house should be correct');
+    assert(apiKey.is_key_content_base64 === true, 'is_key_content_base64 should be correct');
+  });
+
   it('app specific password', async () => {
     this.timeout(1000);
 
