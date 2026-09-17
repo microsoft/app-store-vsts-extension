@@ -25,7 +25,7 @@ Once you have created or retrieved credentials for your App Store account, perfo
 
 2. Go to your Azure DevOps or TFS project, click on the **Pipelines** tab, and create a new pipeline (the "+" icon) that is hooked up to your project's appropriate source repository.
 
-3. Click **Add build step...** and select the necessary tasks to generate your release assets (e.g. **Gulp**, **Cordova Build**).
+3. Click **Add build step...** and select the necessary tasks to generate your release assets (e.g., **Gulp**, **Cordova Build**).
 
 4. Click **Add build step...** and select **App Store Release** from the **Deploy** category.
 
