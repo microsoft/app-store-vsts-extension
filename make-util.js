@@ -1,5 +1,3 @@
-
-var admZip = require('adm-zip');
 var check = require('validator');
 var fs = require('fs');
 var minimatch = require('minimatch');
