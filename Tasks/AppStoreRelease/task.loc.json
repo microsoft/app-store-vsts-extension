@@ -68,7 +68,7 @@
       "type": "string",
       "label": "ms-resource:loc.input.label.apiKeyIssuerId",
       "defaultValue": "",
-      "required": true,
+      "required": false,
       "helpMarkDown": "ms-resource:loc.input.help.apiKeyIssuerId",
       "visibleRule": "authType = ApiKey"
     },

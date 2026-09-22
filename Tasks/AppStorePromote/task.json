@@ -61,8 +61,8 @@
             "type": "string",
             "label": "App Store Connect API Issuer ID",
             "defaultValue": "",
-            "required": true,
-            "helpMarkDown": "The issuer_id of the account used to publish to the Apple App Store.",
+            "required": false,
+            "helpMarkDown": "The issuer_id of the account used to publish to the Apple App Store. Required for Team Keys, leave empty or use 'individualkey' for Individual Keys.",
             "visibleRule": "authType = ApiKey"
         },
         {
