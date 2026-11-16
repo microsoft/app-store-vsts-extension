@@ -42,21 +42,15 @@ stages:
       
     - powershell: |
         git config --global user.email "$(github_email)"
-        if ($LASTEXITCODE -ne 0) { throw "git config user.email failed with exit code $LASTEXITCODE" }
         git config --global user.name "$(username)"
-        if ($LASTEXITCODE -ne 0) { throw "git config user.name failed with exit code $LASTEXITCODE" }
         git fetch --all
-        if ($LASTEXITCODE -ne 0) { throw "git fetch failed with exit code $LASTEXITCODE" }
         git checkout -b Localization origin/Localization
-        if ($LASTEXITCODE -ne 0) { throw "git checkout of Localization branch failed with exit code $LASTEXITCODE" }
         git merge origin/master
         if ($LASTEXITCODE -ne 0) {
-          $mergeExitCode = $LASTEXITCODE
           git merge --abort
-          throw "Failed to merge origin/master into Localization (exit code $mergeExitCode). Resolve the conflict or unrelated histories manually."
+          throw "Sync with master failed due to merge conflicts. Resolve them on the Localization branch and re-run."
         }
         git push origin Localization
-        if ($LASTEXITCODE -ne 0) { throw "git push origin Localization failed with exit code $LASTEXITCODE" }
       displayName: "Sync with master branch"
       condition: and(succeeded(), in(variables['build.reason'], 'Schedule', 'Manual'))
       
